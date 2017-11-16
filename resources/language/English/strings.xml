@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Оператор -->
+    <string id="32000">Select your telecom operator</string>
+    <string id="32001">HBO GO Hungary</string>
+
+    <!-- Акаунт -->
+    <string id="32020">Account</string>
+    <string id="32021">Operator</string>
+    <string id="32022">Username</string>
+    <string id="32023">Password</string>
+    <!-- Субтитри -->
+    <string id="32030">Subtitles</string>
+    <string id="32031">Activate subtitle loading by this addon</string>
+    <string id="32032">Language</string>
+    <string id="32033">Select subtitle language</string>
+    <string id="32034">Hungarian</string>
+    <string id="32035">English</string>
+</strings>
