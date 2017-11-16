@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#Библиотеки, които използват python и Kodi в тази приставка
+#mudlok
 import re
 import sys
 import os
@@ -16,12 +16,11 @@ import base64
 import time
 import random
 
-#Място за дефиниране на константи, които ще се използват няколкократно из отделните модули
+
 __addon_id__= 'plugin.video.hbogohu'
 __Addon = xbmcaddon.Addon(__addon_id__)
 __settings__ = xbmcaddon.Addon(id='plugin.video.hbogohu')
 
-#Глобално търсене през търсачката на Коди, като YouTube addon-a
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
 MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
 
@@ -47,7 +46,8 @@ search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 operator = __settings__.getSetting('operator')
 op_ids = [
 '00000000-0000-0000-0000-000000000000', # Anonymous NoAuthenticated
-'15276cb7-7f53-432a-8ed5-a32038614bbf', # HBO GO Vip/Club HUNgaria
+'15276cb7-7f53-432a-8ed5-a32038614bbf', # HBO GO 
+'48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', # UPC Dire
 
 ]
 op_id = op_ids[int(operator)];
@@ -84,7 +84,6 @@ loggedin_headers = {
 
 
 
-#Записване на автентификационните данни в настройките на добавката за постоянно; изпълнява се еднократно
 def storeIndiv(indiv, custid):
 	global individualization
 	global customerId
@@ -102,7 +101,6 @@ def storeIndiv(indiv, custid):
 
 
 
-#Регистриране на устройство в платформата; изпълнява се еднократно
 def SILENTREGISTER():
 	global goToken
 	global individualization
@@ -129,7 +127,7 @@ def SILENTREGISTER():
 
 
 
-#Автентификация на абоната; изпълнява се преди отваряне на видео
+
 def LOGIN():
 	global sessionId
 	global goToken
@@ -137,8 +135,6 @@ def LOGIN():
 	global GOcustomerId
 	global individualization
 	global loggedin_headers
-	#global username
-	#global password
 
 
 	customerId = __settings__.getSetting('customerId')
@@ -148,7 +144,7 @@ def LOGIN():
 		jsonrsp = SILENTREGISTER()
 
 	if (username=="" or password==""):
-		xbmcgui.Dialog().ok('HBO GO','Регистрирайте се през сайта hbogo.hu и после посочете оператора си и въведете акаунта ви в настройките на тази приставка.')
+		xbmcgui.Dialog().ok('Hiba','Nincs beallitva megfelelo felhasznalo.')
 		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Акаунт")
 		xbmc.executebuiltin("Container.Refresh")
 		LOGIN()
@@ -202,11 +198,9 @@ def LOGIN():
 
 
 
-
-#Категории съдържание
 def CATEGORIES():
 	addDir('Filmek, sorozatok keresése ...','search','',4,'')
-	#Заявка за получаване на категориите
+
 	req = urllib2.Request('https://huapi.hbogo.eu/v5/Groups/json/HUN/COMP', None, loggedin_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
@@ -217,7 +211,7 @@ def CATEGORIES():
 			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
 	except:
 		pass
-	#Списък на категориите
+	
 	for cat in range(0, len(jsonrsp['Items'])):
 		addDir(jsonrsp['Items'][cat]['Name'].encode('utf-8', 'ignore'),jsonrsp['Items'][cat]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0','/0/0/1/1024/0/0'),'',1,md+'DefaultFolder.png')
 
@@ -225,7 +219,6 @@ def CATEGORIES():
 
 
 
-#Заявка за разлистване на категориите съдържание
 def LIST(url):
 	req = urllib2.Request(url, None, loggedin_headers)
 	opener = urllib2.build_opener()
@@ -237,12 +230,11 @@ def LIST(url):
 			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
 	except:
 		pass
-	#Ако има подкатегория/жанрове
+	# If there is a subcategory / genres
 	if len(jsonrsp['Container']) > 1:
 		for Container in range(0, len(jsonrsp['Container'])):
 			addDir(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][Container]['ObjectUrl'],'',1,md+'DefaultFolder.png')
 	else:
-		#Ако няма подкатегория/жанрове
 		for titles in range(0, len(jsonrsp['Container'][0]['Contents']['Items'])):
 			if jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 1: #1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
 				#Ако е филм    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
@@ -264,7 +256,6 @@ def LIST(url):
 
 
 
-#Разлистване сезоните на сериал
 def SEASON(url):
 	req = urllib2.Request(url, None, loggedin_headers)
 	opener = urllib2.build_opener()
@@ -282,7 +273,6 @@ def SEASON(url):
 
 
 
-#Разлистване епизодите на сериал
 def EPISODE(url):
 	req = urllib2.Request(url, None, loggedin_headers)
 	opener = urllib2.build_opener()
@@ -303,7 +293,6 @@ def EPISODE(url):
 		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' СЕЗОН '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+' '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
 
 
-#Зареждане на видео
 def PLAY(url):
 	global goToken
 	global individualization
@@ -312,11 +301,10 @@ def PLAY(url):
 	global sessionId
 	global loggedin_headers
 
-	#Логване, ако потребителя е анонимен
+
 	if sessionId == '00000000-0000-0000-0000-000000000000':
 		LOGIN()
 	
-	#Осигуряване на външни/алтернативни субтитри
 	if se=='true':
 		try:
 			#print 'CID '+cid
@@ -330,7 +318,6 @@ def PLAY(url):
 			jsonrsps = json.loads(f.read())
 			#print jsonrsps
 			
-			#Изтегляме официалните субтитри за епизода в TTML формат и ги конвертираме към SRT
 			try:
 				if jsonrsps['Subtitles'][0]['Code']==Code:
 					slink = jsonrsps['Subtitles'][0]['Url']
@@ -353,7 +340,7 @@ def PLAY(url):
 					sub = 'true'
 					with open(srtsubs_path, "w") as subfile:
 						subfile.write(buffer)
-				#Генерира грешка, за да изключи субтитрите при какъвто и да е проблем
+
 				if sub != 'true':
 					raise Exception()
 					
@@ -363,7 +350,7 @@ def PLAY(url):
 			sub = 'false'
 	
 	
-	#Заявяване на ism Manifest
+
 	purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>'+cid+'</ContentId><CustomerId>'+GOcustomerId+'</CustomerId><Individualization>'+individualization+'</Individualization><OperatorId>'+op_id+'</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
 
 	purchase_headers = {
@@ -400,9 +387,9 @@ def PLAY(url):
 	x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
 	dt_custom_data = base64.b64encode("{\"userId\":\"" + GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
-	#Възпроизвеждане на видеото
+
 	li = xbmcgui.ListItem(iconImage=thumbnail, thumbnailImage=thumbnail, path=MediaUrl)
-	if (se=='true' and sub=='true'): #Задаване на външни субтитри, ако е избран този режим
+	if (se=='true' and sub=='true'): 
 		li.setSubtitles([srtsubs_path])
 	license_server = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
 	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hu&Content-Type='
@@ -423,7 +410,7 @@ def PLAY(url):
 	#		xbmc.Player().setSubtitles(srtsubs_path)
 
 
-#Търсачка
+
 def SEARCH():
 	keyb = xbmc.Keyboard(search_string, 'Filmek, sorozatok keresése ...')
 	keyb.doModal()
@@ -433,9 +420,8 @@ def SEARCH():
 		if searchText == "":
 			addDir('Nincs találat','','','',md+'DefaultFolderBack.png')
 		else:
-			#Записване на заявката за търсене в настройките
 			__settings__.setSetting('lastsearch', searchText)
-			#Провеждане на търсене
+
 			req = urllib2.Request('https://huapi.hbogo.eu/v5/Search/Json/HUN/COMP/'+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
@@ -483,7 +469,7 @@ def addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mo
 	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
 	return ok
 
-#Модул за добавяне на отделна директория и нейните атрибути към съдържанието на показваната в Kodi директория - НЯМА НУЖДА ДА ПРОМЕНЯТЕ НИЩО ТУК
+
 def addDir(name,url,plot,mode,iconimage):
 	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
 	ok=True
@@ -493,7 +479,7 @@ def addDir(name,url,plot,mode,iconimage):
 	return ok
 
 
-#НЯМА НУЖДА ДА ПРОМЕНЯТЕ НИЩО ТУК
+
 def get_params():
 	param=[]
 	paramstring=sys.argv[2]
@@ -541,7 +527,7 @@ except:
 		pass
 
 
-#Списък на отделните подпрограми/модули в тази приставка - трябва напълно да отговаря на кода отгоре
+
 if mode==None or url==None or len(url)<1:
 		CATEGORIES()
 

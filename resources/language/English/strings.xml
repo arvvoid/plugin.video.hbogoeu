@@ -3,6 +3,7 @@
     <!-- Оператор -->
     <string id="32000">Select your telecom operator</string>
     <string id="32001">HBO GO Hungary</string>
+    <string id="32002">UPC Direct</string>
 
     <!-- Акаунт -->
     <string id="32020">Account</string>

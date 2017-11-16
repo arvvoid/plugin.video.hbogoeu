@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Оператор -->
-    <string id="32000">Select your telecom operator</string>
+    <string id="32000">Válaszd ki a szolgáltatódat!</string>
     <string id="32001">HBO GO Hungary</string>
+    <string id="32002">UPC Direct</string>
 
     <!-- Акаунт -->
-    <string id="32020">Account</string>
-    <string id="32021">Operator</string>
-    <string id="32022">Username</string>
-    <string id="32023">Password</string>
+    <string id="32020">Fiók</string>
+    <string id="32021">Szolgáltató</string>
+    <string id="32022">Felhasználnév</string>
+    <string id="32023">Jelszó</string>
     <!-- Субтитри -->
-    <string id="32030">Subtitles</string>
-    <string id="32031">Activate subtitle loading by this addon</string>
-    <string id="32032">Language</string>
-    <string id="32033">Select subtitle language</string>
-    <string id="32034">Hungarian</string>
-    <string id="32035">English</string>
+    <string id="32030">Feliratok</string>
+    <string id="32031">Felirat letöltése automatikusan</string>
+    <string id="32032">Nyelv</string>
+    <string id="32033">Válassz nyelvet!</string>
+    <string id="32034">Magyar</string>
+    <string id="32035">Angol</string>
 </strings>

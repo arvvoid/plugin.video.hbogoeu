@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<!-- Акаунт -->
+	<!-- Account -->
 	<category label="32020">
-        <setting label="32021" type="enum" id="operator" lvalues="32000|32001" default="32000"/>
+        <setting label="32021" type="enum" id="operator" lvalues="32000|32001|32002" default="32000"/>
 	    <setting label="32022" type="text" id="username" default=""/>
         <setting label="32023" type="text" id="password" option="hidden" enable="!eq(-1,)" default=""/>
 	</category>
-	<!-- Субтитри -->
+	<!-- Subtitles -->
 	<category label="32030">
         <setting label="32031" type="bool" id="se" default="true"/>
 	    <setting label="32032" type="enum" id="language" lvalues="32033|32034|32035" default="32033"/>/>

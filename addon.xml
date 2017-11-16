@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogohu" name="HBO GO Hungary" version="0.4.4" provider-name="RESU OBH">
+<addon id="plugin.video.hbogohu" name="HBO GO Hungary" version="0.1" provider-name="billsuxx">
   <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="inputstream.adaptive" version="2.1.0"/>
   </requires>
@@ -9,13 +11,13 @@
   </extension>
   <extension point="xbmc.addon.metadata">
   	<summary lang="hu">HBO GO Hungary</summary>
-  	<description lang="hu">Гледайте хитови филми и сериали, HBO оригинални продукции, документални заглавия, концерти и още на вашето Коди устройство! Абонаментна услуга, ЕКСКЛУЗИВНО за HBO абонати на следните оператори: Blizoo, HBO GO Vip/Club Bulgaria, M SAT CABLE EAD, Mtel, N3, NET1, NetSurf, NetWorx, Silistra TV, Telekabel, Telenor, Vivacom. Код за регистрация/клиентски номер ще получите от вашия телеком оператор.</description>
-  	<disclaimer lang="hu">Това не е официална приставка! Ако официално приложение е достъпно за вашата платформа, използвайте него вместо тази приставка. Всички права върху съдържанието са запазени от HBO® Europe.</disclaimer>
+  	<description lang="hu">HBO GO Kodi plugin</description>
+  	<disclaimer lang="hu">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
   	<language>hu</language>
   	<platform>all</platform>
-  	<forum>https://kodibg.org/forum/</forum>
-  	<website>https://www.hbogo.bg</website>
-  	<news>Информацията за достъпността на заглавията вече се добавя в края на описанията; Външните субтитри (когато има такива) се задават преди отваряне на видеото, а не секунди след това; Известни дефекти в InputStream Adaptive: 1.некоректна поддръжка на https://www.w3.org/TR/ttaf1-dfxp/ субтитри; 2.Пропускане/неразкодиране на кадри при Mic®o$oft Smooth Streaming;</news>
+  	<forum>https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html</forum>
+  	<website>https://www.hbogo.hu</website>
+  	<news></news>
   	<assets>
 	   <icon>resources/icon.png</icon>
        <fanart>resources/fanart.jpg</fanart>
