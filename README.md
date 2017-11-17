@@ -59,7 +59,7 @@ DRM dll/so fajl a lejátszáshoz kell. Libreelec esetén ennyi csak a dolgunk:
 curl -Ls http://nmacleod.com/public/libreelec/getwidevine.sh | bash
 ```
 
-Más platformoknál be kell szerezni a dll/so fájlt, és a kodi/cmd könyvtár alá bemásolni.
+Mas platformoknál be kell szerezni a dll/so fájlt, és a kodi/cmd könyvtár alá bemásolni.
 
 
 Linux:  libwidevinecdm.so -t kell beszerezni és a ~/.kodi/cmd alá bemásolni
