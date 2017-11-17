@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogohu" name="HBO GO Hungary" version="0.2" provider-name="billsuxx">
+<addon id="plugin.video.hbogohu" name="HBO GO Hungary" version="0.2.1" provider-name="billsuxx">
   <requires>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="inputstream.adaptive" version="2.1.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
-  	<provides>video</provides>
+    <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-  	<summary lang="hu">HBO GO Hungary</summary>
-  	<description lang="hu">Ezzel a pluginnal az HBO GO teljes tartalma elerheto. Listazhato, keresheto. Tamogatja a kulonbozo nyelveket es feliratokat is.</description>
-  	<disclaimer lang="hu">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
-  	<language>hu</language>
-  	<platform>all</platform>
-  	<forum>https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html</forum>
-  	<website>https://github.com/billsuxx/plugin.video.hbogohu</website>
-  	<news>Felesleges Notifications eltavolitva.</news>
-  	<assets>
-	   <icon>resources/icon.png</icon>
+    <summary lang="hu">HBO GO Hungary</summary>
+    <description lang="hu">Ezzel a pluginnal az HBO GO teljes tartalma elerheto. Listazhato, keresheto. Tamogatja a kulonbozo nyelveket es feliratokat is.</description>
+    <disclaimer lang="hu">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
+    <summary lang="en">HBO GO Hungary</summary>
+    <description lang="en">Plugin for HBO GO Hungary</description>
+    <disclaimer lang="en">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
+    <language>hu</language>
+    <platform>all</platform>
+    <forum>https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html</forum>
+    <website>https://github.com/billsuxx/plugin.video.hbogohu</website>
+    <news>Felesleges Notifications eltavolitva.</news>
+    <assets>
+     <icon>resources/icon.png</icon>
        <fanart>resources/fanart.jpg</fanart>
        <screenshot>resources/screenshot-01.jpg</screenshot>
        <screenshot>resources/screenshot-02.jpg</screenshot>
        <screenshot>resources/screenshot-03.jpg</screenshot>
        <screenshot>resources/screenshot-04.jpg</screenshot>
-	</assets>
+  </assets>
   </extension>
 </addon>
