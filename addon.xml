@@ -10,13 +10,13 @@
   </extension>
   <extension point="xbmc.addon.metadata">
   	<summary lang="hu">HBO GO Hungary</summary>
-  	<description lang="hu">Ezzel a pluginnal az HBO GO teljes tartalma elérhető. Listázható, kereshető. Támogatja a különböző nyelveket és feliratokat is.</description>
+  	<description lang="hu">Ezzel a pluginnal az HBO GO teljes tartalma elerheto. Listazhato, keresheto. Tamogatja a kulonbozo nyelveket es feliratokat is.</description>
   	<disclaimer lang="hu">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
   	<language>hu</language>
   	<platform>all</platform>
   	<forum>https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html</forum>
-  	<website>https://www.hbogo.hu</website>
-  	<news>Felesleges Notifications eltávolítva.</news>
+  	<website>https://github.com/billsuxx/plugin.video.hbogohu</website>
+  	<news>Felesleges Notifications eltavolitva.</news>
   	<assets>
 	   <icon>resources/icon.png</icon>
        <fanart>resources/fanart.jpg</fanart>
