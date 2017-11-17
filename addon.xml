@@ -22,11 +22,11 @@
     <news>Felesleges Notifications eltavolitva.</news>
     <assets>
      <icon>resources/icon.png</icon>
-       <fanart>resources/fanart.jpg</fanart>
-       <screenshot>resources/screenshot-01.jpg</screenshot>
-       <screenshot>resources/screenshot-02.jpg</screenshot>
-       <screenshot>resources/screenshot-03.jpg</screenshot>
-       <screenshot>resources/screenshot-04.jpg</screenshot>
-  </assets>
+     <fanart>resources/fanart.jpg</fanart>
+     <screenshot>resources/screenshot-01.jpg</screenshot>
+     <screenshot>resources/screenshot-02.jpg</screenshot>
+     <screenshot>resources/screenshot-03.jpg</screenshot>
+     <screenshot>resources/screenshot-04.jpg</screenshot>
+    </assets>
   </extension>
 </addon>

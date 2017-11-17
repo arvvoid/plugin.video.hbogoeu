@@ -13,6 +13,7 @@ Fuggosegek:
 Tesztelt, mukodo szolgaltatok:
  * Telenor (koszi noribi)
  * Telekom (koszi zodera)
+ * UPC Direct (koszi ekrisztian)
  * HBO GO webes regsztracio
 
 Meg nem tesztelt, de a pluginban benne levo szolgaltatok:
@@ -39,26 +40,30 @@ Meg nem tesztelt, de a pluginban benne levo szolgaltatok:
 
 
 
-## Kodi 18
+## Kodi 18 @ LibreELEC
 
-Ha Libreelecet hasznalunk, akkor tudunk frissíteni a test buildekre, amikben mar benne van a megfelelo verzioju Kodi, a megfelelő pluginnal.
+Ha LibreELEC-et hasznalunk, akkor tudunk frissiteni a test buildekre, amikben mar benne van a megfelelo verzioju Kodi, a megfelelő pluginnal.
 
 Teszt buildek: https://forum.kodi.tv/showthread.php?tid=298461
 
-Annyi a dolgod h a legfrissebbet letoltod, es a `Update` nevu shared folderbe berakod, vagy ha ssh-tol nem rettensz vissza, akkor a `/storage/.update`folderbe lewgeteled,
+Annyi a dolgod hogy a legfrissebb verziot letoltod, es a `Update` nevu shared folderbe berakod, vagy ha ssh-tol nem rettensz vissza, akkor a `/storage/.update`folderbe lewgeteled.
 
-Restart (update)
+Ezek utan ujra kell inditani az eszkozt, es a LibreELEC frissiteni fogja magat.
+
+## Inputstream Adaptive plugin 
+
+Alapertelmezetten ki van kapcsolva, de az addonok kozott mar megtalalod, kapcsodl be.
 
 
 ## widevinecdm
 
-DRM dll/so fajl a lejatszáshoz kell. Libreelec eseten ennyi csak a dolgunk:
+DRM dll/so fajl a lejatszáshoz kell. LibreELEC eseten ennyi csak a dolgunk:
 
 ```
 curl -Ls http://nmacleod.com/public/libreelec/getwidevine.sh | bash
 ```
 
-Mas platformokhoz is be kell szerezni a dll/so fajlt:
+A kulonbozo platformokhoz ide kell tenni a dll/so fajlt:
 
  * Linux:  libwidevinecdm.so -> `~/.kodi/cmd`
 
@@ -70,3 +75,8 @@ Mas platformokhoz is be kell szerezni a dll/so fajlt:
 ## Letoltes
 
 https://github.com/billsuxx/plugin.video.hbogohu/releases
+
+## Kapcsolat
+
+ * Twitter: https://twitter.com/billsuxx
+ * Beszelgessunk: https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html
