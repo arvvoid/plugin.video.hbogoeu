@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#mudlok
+
 import re
 import sys
 import os
@@ -161,7 +161,7 @@ def LOGIN():
 		jsonrsp = SILENTREGISTER()
 
 	if (username=="" or password==""):
-		xbmcgui.Dialog().ok('Hiba','Nincs beallitva megfelelo felhasznalo.')
+		xbmcgui.Dialog().ok('Hiba','Kérlek add meg a beállításoknál a belépési adatokat!')
 		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Акаунт")
 		xbmc.executebuiltin("Container.Refresh")
 		LOGIN()
@@ -201,7 +201,6 @@ def LOGIN():
 		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Акаунт")
 		xbmc.executebuiltin("Action(Back)")
 	else:
-		xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(username,'Belépve!', 4000, md+'DefaultUser.png'))
 
 		goToken = jsonrspl['Token']
 		GOcustomerId = jsonrspl['Customer']['Id']
@@ -211,12 +210,8 @@ def LOGIN():
 		loggedin_headers['GO-CustomerId'] = str(GOcustomerId)
 
 
-
-
-
-
 def CATEGORIES():
-	addDir('Filmek, sorozatok keresése ...','search','',4,'')
+	addDir('Keresés...','search','',4,'')
 
 	req = urllib2.Request('https://huapi.hbogo.eu/v5/Groups/json/HUN/COMP', None, loggedin_headers)
 	opener = urllib2.build_opener()
@@ -429,7 +424,7 @@ def PLAY(url):
 
 
 def SEARCH():
-	keyb = xbmc.Keyboard(search_string, 'Filmek, sorozatok keresése ...')
+	keyb = xbmc.Keyboard(search_string, 'Filmek, sorozatok keresése...')
 	keyb.doModal()
 	searchText = ''
 	if (keyb.isConfirmed()):
