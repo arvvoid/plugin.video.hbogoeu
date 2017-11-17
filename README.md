@@ -8,8 +8,36 @@ Koszi morefire-nak az operatorid-kat.
 
 
 Fuggosegek:
-* Kodi 18 (Inputstream Adaptive miatt)
-* widevinecdm
+ * Kodi 18 (Inputstream Adaptive miatt)
+ * widevinecdm
+
+Tesztelt, mukodo szolgaltatok:
+ * Telenor (koszi noribi)
+ * Telekom (koszi zodera)
+ * HBO GO webes regsztracio
+
+Meg nem tesztelt, de a pluginban benne levo szolgaltatok:
+ * UPC Direct
+ * DIGI
+ * UPC Magyarorszag
+ * INVITEL
+ * Celldömölki Kábeltelevízió Kft.
+ * Eurocable – Hello Digital
+ * HFC-Network Kft.
+ * HIR-SAT 2000 Kft.
+ * Jurop Telekom
+ * Kabelszat 2002
+ * Klapka Lakásszövetkezet
+ * Lát-Sat Kft.
+ * MinDig TV Extra
+ * PARISAT
+ * PR-TELECOM
+ * TARR Kft
+ * Vác Városi Kábeltelevízió Kft.
+ * Vidanet Zrt.
+ * HBO Development Hungary
+ * HBO GO Vip/Club Hungary
+
 
 
 ## Kodi 18

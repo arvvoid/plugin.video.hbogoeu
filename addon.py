@@ -162,7 +162,7 @@ def LOGIN():
 
 	if (username=="" or password==""):
 		xbmcgui.Dialog().ok('Hiba','Kérlek add meg a beállításoknál a belépési adatokat!')
-		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Акаунт")
+		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Accunt")
 		xbmc.executebuiltin("Container.Refresh")
 		LOGIN()
 
@@ -179,9 +179,15 @@ def LOGIN():
 		'GO-CustomerId': '00000000-0000-0000-0000-000000000000',
 		'Content-Type': 'application/json',
 	}
+    
+	operator = __settings__.getSetting('operator')
+	if operator == '1':
+		url = 'https://api.ugw.hbogo.eu/v3.0/Authentication/HUN/JSON/HUN/COMP'
+	else:
+		url = 'https://hugwapi.hbogo.eu/v2.1/Authentication/json/HUN/COMP'
 
-	data = '{"Action":"L","AppLanguage":null,"ActivationCode":null,"AllowedContents":[],"AudioLanguage":null,"AutoPlayNext":false,"BirthYear":0,"CurrentDevice":{"AppLanguage":"","AutoPlayNext":false,"Brand":"Chromium","CreatedDate":"","DeletedDate":"","Id":"00000000-0000-0000-0000-000000000000","Individualization":"'+individualization+'","IsDeleted":false,"LastUsed":"","Modell":"62","Name":"","OSName":"Ubuntu","OSVersion":"undefined","Platform":"COMP","SWVersion":"2.4.2.4025.240","SubtitleSize":""},"CustomerCode":"","DebugMode":false,"DefaultSubtitleLanguage":null,"EmailAddress":"'+username+'","FirstName":"","Gender":0,"Id":"00000000-0000-0000-0000-000000000000","IsAnonymus":true,"IsPromo":false,"Language":"HUN","LastName":"","Nick":"","NotificationChanges":0,"OperatorId":"'+op_id+'","OperatorName":"","OperatorToken":"","ParentalControl":{"Active":false,"Password":"","Rating":0,"ReferenceId":"00000000-0000-0000-0000-000000000000"},"Password":"'+password+'","PromoCode":"","ReferenceId":"00000000-0000-0000-0000-000000000000","SecondaryEmailAddress":"","SecondarySpecificData":null,"ServiceCode":"","SubscribeForNewsletter":false,"SubscState":null,"SubtitleSize":"","TVPinCode":"","ZipCode":""}'
-	r = requests.post('https://api.ugw.hbogo.eu/v3.0/Authentication/HUN/JSON/HUN/COMP', headers=headers, data=data)
+	data = '{"Action":"L","AppLanguage":null,"ActivationCode":null,"AllowedContents":[],"AudioLanguage":null,"AutoPlayNext":false,"BirthYear":0,"CurrentDevice":{"AppLanguage":"","AutoPlayNext":false,"Brand":"Chromium","CreatedDate":"","DeletedDate":"","Id":"00000000-0000-0000-0000-000000000000","Individualization":"'+individualization+'",               "IsDeleted":false,"LastUsed":"","Modell":"62","Name":"","OSName":"Ubuntu","OSVersion":"undefined","Platform":"COMP","SWVersion":"2.4.2.4025.240","SubtitleSize":""},"CustomerCode":"","DebugMode":false,"DefaultSubtitleLanguage":null,"EmailAddress":"'+username+'","FirstName":"",           "Gender":0,"Id":"00000000-0000-0000-0000-000000000000","IsAnonymus":true,"IsPromo":false,"Language":"HUN","LastName":"","Nick":"","NotificationChanges":0,"OperatorId":"'+op_id+'",                           "OperatorName":"","OperatorToken":"","ParentalControl":{"Active":false,"Password":"","Rating":0,"ReferenceId":"00000000-0000-0000-0000-000000000000"},"Password":"'+password+'","PromoCode":"","ReferenceId":"00000000-0000-0000-0000-000000000000","SecondaryEmailAddress":"","SecondarySpecificData":null,"ServiceCode":"","SubscribeForNewsletter":false,"SubscState":null,"SubtitleSize":"","TVPinCode":"","ZipCode":""}'
+	r = requests.post(url, headers=headers, data=data)
 
 
 	jsonrspl = json.loads(r.text)
@@ -198,7 +204,7 @@ def LOGIN():
 	sessionId = jsonrspl['SessionId']
 	if sessionId == '00000000-0000-0000-0000-000000000000':
 		xbmcgui.Dialog().ok('Login Hiba!','Ellenőrizd a belépési adatokat!')
-		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Акаунт")
+		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Accunt")
 		xbmc.executebuiltin("Action(Back)")
 	else:
 
@@ -260,7 +266,7 @@ def LIST(url):
 				#Ако е епизод на сериал    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
 				if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-					plot = plot + ' Епизода е достъпен за гледане до: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
+					plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
 				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8', 'ignore')+' СЕЗОН '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['SeasonIndex'])+' ЕПИЗОД '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']),jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
 			else:
 				#Ако е сериал
@@ -301,7 +307,7 @@ def EPISODE(url):
 		# addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 		plot = jsonrsp['ChildContents']['Items'][episode]['Abstract'].encode('utf-8', 'ignore')
 		if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
-			plot = plot + ' Епизода е достъпен за гледане до: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
+			plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
 		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' СЕЗОН '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+' '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
 
 
