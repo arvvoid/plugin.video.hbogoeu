@@ -16,6 +16,7 @@ Tesztelt, mukodo szolgaltatok:
  * Telekom (koszi zodera)
  * UPC Direct (koszi ekrisztian)
  * UPC Magyarorszag (Sanchez997)
+ * TARR Kft (kmarci25)
  
 Meg nem tesztelt, de a pluginban benne levo szolgaltatok:
  * DIGI
@@ -31,7 +32,6 @@ Meg nem tesztelt, de a pluginban benne levo szolgaltatok:
  * MinDig TV Extra
  * PARISAT
  * PR-TELECOM
- * TARR Kft
  * Vac Varosi Kabeltelevizio Kft.
  * Vidanet Zrt.
  * HBO Development Hungary
