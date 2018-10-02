@@ -77,6 +77,7 @@ goToken = ""
 customerId = ""
 GOcustomerId = ""
 sessionId = '00000000-0000-0000-0000-000000000000'
+FavoritesGroupId = ""
 
 loggedin_headers = {
 	'User-Agent': UA,
@@ -100,6 +101,7 @@ loggedin_headers = {
 def storeIndiv(indiv, custid):
 	global individualization
 	global customerId
+
 	individualization = __settings__.getSetting('individualization')
 	if individualization == "":
 		__settings__.setSetting('individualization', indiv)
@@ -109,6 +111,15 @@ def storeIndiv(indiv, custid):
 	if customerId == "":
 		__settings__.setSetting('customerId', custid)
 		customerId = custid
+
+# FavoritesGroupId eltarolasa
+def storeFavgroup(favgroupid):
+	global FavoritesGroupId
+
+	FavoritesGroupId = __settings__.getSetting('FavoritesGroupId')
+	if FavoritesGroupId == "":
+		__settings__.setSetting('FavoritesGroupId', favgroupid)
+		FavoritesGroupId = favgroupid
 
 # eszkoz regisztracioja
 def SILENTREGISTER():
@@ -133,6 +144,19 @@ def SILENTREGISTER():
 	sessionId= jsonrsp['Data']['SessionId']
 	return jsonrsp
 
+# lejatszasi lista id lekerdezes
+def GETFAVORITEGROUP():
+	global FavoritesGroupId
+
+	req = urllib2.Request('https://huapi.hbogo.eu/v7/Settings/json/HUN/COMP', None, loggedin_headers)
+
+	opener = urllib2.build_opener()
+	f = opener.open(req)
+	jsonrsp = json.loads(f.read())
+
+	favgroupId = jsonrsp['FavoritesGroupId']
+	storeFavgroup(favgroupId)
+
 # belepes
 def LOGIN():
 	global sessionId
@@ -141,15 +165,20 @@ def LOGIN():
 	global GOcustomerId
 	global individualization
 	global loggedin_headers
+	global FavoritesGroupId
 
 	operator = __settings__.getSetting('operator')
 	username = __settings__.getSetting('username')
 	password = __settings__.getSetting('password')
 	customerId = __settings__.getSetting('customerId')
 	individualization = __settings__.getSetting('individualization')
+	FavoritesGroupId = __settings__.getSetting('FavoritesGroupId')
 
 	if (individualization == "" or customerId == ""):
 		jsonrsp = SILENTREGISTER()
+
+	if (FavoritesGroupId == ""):
+		GETFAVORITEGROUP()
 
 	if (username=="" or password==""):
 		xbmcgui.Dialog().ok('Hiba','Kérlek add meg a beállításoknál a belépési adatokat!')
@@ -170,7 +199,7 @@ def LOGIN():
 		'GO-CustomerId': '00000000-0000-0000-0000-000000000000',
 		'Content-Type': 'application/json',
 	}
-    
+
     # todo: a gatewayes hivasok helyett lehet vissza lehet alni a bulgar verziora, de jelenleg igy tuti mukodik
     # a linkek a weboldalrol lettek kiszedve
 	if operator == '1':
@@ -206,7 +235,15 @@ def LOGIN():
 
 # kategoria
 def CATEGORIES():
+	global FavoritesGroupId
+
 	addDir('Keresés...','search','',4,'')
+
+	if (FavoritesGroupId == ""):
+		GETFAVORITEGROUP()
+
+	if (FavoritesGroupId != ""):
+		addDir('Lejátszási listád','https://huapi.hbogo.eu/v7/CustomerGroup/json/HUN/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
 
 	req = urllib2.Request('https://huapi.hbogo.eu/v5/Groups/json/HUN/COMP', None, loggedin_headers)
 	opener = urllib2.build_opener()
@@ -218,12 +255,18 @@ def CATEGORIES():
 			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
 	except:
 		pass
-	
+
 	for cat in range(0, len(jsonrsp['Items'])):
 		addDir(jsonrsp['Items'][cat]['Name'].encode('utf-8', 'ignore'),jsonrsp['Items'][cat]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0','/0/0/1/1024/0/0'),'',1,md+'DefaultFolder.png')
 
 # lista
 def LIST(url):
+	global sessionId
+	global loggedin_headers
+
+	if sessionId == '00000000-0000-0000-0000-000000000000':
+		LOGIN()
+
 	req = urllib2.Request(url, None, loggedin_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
@@ -243,11 +286,12 @@ def LIST(url):
 			if jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 1: #1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
 				#Ако е филм    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
-				if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-					plot = plot + ' A film megtekinthető: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
+				if 'AvailabilityTo' in jsonrsp['Container'][0]['Contents']['Items'][titles]:
+					if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
+						plot = plot + ' A film megtekinthető: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
 				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
 				#xbmc.log("GO: FILMI: DUMP: " + jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'], xbmc.LOGNOTICE)
-				
+
 			elif jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 3:
 				#Ако е Epizód на сериал    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
@@ -290,8 +334,9 @@ def EPISODE(url):
 	for episode in range(0, len(jsonrsp['ChildContents']['Items'])):
 		# addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 		plot = jsonrsp['ChildContents']['Items'][episode]['Abstract'].encode('utf-8', 'ignore')
-		if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
-			plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
+		if 'AvailabilityTo' in jsonrsp['ChildContents']['Items'][episode]:
+			if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
+				plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
 		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+'. ÉVAD '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
 
 # lejatszas
@@ -305,7 +350,7 @@ def PLAY(url):
 
 	if sessionId == '00000000-0000-0000-0000-000000000000':
 		LOGIN()
-	
+
 	if se=='true':
 		try:
 			#print 'CID '+cid
@@ -318,7 +363,7 @@ def PLAY(url):
 			f = opener.open(req)
 			jsonrsps = json.loads(f.read())
 			#print jsonrsps
-			
+
 			try:
 				if jsonrsps['Subtitles'][0]['Code']==Code:
 					slink = jsonrsps['Subtitles'][0]['Url']
@@ -328,7 +373,7 @@ def PLAY(url):
 				response = urllib2.urlopen(req)
 				data=response.read()
 				response.close()
-					
+
 				subs = re.compile('<p[^>]+begin="([^"]+)\D(\d+)"[^>]+end="([^"]+)\D(\d+)"[^>]*>([\w\W]+?)</p>').findall(data)
 				row = 0
 				buffer = ''
@@ -344,7 +389,7 @@ def PLAY(url):
 
 				if sub != 'true':
 					raise Exception()
-					
+
 			except:
 				sub = 'false'
 		except:
@@ -389,7 +434,7 @@ def PLAY(url):
 
 
 	li = xbmcgui.ListItem(iconImage=thumbnail, thumbnailImage=thumbnail, path=MediaUrl)
-	if (se=='true' and sub=='true'): 
+	if (se=='true' and sub=='true'):
 		li.setSubtitles([srtsubs_path])
 	license_server = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
 	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hu&Content-Type='
@@ -400,7 +445,7 @@ def PLAY(url):
 	li.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
 	li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
 	li.setProperty('inputstream.adaptive.license_key', license_key)
-	
+
 	xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
 
 	#Задаване на външни субтитри, ако е избран този режим
@@ -408,8 +453,6 @@ def PLAY(url):
 	#	while not xbmc.Player().isPlaying():
 	#		xbmc.sleep(42)
 	#		xbmc.Player().setSubtitles(srtsubs_path)
-
-
 
 def SEARCH():
 	keyb = xbmc.Keyboard(search_string, 'Filmek, sorozatok keresése...')
@@ -425,7 +468,7 @@ def SEARCH():
 			req = urllib2.Request('https://huapi.hbogo.eu/v5/Search/Json/HUN/COMP/'+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
-			jsonrsp = json.loads(f.read())        
+			jsonrsp = json.loads(f.read())
 			#print jsonrsp
 
 			try:
@@ -448,7 +491,6 @@ def SEARCH():
 				br=br+1
 			if br==0:
 				addDir('Nincs találat','','','',md+'DefaultFolderBack.png')
-
 
 def addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode):
 	cid = ou.rsplit('/',2)[1]
