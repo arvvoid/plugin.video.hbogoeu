@@ -67,7 +67,7 @@ Windowson ha mar van Chrome fent, akkor eleg innen kimasolni:
 
 A kulonbozo platformokhoz ide kell tenni a dll/so fajlt:
 
- * Linux:  libwidevinecdm.so -> `~/.kodi/cmd`
+ * Linux:  libwidevinecdm.so -> `~/.kodi/cdm`
 
  * Windows: widevinecdm.dll -> `%APPDATA%\kodi\cdm`
 
