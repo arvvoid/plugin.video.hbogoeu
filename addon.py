@@ -15,6 +15,7 @@ import xbmcvfs
 import base64
 import time
 import random
+import inputstreamhelper
 
 
 __addon_id__= 'plugin.video.hbogohu'
@@ -440,9 +441,13 @@ def PLAY(url):
 	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hu&Content-Type='
 	license_key = license_server + '|' + license_headers + '|R{SSM}|JBlicense'
 
+	protocol = 'ism'
+	drm = 'com.widevine.alpha'
+	is_helper = inputstreamhelper.Helper(protocol, drm=drm)
+	is_helper.check_inputstream()
 	li.setProperty('inputstreamaddon', 'inputstream.adaptive')
-	li.setProperty('inputstream.adaptive.manifest_type', 'ism')
-	li.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+	li.setProperty('inputstream.adaptive.manifest_type', protocol)
+	li.setProperty('inputstream.adaptive.license_type', drm)
 	li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
 	li.setProperty('inputstream.adaptive.license_key', license_key)
 
