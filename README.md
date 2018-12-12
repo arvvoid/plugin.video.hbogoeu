@@ -54,25 +54,9 @@ Ezek utan ujra kell inditani az eszkozt, es a LibreELEC frissiteni fogja magat.
 Alapertelmezetten ki van kapcsolva, de az addonok kozott mar megtalalod, kapcsodl be.
 
 
-## widevinecdm
+## Widevinecdm
 
-DRM dll/so fajl a lejatszáshoz kell. LibreELEC eseten ennyi csak a dolgunk:
-
-```
-curl -Ls http://nmacleod.com/public/libreelec/getwidevine.sh | bash
-```
-
-Windowson ha mar van Chrome fent, akkor eleg innen kimasolni:
-`c:\Program Files (x86)\Google\Chrome\Application\62.0.3202.94\WidevineCdm\_platform_specific\win_x64\`
-
-A kulonbozo platformokhoz ide kell tenni a dll/so fajlt:
-
- * Linux:  libwidevinecdm.so -> `~/.kodi/cdm`
-
- * Windows: widevinecdm.dll -> `%APPDATA%\kodi\cdm`
-
- * MacOS / OS X: libwidevinecdm.dylib `~/Library/Application Support/Kodi/cdm`
-
+A 0.2.3-as verzio óta bekerült az Input Stream Helper, így nem kell kezzel másolni a fájlokat.
 
 ## Letoltes
 
