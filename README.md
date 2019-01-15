@@ -28,3 +28,11 @@ Services not tested but included in plugin:
 ## Download
 
 https://github.com/arvvoid/plugin.video.hbogohr/releases
+
+## Screenshots
+
+![Screenshot 1](/resources/screenshot-01.png?raw=true "Screenshot 1")
+![Screenshot 2](/resources/screenshot-02.png?raw=true "Screenshot 2")
+![Screenshot 3](/resources/screenshot-03.png?raw=true "Screenshot 3")
+![Screenshot 4](/resources/screenshot-04.png?raw=true "Screenshot 4")
+![Screenshot 5](/resources/screenshot-05.png?raw=true "Screenshot 5")
