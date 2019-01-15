@@ -29,6 +29,8 @@ Services not tested but included in plugin:
 
 https://github.com/arvvoid/plugin.video.hbogohr/releases
 
+Get relese source in zip format and use the install addon from zip function in Kodi
+
 ## Screenshots
 
 ![Screenshot 1](/resources/screenshot-01.png?raw=true "Screenshot 1")
