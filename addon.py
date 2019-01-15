@@ -17,10 +17,11 @@ import time
 import random
 import inputstreamhelper
 
+#derived from https://github.com/billsuxx/plugin.video.hbogohu
 
-__addon_id__= 'plugin.video.hbogohu'
+__addon_id__= 'plugin.video.hbogohr'
 __Addon = xbmcaddon.Addon(__addon_id__)
-__settings__ = xbmcaddon.Addon(id='plugin.video.hbogohu')
+__settings__ = xbmcaddon.Addon(id='plugin.video.hbogohr')
 
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
 MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
@@ -28,13 +29,13 @@ MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
 se = __settings__.getSetting('se')
 language = __settings__.getSetting('language')
 if language == '0':
-	lang = 'Hungarian'
-	Code = 'HUN'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Hungarian.Forced.srt')
+	lang = 'Croatian'
+	Code = 'HRV'
+	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Croatian.Forced.srt')
 elif language == '1':
-	lang = 'Hungarian'
-	Code = 'HUN'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Hungarian.Forced.srt')
+	lang = 'Croatian'
+	Code = 'HRV'
+	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Croatian.Forced.srt')
 elif language == '2':
 	lang = 'English'
 	Code = 'ENG'
@@ -47,29 +48,7 @@ search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 operator = __settings__.getSetting('operator')
 op_ids = [
 '00000000-0000-0000-0000-000000000000', # Anonymous NoAuthenticated
-'15276cb7-7f53-432a-8ed5-a32038614bbf', # HBO GO webes
-'48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', # UPC Direct
-'b7728684-13d5-46d9-a9a4-97d676cdaeec', # DIGI
-'04459649-8a90-46f1-9390-0cd5b1958a5d', # Magyar Telekom Nyrt.
-'e71fabae-66b6-4972-9823-8743f8fcf06f', # Telenor MyTV
-'1ca45800-464a-4e9c-8f15-8d822ad7d8a1', # UPC Magyarország
-'f2230905-8e25-4245-80f9-fccf67a24005', # INVITEL
-'383cd446-06fb-4a59-8d39-200a3e9bcf6f', # Celldömölki Kábeltelevízió Kft.
-'fe106c75-293b-42e6-b211-c7446835b548', # Eurocable – Hello Digital
-'42677aa5-7576-4dc7-9004-347b279e4e5d', # HFC-Network Kft.
-'3a3cce31-fb19-470a-9bb5-6947c4ac9996', # HIR-SAT 2000 Kft.
-'c6441ec8-e30f-44b6-837a-beb2eb971395', # Jurop Telekom
-'d91341c2-3542-40d4-adab-40b644798327', # Kabelszat 2002
-'18fb0ff5-9cfa-4042-be00-638c5d34e553', # Klapka Lakásszövetkezet
-'97cddb59-79e3-4090-be03-89a6ae06f5ec', # Lát-Sat Kft.
-'c48c350f-a9db-4eb6-97a6-9b659e2db47f', # MinDig TV Extra
-'7982d5c7-63df-431d-806e-54f98fdfa36a', # PARISAT
-'18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', # PR-TELECOM
-'adb99277-3899-439e-8bdf-c749c90493cd', # TARR Kft
-'5729f013-f01d-4cc3-b048-fe5c91c64296', # Vác Városi Kábeltelevízió Kft.
-'b4f422f7-5424-4116-b72d-7cede85ead4e', # Vidanet Zrt.
-'6a52efe0-54c4-4197-8c55-86ee7a63cd04', # HBO Development Hungary
-'f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', # HBO GO Vip/Club Hungary
+'24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', # HBO GO HR web
 ]
 op_id = op_ids[int(operator)];
 
@@ -84,11 +63,11 @@ loggedin_headers = {
 	'User-Agent': UA,
 	'Accept': '*/*',
 	'Accept-Language': 'en-US,en;q=0.5',
-	'Referer': 'https://www.hbogo.hu/',
+	'Referer': 'https://hbogo.hr/',
 	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-	'Origin': 'https://www.hbogo.hu',
+	'Origin': 'https://www.hbogo.hr',
 	'X-Requested-With': 'XMLHttpRequest',
-	'GO-Language': 'HUN',
+	'GO-Language': 'HRV',
 	'GO-requiredPlatform': 'CHBR',
 	'GO-Token': '',
 	'GO-SessionId': '',
@@ -129,7 +108,7 @@ def SILENTREGISTER():
 	global customerId
 	global sessionId
 
-	req = urllib2.Request('https://hu.hbogo.eu/services/settings/silentregister.aspx', None, loggedin_headers)
+	req = urllib2.Request('https://hr.hbogo.eu/services/settings/silentregister.aspx', None, loggedin_headers)
 
 	opener = urllib2.build_opener()
 	f = opener.open(req)
@@ -145,18 +124,17 @@ def SILENTREGISTER():
 	sessionId= jsonrsp['Data']['SessionId']
 	return jsonrsp
 
-# lejatszasi lista id lekerdezes
 def GETFAVORITEGROUP():
-	global FavoritesGroupId
+    global FavoritesGroupId
 
-	req = urllib2.Request('https://huapi.hbogo.eu/v7/Settings/json/HUN/COMP', None, loggedin_headers)
+    req = urllib2.Request('https://hrapi.hbogo.eu/v7/Settings/json/HRV/COMP', None, loggedin_headers)
 
-	opener = urllib2.build_opener()
-	f = opener.open(req)
-	jsonrsp = json.loads(f.read())
+    opener = urllib2.build_opener()
+    f = opener.open(req)
+    jsonrsp = json.loads(f.read())
 
-	favgroupId = jsonrsp['FavoritesGroupId']
-	storeFavgroup(favgroupId)
+    favgroupId = jsonrsp['FavoritesGroupId']
+    storeFavgroup(favgroupId)
 
 # belepes
 def LOGIN():
@@ -182,15 +160,15 @@ def LOGIN():
 		GETFAVORITEGROUP()
 
 	if (username=="" or password==""):
-		xbmcgui.Dialog().ok('Hiba','Kérlek add meg a beállításoknál a belépési adatokat!')
-		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Accunt")
+		xbmcgui.Dialog().ok('Fault','Please enter your login details in the settings!')
+		xbmcaddon.Addon(id='plugin.video.hbogohr').openSettings("Accunt")
 		xbmc.executebuiltin("Container.Refresh")
 		LOGIN()
 
 	headers = {
 		'Origin': 'https://gateway.hbogo.eu',
 		'Accept-Encoding': 'gzip, deflate, br',
-		'Accept-Language': 'hu,en-US;q=0.9,en;q=0.8',
+		'Accept-Language': 'hr,en-US;q=0.9,en;q=0.8',
 		'User-Agent': UA,
 		'GO-Token': '',
 		'Accept': 'application/json',
@@ -204,17 +182,17 @@ def LOGIN():
     # todo: a gatewayes hivasok helyett lehet vissza lehet alni a bulgar verziora, de jelenleg igy tuti mukodik
     # a linkek a weboldalrol lettek kiszedve
 	if operator == '1':
-		url = 'https://api.ugw.hbogo.eu/v3.0/Authentication/HUN/JSON/HUN/COMP'
+		url = 'https://api.ugw.hbogo.eu/v3.0/Authentication/HRV/JSON/HRV/COMP'
 	else:
-		url = 'https://hugwapi.hbogo.eu/v2.1/Authentication/json/HUN/COMP'
+		url = 'https://hrgwapi.hbogo.eu/v2.1/Authentication/json/HRV/COMP'
 
-	data = '{"Action":"L","AppLanguage":null,"ActivationCode":null,"AllowedContents":[],"AudioLanguage":null,"AutoPlayNext":false,"BirthYear":0,"CurrentDevice":{"AppLanguage":"","AutoPlayNext":false,"Brand":"Chromium","CreatedDate":"","DeletedDate":"","Id":"00000000-0000-0000-0000-000000000000","Individualization":"'+individualization+'",               "IsDeleted":false,"LastUsed":"","Modell":"62","Name":"","OSName":"Ubuntu","OSVersion":"undefined","Platform":"COMP","SWVersion":"2.4.2.4025.240","SubtitleSize":""},"CustomerCode":"","DebugMode":false,"DefaultSubtitleLanguage":null,"EmailAddress":"'+username+'","FirstName":"",           "Gender":0,"Id":"00000000-0000-0000-0000-000000000000","IsAnonymus":true,"IsPromo":false,"Language":"HUN","LastName":"","Nick":"","NotificationChanges":0,"OperatorId":"'+op_id+'",                           "OperatorName":"","OperatorToken":"","ParentalControl":{"Active":false,"Password":"","Rating":0,"ReferenceId":"00000000-0000-0000-0000-000000000000"},"Password":"'+password+'","PromoCode":"","ReferenceId":"00000000-0000-0000-0000-000000000000","SecondaryEmailAddress":"","SecondarySpecificData":null,"ServiceCode":"","SubscribeForNewsletter":false,"SubscState":null,"SubtitleSize":"","TVPinCode":"","ZipCode":""}'
+	data = '{"Action":"L","AppLanguage":null,"ActivationCode":null,"AllowedContents":[],"AudioLanguage":null,"AutoPlayNext":false,"BirthYear":0,"CurrentDevice":{"AppLanguage":"","AutoPlayNext":false,"Brand":"Chromium","CreatedDate":"","DeletedDate":"","Id":"00000000-0000-0000-0000-000000000000","Individualization":"'+individualization+'",               "IsDeleted":false,"LastUsed":"","Modell":"62","Name":"","OSName":"Ubuntu","OSVersion":"undefined","Platform":"COMP","SWVersion":"2.4.2.4025.240","SubtitleSize":""},"CustomerCode":"","DebugMode":false,"DefaultSubtitleLanguage":null,"EmailAddress":"'+username+'","FirstName":"",           "Gender":0,"Id":"00000000-0000-0000-0000-000000000000","IsAnonymus":true,"IsPromo":false,"Language":"HRV","LastName":"","Nick":"","NotificationChanges":0,"OperatorId":"'+op_id+'",                           "OperatorName":"","OperatorToken":"","ParentalControl":{"Active":false,"Password":"","Rating":0,"ReferenceId":"00000000-0000-0000-0000-000000000000"},"Password":"'+password+'","PromoCode":"","ReferenceId":"00000000-0000-0000-0000-000000000000","SecondaryEmailAddress":"","SecondarySpecificData":null,"ServiceCode":"","SubscribeForNewsletter":false,"SubscState":null,"SubtitleSize":"","TVPinCode":"","ZipCode":""}'
 	r = requests.post(url, headers=headers, data=data)
 	jsonrspl = json.loads(r.text)
 
 	try:
 		if jsonrspl['ErrorMessage']:
-			xbmcgui.Dialog().ok('Login Hiba!', jsonrspl['ErrorMessage'])
+			xbmcgui.Dialog().ok('Login Error!', jsonrspl['ErrorMessage'])
 	except:
 		pass
 
@@ -223,8 +201,8 @@ def LOGIN():
 
 	sessionId = jsonrspl['SessionId']
 	if sessionId == '00000000-0000-0000-0000-000000000000':
-		xbmcgui.Dialog().ok('Login Hiba!','Ellenőrizd a belépési adatokat!')
-		xbmcaddon.Addon(id='plugin.video.hbogohu').openSettings("Accunt")
+		xbmcgui.Dialog().ok('Login Error!','Check your login details!')
+		xbmcaddon.Addon(id='plugin.video.hbogohr').openSettings("Accunt")
 		xbmc.executebuiltin("Action(Back)")
 	else:
 		goToken = jsonrspl['Token']
@@ -238,22 +216,22 @@ def LOGIN():
 def CATEGORIES():
 	global FavoritesGroupId
 
-	addDir('Keresés...','search','',4,'')
+	addDir('Traži...','search','',4,'')
 
 	if (FavoritesGroupId == ""):
 		GETFAVORITEGROUP()
 
 	if (FavoritesGroupId != ""):
-		addDir('Lejátszási listád','https://huapi.hbogo.eu/v7/CustomerGroup/json/HUN/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
+		addDir('Vaša playlista','https://hrapi.hbogo.eu/v7/CustomerGroup/json/HRV/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
 
-	req = urllib2.Request('https://huapi.hbogo.eu/v5/Groups/json/HUN/COMP', None, loggedin_headers)
+	req = urllib2.Request('https://hrapi.hbogo.eu/v5/Groups/json/HRV/COMP', None, loggedin_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrsp = json.loads(f.read())
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
 	except:
 		pass
 
@@ -275,7 +253,7 @@ def LIST(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
 	except:
 		pass
 	# If there is a subcategory / genres
@@ -298,7 +276,7 @@ def LIST(url):
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
 				if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
 					plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
-				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['SeasonIndex'])+'. ÉVAD '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']) + '. RÉSZ',jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
+				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['SeasonIndex'])+'. ÉVAD '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']) + '. KATEGORIJA',jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
 			else:
 				#Ако е сериал
 				addDir(jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore'),2,jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'])
@@ -313,7 +291,7 @@ def SEASON(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
 	except:
 		pass
 	for season in range(0, len(jsonrsp['Parent']['ChildContents']['Items'])):
@@ -328,7 +306,7 @@ def EPISODE(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
 	except:
 		pass
 
@@ -338,7 +316,7 @@ def EPISODE(url):
 		if 'AvailabilityTo' in jsonrsp['ChildContents']['Items'][episode]:
 			if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
 				plot = plot + ' Az epizód megtekinthető: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
-		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+'. ÉVAD '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
+		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+'. SEZONA '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
 
 # lejatszas
 def PLAY(url):
@@ -355,10 +333,10 @@ def PLAY(url):
 	if se=='true':
 		try:
 			#print 'CID '+cid
-			#http://huapi.hbogo.eu/player50.svc/Content/json/HUN/COMP/
-			#http://huapi.hbogo.eu/player50.svc/Content/json/HUN/APPLE/
-			#http://huapi.hbogo.eu/player50.svc/Content/json/HUN/SONY/
-			req = urllib2.Request('http://huapi.hbogo.eu/v5/Content/json/HUN/MOBI/'+cid, None, loggedin_headers)
+			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/COMP/
+			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/APPLE/
+			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/SONY/
+			req = urllib2.Request('http://hrapi.hbogo.eu/v5/Content/json/HRV/MOBI/'+cid, None, loggedin_headers)
 			req.add_header('User-Agent', MUA)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
@@ -410,13 +388,13 @@ def PLAY(url):
 		'GO-SessionId': str(sessionId),
 		'GO-swVersion': '4.7.4',
 		'GO-Token': str(goToken),
-		'Host': 'huapi.hbogo.eu',
-		'Referer': 'https://hbogo.hu/',
-		'Origin': 'https://www.hbogo.hu',
+		'Host': 'hrapi.hbogo.eu',
+		'Referer': 'https://hbogo.hr/',
+		'Origin': 'https://www.hbogo.hr',
 		'User-Agent': UA
 		}
 
-	req = urllib2.Request('https://huapi.hbogo.eu/v5/Purchase/Json/HUN/COMP', purchase_payload, purchase_headers)
+	req = urllib2.Request('https://hrapi.hbogo.eu/v5/Purchase/Json/HRV/COMP', purchase_payload, purchase_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrspp = json.loads(f.read())
@@ -424,7 +402,7 @@ def PLAY(url):
 
 	try:
 		if jsonrspp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Hiba', jsonrspp['ErrorMessage'])
+			xbmcgui.Dialog().ok('Error', jsonrspp['ErrorMessage'])
 	except:
 		pass
 
@@ -438,7 +416,7 @@ def PLAY(url):
 	if (se=='true' and sub=='true'):
 		li.setSubtitles([srtsubs_path])
 	license_server = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
-	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hu&Content-Type='
+	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hr&Content-Type='
 	license_key = license_server + '|' + license_headers + '|R{SSM}|JBlicense'
 
 	protocol = 'ism'
@@ -460,17 +438,17 @@ def PLAY(url):
 	#		xbmc.Player().setSubtitles(srtsubs_path)
 
 def SEARCH():
-	keyb = xbmc.Keyboard(search_string, 'Filmek, sorozatok keresése...')
+	keyb = xbmc.Keyboard(search_string, 'Find movies, series...')
 	keyb.doModal()
 	searchText = ''
 	if (keyb.isConfirmed()):
 		searchText = urllib.quote_plus(keyb.getText())
 		if searchText == "":
-			addDir('Nincs találat','','','',md+'DefaultFolderBack.png')
+			addDir('Nema rezultata','','','',md+'DefaultFolderBack.png')
 		else:
 			__settings__.setSetting('lastsearch', searchText)
 
-			req = urllib2.Request('https://huapi.hbogo.eu/v5/Search/Json/HUN/COMP/'+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
+			req = urllib2.Request('https://hrapi.hbogo.eu/v5/Search/Json/HRV/COMP/'+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
 			jsonrsp = json.loads(f.read())
@@ -478,7 +456,7 @@ def SEARCH():
 
 			try:
 				if jsonrsp['ErrorMessage']:
-					xbmcgui.Dialog().ok('Hiba', jsonrsp['ErrorMessage'])
+					xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
 			except:
 				pass
 

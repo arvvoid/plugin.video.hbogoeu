@@ -2,13 +2,13 @@
 <settings>
 	<!-- Account -->
 	<category label="32040">
-        <setting label="32041" type="enum" id="operator" lvalues="32000|32001|32002|32003|32004|32005|32006|32007|32008|32009|32010|32011|32012|32013|32014|32015|32016|32017|32018|32019|32020|32021|32022|32023" default="32000"/>
+        <setting label="32041" type="enum" id="operator" lvalues="32000|32001" default="32001"/>
 	    <setting label="32042" type="text" id="username" default=""/>
         <setting label="32043" type="text" id="password" option="hidden" enable="!eq(-1,)" default=""/>
 	</category>
 	<!-- Subtitles -->
 	<category label="32050">
         <setting label="32051" type="bool" id="se" default="true"/>
-	    <setting label="32052" type="enum" id="language" lvalues="32053|32054|32055" default="32053"/>/>
+	    <setting label="32052" type="enum" id="language" lvalues="32053|32054|32055" default="32054"/>/>
 	</category>
 </settings>

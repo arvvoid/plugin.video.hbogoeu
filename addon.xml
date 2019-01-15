@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogohu" name="HBO GO Hungary" version="0.2.3" provider-name="billsuxx">
+<addon id="plugin.video.hbogohr" name="HBO GO Croatia" version="0.1.0.HR.BETA" provider-name="arvvoid">
   <requires>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -10,17 +10,26 @@
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="hu">HBO GO Hungary</summary>
-    <description lang="hu">Ezzel a pluginnal az HBO GO teljes tartalma elerheto. Listazhato, keresheto. Tamogatja a kulonbozo nyelveket es feliratokat is.</description>
-    <disclaimer lang="hu">Ez nem hivatalos plugin! Amennyiben hivatalos app elerheto a platformodon, hasznald azt a frissitesek miatt. Minden jog az HBO® Europe altal fenntartva.</disclaimer>
-    <summary lang="en">HBO GO Hungary</summary>
-    <description lang="en">Plugin for HBO GO Hungary</description>
-    <disclaimer lang="en">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.</disclaimer>
-    <language>hu</language>
+      <summary lang="hr">HBO GO Hrvatska</summary>
+      <description lang="hr">Plugin za HBO GO Hrvatska</description>
+      <disclaimer lang="hr">Ovo je neslužbeni plug-in! Ako postoji službeni plugin za vašu platformu koristiti službenu aplikaciju. All rights in the content are reserved by HBO® Europe.
+
+          
+          Important, HBO GO must be paid for!!! You need a valid account credentials!
+          Register on the official HBO® Go website https://hbogo.hr
+      </disclaimer>
+    <summary lang="en">HBO GO Croatia</summary>
+    <description lang="en">Plugin for HBO GO Hrvatska</description>
+    <disclaimer lang="en">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.
+
+        Important, HBO GO must be paid for!!! You need a valid account credentials!
+        Register on the official HBO® Go website https://hbogo.hr
+    </disclaimer>
+    <language>en hr</language>
     <platform>all</platform>
-    <forum>https://prohardver.hu/tema/kodi_xbmc_kiegeszito_magyar_nyelvu_online_filmekhe/friss.html</forum>
-    <website>https://github.com/billsuxx/plugin.video.hbogohu</website>
-    <news>Lejatszasi listad menupont hozzaadva.</news>
+    <forum></forum>
+    <website>https://github.com/arvvoid/plugin.video.hbogohr</website>
+    <news>- 0.2.4.HR.BETA: Početna test verzija</news>
     <assets>
      <icon>resources/icon.png</icon>
      <fanart>resources/fanart.jpg</fanart>
