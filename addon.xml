@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogohr" name="HBO GO Croatia" version="0.1.1.HR.BETA" provider-name="arvvoid">
+<addon id="plugin.video.hbogohr" name="HBO GO Croatia" version="0.1.2.HR.BETA" provider-name="arvvoid">
   <requires>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -30,6 +30,7 @@
     <forum></forum>
     <website>https://github.com/arvvoid/plugin.video.hbogohr</website>
     <news>
+    - 0.1.2.HR.BETA: Ispravljena login greška u slučaju specijalnih znakova u password-u
     - 0.1.1.HR.BETA: Ispravljen prijevod
     - 0.1.0.HR.BETA: Početna test verzija
     </news>

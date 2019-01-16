@@ -18,18 +18,36 @@ The plugin is derived from https://github.com/billsuxx/plugin.video.hbogohu witc
 
 REQUIRMENTS:
 * Kodi 18 (Inputstream Adaptive), on any platform supported by Kodi http://kodi.tv
-* Libwidevine >=1.4.8.970 (for non Android devices, Please make sure to read the licence agreement that comes with it, so you know what you´re getting yourself into.)
-
-Tested Services:
-* HBO GO HR Web Register
-
-Services not tested but included in plugin:
+* Libwidevine >=1.4.8.970 (Your device might include it already or might not, not all devices have the same widevine certification level, witch can impact playback ability and max quality of DRM content, please make sure to read the licence agreement that comes with it, so you know what you´re getting yourself into.)
+* playback quality (resolution) of DRM content in Kodi, and if the playback will work at all, depends on Inputstream Adaptive and Libwidevine and widevine certification level on your device, and the service provider requirments and restrictions for the specific content. HDCP support can play a role as well.
 
 ## Download
 
 https://github.com/arvvoid/plugin.video.hbogohr/releases
 
 Get relese source in zip format and use the install addon from zip function in Kodi
+
+## Tested
+
+Tested Services:
+* HBO GO HR Web Registration
+
+Services not tested but included in plugin:
+
+_______________________________________
+PLATFORMS:
+
+Ubuntu 16.04 (Kodi 18 RC4)
+WORKS HW Decoding
+
+Mac OS 10.14.1 (Kodi 18 RC4)
+WORKS  HW Decoding
+
+Libreelec v8.95.2 BETA (Kodi 18 RC4)
+on Raspberry Pi 3B+,3B,2B
+WORKS HW Decoding
+
+Other platforms have not been tested at the moment
 
 ## Screenshots
 

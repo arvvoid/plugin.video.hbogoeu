@@ -125,16 +125,16 @@ def SILENTREGISTER():
 	return jsonrsp
 
 def GETFAVORITEGROUP():
-    global FavoritesGroupId
+	global FavoritesGroupId
 
-    req = urllib2.Request('https://hrapi.hbogo.eu/v7/Settings/json/HRV/COMP', None, loggedin_headers)
+	req = urllib2.Request('https://hrapi.hbogo.eu/v7/Settings/json/HRV/COMP', None, loggedin_headers)
 
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+	opener = urllib2.build_opener()
+	f = opener.open(req)
+	jsonrsp = json.loads(f.read())
 
-    favgroupId = jsonrsp['FavoritesGroupId']
-    storeFavgroup(favgroupId)
+	favgroupId = jsonrsp['FavoritesGroupId']
+	storeFavgroup(favgroupId)
 
 # belepes
 def LOGIN():
@@ -179,14 +179,74 @@ def LOGIN():
 		'Content-Type': 'application/json',
 	}
 
-    # todo: a gatewayes hivasok helyett lehet vissza lehet alni a bulgar verziora, de jelenleg igy tuti mukodik
-    # a linkek a weboldalrol lettek kiszedve
+
 	if operator == '1':
 		url = 'https://api.ugw.hbogo.eu/v3.0/Authentication/HRV/JSON/HRV/COMP'
 	else:
 		url = 'https://hrgwapi.hbogo.eu/v2.1/Authentication/json/HRV/COMP'
 
-	data = '{"Action":"L","AppLanguage":null,"ActivationCode":null,"AllowedContents":[],"AudioLanguage":null,"AutoPlayNext":false,"BirthYear":0,"CurrentDevice":{"AppLanguage":"","AutoPlayNext":false,"Brand":"Chromium","CreatedDate":"","DeletedDate":"","Id":"00000000-0000-0000-0000-000000000000","Individualization":"'+individualization+'",               "IsDeleted":false,"LastUsed":"","Modell":"62","Name":"","OSName":"Ubuntu","OSVersion":"undefined","Platform":"COMP","SWVersion":"2.4.2.4025.240","SubtitleSize":""},"CustomerCode":"","DebugMode":false,"DefaultSubtitleLanguage":null,"EmailAddress":"'+username+'","FirstName":"",           "Gender":0,"Id":"00000000-0000-0000-0000-000000000000","IsAnonymus":true,"IsPromo":false,"Language":"HRV","LastName":"","Nick":"","NotificationChanges":0,"OperatorId":"'+op_id+'",                           "OperatorName":"","OperatorToken":"","ParentalControl":{"Active":false,"Password":"","Rating":0,"ReferenceId":"00000000-0000-0000-0000-000000000000"},"Password":"'+password+'","PromoCode":"","ReferenceId":"00000000-0000-0000-0000-000000000000","SecondaryEmailAddress":"","SecondarySpecificData":null,"ServiceCode":"","SubscribeForNewsletter":false,"SubscState":null,"SubtitleSize":"","TVPinCode":"","ZipCode":""}'
+	data_obj = {
+	  "Action": "L",
+	  "AppLanguage": None,
+	  "ActivationCode": None,
+	  "AllowedContents": [],
+	  "AudioLanguage": None,
+	  "AutoPlayNext": False,
+	  "BirthYear": 1,
+	  "CurrentDevice": {
+		"AppLanguage":"",
+		"AutoPlayNext": False,
+		"Brand": "Chromium",
+		"CreatedDate": "",
+		"DeletedDate": "",
+		"Id": "00000000-0000-0000-0000-000000000000",
+		"Individualization": individualization,
+		"IsDeleted": False,
+		"LastUsed": "",
+		"Modell": "62",
+		"Name": "",
+		"OSName": "Ubuntu",
+		"OSVersion": "undefined",
+		"Platform": "COMP",
+		"SWVersion": "2.4.2.4025.240",
+		"SubtitleSize": ""
+	  },
+	  "CustomerCode": "",
+	  "DebugMode": False,
+	  "DefaultSubtitleLanguage": None,
+	  "EmailAddress": username,
+	  "FirstName": "",
+	  "Gender": 0,
+	  "Id": "00000000-0000-0000-0000-000000000000",
+	  "IsAnonymus": True,
+	  "IsPromo": False,
+	  "Language": "HRV",
+	  "LastName": "",
+	  "Nick": "",
+	  "NotificationChanges": 0,
+	  "OperatorId": op_id,
+	  "OperatorName": "",
+	  "OperatorToken": "",
+	  "ParentalControl": {
+		"Active": False,
+		"Password": "",
+		"Rating": 0,
+		"ReferenceId": "00000000-0000-0000-0000-000000000000"
+	  },
+	  "Password": password,
+	  "PromoCode": "",
+	  "ReferenceId": "00000000-0000-0000-0000-000000000000",
+	  "SecondaryEmailAddress": "",
+	  "SecondarySpecificData": None,
+	  "ServiceCode": "",
+	  "SubscribeForNewsletter": False,
+	  "SubscState": None,
+	  "SubtitleSize": "",
+	  "TVPinCode": "",
+	  "ZipCode": ""
+	}
+
+	data = json.dumps(data_obj)
 	r = requests.post(url, headers=headers, data=data)
 	jsonrspl = json.loads(r.text)
 
