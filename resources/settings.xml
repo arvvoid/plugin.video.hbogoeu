@@ -11,4 +11,9 @@
         <setting label="32051" type="bool" id="se" default="true"/>
 	    <setting label="32052" type="enum" id="language" lvalues="32053|32054|32055" default="32053"/>/>
 	</category>
+    <!-- Streaming -->
+    <category label="32060">
+    <setting id="is_settings" type="action" label="30065" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
+    </category>
+
 </settings>

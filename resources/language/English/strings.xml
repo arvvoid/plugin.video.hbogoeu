@@ -24,4 +24,7 @@
     <string id="32053">Select subtitle language</string>
     <string id="32054">Hrvatski</string>
     <string id="32055">English</string>
+    <!-- Streaming -->
+    <string id="32060">Streaming</string>
+    <string id="30065">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>
 </strings>

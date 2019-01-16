@@ -24,4 +24,7 @@
     <string id="32053">Odaberi jezik titlova</string>
     <string id="32054">Hrvatski</string>
     <string id="32055">English</string>
+    <!-- Streaming -->
+    <string id="32060">Streaming</string>
+    <string id="30065">Inputstream Adaptive Postavke (max bitrate,rezolucija,itd...)</string>
 </strings>
