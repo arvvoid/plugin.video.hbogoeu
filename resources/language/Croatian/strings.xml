@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Operator -->
-    <string id="32000">Select your telecom operator</string>
+    <string id="32000">Odaberite vašeg operatera</string>
     <string id="32001">HBO GO Hrvatska (Web, kreditna kartica)</string>
     <string id="32002">A1</string>
     <string id="32003">BonBon</string>
@@ -13,15 +13,15 @@
     <string id="32009">Simpa</string>
 
     <!-- Account -->
-    <string id="32040">Account</string>
-    <string id="32041">Operator</string>
-    <string id="32042">Username</string>
-    <string id="32043">Password</string>
+    <string id="32040">Korisnički račun</string>
+    <string id="32041">Operater</string>
+    <string id="32042">Korisničko ime</string>
+    <string id="32043">Lozinka</string>
     <!-- Settings -->
-    <string id="32050">Subtitles</string>
-    <string id="32051">Activate subtitle loading by this addon</string>
-    <string id="32052">Language</string>
-    <string id="32053">Select subtitle language</string>
+    <string id="32050">Titlovi</string>
+    <string id="32051">Aktiviraj titlove kad se add-on učita</string>
+    <string id="32052">Jezik</string>
+    <string id="32053">Odaberi jezik titlova</string>
     <string id="32054">Hrvatski</string>
     <string id="32055">English</string>
 </strings>

@@ -29,10 +29,21 @@ Get relese source in zip format and use the install addon from zip function in K
 
 ## Tested
 
-Tested Services:
-* HBO GO HR Web Registration
+Tested Operators:
+* HBO GO Hrvatska web (kreditna kartica)
 
-Services not tested but included in plugin:
+Operators not curently tested but included in the plugin:
+
+* A1
+* bonbon
+* evotv
+* HBO GO Vip/Club Croatia
+* Hrvatski Telekom d.d.
+* Iskon Internet d.d.
+* Optima Telekom d.d.
+* Simpa
+
+(access with these operators should work, but first register and try to login on the official site https://hbogo.hr throu your chosen operator, please report success or failure)
 
 _______________________________________
 PLATFORMS:

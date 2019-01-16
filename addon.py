@@ -45,10 +45,19 @@ elif language == '2':
 md = xbmc.translatePath(__Addon.getAddonInfo('path') + "/resources/media/")
 search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 
+#county id 467fecfe-a523-43aa-9d9e-8522358a8ba4
 operator = __settings__.getSetting('operator')
 op_ids = [
 '00000000-0000-0000-0000-000000000000', # Anonymous NoAuthenticated
-'24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', # HBO GO HR web
+'24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', # HBO GO Hrvatska web (kreditna kartica)
+'e1fb87d0-7581-4671-94bb-8e647e13385a', # A1
+'81a65859-145b-4bbc-afa6-04e9ade004f9', # bonbon
+'beed025d-06c9-4cac-a8a4-a118bdf22861', # evotv
+'323f061a-34e9-4453-987b-99aa38c46480', # HBO GO Vip/Club Croatia
+'73893614-eae3-4435-ab53-1d46c7f90498', # Hrvatski Telekom d.d.
+'5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', # Iskon Internet d.d.
+'a9e06fc5-c8d3-4b79-a776-b78d86729843', # Optima Telekom d.d.
+'3a1bb01c-9f7b-4029-a98d-6d17708fa4db', # Simpa
 ]
 op_id = op_ids[int(operator)];
 
@@ -77,7 +86,7 @@ loggedin_headers = {
 	'Accept-Encoding': ''
 }
 
-# individualization es customerId eltarolasa
+
 def storeIndiv(indiv, custid):
 	global individualization
 	global customerId
@@ -92,7 +101,7 @@ def storeIndiv(indiv, custid):
 		__settings__.setSetting('customerId', custid)
 		customerId = custid
 
-# FavoritesGroupId eltarolasa
+# FavoritesGroupId
 def storeFavgroup(favgroupid):
 	global FavoritesGroupId
 
@@ -101,7 +110,7 @@ def storeFavgroup(favgroupid):
 		__settings__.setSetting('FavoritesGroupId', favgroupid)
 		FavoritesGroupId = favgroupid
 
-# eszkoz regisztracioja
+# silent registration
 def SILENTREGISTER():
 	global goToken
 	global individualization
