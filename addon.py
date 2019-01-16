@@ -282,7 +282,7 @@ def CATEGORIES():
 		GETFAVORITEGROUP()
 
 	if (FavoritesGroupId != ""):
-		addDir('Vaša playlista','https://hrapi.hbogo.eu/v7/CustomerGroup/json/HRV/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
+		addDir('Moj izbor','https://hrapi.hbogo.eu/v7/CustomerGroup/json/HRV/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
 
 	req = urllib2.Request('https://hrapi.hbogo.eu/v5/Groups/json/HRV/COMP', None, loggedin_headers)
 	opener = urllib2.build_opener()
