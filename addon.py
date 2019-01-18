@@ -410,7 +410,7 @@ def PLAY(url):
 			opener = urllib2.build_opener()
 			f = opener.open(req)
 			jsonrsps = json.loads(f.read())
-			#print jsonrsps
+			#print(jsonrsps)
 
 			try:
 				if jsonrsps['Subtitles'][0]['Code']==Code:
@@ -467,7 +467,7 @@ def PLAY(url):
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrspp = json.loads(f.read())
-	print jsonrspp
+	print(jsonrspp)
 
 	try:
 		if jsonrspp['ErrorMessage']:
@@ -521,7 +521,7 @@ def SEARCH():
 			opener = urllib2.build_opener()
 			f = opener.open(req)
 			jsonrsp = json.loads(f.read())
-			#print jsonrsp
+			#print(jsonrsp)
 
 			try:
 				if jsonrsp['ErrorMessage']:

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogohr" name="HBO GO Croatia" version="1.0.HR.RC2" provider-name="arvvoid">
+<addon id="plugin.video.hbogohr" name="HBO GO Croatia" version="1.0.HR" provider-name="arvvoid">
   <requires>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="xbmc.python" version="2.25.0"/>
