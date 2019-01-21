@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Operator -->
-    <string id="32000">Select your telecom operator</string>
-    <string id="32001">HBO GO Hrvatska (Web, kreditna kartica)</string>
-    <string id="32002">A1</string>
-    <string id="32003">BonBon</string>
-    <string id="32004">evoTv</string>
-    <string id="32005">HBO GO Vip/Club Croatia</string>
-    <string id="32006">Hrvatski Telekom d.d.</string>
-    <string id="32007">Iskon Internet d.d.</string>
-    <string id="32008">Optima Telekom d.d.</string>
-    <string id="32009">Simpa</string>
+    <string id="32000">N/A</string>
+    <!-- HU 32001-32050 -->
+    <!-- CZ 32051-32100 -->
+    <!-- SK 32101-32150 -->
+    <!-- RO 32151-32200 -->
+    <!-- PL 32201-32250 -->
+    <!-- HR 32251-32300 -->
+    <string id="32251">Croatia: hbogo.hr (credit card)</string>
+    <string id="32252">Croatia: A1</string>
+    <string id="32253">Croatia: BonBon</string>
+    <string id="32254">Croatia: evoTv</string>
+    <string id="32255">Croatia: HBO GO Vip/Club Croatia</string>
+    <string id="32256">Croatia: Hrvatski Telekom d.d.</string>
+    <string id="32257">Croatia: Iskon Internet d.d.</string>
+    <string id="32258">Croatia: Optima Telekom d.d.</string>
+    <string id="32259">Croatia: Simpa</string>
+    <!-- RS 32301-32350 -->
+    <!-- SI 32351-32400 -->
+    <!-- MK 32401-32450 -->
+    <!-- ME 32451-32500 -->
+    <!-- BG 32501-32550 -->
+    <!-- BA 32551-32600 -->
 
     <!-- Account -->
-    <string id="32040">Account</string>
-    <string id="32041">Operator</string>
-    <string id="32042">Username</string>
-    <string id="32043">Password</string>
+    <string id="33440">Settings</string>
+    <string id="33441">Chose operator</string>
+    <string id="33442">Username</string>
+    <string id="33443">Password</string>
     <!-- Settings -->
-    <string id="32050">Subtitles</string>
-    <string id="32051">Activate subtitle loading by this addon</string>
-    <string id="32052">Language</string>
-    <string id="32053">Select subtitle language</string>
-    <string id="32054">Hrvatski</string>
-    <string id="32055">English</string>
+    <string id="33550">Subtitles</string>
+    <string id="33551">Activate subtitle loading by this addon</string>
+    <string id="33552">Language</string>
+    <string id="33553">Default</string>
+    <string id="33554">Hrvatski</string>
+    <string id="33555">English</string>
     <!-- Streaming -->
-    <string id="32060">Streaming</string>
-    <string id="30065">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>
+    <string id="33660">Streaming</string>
+    <string id="33665">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>
 </strings>

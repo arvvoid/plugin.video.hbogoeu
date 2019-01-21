@@ -9,10 +9,25 @@ If an official app is available for your platform, use it instead of this.
 
 # HBO GO Croatia for Kodi 18 (plugin.video.hbogohr)
 
-Simple, great Kodi plugin for HBO GO content.
+Simple, great Kodi plugin for HBO GO content. The work to transform the plugin to plugin.video.hbogoeu have begun. Soon it will be a generic HBO Go EU plugin with support for all countries where hbo go eu is availible.
 
 Important, HBO GO must be paid for!!! You need a valid account credentials!
-Register on the official HBO® Go website https://hbogo.hr
+Register on the official HBO® Go website https://hbogo.eu
+
+Supported operators/country:
+
+* Croatia: hbogo.hr (credit card)
+
+Supported but not tested atm:
+
+* Croatia: A1
+* Croatia: bonbon
+* Croatia: evotv
+* Croatia: HBO GO Vip/Club Croatia
+* Croatia: Hrvatski Telekom d.d.
+* Croatia: Iskon Internet d.d.
+* Croatia: Optima Telekom d.d.
+* Croatia: Simpa
 
 The plugin is derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html
 
@@ -29,23 +44,6 @@ Get relese source in zip format and use the install addon from zip function in K
 
 ## Tested
 
-Tested Operators:
-* HBO GO Hrvatska web (kreditna kartica)
-
-Operators not curently tested but included in the plugin:
-
-* A1
-* bonbon
-* evotv
-* HBO GO Vip/Club Croatia
-* Hrvatski Telekom d.d.
-* Iskon Internet d.d.
-* Optima Telekom d.d.
-* Simpa
-
-(access with these operators should work, but first register and try to login on the official site https://hbogo.hr throu your chosen operator, please report success or failure)
-
-_______________________________________
 PLATFORMS:
 
 Ubuntu 16.04 (Kodi 18 RC4)

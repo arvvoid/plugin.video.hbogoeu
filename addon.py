@@ -2,7 +2,6 @@
 
 import re
 import sys
-import os
 import urllib
 import urllib2
 import requests
@@ -11,17 +10,12 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import xbmcvfs
 import base64
-import time
-import random
 import inputstreamhelper
 
-#derived from https://github.com/billsuxx/plugin.video.hbogohu
-
-__addon_id__= 'plugin.video.hbogohr'
+__addon_id__= 'plugin.video.hbogoeu'
 __Addon = xbmcaddon.Addon(__addon_id__)
-__settings__ = xbmcaddon.Addon(id='plugin.video.hbogohr')
+__settings__ = xbmcaddon.Addon(id='plugin.video.hbogoeu')
 
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
 MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
@@ -29,9 +23,9 @@ MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
 se = __settings__.getSetting('se')
 language = __settings__.getSetting('language')
 if language == '0':
-	lang = 'Croatian'
-	Code = 'HRV'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Croatian.Forced.srt')
+	lang = 'English'
+	Code = 'ENG'
+	srtsubs_path = xbmc.translatePath('special://temp/hbogo.English.Forced.srt')
 elif language == '1':
 	lang = 'Croatian'
 	Code = 'HRV'
@@ -45,21 +39,61 @@ elif language == '2':
 md = xbmc.translatePath(__Addon.getAddonInfo('path') + "/resources/media/")
 search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 
-#county id 467fecfe-a523-43aa-9d9e-8522358a8ba4
+# 'operator hash, short country code, long country code, country hash
 operator = __settings__.getSetting('operator')
 op_ids = [
-'00000000-0000-0000-0000-000000000000', # Anonymous NoAuthenticated
-'24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', # HBO GO Hrvatska web (kreditna kartica)
-'e1fb87d0-7581-4671-94bb-8e647e13385a', # A1
-'81a65859-145b-4bbc-afa6-04e9ade004f9', # bonbon
-'beed025d-06c9-4cac-a8a4-a118bdf22861', # evotv
-'323f061a-34e9-4453-987b-99aa38c46480', # HBO GO Vip/Club Croatia
-'73893614-eae3-4435-ab53-1d46c7f90498', # Hrvatski Telekom d.d.
-'5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', # Iskon Internet d.d.
-'a9e06fc5-c8d3-4b79-a776-b78d86729843', # Optima Telekom d.d.
-'3a1bb01c-9f7b-4029-a98d-6d17708fa4db', # Simpa
+['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', '00000000-0000-0000-0000-000000000000'],  # Anonymous NoAuthenticated
+['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # HBO GO Hrvatska web (credit card)
+['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # A1
+['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # bonbon
+['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # evotv
+['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # HBO GO Vip/Club Croatia
+['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Hrvatski Telekom d.d.
+['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Iskon Internet d.d.
+['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Optima Telekom d.d.
+['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Simpa
 ]
-op_id = op_ids[int(operator)];
+op_id = op_ids[int(operator)][0]
+
+COUNTRY_ID=op_ids[int(operator)][3]
+COUNTRY_CODE_SHORT= op_ids[int(operator)][1]
+COUNTRY_CODE= op_ids[int(operator)][2]
+
+#API URLS
+
+LICENSE_SERVER='https://lic.drmtoday.com/license-proxy-widevine/cenc/'
+
+API_HOST=COUNTRY_CODE_SHORT+'api.hbogo.eu'
+API_HOST_REFERER='https://hbogo.hr/'
+API_HOST_ORIGIN='https://www.hbogo.hr'
+API_HOST_GATEWAY='https://gateway.hbogo.eu'
+API_HOST_GATEWAY_REFERER='https://gateway.hbogo.eu/signin/form'
+
+API_URL_SILENTREGISTER='https://'+COUNTRY_CODE_SHORT+'.hbogo.eu/services/settings/silentregister.aspx'
+
+API_URL_SETTINGS='https://'+API_HOST+'/v7/Settings/json/'+COUNTRY_CODE+'/COMP'
+API_URL_AUTH_WEBBASIC='https://api.ugw.hbogo.eu/v3.0/Authentication/'+COUNTRY_CODE+'/JSON/'+COUNTRY_CODE+'/COMP'
+API_URL_AUTH_OPERATOR='https://'+COUNTRY_CODE_SHORT+'gwapi.hbogo.eu/v2.1/Authentication/json/'+COUNTRY_CODE+'/COMP'
+API_URL_CUSTOMER_GROUP='https://'+API_HOST+'/v7/CustomerGroup/json/'+COUNTRY_CODE+'/COMP/'
+API_URL_GROUPS='https://'+API_HOST+'/v5/Groups/json/'+COUNTRY_CODE+'/COMP'
+#API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/COMP/'
+#API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/APPLE/'
+#API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/SONY/'
+API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/MOBI/'
+API_URL_PURCHASE='https://'+API_HOST+'/v5/Purchase/Json/'+COUNTRY_CODE+'/COMP'
+API_URL_SEARCH='https://'+API_HOST+'/v5/Search/Json/'+COUNTRY_CODE+'/COMP/'
+
+#LABELS
+
+LB_SEARCH_DESC='Traži filmove, serije...'
+LB_SEARCH_NORES='Nema rezultata'
+LB_ERROR='Error'
+LB_EPIZODE_UNTILL='Epizoda se može pogledati do:'
+LB_FILM_UNTILL='Film se može pogledati do:'
+LB_EPISODE='EPIZODA'
+LB_SEASON='SEZONA'
+
+
 
 individualization = ""
 goToken = ""
@@ -72,11 +106,11 @@ loggedin_headers = {
 	'User-Agent': UA,
 	'Accept': '*/*',
 	'Accept-Language': 'en-US,en;q=0.5',
-	'Referer': 'https://hbogo.hr/',
+	'Referer': API_HOST_REFERER,
 	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-	'Origin': 'https://www.hbogo.hr',
+	'Origin': API_HOST_ORIGIN,
 	'X-Requested-With': 'XMLHttpRequest',
-	'GO-Language': 'HRV',
+	'GO-Language': COUNTRY_CODE,
 	'GO-requiredPlatform': 'CHBR',
 	'GO-Token': '',
 	'GO-SessionId': '',
@@ -117,14 +151,14 @@ def SILENTREGISTER():
 	global customerId
 	global sessionId
 
-	req = urllib2.Request('https://hr.hbogo.eu/services/settings/silentregister.aspx', None, loggedin_headers)
+	req = urllib2.Request(API_URL_SILENTREGISTER, None, loggedin_headers)
 
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrsp = json.loads(f.read())
 
 	if jsonrsp['Data']['ErrorMessage']:
-		xbmcgui.Dialog().ok('Error', jsonrsp['Data']['ErrorMessage'])
+		xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['Data']['ErrorMessage'])
 
 	indiv = jsonrsp['Data']['Customer']['CurrentDevice']['Individualization']
 	custid = jsonrsp['Data']['Customer']['CurrentDevice']['Id'];
@@ -136,7 +170,7 @@ def SILENTREGISTER():
 def GETFAVORITEGROUP():
 	global FavoritesGroupId
 
-	req = urllib2.Request('https://hrapi.hbogo.eu/v7/Settings/json/HRV/COMP', None, loggedin_headers)
+	req = urllib2.Request(API_URL_SETTINGS, None, loggedin_headers)
 
 	opener = urllib2.build_opener()
 	f = opener.open(req)
@@ -175,14 +209,14 @@ def LOGIN():
 		LOGIN()
 
 	headers = {
-		'Origin': 'https://gateway.hbogo.eu',
+		'Origin': API_HOST_GATEWAY,
 		'Accept-Encoding': 'gzip, deflate, br',
 		'Accept-Language': 'hr,en-US;q=0.9,en;q=0.8',
 		'User-Agent': UA,
 		'GO-Token': '',
 		'Accept': 'application/json',
 		'GO-SessionId': '',
-		'Referer': 'https://gateway.hbogo.eu/signin/form',
+		'Referer': API_HOST_GATEWAY_REFERER,
 		'Connection': 'keep-alive',
 		'GO-CustomerId': '00000000-0000-0000-0000-000000000000',
 		'Content-Type': 'application/json',
@@ -190,9 +224,9 @@ def LOGIN():
 
 
 	if operator == '1':
-		url = 'https://api.ugw.hbogo.eu/v3.0/Authentication/HRV/JSON/HRV/COMP'
+		url = API_URL_AUTH_WEBBASIC
 	else:
-		url = 'https://hrgwapi.hbogo.eu/v2.1/Authentication/json/HRV/COMP'
+		url = API_URL_AUTH_OPERATOR
 
 	data_obj = {
 	  "Action": "L",
@@ -291,16 +325,16 @@ def CATEGORIES():
 		GETFAVORITEGROUP()
 
 	if (FavoritesGroupId != ""):
-		addDir('Moj izbor','https://hrapi.hbogo.eu/v7/CustomerGroup/json/HRV/COMP/'+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
+		addDir('Moj izbor',API_URL_CUSTOMER_GROUP+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
 
-	req = urllib2.Request('https://hrapi.hbogo.eu/v5/Groups/json/HRV/COMP', None, loggedin_headers)
+	req = urllib2.Request(API_URL_GROUPS, None, loggedin_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrsp = json.loads(f.read())
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
 	except:
 		pass
 
@@ -322,7 +356,7 @@ def LIST(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
 	except:
 		pass
 	# If there is a subcategory / genres
@@ -332,22 +366,19 @@ def LIST(url):
 	else:
 		for titles in range(0, len(jsonrsp['Container'][0]['Contents']['Items'])):
 			if jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 1: #1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-				#Ако е филм    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
 				if 'AvailabilityTo' in jsonrsp['Container'][0]['Contents']['Items'][titles]:
 					if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-						plot = plot + ' Film se može pogledati do: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
+						plot = plot + ' ' + LB_FILM_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
 				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
-				#xbmc.log("GO: FILMI: DUMP: " + jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'], xbmc.LOGNOTICE)
+				xbmc.log("GO: FILM: DUMP: " + jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'])
 
 			elif jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 3:
-				#Ако е Epizód на сериал    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 				plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
 				if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-					plot = plot + ' Epizoda se može pogledati do: ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
-				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['SeasonIndex'])+'. SEZONA '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']) + '. EPIZODA',jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
+					plot = plot + ' ' + LB_EPIZODE_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'].encode('utf-8', 'ignore')
+				addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],plot,jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['SeasonIndex'])+'. '+LB_SEASON+' '+str(jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']) + '. '+LB_EPISODE,jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'],5)
 			else:
-				#Ако е сериал
 				addDir(jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore'),2,jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'])
 
 
@@ -360,7 +391,7 @@ def SEASON(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
 	except:
 		pass
 	for season in range(0, len(jsonrsp['Parent']['ChildContents']['Items'])):
@@ -375,7 +406,7 @@ def EPISODE(url):
 
 	try:
 		if jsonrsp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
 	except:
 		pass
 
@@ -384,7 +415,7 @@ def EPISODE(url):
 		plot = jsonrsp['ChildContents']['Items'][episode]['Abstract'].encode('utf-8', 'ignore')
 		if 'AvailabilityTo' in jsonrsp['ChildContents']['Items'][episode]:
 			if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
-				plot = plot + ' Epizoda se može pogledati do: ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
+				plot = plot + ' ' + LB_EPIZODE_UNTILL + ' ' + jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'].encode('utf-8', 'ignore')
 		addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'],plot,jsonrsp['ChildContents']['Items'][episode]['AgeRating'],jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],[jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],jsonrsp['ChildContents']['Items'][episode]['Director'],jsonrsp['ChildContents']['Items'][episode]['Writer'],jsonrsp['ChildContents']['Items'][episode]['Duration'],jsonrsp['ChildContents']['Items'][episode]['Genre'],jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore')+' - '+str(jsonrsp['ChildContents']['Items'][episode]['SeasonIndex'])+'. SEZONA '+jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),jsonrsp['ChildContents']['Items'][episode]['OriginalName'],jsonrsp['ChildContents']['Items'][episode]['ProductionYear'],5)
 
 # lejatszas
@@ -401,22 +432,21 @@ def PLAY(url):
 
 	if se=='true':
 		try:
-			#print 'CID '+cid
-			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/COMP/
-			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/APPLE/
-			#http://hrapi.hbogo.eu/player50.svc/Content/json/HRV/SONY/
-			req = urllib2.Request('http://hrapi.hbogo.eu/v5/Content/json/HRV/MOBI/'+cid, None, loggedin_headers)
+			xbmc.log('CID '+cid)
+			req = urllib2.Request(API_URL_CONTENT+cid, None, loggedin_headers)
 			req.add_header('User-Agent', MUA)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
 			jsonrsps = json.loads(f.read())
-			#print(jsonrsps)
+			xbmc.log(str(jsonrsps))
 
 			try:
 				if jsonrsps['Subtitles'][0]['Code']==Code:
 					slink = jsonrsps['Subtitles'][0]['Url']
+					xbmc.log(slink)
 				elif jsonrsps['Subtitles'][1]['Code']==Code:
 					slink = jsonrsps['Subtitles'][1]['Url']
+					xbmc.log(slink)
 				req = urllib2.Request(slink, None, loggedin_headers)
 				response = urllib2.urlopen(req)
 				data=response.read()
@@ -436,6 +466,7 @@ def PLAY(url):
 						subfile.write(buffer)
 
 				if sub != 'true':
+					xbmc.log("Subs Failed")
 					raise Exception()
 
 			except:
@@ -457,21 +488,21 @@ def PLAY(url):
 		'GO-SessionId': str(sessionId),
 		'GO-swVersion': '4.7.4',
 		'GO-Token': str(goToken),
-		'Host': 'hrapi.hbogo.eu',
-		'Referer': 'https://hbogo.hr/',
-		'Origin': 'https://www.hbogo.hr',
+		'Host': API_HOST,
+		'Referer': API_HOST_REFERER,
+		'Origin': API_HOST_ORIGIN,
 		'User-Agent': UA
 		}
 
-	req = urllib2.Request('https://hrapi.hbogo.eu/v5/Purchase/Json/HRV/COMP', purchase_payload, purchase_headers)
+	req = urllib2.Request(API_URL_PURCHASE, purchase_payload, purchase_headers)
 	opener = urllib2.build_opener()
 	f = opener.open(req)
 	jsonrspp = json.loads(f.read())
-	print(jsonrspp)
+	xbmc.log(str(jsonrspp))
 
 	try:
 		if jsonrspp['ErrorMessage']:
-			xbmcgui.Dialog().ok('Error', jsonrspp['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrspp['ErrorMessage'])
 	except:
 		pass
 
@@ -484,8 +515,8 @@ def PLAY(url):
 	li = xbmcgui.ListItem(iconImage=thumbnail, thumbnailImage=thumbnail, path=MediaUrl)
 	if (se=='true' and sub=='true'):
 		li.setSubtitles([srtsubs_path])
-	license_server = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
-	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=https://www.hbogo.hr&Content-Type='
+	license_server = LICENSE_SERVER
+	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin='+API_HOST_ORIGIN+'&Content-Type='
 	license_key = license_server + '|' + license_headers + '|R{SSM}|JBlicense'
 
 	protocol = 'ism'
@@ -500,49 +531,43 @@ def PLAY(url):
 
 	xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
 
-	#Задаване на външни субтитри, ако е избран този режим
-	#if (se=='true' and sub=='true'):
-	#	while not xbmc.Player().isPlaying():
-	#		xbmc.sleep(42)
-	#		xbmc.Player().setSubtitles(srtsubs_path)
 
 def SEARCH():
-	keyb = xbmc.Keyboard(search_string, 'Traži filmove, serije...')
+	keyb = xbmc.Keyboard(search_string, LB_SEARCH_DESC)
 	keyb.doModal()
 	searchText = ''
 	if (keyb.isConfirmed()):
 		searchText = urllib.quote_plus(keyb.getText())
 		if searchText == "":
-			addDir('Nema rezultata','','','',md+'DefaultFolderBack.png')
+			addDir(LB_SEARCH_NORES,'','','',md+'DefaultFolderBack.png')
 		else:
 			__settings__.setSetting('lastsearch', searchText)
 
-			req = urllib2.Request('https://hrapi.hbogo.eu/v5/Search/Json/HRV/COMP/'+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
+			req = urllib2.Request(API_URL_SEARCH+searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore')+'/0', None, loggedin_headers)
 			opener = urllib2.build_opener()
 			f = opener.open(req)
 			jsonrsp = json.loads(f.read())
-			#print(jsonrsp)
+			xbmc.log(str(jsonrsp))
 
 			try:
 				if jsonrsp['ErrorMessage']:
-					xbmcgui.Dialog().ok('Error', jsonrsp['ErrorMessage'])
+					xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
 			except:
 				pass
 
 			br=0
 			for index in range(0, len(jsonrsp['Container'][0]['Contents']['Items'])):
 				if (jsonrsp['Container'][0]['Contents']['Items'][index]['ContentType'] == 1 or jsonrsp['Container'][0]['Contents']['Items'][index]['ContentType'] == 7): #1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-					#Ако е филм    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
+					# addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 					addLink(jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][index]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][index]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][index]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][index]['Director'],jsonrsp['Container'][0]['Contents']['Items'][index]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][index]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][index]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][index]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][index]['ProductionYear'],5)
 				elif jsonrsp['Container'][0]['Contents']['Items'][index]['ContentType'] == 3:
-					#Ако е Epizód на сериал    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
+					# addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
 					addLink(jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][index]['AgeRating'],jsonrsp['Container'][0]['Contents']['Items'][index]['ImdbRate'],jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'],[jsonrsp['Container'][0]['Contents']['Items'][index]['Cast'].split(', ')][0],jsonrsp['Container'][0]['Contents']['Items'][index]['Director'],jsonrsp['Container'][0]['Contents']['Items'][index]['Writer'],jsonrsp['Container'][0]['Contents']['Items'][index]['Duration'],jsonrsp['Container'][0]['Contents']['Items'][index]['Genre'],jsonrsp['Container'][0]['Contents']['Items'][index]['SeriesName'].encode('utf-8', 'ignore')+' '+jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][index]['OriginalName'],jsonrsp['Container'][0]['Contents']['Items'][index]['ProductionYear'],5)
 				else:
-					#Ако е сериал
 					addDir(jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'),2,jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'])
 				br=br+1
 			if br==0:
-				addDir('Nincs találat','','','',md+'DefaultFolderBack.png')
+				addDir(LB_SEARCH_NORES,'','','',md+'DefaultFolderBack.png')
 
 def addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode):
 	cid = ou.rsplit('/',2)[1]
