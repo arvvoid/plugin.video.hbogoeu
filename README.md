@@ -7,7 +7,7 @@ THERE IS NO WARRANTY FOR THE PLUGIN, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
 If an official app is available for your platform, use it instead of this.
 
-# HBO GO Croatia for Kodi 18 (plugin.video.hbogohr)
+# HBO GO Croatia for Kodi 18 (plugin.video.hbogoeu)
 
 Simple, great Kodi plugin for HBO GO content. The work to transform the plugin to plugin.video.hbogoeu have begun. Soon it will be a generic HBO Go EU plugin with support for all countries where hbo go eu is availible.
 
