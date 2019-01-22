@@ -86,7 +86,7 @@ COUNTRY_CODE_SHORT= op_ids[int(operator)][1]
 xbmc.log("OPERATOR COUNTRY_CODE_SHORT: "+op_ids[int(operator)][1])
 COUNTRY_CODE= op_ids[int(operator)][2]
 xbmc.log("OPERATOR COUNTRY_CODE: "+op_ids[int(operator)][2])
-IS_WEB= op_ids[int(operator)][4];
+IS_WEB= op_ids[int(operator)][4]
 xbmc.log("OPERATOR IS HBO GO WEB: "+str(IS_WEB))
 
 #API URLS
@@ -115,14 +115,14 @@ API_URL_SEARCH='https://'+API_HOST+'/v5/Search/Json/'+COUNTRY_CODE+'/COMP/'
 
 #LABELS
 
-LB_SEARCH_DESC = __language__(33700)
-LB_SEARCH_NORES = __language__(33701)
-LB_ERROR = __language__(33702)
-LB_EPIZODE_UNTILL = __language__(33703)
-LB_FILM_UNTILL = __language__(33704)
-LB_EPISODE = __language__(33705)
-LB_SEASON = __language__(33706)
-LB_MYPLAYLIST = __language__(33707)
+LB_SEARCH_DESC = __language__(33700).decode('utf-8').encode('utf-8')
+LB_SEARCH_NORES = __language__(33701).decode('utf-8').encode('utf-8')
+LB_ERROR = __language__(33702).decode('utf-8').encode('utf-8')
+LB_EPIZODE_UNTILL = __language__(33703).decode('utf-8').encode('utf-8')
+LB_FILM_UNTILL = __language__(33704).decode('utf-8').encode('utf-8')
+LB_EPISODE = __language__(33705).decode('utf-8').encode('utf-8')
+LB_SEASON = __language__(33706).decode('utf-8').encode('utf-8')
+LB_MYPLAYLIST = __language__(33707).decode('utf-8').encode('utf-8')
 
 
 
