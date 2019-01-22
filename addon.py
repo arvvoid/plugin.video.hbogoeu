@@ -16,6 +16,7 @@ import inputstreamhelper
 __addon_id__= 'plugin.video.hbogoeu'
 __Addon = xbmcaddon.Addon(__addon_id__)
 __settings__ = xbmcaddon.Addon(id='plugin.video.hbogoeu')
+__language__ = __settings__.getLocalizedString
 
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
 MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
@@ -43,15 +44,38 @@ search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 operator = __settings__.getSetting('operator')
 op_ids = [
 ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', '00000000-0000-0000-0000-000000000000'],  # Anonymous NoAuthenticated
-['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # HBO GO Hrvatska web (credit card)
-['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # A1
-['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # bonbon
-['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # evotv
-['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # HBO GO Vip/Club Croatia
-['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Hrvatski Telekom d.d.
-['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Iskon Internet d.d.
-['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Optima Telekom d.d.
-['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Simpa
+['15276cb7-7f53-432a-8ed5-a32038614bbf', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: HBO GO HUN webes
+['48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: UPC Direct
+['b7728684-13d5-46d9-a9a4-97d676cdaeec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: DIGI
+['04459649-8a90-46f1-9390-0cd5b1958a5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Magyar Telekom Nyrt.
+['e71fabae-66b6-4972-9823-8743f8fcf06f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Telenor MyTV
+['1ca45800-464a-4e9c-8f15-8d822ad7d8a1', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: UPC Magyarország
+['f2230905-8e25-4245-80f9-fccf67a24005', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: INVITEL
+['383cd446-06fb-4a59-8d39-200a3e9bcf6f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Celldömölki Kábeltelevízió Kft.
+['fe106c75-293b-42e6-b211-c7446835b548', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Eurocable – Hello Digital
+['42677aa5-7576-4dc7-9004-347b279e4e5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: HFC-Network Kft.
+['3a3cce31-fb19-470a-9bb5-6947c4ac9996', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: HIR-SAT 2000 Kft.
+['c6441ec8-e30f-44b6-837a-beb2eb971395', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Jurop Telekom
+['d91341c2-3542-40d4-adab-40b644798327', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Kabelszat 2002
+['18fb0ff5-9cfa-4042-be00-638c5d34e553', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Klapka Lakásszövetkezet
+['97cddb59-79e3-4090-be03-89a6ae06f5ec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Lát-Sat Kft.
+['c48c350f-a9db-4eb6-97a6-9b659e2db47f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: MinDig TV Extra
+['7982d5c7-63df-431d-806e-54f98fdfa36a', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: PARISAT
+['18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: PR-TELECOM
+['adb99277-3899-439e-8bdf-c749c90493cd', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: TARR Kft
+['5729f013-f01d-4cc3-b048-fe5c91c64296', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Vác Városi Kábeltelevízió Kft.
+['b4f422f7-5424-4116-b72d-7cede85ead4e', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: Vidanet Zrt.
+['6a52efe0-54c4-4197-8c55-86ee7a63cd04', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: HBO Development Hungary
+['f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2'],  # Hungary: HBO GO Vip/Club Hungary
+['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia:  HBO GO Hrvatska web (credit card)
+['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: A1
+['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: bonbon
+['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: evotv
+['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: HBO GO Vip/Club Croatia
+['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: Hrvatski Telekom d.d.
+['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: Iskon Internet d.d.
+['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: Optima Telekom d.d.
+['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4'],  # Croatia: Simpa
 ]
 op_id = op_ids[int(operator)][0]
 
@@ -64,8 +88,8 @@ COUNTRY_CODE= op_ids[int(operator)][2]
 LICENSE_SERVER='https://lic.drmtoday.com/license-proxy-widevine/cenc/'
 
 API_HOST=COUNTRY_CODE_SHORT+'api.hbogo.eu'
-API_HOST_REFERER='https://hbogo.hr/'
-API_HOST_ORIGIN='https://www.hbogo.hr'
+API_HOST_REFERER='https://hbogo.'+COUNTRY_CODE_SHORT+'/'
+API_HOST_ORIGIN='https://www.hbogo.'+COUNTRY_CODE_SHORT
 API_HOST_GATEWAY='https://gateway.hbogo.eu'
 API_HOST_GATEWAY_REFERER='https://gateway.hbogo.eu/signin/form'
 
@@ -85,13 +109,14 @@ API_URL_SEARCH='https://'+API_HOST+'/v5/Search/Json/'+COUNTRY_CODE+'/COMP/'
 
 #LABELS
 
-LB_SEARCH_DESC='Traži filmove, serije...'
-LB_SEARCH_NORES='Nema rezultata'
-LB_ERROR='Error'
-LB_EPIZODE_UNTILL='Epizoda se može pogledati do:'
-LB_FILM_UNTILL='Film se može pogledati do:'
-LB_EPISODE='EPIZODA'
-LB_SEASON='SEZONA'
+LB_SEARCH_DESC = __language__(33700)
+LB_SEARCH_NORES = __language__(33701)
+LB_ERROR = __language__(33702)
+LB_EPIZODE_UNTILL = __language__(33703)
+LB_FILM_UNTILL = __language__(33704)
+LB_EPISODE = __language__(33705)
+LB_SEASON = __language__(33706)
+LB_MYPLAYLIST = __language__(33707)
 
 
 
@@ -325,7 +350,7 @@ def CATEGORIES():
 		GETFAVORITEGROUP()
 
 	if (FavoritesGroupId != ""):
-		addDir('Moj izbor',API_URL_CUSTOMER_GROUP+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
+		addDir(LB_MYPLAYLIST,API_URL_CUSTOMER_GROUP+FavoritesGroupId+'/-/-/-/1000/-/-/false','',1,md+'FavoritesFolder.png')
 
 	req = urllib2.Request(API_URL_GROUPS, None, loggedin_headers)
 	opener = urllib2.build_opener()

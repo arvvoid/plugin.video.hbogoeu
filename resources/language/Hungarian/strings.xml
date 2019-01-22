@@ -3,29 +3,29 @@
     <!-- Operator -->
     <string id="32000">N/A</string>
     <!-- HU 32001-32050 -->
-    <string id="32001">Hungary: hbogo.hu (credit card)</string>
-    <string id="32002">Hungary: UPC Direct</string>
-    <string id="32003">Hungary: DIGI</string>
-    <string id="32004">Hungary: Magyar Telekom Nyrt.</string>
-    <string id="32005">Hungary: Telenor MyTV</string>
-    <string id="32006">Hungary: UPC Magyarorszag</string>
-    <string id="32007">Hungary: INVITEL</string>
-    <string id="32008">Hungary: Celldomolki Kabeltelevízió Kft.</string>
-    <string id="32009">Hungary: Eurocable - Hello Digital</string>
-    <string id="32010">Hungary: hFC-Network Kft.</string>
-    <string id="32011">Hungary: HIR-SAT 2000 Kft.</string>
-    <string id="32012">Hungary: Jurop Telekom</string>
-    <string id="32013">Hungary: Kabelszat 2002</string>
-    <string id="32014">Hungary: Klapka Lakasszövetkezet</string>
-    <string id="32015">Hungary: Lat-Sat Kft.</string>
-    <string id="32016">Hungary: MinDig TV Extra</string>
-    <string id="32017">Hungary: PARISAT</string>
-    <string id="32018">Hungary: PR-TELECOM</string>
-    <string id="32019">Hungary: TARR Kft</string>
-    <string id="32020">Hungary: Vac Varosi Kabeltelevizio Kft.</string>
-    <string id="32021">Hungary: Vidanet Zrt.</string>
-    <string id="32022">Hungary: HBO Development Hungary</string>
-    <string id="32023">Hungary: HBO GO Vip/Club Hungary</string>
+    <string id="32001">Magyarország: hbogo.hu (credit card)</string>
+    <string id="32002">Magyarország: UPC Direct</string>
+    <string id="32003">Magyarország: DIGI</string>
+    <string id="32004">Magyarország: Magyar Telekom Nyrt.</string>
+    <string id="32005">Magyarország: Telenor MyTV</string>
+    <string id="32006">Magyarország: UPC Magyarorszag</string>
+    <string id="32007">Magyarország: INVITEL</string>
+    <string id="32008">Magyarország: Celldomolki Kabeltelevízió Kft.</string>
+    <string id="32009">Magyarország: Eurocable - Hello Digital</string>
+    <string id="32010">Magyarország: hFC-Network Kft.</string>
+    <string id="32011">Magyarország: HIR-SAT 2000 Kft.</string>
+    <string id="32012">Magyarország: Jurop Telekom</string>
+    <string id="32013">Magyarország: Kabelszat 2002</string>
+    <string id="32014">Magyarország: Klapka Lakasszövetkezet</string>
+    <string id="32015">Magyarország: Lat-Sat Kft.</string>
+    <string id="32016">Magyarország: MinDig TV Extra</string>
+    <string id="32017">Magyarország: PARISAT</string>
+    <string id="32018">Magyarország: PR-TELECOM</string>
+    <string id="32019">Magyarország: TARR Kft</string>
+    <string id="32020">Magyarország: Vac Varosi Kabeltelevizio Kft.</string>
+    <string id="32021">Magyarország: Vidanet Zrt.</string>
+    <string id="32022">Magyarország: HBO Development Hungary</string>
+    <string id="32023">Magyarország: HBO GO Vip/Club Hungary</string>
     <!-- CZ 32051-32100 -->
     <!-- SK 32101-32150 -->
     <!-- RO 32151-32200 -->
@@ -58,7 +58,7 @@
     <string id="33552">Language</string>
     <string id="33553">English</string>
     <string id="33554">Hrvatski</string>
-    <string id="33555">Hungarian</string>
+    <string id="33555">Magyar</string>
     <!-- Streaming -->
     <string id="33660">Streaming</string>
     <string id="33665">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>

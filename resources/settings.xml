@@ -2,7 +2,7 @@
 <settings>
 	<!-- Account -->
 	<category label="33440">
-        <setting label="33441" type="select" id="operator" lvalues="32000|32251|32252|32253|32254|32255|32256|32257|32258|32259" default="32000"/>
+        <setting label="33441" type="select" id="operator" lvalues="32000|32001|32002|32003|32004|32005|32006|32007|32008|32009|32010|32011|32012|32013|32014|32015|32016|32017|32018|32019|32020|32021|32022|32023|32251|32252|32253|32254|32255|32256|32257|32258|32259" default="32000"/>
 	    <setting label="33442" type="text" id="username" default=""/>
         <setting label="33443" type="text" id="password" option="hidden" enable="!eq(-1,)" default=""/>
 

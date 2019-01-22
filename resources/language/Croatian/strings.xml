@@ -3,6 +3,29 @@
     <!-- Operator -->
     <string id="32000">N/A</string>
     <!-- HU 32001-32050 -->
+    <string id="32001">Hungary: hbogo.hu (credit card)</string>
+    <string id="32002">Hungary: UPC Direct</string>
+    <string id="32003">Hungary: DIGI</string>
+    <string id="32004">Hungary: Magyar Telekom Nyrt.</string>
+    <string id="32005">Hungary: Telenor MyTV</string>
+    <string id="32006">Hungary: UPC Magyarorszag</string>
+    <string id="32007">Hungary: INVITEL</string>
+    <string id="32008">Hungary: Celldomolki Kabeltelevízió Kft.</string>
+    <string id="32009">Hungary: Eurocable - Hello Digital</string>
+    <string id="32010">Hungary: hFC-Network Kft.</string>
+    <string id="32011">Hungary: HIR-SAT 2000 Kft.</string>
+    <string id="32012">Hungary: Jurop Telekom</string>
+    <string id="32013">Hungary: Kabelszat 2002</string>
+    <string id="32014">Hungary: Klapka Lakasszövetkezet</string>
+    <string id="32015">Hungary: Lat-Sat Kft.</string>
+    <string id="32016">Hungary: MinDig TV Extra</string>
+    <string id="32017">Hungary: PARISAT</string>
+    <string id="32018">Hungary: PR-TELECOM</string>
+    <string id="32019">Hungary: TARR Kft</string>
+    <string id="32020">Hungary: Vac Varosi Kabeltelevizio Kft.</string>
+    <string id="32021">Hungary: Vidanet Zrt.</string>
+    <string id="32022">Hungary: HBO Development Hungary</string>
+    <string id="32023">Hungary: HBO GO Vip/Club Hungary</string>
     <!-- CZ 32051-32100 -->
     <!-- SK 32101-32150 -->
     <!-- RO 32151-32200 -->
@@ -33,10 +56,19 @@
     <string id="33550">Titlovi</string>
     <string id="33551">Aktiviraj titlove kad se add-on učita</string>
     <string id="33552">Jezik</string>
-    <string id="33553">Zadani</string>
+    <string id="33553">English</string>
     <string id="33554">Hrvatski</string>
-    <string id="33555">English</string>
+    <string id="33555">Mađarski</string>
     <!-- Streaming -->
     <string id="33660">Streaming</string>
     <string id="33665">Inputstream Adaptive Postavke (max bitrate,rezolucija,itd...)</string>
+    <!-- Strings -->
+    <string id="33700">Traži filmove, serije...</string>
+    <string id="33701">Nema rezultata</string>
+    <string id="33702">Error</string>
+    <string id="33703">Epizoda se može pogledati do:</string>
+    <string id="33704">Film se može pogledati do:</string>
+    <string id="33705">EPIZODA</string>
+    <string id="33706">SEZONA</string>
+    <string id="33707">Moj izbor</string>
 </strings>
