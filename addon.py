@@ -115,14 +115,14 @@ API_URL_SEARCH='https://'+API_HOST+'/v5/Search/Json/'+COUNTRY_CODE+'/COMP/'
 
 #LABELS
 
-LB_SEARCH_DESC = __language__(33700).decode('utf-8').encode('utf-8')
-LB_SEARCH_NORES = __language__(33701).decode('utf-8').encode('utf-8')
-LB_ERROR = __language__(33702).decode('utf-8').encode('utf-8')
-LB_EPIZODE_UNTILL = __language__(33703).decode('utf-8').encode('utf-8')
-LB_FILM_UNTILL = __language__(33704).decode('utf-8').encode('utf-8')
-LB_EPISODE = __language__(33705).decode('utf-8').encode('utf-8')
-LB_SEASON = __language__(33706).decode('utf-8').encode('utf-8')
-LB_MYPLAYLIST = __language__(33707).decode('utf-8').encode('utf-8')
+LB_SEARCH_DESC = __language__(33700).encode('utf-8')
+LB_SEARCH_NORES = __language__(33701).encode('utf-8')
+LB_ERROR = __language__(33702).encode('utf-8')
+LB_EPIZODE_UNTILL = __language__(33703)..encode('utf-8')
+LB_FILM_UNTILL = __language__(33704).encode('utf-8')
+LB_EPISODE = __language__(33705).encode('utf-8')
+LB_SEASON = __language__(33706).encode('utf-8')
+LB_MYPLAYLIST = __language__(33707).encode('utf-8')
 
 
 
