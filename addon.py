@@ -87,7 +87,7 @@ xbmc.log("OPERATOR COUNTRY_CODE_SHORT: "+op_ids[int(operator)][1])
 COUNTRY_CODE= op_ids[int(operator)][2]
 xbmc.log("OPERATOR COUNTRY_CODE: "+op_ids[int(operator)][2])
 IS_WEB= op_ids[int(operator)][4];
-xbmc.log("OPERATOR IS HBO GO WEB: "+IS_WEB)
+xbmc.log("OPERATOR IS HBO GO WEB: "+str(IS_WEB))
 
 #API URLS
 
