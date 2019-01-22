@@ -1,33 +1,53 @@
 # Disclaimer
 
 This plugin is not officially commisioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
-For more information on HBO® Go Croatia visit the official website: https://hbogo.hr
+For more information on HBO® Go Croatia visit the official website: http://hbogo.eu
 
 THERE IS NO WARRANTY FOR THE PLUGIN, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
 If an official app is available for your platform, use it instead of this.
 
-# HBO GO Croatia for Kodi 18 (plugin.video.hbogoeu)
+# HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
 
 Simple, great Kodi plugin for HBO GO content. The work to transform the plugin to plugin.video.hbogoeu have begun. Soon it will be a generic HBO Go EU plugin with support for all countries where hbo go eu is availible.
 
 Important, HBO GO must be paid for!!! You need a valid account credentials!
-Register on the official HBO® Go website https://hbogo.eu
+Register on the official HBO® Go website http://hbogo.eu
 
 Supported operators/country:
 
-* Croatia: hbogo.hr (credit card)
-
-Supported but not tested atm:
-
-* Croatia: A1
-* Croatia: bonbon
-* Croatia: evotv
-* Croatia: HBO GO Vip/Club Croatia
-* Croatia: Hrvatski Telekom d.d.
-* Croatia: Iskon Internet d.d.
-* Croatia: Optima Telekom d.d.
-* Croatia: Simpa
+*Hungary: hbogo.hu (credit card)
+*Hungary: UPC Direct
+*Hungary: DIGI
+*Hungary: Magyar Telekom Nyrt.
+*Hungary: Telenor MyTV
+*Hungary: UPC Magyarorszag
+*Hungary: INVITEL
+*Hungary: Celldomolki Kabeltelevízió Kft.
+*Hungary: Eurocable - Hello Digital
+*Hungary: hFC-Network Kft.
+*Hungary: HIR-SAT 2000 Kft.
+*Hungary: Jurop Telekom
+*Hungary: Kabelszat 2002
+*Hungary: Klapka Lakasszövetkezet
+*Hungary: Lat-Sat Kft.
+*Hungary: MinDig TV Extra
+*Hungary: PARISAT
+*Hungary: PR-TELECOM
+*Hungary: TARR Kft
+*Hungary: Vac Varosi Kabeltelevizio Kft.
+*Hungary: Vidanet Zrt.
+*Hungary: HBO Development Hungary
+*Hungary: HBO GO Vip/Club Hungary
+*Croatia: hbogo.hr (credit card)
+*Croatia: A1
+*Croatia: BonBon
+*Croatia: evoTv
+*Croatia: HBO GO Vip/Club Croatia
+*Croatia: Hrvatski Telekom d.d.
+*Croatia: Iskon Internet d.d.
+*Croatia: Optima Telekom d.d.
+*Croatia: Simpa
 
 The plugin is derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html
 
@@ -38,7 +58,7 @@ REQUIRMENTS:
 
 ## Download
 
-https://github.com/arvvoid/plugin.video.hbogohr/releases
+https://github.com/arvvoid/plugin.video.hbogoeu/releases
 
 Get relese source in zip format and use the install addon from zip function in Kodi
 

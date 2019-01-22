@@ -2,15 +2,9 @@
 <settings>
 	<!-- Account -->
 	<category label="33440">
-        <setting label="33441" type="select" id="operator" lvalues="32000|32001|32002|32003|32004|32005|32006|32007|32008|32009|32010|32011|32012|32013|32014|32015|32016|32017|32018|32019|32020|32021|32022|32023|32251|32252|32253|32254|32255|32256|32257|32258|32259" default="32000"/>
+        <setting label="33441" type="select" id="operator" values="N/A|Hungary: hbogo.hu (credit card)|Hungary: UPC Direct|Hungary: DIGI|Hungary: Magyar Telekom Nyrt.|Hungary: Telenor MyTV|Hungary: UPC Magyarorszag|Hungary: INVITEL|Hungary: Celldomolki Kabeltelevízió Kft.|Hungary: Eurocable - Hello Digital|Hungary: hFC-Network Kft.|Hungary: HIR-SAT 2000 Kft.|Hungary: Jurop Telekom|Hungary: Kabelszat 2002|Hungary: Klapka Lakasszövetkezet|Hungary: Lat-Sat Kft.|Hungary: MinDig TV Extra|Hungary: PARISAT|Hungary: PR-TELECOM|Hungary: TARR Kft|Hungary: Vac Varosi Kabeltelevizio Kft.|Hungary: Vidanet Zrt.|Hungary: HBO Development Hungary|Hungary: HBO GO Vip/Club Hungary|Croatia: hbogo.hr (credit card)|Croatia: A1|Croatia: BonBon|Croatia: evoTv|Croatia: HBO GO Vip/Club Croatia|Croatia: Hrvatski Telekom d.d.|Croatia: Iskon Internet d.d.|Croatia: Optima Telekom d.d.|Croatia: Simpa" default="N/A"/>
 	    <setting label="33442" type="text" id="username" default=""/>
         <setting label="33443" type="text" id="password" option="hidden" enable="!eq(-1,)" default=""/>
-
-	<!-- Subtitles -->
-        <setting label="33550" type="lsep"/>
-        <setting label="33551" type="bool" id="se" default="false"/>
-	    <setting label="33552" type="select" id="language" lvalues="33553|33554|33555" default="33553"/>/>
-
     <!-- Streaming -->
     <setting label="33660" type="lsep"/>
     <setting id="is_settings" type="action" label="33665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>

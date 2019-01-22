@@ -21,72 +21,57 @@ __language__ = __settings__.getLocalizedString
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
 MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
 
-se = __settings__.getSetting('se')
-language = __settings__.getSetting('language')
-if language == '0':
-	lang = 'English'
-	Code = 'ENG'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.English.Forced.srt')
-elif language == '1':
-	lang = 'Croatian'
-	Code = 'HRV'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Croatian.Forced.srt')
-elif language == '2':
-	lang = 'Hungarian'
-	Code = 'HUN'
-	srtsubs_path = xbmc.translatePath('special://temp/hbogo.Hungarian.Forced.srt')
-	
-
 md = xbmc.translatePath(__Addon.getAddonInfo('path') + "/resources/media/")
 search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 
-# 'operator hash, short country code, long country code, country hash,web true/false
+# 'operator SETTING_ID - > operator hash, short country code, long country code, country hash,web true/false
 operator = __settings__.getSetting('operator')
-op_ids = [
-['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', '00000000-0000-0000-0000-000000000000'],  # Anonymous NoAuthenticated
-['15276cb7-7f53-432a-8ed5-a32038614bbf', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', True],  # Hungary: HBO GO HUN webes
-['48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: UPC Direct
-['b7728684-13d5-46d9-a9a4-97d676cdaeec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: DIGI
-['04459649-8a90-46f1-9390-0cd5b1958a5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Magyar Telekom Nyrt.
-['e71fabae-66b6-4972-9823-8743f8fcf06f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Telenor MyTV
-['1ca45800-464a-4e9c-8f15-8d822ad7d8a1', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: UPC Magyarország
-['f2230905-8e25-4245-80f9-fccf67a24005', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: INVITEL
-['383cd446-06fb-4a59-8d39-200a3e9bcf6f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Celldömölki Kábeltelevízió Kft.
-['fe106c75-293b-42e6-b211-c7446835b548', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Eurocable – Hello Digital
-['42677aa5-7576-4dc7-9004-347b279e4e5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: HFC-Network Kft.
-['3a3cce31-fb19-470a-9bb5-6947c4ac9996', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: HIR-SAT 2000 Kft.
-['c6441ec8-e30f-44b6-837a-beb2eb971395', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Jurop Telekom
-['d91341c2-3542-40d4-adab-40b644798327', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Kabelszat 2002
-['18fb0ff5-9cfa-4042-be00-638c5d34e553', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Klapka Lakásszövetkezet
-['97cddb59-79e3-4090-be03-89a6ae06f5ec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Lát-Sat Kft.
-['c48c350f-a9db-4eb6-97a6-9b659e2db47f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: MinDig TV Extra
-['7982d5c7-63df-431d-806e-54f98fdfa36a', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: PARISAT
-['18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: PR-TELECOM
-['adb99277-3899-439e-8bdf-c749c90493cd', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: TARR Kft
-['5729f013-f01d-4cc3-b048-fe5c91c64296', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Vác Városi Kábeltelevízió Kft.
-['b4f422f7-5424-4116-b72d-7cede85ead4e', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: Vidanet Zrt.
-['6a52efe0-54c4-4197-8c55-86ee7a63cd04', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: HBO Development Hungary
-['f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],  # Hungary: HBO GO Vip/Club Hungary
-['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', True],  # Croatia:  HBO GO Hrvatska web (credit card)
-['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: A1
-['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: bonbon
-['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: evotv
-['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: HBO GO Vip/Club Croatia
-['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: Hrvatski Telekom d.d.
-['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: Iskon Internet d.d.
-['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: Optima Telekom d.d.
-['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],  # Croatia: Simpa
-]
-op_id = op_ids[int(operator)][0]
+xbmc.log("OPERATOR SETTING_ID: "+operator)
+op_ids = {
+	'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', '00000000-0000-0000-0000-000000000000', True],
+	'Hungary: hbogo.hu (credit card)': ['15276cb7-7f53-432a-8ed5-a32038614bbf', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', True],
+	'Hungary: UPC Direct': ['48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: DIGI': ['b7728684-13d5-46d9-a9a4-97d676cdaeec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Magyar Telekom Nyrt.': ['04459649-8a90-46f1-9390-0cd5b1958a5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Telenor MyTV': ['e71fabae-66b6-4972-9823-8743f8fcf06f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: UPC Magyarorszag': ['1ca45800-464a-4e9c-8f15-8d822ad7d8a1', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: INVITEL': ['f2230905-8e25-4245-80f9-fccf67a24005', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Celldomolki Kabeltelevízió Kft.': ['383cd446-06fb-4a59-8d39-200a3e9bcf6f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Eurocable - Hello Digital': ['fe106c75-293b-42e6-b211-c7446835b548', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: hFC-Network Kft.': ['42677aa5-7576-4dc7-9004-347b279e4e5d', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: HIR-SAT 2000 Kft.': ['3a3cce31-fb19-470a-9bb5-6947c4ac9996', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Jurop Telekom': ['c6441ec8-e30f-44b6-837a-beb2eb971395', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Kabelszat 2002': ['d91341c2-3542-40d4-adab-40b644798327', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Klapka Lakasszövetkezet': ['18fb0ff5-9cfa-4042-be00-638c5d34e553', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Lat-Sat Kft.': ['97cddb59-79e3-4090-be03-89a6ae06f5ec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: MinDig TV Extra': ['c48c350f-a9db-4eb6-97a6-9b659e2db47f', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: PARISAT': ['7982d5c7-63df-431d-806e-54f98fdfa36a', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: PR-TELECOM': ['18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: TARR Kft': ['adb99277-3899-439e-8bdf-c749c90493cd', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Vac Varosi Kabeltelevizio Kft.': ['5729f013-f01d-4cc3-b048-fe5c91c64296', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: Vidanet Zrt.': ['b4f422f7-5424-4116-b72d-7cede85ead4e', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: HBO Development Hungary': ['6a52efe0-54c4-4197-8c55-86ee7a63cd04', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Hungary: HBO GO Vip/Club Hungary': ['f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+	'Croatia: hbogo.hr (credit card)': ['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', True],
+	'Croatia: A1': ['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: BonBon': ['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: evoTv': ['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: HBO GO Vip/Club Croatia': ['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: Hrvatski Telekom d.d.': ['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: Iskon Internet d.d.': ['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: Optima Telekom d.d.': ['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+	'Croatia: Simpa': ['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+}
+op_id = op_ids[operator][0]
 xbmc.log("OPERATOR ID: "+op_id)
 
-COUNTRY_ID=op_ids[int(operator)][3]
-xbmc.log("OPERATOR COUNTRY_ID: "+op_ids[int(operator)][3])
-COUNTRY_CODE_SHORT= op_ids[int(operator)][1]
-xbmc.log("OPERATOR COUNTRY_CODE_SHORT: "+op_ids[int(operator)][1])
-COUNTRY_CODE= op_ids[int(operator)][2]
-xbmc.log("OPERATOR COUNTRY_CODE: "+op_ids[int(operator)][2])
-IS_WEB= op_ids[int(operator)][4]
+COUNTRY_ID=op_ids[operator][3]
+xbmc.log("OPERATOR COUNTRY_ID: "+op_ids[operator][3])
+COUNTRY_CODE_SHORT= op_ids[operator][1]
+xbmc.log("OPERATOR COUNTRY_CODE_SHORT: "+op_ids[operator][1])
+COUNTRY_CODE= op_ids[operator][2]
+xbmc.log("OPERATOR COUNTRY_CODE: "+op_ids[operator][2])
+IS_WEB= op_ids[operator][4]
 xbmc.log("OPERATOR IS HBO GO WEB: "+str(IS_WEB))
 
 #API URLS
@@ -123,7 +108,8 @@ LB_FILM_UNTILL = __language__(33704).encode('utf-8')
 LB_EPISODE = __language__(33705).encode('utf-8')
 LB_SEASON = __language__(33706).encode('utf-8')
 LB_MYPLAYLIST = __language__(33707).encode('utf-8')
-
+LB_NOLOGIN = __language__(33708).encode('utf-8')
+LB_LOGIN_ERROR = __language__(33709).encode('utf-8')
 
 
 individualization = ""
@@ -220,7 +206,6 @@ def LOGIN():
 	global loggedin_headers
 	global FavoritesGroupId
 
-	operator = __settings__.getSetting('operator')
 	username = __settings__.getSetting('username')
 	password = __settings__.getSetting('password')
 	customerId = __settings__.getSetting('customerId')
@@ -234,10 +219,8 @@ def LOGIN():
 		GETFAVORITEGROUP()
 
 	if (username=="" or password==""):
-		xbmcgui.Dialog().ok('Fault','Please enter your login details in the settings!')
-		xbmcaddon.Addon(id='plugin.video.hbogohr').openSettings()
-		xbmc.executebuiltin("Container.Refresh")
-		LOGIN()
+		xbmcgui.Dialog().ok(LB_ERROR,LB_NOLOGIN)
+		xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
 
 	headers = {
 		'Origin': API_HOST_GATEWAY,
@@ -325,7 +308,7 @@ def LOGIN():
 
 	try:
 		if jsonrspl['ErrorMessage']:
-			xbmcgui.Dialog().ok('Login Error!', jsonrspl['ErrorMessage'])
+			xbmcgui.Dialog().ok(LB_ERROR, jsonrspl['ErrorMessage'])
 	except:
 		pass
 
@@ -334,7 +317,7 @@ def LOGIN():
 
 	sessionId = jsonrspl['SessionId']
 	if sessionId == '00000000-0000-0000-0000-000000000000':
-		xbmcgui.Dialog().ok('Login Error!','Check your login details!')
+		xbmcgui.Dialog().ok(LB_ERROR,LB_LOGIN_ERROR)
 		xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
 		xbmc.executebuiltin("Action(Back)")
 	else:
@@ -460,50 +443,6 @@ def PLAY(url):
 	if sessionId == '00000000-0000-0000-0000-000000000000':
 		LOGIN()
 
-	if se=='true':
-		try:
-			xbmc.log('CID '+cid)
-			req = urllib2.Request(API_URL_CONTENT+cid, None, loggedin_headers)
-			req.add_header('User-Agent', MUA)
-			opener = urllib2.build_opener()
-			f = opener.open(req)
-			jsonrsps = json.loads(f.read())
-			xbmc.log(str(jsonrsps))
-
-			try:
-				if jsonrsps['Subtitles'][0]['Code']==Code:
-					slink = jsonrsps['Subtitles'][0]['Url']
-					xbmc.log(slink)
-				elif jsonrsps['Subtitles'][1]['Code']==Code:
-					slink = jsonrsps['Subtitles'][1]['Url']
-					xbmc.log(slink)
-				req = urllib2.Request(slink, None, loggedin_headers)
-				response = urllib2.urlopen(req)
-				data=response.read()
-				response.close()
-
-				subs = re.compile('<p[^>]+begin="([^"]+)\D(\d+)"[^>]+end="([^"]+)\D(\d+)"[^>]*>([\w\W]+?)</p>').findall(data)
-				row = 0
-				buffer = ''
-				for sub in subs:
-					row = row + 1
-					buffer += str(row) +'\n'
-					buffer += "%s,%03d" % (sub[0], int(sub[1])) + ' --> ' + "%s,%03d" % (sub[2], int(sub[3])) + '\n'
-					buffer += urllib.unquote_plus(sub[4]).replace('<br/>','\n').replace('<br />','\n').replace("\r\n", "").replace("&lt;", "<").replace("&gt;", ">").replace("\n    ","").strip()
-					buffer += '\n\n'
-					sub = 'true'
-					with open(srtsubs_path, "w") as subfile:
-						subfile.write(buffer)
-
-				if sub != 'true':
-					xbmc.log("Subs Failed")
-					raise Exception()
-
-			except:
-				sub = 'false'
-		except:
-			sub = 'false'
-
 
 	purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>'+cid+'</ContentId><CustomerId>'+GOcustomerId+'</CustomerId><Individualization>'+individualization+'</Individualization><OperatorId>'+op_id+'</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
 
@@ -543,8 +482,6 @@ def PLAY(url):
 
 
 	li = xbmcgui.ListItem(iconImage=thumbnail, thumbnailImage=thumbnail, path=MediaUrl)
-	if (se=='true' and sub=='true'):
-		li.setSubtitles([srtsubs_path])
 	license_server = LICENSE_SERVER
 	license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin='+API_HOST_ORIGIN+'&Content-Type='
 	license_key = license_server + '|' + license_headers + '|R{SSM}|JBlicense'

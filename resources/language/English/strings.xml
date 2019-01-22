@@ -1,64 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <!-- Operator -->
-    <string id="32000">N/A</string>
-    <!-- HU 32001-32050 -->
-    <string id="32001">Hungary: hbogo.hu (credit card)</string>
-    <string id="32002">Hungary: UPC Direct</string>
-    <string id="32003">Hungary: DIGI</string>
-    <string id="32004">Hungary: Magyar Telekom Nyrt.</string>
-    <string id="32005">Hungary: Telenor MyTV</string>
-    <string id="32006">Hungary: UPC Magyarorszag</string>
-    <string id="32007">Hungary: INVITEL</string>
-    <string id="32008">Hungary: Celldomolki Kabeltelevízió Kft.</string>
-    <string id="32009">Hungary: Eurocable - Hello Digital</string>
-    <string id="32010">Hungary: hFC-Network Kft.</string>
-    <string id="32011">Hungary: HIR-SAT 2000 Kft.</string>
-    <string id="32012">Hungary: Jurop Telekom</string>
-    <string id="32013">Hungary: Kabelszat 2002</string>
-    <string id="32014">Hungary: Klapka Lakasszövetkezet</string>
-    <string id="32015">Hungary: Lat-Sat Kft.</string>
-    <string id="32016">Hungary: MinDig TV Extra</string>
-    <string id="32017">Hungary: PARISAT</string>
-    <string id="32018">Hungary: PR-TELECOM</string>
-    <string id="32019">Hungary: TARR Kft</string>
-    <string id="32020">Hungary: Vac Varosi Kabeltelevizio Kft.</string>
-    <string id="32021">Hungary: Vidanet Zrt.</string>
-    <string id="32022">Hungary: HBO Development Hungary</string>
-    <string id="32023">Hungary: HBO GO Vip/Club Hungary</string>
-    <!-- CZ 32051-32100 -->
-    <!-- SK 32101-32150 -->
-    <!-- RO 32151-32200 -->
-    <!-- PL 32201-32250 -->
-    <!-- HR 32251-32300 -->
-    <string id="32251">Croatia: hbogo.hr (credit card)</string>
-    <string id="32252">Croatia: A1</string>
-    <string id="32253">Croatia: BonBon</string>
-    <string id="32254">Croatia: evoTv</string>
-    <string id="32255">Croatia: HBO GO Vip/Club Croatia</string>
-    <string id="32256">Croatia: Hrvatski Telekom d.d.</string>
-    <string id="32257">Croatia: Iskon Internet d.d.</string>
-    <string id="32258">Croatia: Optima Telekom d.d.</string>
-    <string id="32259">Croatia: Simpa</string>
-    <!-- RS 32301-32350 -->
-    <!-- SI 32351-32400 -->
-    <!-- MK 32401-32450 -->
-    <!-- ME 32451-32500 -->
-    <!-- BG 32501-32550 -->
-    <!-- BA 32551-32600 -->
-
     <!-- Account -->
     <string id="33440">Settings</string>
     <string id="33441">Chose operator</string>
     <string id="33442">Username</string>
     <string id="33443">Password</string>
-    <!-- Settings -->
-    <string id="33550">Subtitles</string>
-    <string id="33551">Activate subtitle loading by this addon</string>
-    <string id="33552">Language</string>
-    <string id="33553">English</string>
-    <string id="33554">Hrvatski</string>
-    <string id="33555">Hungarian</string>
     <!-- Streaming -->
     <string id="33660">Streaming</string>
     <string id="33665">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>
@@ -71,4 +17,6 @@
     <string id="33705">EPISODE</string>
     <string id="33706">SEASON</string>
     <string id="33707">Favorites</string>
+    <string id="33708">Please enter your login details in the settings!</string>
+    <string id="33709">Login error, check your operator/login details!</string>
 </strings>
