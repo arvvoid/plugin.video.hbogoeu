@@ -8,9 +8,6 @@
     <!-- Language -->
     <setting label="33650" type="lsep"/>
     <setting label="33651" type="bool" id="deflang" default="false"/>
-    <!-- Subtitles-->
-    <setting label="33655" type="lsep"/>
-    <setting label="33656" type="bool" id="autosub" default="false"/>
     <!-- Streaming -->
     <setting label="33660" type="lsep"/>
     <setting id="is_settings" type="action" label="33665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>

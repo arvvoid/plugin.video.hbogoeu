@@ -106,12 +106,6 @@ if __language__(32000) == 'ENG':  # only englih or the default language for the 
 if __settings__.getSetting('deflang') == 'true':
     LANGUAGE_CODE = DEFAULT_LANGUAGE
 
-DEFAULT_SUBS = None
-
-#check if default subs is forced
-if __settings__.getSetting('autosub') == 'true':
-    DEFAULT_SUBS = DEFAULT_LANGUAGE
-
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
 # API_PLATFORM = 'APPLE'
@@ -299,7 +293,7 @@ def LOGIN():
         },
         "CustomerCode": "",
         "DebugMode": False,
-        "DefaultSubtitleLanguage": DEFAULT_SUBS,
+        "DefaultSubtitleLanguage": None,
         "EmailAddress": username,
         "FirstName": "",
         "Gender": 0,
