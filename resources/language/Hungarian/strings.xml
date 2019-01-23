@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Account -->
-    <string id="33440">Settings</string>
-    <string id="33441">Chose operator</string>
-    <string id="33442">Username</string>
-    <string id="33443">Password</string>
+    <string id="33440">Beállítások</string>
+    <string id="33441">Kiválasztott operátor</string>
+    <string id="33442">Felhasználónév</string>
+    <string id="33443">Jelszó</string>
     <!-- Streaming -->
-    <string id="33660">Streaming</string>
-    <string id="33665">Inputstream Adaptive Settings (max bitrate,resolution,ecc..)</string>
+    <string id="33660">Folyó</string>
+    <string id="33665">Inputstream Adaptive beállítások (max bitrate,resolution,ecc..)</string>
     <!-- Strings -->
-    <string id="33700">Find movies and TV Shows...</string>
-    <string id="33701">No result</string>
-    <string id="33702">Error</string>
-    <string id="33703">Episode can be watched until:</string>
-    <string id="33704">The movie can be watched until:</string>
-    <string id="33705">EPISODE</string>
-    <string id="33706">SEASON</string>
-    <string id="33707">Favorites</string>
-    <string id="33708">Please enter your login details in the settings!</string>
-    <string id="33709">Login error, check your operator/login details!</string>
+    <string id="33700">Filmek és TV-műsorok keresése</string>
+    <string id="33701">Nincs eredmény</string>
+    <string id="33702">Hiba</string>
+    <string id="33703">Az epizód megtekinthető, amíg:</string>
+    <string id="33704">A film megtekinthető, amíg:</string>
+    <string id="33705">EEPIZÓD</string>
+    <string id="33706">ÉVSZAK</string>
+    <string id="33707">Érdekes</string>
+    <string id="33708">Kérjük, adja meg a bejelentkezési adatait a beállításoknál!</string>
+    <string id="33709">Bejelentkezési hiba, ellenőrizze a bejelentkezési adatait!</string>
+    <string id="33710">Nincs megadva üzemeltető! Ellenőrizze a beállításokat!</string>
+    <string id="33711">Keresés...</string>
 </strings>

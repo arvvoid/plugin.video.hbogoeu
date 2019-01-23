@@ -18,5 +18,7 @@
     <string id="33706">SEASON</string>
     <string id="33707">Favorites</string>
     <string id="33708">Please enter your login details in the settings!</string>
-    <string id="33709">Login error, check your operator/login details!</string>
+    <string id="33709">Login error, check your login details!</string>
+    <string id="33710">No operator defined! Check your settings!</string>
+    <string id="33711">Search...</string>
 </strings>

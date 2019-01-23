@@ -16,31 +16,41 @@
 
           
           Important, HBO GO must be paid for!!! You need a valid account credentials!
-          Register on the official HBO® Go website https://hbogo.eu
+          Register on the official HBO® Go website http://hbogo.eu
       </disclaimer>
     <summary lang="en">HBO GO EU</summary>
     <description lang="en">Plugin for HBO GO EU</description>
     <disclaimer lang="en">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.
 
         Important, HBO GO must be paid for!!! You need a valid account credentials!
-        Register on the official HBO® Go website https://hbogo.eu
+        Register on the official HBO® Go website http://hbogo.eu
     </disclaimer>
+      <summary lang="hu">HBO GO EU</summary>
+      <description lang="hu">Plugin za HBO GO EU</description>
+      <disclaimer lang="hu">Ez egy nem hivatalos plug-in! Ha hivatalos platformja van, használja a hivatalos alkalmazást. All rights in the content are reserved by HBO® Europe.
+
+
+          Important, HBO GO must be paid for!!! You need a valid account credentials!
+          Register on the official HBO® Go website http://hbogo.eu
+      </disclaimer>
     <language>en hr hu</language>
     <platform>all</platform>
     <forum></forum>
-    <website>https://github.com/arvvoid/plugin.video.hbogohr</website>
+    <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
     *1.2.EU Added support for Hungary
-    *1.1.EU First General HBOGO Eu Realease (only Croatia support atm)
+    *1.1.EU First General HBOGo Eu Realease (only Croatia support atm)
     </news>
     <assets>
      <icon>resources/icon.png</icon>
      <fanart>resources/fanart.jpg</fanart>
-     <screenshot>resources/screenshot-01.png</screenshot>
-     <screenshot>resources/screenshot-02.png</screenshot>
-     <screenshot>resources/screenshot-03.png</screenshot>
-     <screenshot>resources/screenshot-04.png</screenshot>
-     <screenshot>resources/screenshot-05.png</screenshot>
+     <screenshot>resources/screen1.png</screenshot>
+     <screenshot>resources/screen2.png</screenshot>
+     <screenshot>resources/screen3.png</screenshot>
+     <screenshot>resources/screen4.png</screenshot>
+     <screenshot>resources/screen5.png</screenshot>
+     <screenshot>resources/screen6.png</screenshot>
+     <screenshot>resources/screen7.png</screenshot>
     </assets>
   </extension>
 </addon>
