@@ -99,18 +99,18 @@ xbmc.log("DEFAULT HBO GO LANGUAGE: " + DEFAULT_LANGUAGE)
 # API URLS
 LANGUAGE_CODE = DEFAULT_LANGUAGE
 
-if __language__(32000).encode('utf-8') == 'ENG':  # only englih or the default language for the selected operator is allowed
+if __language__(32000) == 'ENG':  # only englih or the default language for the selected operator is allowed
     LANGUAGE_CODE = 'ENG'
 
 #check if default language is forced
-if __settings__.getSetting('deflang'):
+if __settings__.getSetting('deflang') == 'true':
     LANGUAGE_CODE = DEFAULT_LANGUAGE
 
 DEFAULT_SUBS = None
 
 #check if default subs is forced
-#if __settings__.getSetting('autosub'):
-#    DEFAULT_SUBS = DEFAULT_LANGUAGE
+if __settings__.getSetting('autosub') == 'true':
+    DEFAULT_SUBS = DEFAULT_LANGUAGE
 
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
