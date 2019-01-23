@@ -11,7 +11,7 @@ If an official app is available for your platform, use it instead of this.
 
 Simple, great Kodi plugin for HBO GO content.
 
-![HBOGoLogo](/resources/icon.png?raw=true)
+![HBOGoLogo](/resources/icon.png?raw=true=150x150)
 
 Important, HBO GO must be paid for!!! You need a valid account credentials!
 Register on the official HBO® Go website http://hbogo.eu
@@ -86,10 +86,10 @@ Other platforms have not been tested at the moment
 
 ## Screenshots
 
-![Screenshot 1](/resources/scree1.png?raw=true "Screenshot 1")
-![Screenshot 2](/resources/scree2.png?raw=true "Screenshot 2")
-![Screenshot 3](/resources/scree3.png?raw=true "Screenshot 3")
-![Screenshot 4](/resources/scree4.png?raw=true "Screenshot 4")
-![Screenshot 5](/resources/scree5.png?raw=true "Screenshot 5")
-![Screenshot 6](/resources/scree6.png?raw=true "Screenshot 6")
-![Screenshot 7](/resources/scree7.png?raw=true "Screenshot 7")
+![Screenshot 1](/resources/screen1.png?raw=true "Screenshot 1")
+![Screenshot 2](/resources/screen2.png?raw=true "Screenshot 2")
+![Screenshot 3](/resources/screen3.png?raw=true "Screenshot 3")
+![Screenshot 4](/resources/screen4.png?raw=true "Screenshot 4")
+![Screenshot 5](/resources/screen5.png?raw=true "Screenshot 5")
+![Screenshot 6](/resources/screen6.png?raw=true "Screenshot 6")
+![Screenshot 7](/resources/screen7.png?raw=true "Screenshot 7")
