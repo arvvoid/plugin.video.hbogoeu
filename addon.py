@@ -97,10 +97,10 @@ DEFAULT_LANGUAGE = op_ids[operator][3]
 xbmc.log("DEFAULT HBO GO LANGUAGE: " + DEFAULT_LANGUAGE)
 
 # API URLS
-LANGUAGE_CODE = __language__(32000).encode('utf-8')  # get language code for the API from loaded language file. Content from hbo go eu will be retrived in current Kodi language
+LANGUAGE_CODE = DEFAULT_LANGUAGE
 
-if LANGUAGE_CODE!='ENG' and LANGUAGE_CODE!=DEFAULT_LANGUAGE:  # only englih or the default language for the selected operator is allowed, otherwise api calls fail
-    LANGUAGE_CODE = DEFAULT_LANGUAGE
+if __language__(32000).encode('utf-8') == 'ENG':  # only englih or the default language for the selected operator is allowed
+    LANGUAGE_CODE = 'ENG'
 
 #check if default language is forced
 if __settings__.getSetting('deflang'):
@@ -109,8 +109,8 @@ if __settings__.getSetting('deflang'):
 DEFAULT_SUBS = None
 
 #check if default subs is forced
-if __settings__.getSetting('autosub'):
-    DEFAULT_SUBS = DEFAULT_LANGUAGE
+#if __settings__.getSetting('autosub'):
+#    DEFAULT_SUBS = DEFAULT_LANGUAGE
 
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
