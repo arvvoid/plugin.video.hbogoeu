@@ -1,33 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" version="1.2.EU.RC" provider-name="arvvoid">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="1.3.EU.RC">
   <requires>
-    <import addon="script.module.requests" version="2.12.4"/>
-    <import addon="xbmc.python" version="2.25.0"/>
-    <import addon="inputstream.adaptive" version="2.1.0"/>
-    <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    <import addon="script.module.requests" version="2.12.4" />
+    <import addon="xbmc.python" version="2.25.0" />
+    <import addon="inputstream.adaptive" version="2.1.0" />
+    <import addon="script.module.inputstreamhelper" version="0.3.3" />
   </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
+  <extension library="addon.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-      <summary lang="hr">HBO GO EU</summary>
-      <description lang="hr">Plugin za HBO GO EU</description>
-      <disclaimer lang="hr">Ovo je neslužbeni plug-in! Ako postoji službeni plugin za vašu platformu koristiti službenu aplikaciju. All rights in the content are reserved by HBO® Europe.
+      <summary lang="hr_HR">HBO GO EU</summary>
+      <description lang="hr_HR">Plugin za HBO GO EU</description>
+      <disclaimer lang="hr_HR">Ovo je neslužbeni plug-in! Ako postoji službeni plugin za vašu platformu koristiti službenu aplikaciju. All rights in the content are reserved by HBO® Europe.
 
           
           Important, HBO GO must be paid for!!! You need a valid account credentials!
           Register on the official HBO® Go website http://hbogo.eu
       </disclaimer>
-    <summary lang="en">HBO GO EU</summary>
-    <description lang="en">Plugin for HBO GO EU</description>
-    <disclaimer lang="en">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.
+    <summary lang="en_GB">HBO GO EU</summary>
+    <description lang="en_GB">Plugin for HBO GO EU</description>
+    <disclaimer lang="en_GB">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.
 
         Important, HBO GO must be paid for!!! You need a valid account credentials!
         Register on the official HBO® Go website http://hbogo.eu
     </disclaimer>
-      <summary lang="hu">HBO GO EU</summary>
-      <description lang="hu">Plugin za HBO GO EU</description>
-      <disclaimer lang="hu">Ez egy nem hivatalos plug-in! Ha hivatalos platformja van, használja a hivatalos alkalmazást. All rights in the content are reserved by HBO® Europe.
+      <summary lang="hu_HU">HBO GO EU</summary>
+      <description lang="hu_HU">Plugin za HBO GO EU</description>
+      <disclaimer lang="hu_HU">Ez egy nem hivatalos plug-in! Ha hivatalos platformja van, használja a hivatalos alkalmazást. All rights in the content are reserved by HBO® Europe.
 
 
           Important, HBO GO must be paid for!!! You need a valid account credentials!
@@ -35,11 +34,11 @@
       </disclaimer>
     <language>en hr hu</language>
     <platform>all</platform>
-    <forum></forum>
+    <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
-    <news>
-    *1.2.EU Added support for Hungary
-    *1.1.EU First General HBOGo Eu Realease (only Croatia support atm)
+    <news>*1.3.EU Language of retrived HBO Go Eu content is set from curently loaded language file
+        *1.2.EU Added support for Hungary
+        *1.1.EU First General HBOGo Eu Realease (only Croatia support atm)
     </news>
     <assets>
      <icon>resources/icon.png</icon>
@@ -51,6 +50,8 @@
      <screenshot>resources/screen5.png</screenshot>
      <screenshot>resources/screen6.png</screenshot>
      <screenshot>resources/screen7.png</screenshot>
+     <screenshot>resources/screen8.png</screenshot>
+     <screenshot>resources/screen9.png</screenshot>
     </assets>
   </extension>
 </addon>

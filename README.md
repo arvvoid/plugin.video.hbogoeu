@@ -1,7 +1,7 @@
 # Disclaimer
 
-This plugin is not officially commisioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
-For more information on HBO® Go Croatia visit the official website: http://hbogo.eu
+This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
+For more information on HBO® Go Europe visit the official website: http://hbogo.eu
 
 THERE IS NO WARRANTY FOR THE PLUGIN, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
@@ -14,11 +14,25 @@ Simple, great Kodi plugin for HBO GO content.
 Important, HBO GO must be paid for!!! You need a valid account credentials!
 Register on the official HBO® Go website http://hbogo.eu
 
-Supported operators/country:
+The add-on retrive content from HBO Go Eu in the selected Kodi language
+
+Included web registration login:
+* Croatia: hbogo.hr (web registration)
+* Hungary: hbogo.hu (web registration)
+
+Included operators/country:
+
+* CROATIA 
+  * Croatia: A1
+  * Croatia: BonBon
+  * Croatia: evoTv
+  * Croatia: HBO GO Vip/Club Croatia
+  * Croatia: Hrvatski Telekom d.d.
+  * Croatia: Iskon Internet d.d.
+  * Croatia: Optima Telekom d.d.
+  * Croatia: Simpa
 
 * HUNGARY
-
-  * Hungary: hbogo.hu (web registration)
   * Hungary: UPC Direct
   * Hungary: DIGI
   * Hungary: Magyar Telekom Nyrt.
@@ -42,16 +56,6 @@ Supported operators/country:
   * Hungary: HBO Development Hungary
   * Hungary: HBO GO Vip/Club Hungary
 
-* CROATIA
-  * Croatia: hbogo.hr (web registration)
-  * Croatia: A1
-  * Croatia: BonBon
-  * Croatia: evoTv
-  * Croatia: HBO GO Vip/Club Croatia
-  * Croatia: Hrvatski Telekom d.d.
-  * Croatia: Iskon Internet d.d.
-  * Croatia: Optima Telekom d.d.
-  * Croatia: Simpa
 
 REQUIRMENTS:
 * Kodi 18 (Inputstream Adaptive), on any platform supported by Kodi http://kodi.tv
@@ -70,15 +74,15 @@ Get the latest release and use the install add-on from zip function in Kodi
 
 PLATFORMS:
 
-Ubuntu 16.04 (Kodi 18 RC4)
-WORKS HW Decoding
+Ubuntu 16.04 (Kodi 18 RC5.2)
+WORKS HW Decoding up to 1080p
 
-Mac OS 10.14.1 (Kodi 18 RC4)
-WORKS  HW Decoding
+Mac OS 10.14.1 (Kodi 18 RC5.2)
+WORKS  HW Decoding up to 1080p
 
-Libreelec v8.95.2 BETA (Kodi 18 RC4)
+Libreelec v8.95.3 BETA (Kodi 18 RC5.2)
 on Raspberry Pi 3B+,3B,2B
-WORKS HW Decoding
+WORKS HW Decoding up to 1080p
 
 Other platforms have not been tested at the moment
 
@@ -91,3 +95,5 @@ Other platforms have not been tested at the moment
 ![Screenshot 5](/resources/screen5.png?raw=true "Screenshot 5")
 ![Screenshot 6](/resources/screen6.png?raw=true "Screenshot 6")
 ![Screenshot 7](/resources/screen7.png?raw=true "Screenshot 7")
+![Screenshot 8](/resources/screen8.png?raw=true "Screenshot 8")
+![Screenshot 9](/resources/screen9.png?raw=true "Screenshot 9")

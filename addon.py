@@ -126,6 +126,12 @@ IS_WEB = op_ids[operator][4]
 xbmc.log("OPERATOR IS HBO GO WEB: " + str(IS_WEB))
 
 # API URLS
+LANGUAGE_CODE = __language__(32000).encode('utf-8')  # get language code for the API from loaded language file. Content from hbo go eu will be retrived in current Kodi language
+
+API_PLATFORM = 'COMP'
+# API_PLATFORM = 'MOBI'
+# API_PLATFORM = 'APPLE'
+# API_PLATFORM = 'SONY'
 
 LICENSE_SERVER = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
 
@@ -137,17 +143,14 @@ API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
 API_URL_SILENTREGISTER = 'https://' + COUNTRY_CODE_SHORT + '.hbogo.eu/services/settings/silentregister.aspx'
 
-API_URL_SETTINGS = 'https://' + API_HOST + '/v7/Settings/json/' + COUNTRY_CODE + '/COMP'
-API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + COUNTRY_CODE + '/JSON/' + COUNTRY_CODE + '/COMP'
-API_URL_AUTH_OPERATOR = 'https://' + COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + COUNTRY_CODE + '/COMP'
-API_URL_CUSTOMER_GROUP = 'https://' + API_HOST + '/v7/CustomerGroup/json/' + COUNTRY_CODE + '/COMP/'
-API_URL_GROUPS = 'https://' + API_HOST + '/v5/Groups/json/' + COUNTRY_CODE + '/COMP'
-# API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/COMP/'
-# API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/APPLE/'
-# API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+COUNTRY_CODE+'/SONY/'
-API_URL_CONTENT = 'http://' + API_HOST + '/v5/Content/json/' + COUNTRY_CODE + '/MOBI/'
-API_URL_PURCHASE = 'https://' + API_HOST + '/v5/Purchase/Json/' + COUNTRY_CODE + '/COMP'
-API_URL_SEARCH = 'https://' + API_HOST + '/v5/Search/Json/' + COUNTRY_CODE + '/COMP/'
+API_URL_SETTINGS = 'https://' + API_HOST + '/v7/Settings/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + COUNTRY_CODE + '/JSON/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_AUTH_OPERATOR = 'https://' + COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_CUSTOMER_GROUP = 'https://' + API_HOST + '/v7/CustomerGroup/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_GROUPS = 'https://' + API_HOST + '/v5/Groups/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+LANGUAGE_CODE+'/'+API_PLATFORM
+API_URL_PURCHASE = 'https://' + API_HOST + '/v5/Purchase/Json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_SEARCH = 'https://' + API_HOST + '/v5/Search/Json/' + LANGUAGE_CODE + '/'+API_PLATFORM
 
 individualization = ""
 goToken = ""

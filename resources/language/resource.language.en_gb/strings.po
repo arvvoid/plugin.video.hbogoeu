@@ -1,0 +1,94 @@
+# Kodi Media Center language file
+# Addon Name: HBO GO EU
+# Addon id: plugin.video.hbogoeu
+# Addon Provider: arvvoid
+msgid ""
+msgstr ""
+"Project-Id-Version: plugin.video.hbogoeu\n"
+"Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: arvvoid\n"
+"Language-Team: arvvoid\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "ENG"
+msgstr ""
+
+msgctxt "#33440"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#33441"
+msgid "Chose operator"
+msgstr ""
+
+msgctxt "#33442"
+msgid "Username"
+msgstr ""
+
+msgctxt "#33443"
+msgid "Password"
+msgstr ""
+
+msgctxt "#33660"
+msgid "Streaming"
+msgstr ""
+
+msgctxt "#33665"
+msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
+msgstr ""
+
+msgctxt "#33700"
+msgid "Find movies and TV Shows..."
+msgstr ""
+
+msgctxt "#33701"
+msgid "No result"
+msgstr ""
+
+msgctxt "#33702"
+msgid "Error"
+msgstr ""
+
+msgctxt "#33703"
+msgid "Episode can be watched until:"
+msgstr ""
+
+msgctxt "#33704"
+msgid "The movie can be watched until:"
+msgstr ""
+
+msgctxt "#33705"
+msgid "EPISODE"
+msgstr ""
+
+msgctxt "#33706"
+msgid "SEASON"
+msgstr ""
+
+msgctxt "#33707"
+msgid "Favorites"
+msgstr ""
+
+msgctxt "#33708"
+msgid "Please enter your login details in the settings!"
+msgstr ""
+
+msgctxt "#33709"
+msgid "Login error, check your login details!"
+msgstr ""
+
+msgctxt "#33710"
+msgid "No operator defined! Check your settings!"
+msgstr ""
+
+msgctxt "#33711"
+msgid "Search..."
+msgstr ""
+
