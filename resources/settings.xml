@@ -5,6 +5,12 @@
         <setting label="33441" type="select" id="operator" values="N/A|Croatia: hbogo.hr (web registration)|Hungary: hbogo.hu (web registration)|Croatia: A1|Croatia: BonBon|Croatia: evoTv|Croatia: HBO GO Vip/Club Croatia|Croatia: Hrvatski Telekom d.d.|Croatia: Iskon Internet d.d.|Croatia: Optima Telekom d.d.|Croatia: Simpa|Hungary: UPC Direct|Hungary: DIGI|Hungary: Magyar Telekom Nyrt.|Hungary: Telenor MyTV|Hungary: UPC Magyarorszag|Hungary: INVITEL|Hungary: Celldomolki Kabeltelevízió Kft.|Hungary: Eurocable - Hello Digital|Hungary: hFC-Network Kft.|Hungary: HIR-SAT 2000 Kft.|Hungary: Jurop Telekom|Hungary: Kabelszat 2002|Hungary: Klapka Lakasszövetkezet|Hungary: Lat-Sat Kft.|Hungary: MinDig TV Extra|Hungary: PARISAT|Hungary: PR-TELECOM|Hungary: TARR Kft|Hungary: Vac Varosi Kabeltelevizio Kft.|Hungary: Vidanet Zrt.|Hungary: HBO Development Hungary|Hungary: HBO GO Vip/Club Hungary" default="N/A"/>
 	    <setting label="33442" type="text" id="username" default=""/>
         <setting label="33443" type="text" id="password" option="hidden" enable="!eq(-1,)" default=""/>
+    <!-- Language -->
+    <setting label="33650" type="lsep"/>
+    <setting label="33651" type="bool" id="deflang" default="false"/>
+    <!-- Subtitles-->
+    <setting label="33655" type="lsep"/>
+    <setting label="33656" type="bool" id="autosub" default="false"/>
     <!-- Streaming -->
     <setting label="33660" type="lsep"/>
     <setting id="is_settings" type="action" label="33665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>

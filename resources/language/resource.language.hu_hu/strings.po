@@ -92,3 +92,18 @@ msgctxt "#33711"
 msgid "Search..."
 msgstr "Keresés..."
 
+msgctxt "#33650"
+msgid "Language"
+msgstr "Nyelv"
+
+msgctxt "#33651"
+msgid "Always use default operator language"
+msgstr "Mindig használjon alapértelmezett kezelői nyelvet"
+
+msgctxt "#33655"
+msgid "Subtitles"
+msgstr "Feliratok"
+
+msgctxt "#33656"
+msgid "Automatically turn on default subtitles"
+msgstr "Az alapértelmezett feliratok automatikus bekapcsolása"

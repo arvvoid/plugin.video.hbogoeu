@@ -48,85 +48,69 @@ if operator == 'N/A':
 xbmc.log("OPERATOR SETTING_ID: " + operator)
 
 op_ids = {
-    'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', '00000000-0000-0000-0000-000000000000', True],
-    'Hungary: hbogo.hu (web registration)': ['15276cb7-7f53-432a-8ed5-a32038614bbf', 'hu', 'HUN',
-                                             'd35eda69-a367-4b47-aa0c-a51032d94be2', True],
-    'Hungary: UPC Direct': ['48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                            False],
-    'Hungary: DIGI': ['b7728684-13d5-46d9-a9a4-97d676cdaeec', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                      False],
-    'Hungary: Magyar Telekom Nyrt.': ['04459649-8a90-46f1-9390-0cd5b1958a5d', 'hu', 'HUN',
-                                      'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Telenor MyTV': ['e71fabae-66b6-4972-9823-8743f8fcf06f', 'hu', 'HUN',
-                              'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: UPC Magyarorszag': ['1ca45800-464a-4e9c-8f15-8d822ad7d8a1', 'hu', 'HUN',
-                                  'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: INVITEL': ['f2230905-8e25-4245-80f9-fccf67a24005', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                         False],
-    'Hungary: Celldomolki Kabeltelevízió Kft.': ['383cd446-06fb-4a59-8d39-200a3e9bcf6f', 'hu', 'HUN',
-                                                 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Eurocable - Hello Digital': ['fe106c75-293b-42e6-b211-c7446835b548', 'hu', 'HUN',
-                                           'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: hFC-Network Kft.': ['42677aa5-7576-4dc7-9004-347b279e4e5d', 'hu', 'HUN',
-                                  'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: HIR-SAT 2000 Kft.': ['3a3cce31-fb19-470a-9bb5-6947c4ac9996', 'hu', 'HUN',
-                                   'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Jurop Telekom': ['c6441ec8-e30f-44b6-837a-beb2eb971395', 'hu', 'HUN',
-                               'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Kabelszat 2002': ['d91341c2-3542-40d4-adab-40b644798327', 'hu', 'HUN',
-                                'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Klapka Lakasszövetkezet': ['18fb0ff5-9cfa-4042-be00-638c5d34e553', 'hu', 'HUN',
-                                         'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Lat-Sat Kft.': ['97cddb59-79e3-4090-be03-89a6ae06f5ec', 'hu', 'HUN',
-                              'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: MinDig TV Extra': ['c48c350f-a9db-4eb6-97a6-9b659e2db47f', 'hu', 'HUN',
-                                 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: PARISAT': ['7982d5c7-63df-431d-806e-54f98fdfa36a', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                         False],
-    'Hungary: PR-TELECOM': ['18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                            False],
-    'Hungary: TARR Kft': ['adb99277-3899-439e-8bdf-c749c90493cd', 'hu', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',
-                          False],
-    'Hungary: Vac Varosi Kabeltelevizio Kft.': ['5729f013-f01d-4cc3-b048-fe5c91c64296', 'hu', 'HUN',
-                                                'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: Vidanet Zrt.': ['b4f422f7-5424-4116-b72d-7cede85ead4e', 'hu', 'HUN',
-                              'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: HBO Development Hungary': ['6a52efe0-54c4-4197-8c55-86ee7a63cd04', 'hu', 'HUN',
-                                         'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Hungary: HBO GO Vip/Club Hungary': ['f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', 'hu', 'HUN',
-                                         'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
-    'Croatia: hbogo.hr (web registration)': ['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV',
-                                             '467fecfe-a523-43aa-9d9e-8522358a8ba4', True],
-    'Croatia: A1': ['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
-    'Croatia: BonBon': ['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4',
-                        False],
-    'Croatia: evoTv': ['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4',
-                       False],
-    'Croatia: HBO GO Vip/Club Croatia': ['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV',
-                                         '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
-    'Croatia: Hrvatski Telekom d.d.': ['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV',
-                                       '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
-    'Croatia: Iskon Internet d.d.': ['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV',
-                                     '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
-    'Croatia: Optima Telekom d.d.': ['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV',
-                                     '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
-    'Croatia: Simpa': ['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4',
-                       False],
+    'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', 'ENG', '00000000-0000-0000-0000-000000000000', True],
+    'Hungary: hbogo.hu (web registration)': ['15276cb7-7f53-432a-8ed5-a32038614bbf', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', True],
+    'Hungary: UPC Direct': ['48f48c5b-e9e4-4fca-833b-2fa26fb1ad22', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: DIGI': ['b7728684-13d5-46d9-a9a4-97d676cdaeec', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',False],
+    'Hungary: Magyar Telekom Nyrt.': ['04459649-8a90-46f1-9390-0cd5b1958a5d', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Telenor MyTV': ['e71fabae-66b6-4972-9823-8743f8fcf06f', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: UPC Magyarorszag': ['1ca45800-464a-4e9c-8f15-8d822ad7d8a1', 'hu', 'HUN', 'HUN','d35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: INVITEL': ['f2230905-8e25-4245-80f9-fccf67a24005', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2',False],
+    'Hungary: Celldomolki Kabeltelevízió Kft.': ['383cd446-06fb-4a59-8d39-200a3e9bcf6f', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Eurocable - Hello Digital': ['fe106c75-293b-42e6-b211-c7446835b548', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: hFC-Network Kft.': ['42677aa5-7576-4dc7-9004-347b279e4e5d', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: HIR-SAT 2000 Kft.': ['3a3cce31-fb19-470a-9bb5-6947c4ac9996', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Jurop Telekom': ['c6441ec8-e30f-44b6-837a-beb2eb971395', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Kabelszat 2002': ['d91341c2-3542-40d4-adab-40b644798327', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Klapka Lakasszövetkezet': ['18fb0ff5-9cfa-4042-be00-638c5d34e553', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Lat-Sat Kft.': ['97cddb59-79e3-4090-be03-89a6ae06f5ec', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: MinDig TV Extra': ['c48c350f-a9db-4eb6-97a6-9b659e2db47f', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: PARISAT': ['7982d5c7-63df-431d-806e-54f98fdfa36a', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: PR-TELECOM': ['18f536a3-ecac-42f1-91f1-2bbc3e6cfe81', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: TARR Kft': ['adb99277-3899-439e-8bdf-c749c90493cd', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Vac Varosi Kabeltelevizio Kft.': ['5729f013-f01d-4cc3-b048-fe5c91c64296', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: Vidanet Zrt.': ['b4f422f7-5424-4116-b72d-7cede85ead4e', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: HBO Development Hungary': ['6a52efe0-54c4-4197-8c55-86ee7a63cd04', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Hungary: HBO GO Vip/Club Hungary': ['f320aa2c-e40e-49c2-8cdd-1ebef2ac6f26', 'hu', 'HUN', 'HUN', 'd35eda69-a367-4b47-aa0c-a51032d94be2', False],
+    'Croatia: hbogo.hr (web registration)': ['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', True],
+    'Croatia: A1': ['e1fb87d0-7581-4671-94bb-8e647e13385a', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: BonBon': ['81a65859-145b-4bbc-afa6-04e9ade004f9', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: evoTv': ['beed025d-06c9-4cac-a8a4-a118bdf22861', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: HBO GO Vip/Club Croatia': ['323f061a-34e9-4453-987b-99aa38c46480', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: Hrvatski Telekom d.d.': ['73893614-eae3-4435-ab53-1d46c7f90498', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: Iskon Internet d.d.': ['5bff83d2-9163-4d85-9ae1-b6c2a6eabf71', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: Optima Telekom d.d.': ['a9e06fc5-c8d3-4b79-a776-b78d86729843', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4', False],
+    'Croatia: Simpa': ['3a1bb01c-9f7b-4029-a98d-6d17708fa4db', 'hr', 'HRV', 'HRV', '467fecfe-a523-43aa-9d9e-8522358a8ba4',False],
 }
 op_id = op_ids[operator][0]
 xbmc.log("OPERATOR ID: " + op_id)
 
-COUNTRY_ID = op_ids[operator][3]
-xbmc.log("OPERATOR COUNTRY_ID: " + op_ids[operator][3])
+COUNTRY_ID = op_ids[operator][4]
+xbmc.log("OPERATOR COUNTRY_ID: " + op_ids[operator][4])
 COUNTRY_CODE_SHORT = op_ids[operator][1]
 xbmc.log("OPERATOR COUNTRY_CODE_SHORT: " + op_ids[operator][1])
 COUNTRY_CODE = op_ids[operator][2]
 xbmc.log("OPERATOR COUNTRY_CODE: " + op_ids[operator][2])
-IS_WEB = op_ids[operator][4]
+IS_WEB = op_ids[operator][5]
 xbmc.log("OPERATOR IS HBO GO WEB: " + str(IS_WEB))
+DEFAULT_LANGUAGE = op_ids[operator][3]
+xbmc.log("DEFAULT HBO GO LANGUAGE: " + DEFAULT_LANGUAGE)
 
 # API URLS
 LANGUAGE_CODE = __language__(32000).encode('utf-8')  # get language code for the API from loaded language file. Content from hbo go eu will be retrived in current Kodi language
+
+if LANGUAGE_CODE!='ENG' and LANGUAGE_CODE!=DEFAULT_LANGUAGE:  # only englih or the default language for the selected operator is allowed, otherwise api calls fail
+    LANGUAGE_CODE = DEFAULT_LANGUAGE
+
+#check if default language is forced
+if __settings__.getSetting('deflang'):
+    LANGUAGE_CODE = DEFAULT_LANGUAGE
+
+DEFAULT_SUBS = None
+
+#check if default subs is forced
+if __settings__.getSetting('autosub'):
+    DEFAULT_SUBS = DEFAULT_LANGUAGE
 
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
@@ -315,7 +299,7 @@ def LOGIN():
         },
         "CustomerCode": "",
         "DebugMode": False,
-        "DefaultSubtitleLanguage": None,
+        "DefaultSubtitleLanguage": DEFAULT_SUBS,
         "EmailAddress": username,
         "FirstName": "",
         "Gender": 0,

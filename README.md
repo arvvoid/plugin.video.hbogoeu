@@ -14,8 +14,6 @@ Simple, great Kodi plugin for HBO GO content.
 Important, HBO GO must be paid for!!! You need a valid account credentials!
 Register on the official HBO® Go website http://hbogo.eu
 
-The add-on retrive content from HBO Go Eu in the selected Kodi language
-
 Included web registration login:
 * Croatia: hbogo.hr (web registration)
 * Hungary: hbogo.hu (web registration)
