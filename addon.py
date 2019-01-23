@@ -146,11 +146,11 @@ API_URL_SILENTREGISTER = 'https://' + COUNTRY_CODE_SHORT + '.hbogo.eu/services/s
 API_URL_SETTINGS = 'https://' + API_HOST + '/v7/Settings/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
 API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + COUNTRY_CODE + '/JSON/' + LANGUAGE_CODE + '/'+API_PLATFORM
 API_URL_AUTH_OPERATOR = 'https://' + COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
-API_URL_CUSTOMER_GROUP = 'https://' + API_HOST + '/v7/CustomerGroup/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_CUSTOMER_GROUP = 'https://' + API_HOST + '/v7/CustomerGroup/json/' + LANGUAGE_CODE + '/' + API_PLATFORM + '/'
 API_URL_GROUPS = 'https://' + API_HOST + '/v5/Groups/json/' + LANGUAGE_CODE + '/'+API_PLATFORM
-API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+LANGUAGE_CODE+'/'+API_PLATFORM
+API_URL_CONTENT='http://'+API_HOST+'/v5/Content/json/'+LANGUAGE_CODE + '/' + API_PLATFORM + '/'
 API_URL_PURCHASE = 'https://' + API_HOST + '/v5/Purchase/Json/' + LANGUAGE_CODE + '/'+API_PLATFORM
-API_URL_SEARCH = 'https://' + API_HOST + '/v5/Search/Json/' + LANGUAGE_CODE + '/'+API_PLATFORM
+API_URL_SEARCH = 'https://' + API_HOST + '/v5/Search/Json/' + LANGUAGE_CODE + '/' + API_PLATFORM + '/'
 
 individualization = ""
 goToken = ""
@@ -167,7 +167,7 @@ loggedin_headers = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'Origin': API_HOST_ORIGIN,
     'X-Requested-With': 'XMLHttpRequest',
-    'GO-Language': COUNTRY_CODE,
+    'GO-Language': LANGUAGE_CODE,
     'GO-requiredPlatform': 'CHBR',
     'GO-Token': '',
     'GO-SessionId': '',
@@ -309,7 +309,7 @@ def LOGIN():
             "Name": "",
             "OSName": "Ubuntu",
             "OSVersion": "undefined",
-            "Platform": "COMP",
+            "Platform": API_PLATFORM,
             "SWVersion": "2.4.2.4025.240",
             "SubtitleSize": ""
         },
@@ -322,7 +322,7 @@ def LOGIN():
         "Id": "00000000-0000-0000-0000-000000000000",
         "IsAnonymus": True,
         "IsPromo": False,
-        "Language": "HRV",
+        "Language": LANGUAGE_CODE,
         "LastName": "",
         "Nick": "",
         "NotificationChanges": 0,
