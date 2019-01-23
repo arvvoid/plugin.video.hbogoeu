@@ -11,8 +11,6 @@ If an official app is available for your platform, use it instead of this.
 
 Simple, great Kodi plugin for HBO GO content.
 
-![HBOGoLogo](/resources/icon.png?raw=true){:height="50%" width="50%"}
-
 Important, HBO GO must be paid for!!! You need a valid account credentials!
 Register on the official HBO® Go website http://hbogo.eu
 
