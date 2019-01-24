@@ -54,7 +54,7 @@ Included operators/country:
   * Hungary: HBO Development Hungary
   * Hungary: HBO GO Vip/Club Hungary
 
-TODO: Add all other supported countries/providers, #6 Add all operators for hbogo eu
+TODO: [Add all other supported countries/providers]: https://github.com/arvvoid/plugin.video.hbogoeu/issues/6
 
 REQUIRMENTS:
 * Kodi 18 (Inputstream Adaptive), on any platform supported by Kodi http://kodi.tv
