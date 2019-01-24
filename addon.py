@@ -28,7 +28,7 @@ search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 LB_SEARCH_DESC = __language__(33700).encode('utf-8')
 LB_SEARCH_NORES = __language__(33701).encode('utf-8')
 LB_ERROR = __language__(33702).encode('utf-8')
-LB_EPIZODE_UNTILL = __language__(33703).encode('utf-8')
+LB_EPISODE_UNTILL = __language__(33703).encode('utf-8')
 LB_FILM_UNTILL = __language__(33704).encode('utf-8')
 LB_EPISODE = __language__(33705).encode('utf-8')
 LB_SEASON = __language__(33706).encode('utf-8')
@@ -44,7 +44,7 @@ if operator == 'N/A':
     xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
     xbmc.executebuiltin("Action(Back)")
     sys.exit()
-# 'operator SETTING_ID - > operator hash, short country code, long country code, country hash,web true/false
+# 'operator SETTING_ID - > operator hash ID, short country code, long country code, default language, country hash ID,web true/false
 xbmc.log("OPERATOR SETTING_ID: " + operator)
 
 op_ids = {
@@ -434,7 +434,7 @@ def LIST(url):
             elif jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 3:
                 plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
                 if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + LB_EPIZODE_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles][
+                    plot = plot + ' ' + LB_EPISODE_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles][
                         'AvailabilityTo'].encode('utf-8', 'ignore')
                 addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'], plot,
                         jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],
@@ -459,7 +459,7 @@ def LIST(url):
                        jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'])
 
 
-# SEZONA OK
+# SEASON OK
 def SEASON(url):
     req = urllib2.Request(url, None, loggedin_headers)
     opener = urllib2.build_opener()
@@ -496,7 +496,7 @@ def EPISODE(url):
         plot = jsonrsp['ChildContents']['Items'][episode]['Abstract'].encode('utf-8', 'ignore')
         if 'AvailabilityTo' in jsonrsp['ChildContents']['Items'][episode]:
             if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
-                plot = plot + ' ' + LB_EPIZODE_UNTILL + ' ' + jsonrsp['ChildContents']['Items'][episode][
+                plot = plot + ' ' + LB_EPISODE_UNTILL + ' ' + jsonrsp['ChildContents']['Items'][episode][
                     'AvailabilityTo'].encode('utf-8', 'ignore')
         addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'], plot,
                 jsonrsp['ChildContents']['Items'][episode]['AgeRating'],
@@ -508,7 +508,7 @@ def EPISODE(url):
                 jsonrsp['ChildContents']['Items'][episode]['Duration'],
                 jsonrsp['ChildContents']['Items'][episode]['Genre'],
                 jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore') + ' - ' + str(
-                    jsonrsp['ChildContents']['Items'][episode]['SeasonIndex']) + '. SEZONA ' +
+                    jsonrsp['ChildContents']['Items'][episode]['SeasonIndex']) + '. ' + LB_SEASON + ' ' +
                 jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),
                 jsonrsp['ChildContents']['Items'][episode]['OriginalName'],
                 jsonrsp['ChildContents']['Items'][episode]['ProductionYear'], 5)

@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="1.3.EU.RC">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="1.3.1.EU.RC">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -36,7 +36,8 @@
     <platform>all</platform>
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
-    <news>*1.3.EU Language of retrived HBO Go Eu content is set from curently loaded language file
+    <news>*1.3.1.EU Minor bugfixes
+        *1.3.EU Language of retrived HBO Go Eu content is set from curently loaded language file
         *1.2.EU Added support for Hungary
         *1.1.EU First General HBOGo Eu Realease (only Croatia support atm)
     </news>
@@ -47,7 +48,6 @@
      <screenshot>resources/screen2.png</screenshot>
      <screenshot>resources/screen3.png</screenshot>
      <screenshot>resources/screen4.png</screenshot>
-     <screenshot>resources/screen5.png</screenshot>
      <screenshot>resources/screen6.png</screenshot>
      <screenshot>resources/screen7.png</screenshot>
      <screenshot>resources/screen8.png</screenshot>

@@ -90,7 +90,6 @@ Other platforms have not been tested at the moment
 ![Screenshot 2](/resources/screen2.png?raw=true "Screenshot 2")
 ![Screenshot 3](/resources/screen3.png?raw=true "Screenshot 3")
 ![Screenshot 4](/resources/screen4.png?raw=true "Screenshot 4")
-![Screenshot 5](/resources/screen5.png?raw=true "Screenshot 5")
 ![Screenshot 6](/resources/screen6.png?raw=true "Screenshot 6")
 ![Screenshot 7](/resources/screen7.png?raw=true "Screenshot 7")
 ![Screenshot 8](/resources/screen8.png?raw=true "Screenshot 8")
