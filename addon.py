@@ -42,7 +42,6 @@ operator = __settings__.getSetting('operator')
 if operator == 'N/A':
     xbmcgui.Dialog().ok(LB_ERROR, LB_NO_OPERATOR)
     xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
-    xbmc.executebuiltin("Action(Back)")
     sys.exit()
 # 'operator SETTING_ID - > operator hash ID, short country code, long country code, default language, country hash ID,web true/false
 xbmc.log("OPERATOR SETTING_ID: " + operator)
@@ -243,7 +242,6 @@ def LOGIN():
     if (username == "" or password == ""):
       xbmcgui.Dialog().ok(LB_ERROR, LB_NOLOGIN)
       xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
-      xbmc.executebuiltin("Action(Back)")
       return
 
     headers = {
@@ -333,7 +331,6 @@ def LOGIN():
     try:
         if jsonrspl['ErrorMessage']:
             xbmcgui.Dialog().ok(LB_ERROR, jsonrspl['ErrorMessage'])
-            xbmc.executebuiltin("Action(Back)")
             return
     except:
         pass
@@ -344,7 +341,6 @@ def LOGIN():
     sessionId = jsonrspl['SessionId']
     if sessionId == '00000000-0000-0000-0000-000000000000':
         xbmcgui.Dialog().ok(LB_ERROR, LB_LOGIN_ERROR)
-        xbmc.executebuiltin("Action(Back)")
         return
     else:
         goToken = jsonrspl['Token']
@@ -663,7 +659,7 @@ def addLink(ou, plot, ar, imdb, bu, cast, director, writer, duration, genre, nam
                 infoLabels={"plot": plot, "mpaa": str(ar) + '+', "rating": imdb, "cast": cast, "director": director,
                             "writer": writer, "duration": duration, "genre": genre, "title": name, "originaltitle": on,
                             "year": py})
-    liz.addStreamInfo('video', {'width': 1280, 'height': 720})
+    liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
     liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
     liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
     liz.setProperty("IsPlayable", "true")
