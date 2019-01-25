@@ -9,7 +9,7 @@ If an official app is available for your platform, use it instead of this.
 
 # HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
 
-Simple, great Kodi add-on to access HBO® Go Europe content from Kodi Media Center.
+Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) from Kodi Media Center (http://kodi.tv).
 
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website http://hbogo.eu
