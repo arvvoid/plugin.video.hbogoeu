@@ -3,7 +3,7 @@
 This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
 For more information on HBO® Go Europe visit the official website: http://hbogo.eu
 
-THERE IS NO WARRANTY FOR THE PLUGIN, IT CAN BREAK AND STOP WORKING AT ANY TIME.
+THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
 If an official app is available for your platform, use it instead of this.
 
