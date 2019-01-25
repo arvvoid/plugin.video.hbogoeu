@@ -17,8 +17,10 @@ __Addon = xbmcaddon.Addon(__addon_id__)
 __settings__ = xbmcaddon.Addon(id='plugin.video.hbogoeu')
 __language__ = __settings__.getLocalizedString
 
-UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36'
-MUA = 'Dalvik/2.1.0 (Linux; U; Android 8.0.0; Nexus 5X Build/OPP3.170518.006)'
+UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'  # CHROME ON LINUX
+
+GO_SW_VERSION = '4.7.4'
+GO_REQUIRED_PLATFORM = 'CHBR'  # emulate chrome
 
 md = xbmc.translatePath(__Addon.getAddonInfo('path') + "/resources/media/")
 search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
@@ -105,7 +107,8 @@ if __language__(32000) == 'ENG':  # only englih or the default language for the 
 if __settings__.getSetting('deflang') == 'true':
     LANGUAGE_CODE = DEFAULT_LANGUAGE
 
-ACCEPT_LANGUAGE = 'en-US,'+COUNTRY_CODE_SHORT+',en;q=0.8'
+ACCEPT_LANGUAGE = 'en-us,en;q=0.8'
+
 
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
@@ -147,10 +150,10 @@ loggedin_headers = {
     'Origin': API_HOST_ORIGIN,
     'X-Requested-With': 'XMLHttpRequest',
     'GO-Language': LANGUAGE_CODE,
-    'GO-requiredPlatform': 'CHBR',
+    'GO-requiredPlatform': GO_REQUIRED_PLATFORM,
     'GO-Token': '',
     'GO-SessionId': '',
-    'GO-swVersion': '4.8.0',
+    'GO-swVersion': GO_SW_VERSION,
     'GO-CustomerId': '',
     'Connection': 'keep-alive',
     'Accept-Encoding': ''
@@ -283,12 +286,12 @@ def LOGIN():
             "Individualization": individualization,
             "IsDeleted": False,
             "LastUsed": "",
-            "Modell": "62",
+            "Modell": "71",
             "Name": "",
             "OSName": "Ubuntu",
             "OSVersion": "undefined",
             "Platform": API_PLATFORM,
-            "SWVersion": "2.4.2.4025.240",
+            "SWVersion": "3.3.9.6418.2100",
             "SubtitleSize": ""
         },
         "CustomerCode": "",
@@ -533,9 +536,9 @@ def PLAY(url):
         'Connection': 'keep-alive',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'GO-CustomerId': str(GOcustomerId),
-        'GO-requiredPlatform': 'CHBR',
+        'GO-requiredPlatform': GO_REQUIRED_PLATFORM,
         'GO-SessionId': str(sessionId),
-        'GO-swVersion': '4.7.4',
+        'GO-swVersion': GO_SW_VERSION,
         'GO-Token': str(goToken),
         'Host': API_HOST,
         'Referer': API_HOST_REFERER,
