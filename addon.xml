@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="1.3.1.EU.RC">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="1.3.2.EU.RC">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -10,42 +10,67 @@
   </extension>
   <extension point="xbmc.addon.metadata">
       <summary lang="hr_HR">HBO GO EU</summary>
-      <description lang="hr_HR">Plugin za HBO GO EU</description>
-      <disclaimer lang="hr_HR">Ovo je neslužbeni plug-in! Ako postoji službeni plugin za vašu platformu koristiti službenu aplikaciju. All rights in the content are reserved by HBO® Europe.
+      <description lang="hr_HR">
+Jednostavan, izvrstan Kodi dodatak za pristup HBO® Go EU sadržaju. (Ovaj dodatak nije službeno naručen / podržan od strane HBO-a.)
 
-          
-          Important, HBO GO must be paid for!!! You need a valid account credentials!
-          Register on the official HBO® Go website http://hbogo.eu
+Važno, HBO® Go mora biti plaćen !!! Trebate valjani račun!
+Registrirajte se na službenoj web stranici HBO® Go http://hbogo.eu
+
+Trenutačno radi za: Hrvatska, Mađarska
+      </description>
+      <disclaimer lang="hr_HR">
+Ovaj dodatak nije službeno naručen / podržan od strane HBO-a. Zaštitni znak HBO® Go registriran je od strane Home Box Office, Inc. Za više informacija o HBO® Go Europe posjetite službenu web stranicu: http://hbogo.eu
+NEMA JAMSTVA ZA DODATAK, MOŽE PRESTATI RADITI U BILO KOJEM TRENUTKU.
+Ako je službena aplikacija dostupna za vašu platformu, preporučuje se da je koristite umjesto ovog add-on-a.
+Svi sadržaji HBO Go-a © 2019 Copyright © 2017 Home Box Office, Inc. Sva prava pridržana.
       </disclaimer>
     <summary lang="en_GB">HBO GO EU</summary>
-    <description lang="en_GB">Plugin for HBO GO EU</description>
-    <disclaimer lang="en_GB">This is not an official plug-in! If an official app is available for your platform, use it instead of this plugin. All rights in the content are reserved by HBO® Europe.
+    <description lang="en_GB">
+Simple, great Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
 
-        Important, HBO GO must be paid for!!! You need a valid account credentials!
-        Register on the official HBO® Go website http://hbogo.eu
+Important, HBO® Go must be paid for!!!  You need a valid account!
+Register on the official HBO® Go website http://hbogo.eu
+
+Curently support: Croatia, Hungary
+    </description>
+    <disclaimer lang="en_GB">
+This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc. For more information on HBO® Go Europe visit the official website: http://hbogo.eu
+THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
+If an official app is available for your platform, it's recommended to use it instead of this.
+All HBO Go content is © 2019 Copyright © 2017 Home Box Office, Inc. All rights reserved.
     </disclaimer>
       <summary lang="hu_HU">HBO GO EU</summary>
-      <description lang="hu_HU">Plugin za HBO GO EU</description>
-      <disclaimer lang="hu_HU">Ez egy nem hivatalos plug-in! Ha hivatalos platformja van, használja a hivatalos alkalmazást. All rights in the content are reserved by HBO® Europe.
+      <description lang="hu_HU">
+Egyszerű, nagy Kodi kiegészítő a HBO® Go EU tartalmának eléréséhez. (Ez a kiegészítő nem hivatalosan megbízott / támogatott a HBO® által.)
 
+Fontos, hogy a HBO® Go-t meg kell fizetni !!! Érvényes fiókra van szüksége!
+Regisztráljon a HBO® Go hivatalos honlapján http://hbogo.eu
 
-          Important, HBO GO must be paid for!!! You need a valid account credentials!
-          Register on the official HBO® Go website http://hbogo.eu
+Curently support: Horvátország, Magyarország
+      </description>
+      <disclaimer lang="hu_HU">
+A HBO® nem támogatja ezt a kiegészítőt. A HBO® Go védjegyet a Home Box Office, Inc. regisztrálja. További információ a HBO® Go Europe webhelyről: http://hbogo.eu
+A GARANCIA NEM TÁMOGATOTT, A KÖVETKEZŐ TÁMOGATÁS ÉS A MŰKÖDÉS ELLENŐRZÉSE.
+Ha hivatalos alkalmazás áll rendelkezésre az Ön platformjára, javasoljuk, hogy használja ezt a helyett.
+Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jog fenntartva.
       </disclaimer>
     <language>en hr hu</language>
     <platform>all</platform>
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
-        1.3.1.EU
-         -Minor bugfixes
-        1.3.EU
-         -Language of retrived HBO Go Eu content is set from currently loaded language file
-        1.2.EU
-         -Added support for Hungary
-        1.1.EU
-         -First General HBO Go Eu Realease
-         -Added support for Croatia
+v.1.3.1.EU (25/01/2019)
+-Minor bugfixes
+
+v.1.3.EU
+-Language of retrived HBO Go Eu content is set from currently loaded language file
+
+v.1.2.EU
+-Added support for Hungary
+
+v.1.1.EU
+-First General HBO Go Eu Realease
+-Added support for Croatia
     </news>
     <assets>
      <icon>resources/icon.png</icon>
