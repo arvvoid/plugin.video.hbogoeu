@@ -36,10 +36,16 @@
     <platform>all</platform>
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
-    <news>*1.3.1.EU Minor bugfixes
-        *1.3.EU Language of retrived HBO Go Eu content is set from curently loaded language file
-        *1.2.EU Added support for Hungary
-        *1.1.EU First General HBOGo Eu Realease (only Croatia support atm)
+    <news>
+        1.3.1.EU
+         -Minor bugfixes
+        1.3.EU
+         -Language of retrived HBO Go Eu content is set from currently loaded language file
+        1.2.EU
+         -Added support for Hungary
+        1.1.EU
+         -First General HBO Go Eu Realease
+         -Added support for Croatia
     </news>
     <assets>
      <icon>resources/icon.png</icon>
