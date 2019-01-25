@@ -105,6 +105,8 @@ if __language__(32000) == 'ENG':  # only englih or the default language for the 
 if __settings__.getSetting('deflang') == 'true':
     LANGUAGE_CODE = DEFAULT_LANGUAGE
 
+ACCEPT_LANGUAGE = 'en-US,'+COUNTRY_CODE_SHORT+',en;q=0.8'
+
 API_PLATFORM = 'COMP'
 # API_PLATFORM = 'MOBI'
 # API_PLATFORM = 'APPLE'
@@ -139,7 +141,7 @@ FavoritesGroupId = ""
 loggedin_headers = {
     'User-Agent': UA,
     'Accept': '*/*',
-    'Accept-Language': 'en-US,en;q=0.5',
+    'Accept-Language': ACCEPT_LANGUAGE,
     'Referer': API_HOST_REFERER,
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'Origin': API_HOST_ORIGIN,
@@ -247,7 +249,7 @@ def LOGIN():
     headers = {
         'Origin': API_HOST_GATEWAY,
         'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'hr,en-US;q=0.9,en;q=0.8',
+        'Accept-Language': ACCEPT_LANGUAGE,
         'User-Agent': UA,
         'GO-Token': '',
         'Accept': 'application/json',
@@ -527,7 +529,7 @@ def PLAY(url):
     purchase_headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Accept-Encoding': '',
-        'Accept-Language': 'en-US,en;q=0.8',
+        'Accept-Language': ACCEPT_LANGUAGE,
         'Connection': 'keep-alive',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'GO-CustomerId': str(GOcustomerId),
@@ -560,9 +562,8 @@ def PLAY(url):
         "{\"userId\":\"" + GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
     li = xbmcgui.ListItem(iconImage=thumbnail, thumbnailImage=thumbnail, path=MediaUrl)
-    license_server = LICENSE_SERVER
     license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + API_HOST_ORIGIN + '&Content-Type='
-    license_key = license_server + '|' + license_headers + '|R{SSM}|JBlicense'
+    license_key = LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
 
     protocol = 'ism'
     drm = 'com.widevine.alpha'
