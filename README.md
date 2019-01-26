@@ -14,47 +14,225 @@ Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) fr
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website http://hbogo.eu
 
-Included web registration login:
-* Croatia: hbogo.hr (web registration)
-* Hungary: hbogo.hu (web registration)
 
-Included operators/country:
+Included countries/operators in alphabetical order:
 
-* CROATIA 
-  * Croatia: A1
-  * Croatia: BonBon
-  * Croatia: evoTv
-  * Croatia: HBO GO Vip/Club Croatia
-  * Croatia: Hrvatski Telekom d.d.
-  * Croatia: Iskon Internet d.d.
-  * Croatia: Optima Telekom d.d.
-  * Croatia: Simpa
+* Bosnia and Herzegovina
+   * WEB REGISTRATION: HBO Bosnia and Herzegovina
+   * Bosnia and Herzegovina: HBO Development Bosnia
+   * Bosnia and Herzegovina: HBO GO VIP/Club Bosnia
+   * Bosnia and Herzegovina: Telemach
+   * Bosnia and Herzegovina: Telrad Net
 
-* HUNGARY
-  * Hungary: UPC Direct
-  * Hungary: DIGI
-  * Hungary: Magyar Telekom Nyrt.
-  * Hungary: Telenor MyTV
-  * Hungary: UPC Magyarorszag
-  * Hungary: INVITEL
-  * Hungary: Celldomolki Kabeltelevízió Kft.
-  * Hungary: Eurocable - Hello Digital
-  * Hungary: hFC-Network Kft.
-  * Hungary: HIR-SAT 2000 Kft.
-  * Hungary: Jurop Telekom
-  * Hungary: Kabelszat 2002
-  * Hungary: Klapka Lakasszövetkezet
-  * Hungary: Lat-Sat Kft.
-  * Hungary: MinDig TV Extra
-  * Hungary: PARISAT
-  * Hungary: PR-TELECOM
-  * Hungary: TARR Kft
-  * Hungary: Vac Varosi Kabeltelevizio Kft.
-  * Hungary: Vidanet Zrt.
-  * Hungary: HBO Development Hungary
-  * Hungary: HBO GO Vip/Club Hungary
+* Bulgaria
+   * WEB REGISTRATION: HBO Bulgaria
+   * Bulgaria: A1
+   * Bulgaria: M SAT CABLE EAD
+   * Bulgaria: N3
+   * Bulgaria: NET1
+   * Bulgaria: NetSurf
+   * Bulgaria: NetWorx
+   * Bulgaria: Silistra TV - Силистра ТВ
+   * Bulgaria: Telekabel
+   * Bulgaria: Telenor
+   * Bulgaria: Telenor Promo
+   * Bulgaria: Vivacom
 
-TODO: [Add all other supported countries/providers]: https://github.com/arvvoid/plugin.video.hbogoeu/issues/6
+* Croatia
+   * WEB REGISTRATION: HBO Croatia
+   * Croatia: A1
+   * Croatia: bonbon
+   * Croatia: evotv
+   * Croatia: HBO GO Vip/Club Croatia
+   * Croatia: Hrvatski Telekom d.d.
+   * Croatia: Iskon Internet d.d.
+   * Croatia: Optima Telekom d.d.
+   * Croatia: Simpa
+
+* Czech Republic
+   * WEB REGISTRATION: HBO Czech Republic
+   * Czech Republic: freeSAT Česká republika
+   * Czech Republic: Skylink
+   * Czech Republic: UPC CZ
+   * Czech Republic: Slovak Telekom
+   * Czech Republic: Lepší.TV
+   * Czech Republic: O2
+   * Czech Republic: RIO Media
+   * Czech Republic: UPC BROADBAND SLOVAKIA
+   * Czech Republic: AIM
+   * Czech Republic: T-Mobile Czech Republic a.s.
+   * Czech Republic: Antik Telecom
+   * Czech Republic: CentroNet, a. s.
+   * Czech Republic: DIGI CZ s. r. o.
+   * Czech Republic: DIGI SLOVAKIA s.r.o.
+   * Czech Republic: FixPro
+   * Czech Republic: flexiTV
+   * Czech Republic: freeSAT Slovensko
+   * Czech Republic: GRAPE SC
+   * Czech Republic: HD Kabel
+   * Czech Republic: Kuki
+   * Czech Republic: MARTICO
+   * Czech Republic: Nej.cz
+   * Czech Republic: NETBOX
+   * Czech Republic: Satro
+   * Czech Republic: SATT
+   * Czech Republic: SELFNET
+   * Czech Republic: sledovanitv.cz s.r.o.
+   * Czech Republic: Slovanet a.s.
+   * Czech Republic: SWAN, a. s.
+   * Czech Republic: Tesatel
+   * Czech Republic: HBO GO special
+   * Czech Republic: HBO GO Vip/Club Czech Republic
+   * Czech Republic: HBO Development Czech
+   * Czech Republic: HBO GO VIP/Club Slovakia
+
+* Hungary
+   * WEB REGISTRATION: HBO Hungary
+   * Hungary: DIGI
+   * Hungary: Magyar Telekom Nyrt.
+   * Hungary: Telenor MyTV
+   * Hungary: UPC Direct
+   * Hungary: UPC Magyarország
+   * Hungary: INVITEL
+   * Hungary: Celldömölki Kábeltelevízió Kft.
+   * Hungary: Eurocable – Hello Digital
+   * Hungary: Flip
+   * Hungary: HFC-Network Kft.
+   * Hungary: HIR-SAT 2000 Kft.
+   * Hungary: JuPiNet
+   * Hungary: Kabelszat 2002
+   * Hungary: Klapka Lakásszövetkezet
+   * Hungary: Lát-Sat Kft.
+   * Hungary: Micro-Wave kft.
+   * Hungary: MinDig TV Extra
+   * Hungary: PARISAT
+   * Hungary: PR-TELECOM
+   * Hungary: TARR Kft
+   * Hungary: Vác Városi Kábeltelevízió Kft.
+   * Hungary: Vidanet Zrt.
+   * Hungary: HBO Development Hungary
+   * Hungary: HBO GO Vip/Club Hungary
+
+* Macedonia
+   * WEB REGISTRATION: HBO Macedonia
+   * Macedonia: HBO GO Vip/Club Macedonia
+   * Macedonia: Македонски Телеком
+   * Macedonia: оне.Вип
+
+* Montenegro
+   * WEB REGISTRATION: HBO Montenegro
+   * Montenegro: Crnogorski Telekom
+   * Montenegro: HBO GO VIP/Club Montenegro
+   * Montenegro: Telemach
+   * Montenegro: Telenor
+
+* Polonia
+   * WEB REGISTRATION: HBO Poland
+   * Polonia: Cyfrowy Polsat
+   * Polonia: nc+
+   * Polonia: Plus
+   * Polonia: UPC
+   * Polonia: Vectra
+   * Polonia: PLAY
+   * Polonia: Multimedia Polska
+   * Polonia: Netia
+   * Polonia: Orange
+   * Polonia: INEA
+   * Polonia: TOYA
+   * Polonia: JAMBOX
+   * Polonia: PROMAX
+   * Polonia: Asta-Net
+   * Polonia: TK Chopin
+   * Polonia: ELSAT
+   * Polonia: Eltronik
+   * Polonia: SatFilm
+   * Polonia: Master
+   * Polonia: STANSAT
+   * Polonia: Dialog
+   * Polonia: Internetia
+   * Polonia: Petrotel
+   * Polonia: Cinema City – promocja
+   * Polonia: Samsung - promocja
+   * Polonia: Player+
+   * Polonia: Test operator
+   * Polonia: HBO GO Vip/Club Poland
+
+* Romania
+   * WEB REGISTRATION: HBO Romania
+   * Romania: AKTA
+   * Romania: Canal S
+   * Romania: HBO GO Vip/Club Romania
+   * Romania: INES
+   * Romania: INTERSAT
+   * Romania: Metropolitan
+   * Romania: MITnet
+   * Romania: NextGen Communications
+   * Romania: Orange Romania
+   * Romania: RCS RDS
+   * Romania: Telekom Romania
+   * Romania: Telekom Romania Business
+   * Romania: TV SAT 2002
+   * Romania: UPC Romania
+   * Romania: Vodafone
+   * Romania: Vodafone Romania 4GTV+
+   * Romania: Voucher HBOGO
+
+* Serbia
+   * WEB REGISTRATION: HBO Serbia
+   * Serbia: HBO GO Promo (rs)
+   * Serbia: HBO GO Vip/Club Serbia
+   * Serbia: SAT-TRAKT
+   * Serbia: SBB
+   * Serbia: Telekom Srbija
+   * Serbia: Telenor
+
+* Slovakia
+   * WEB REGISTRATION: HBO Slovakia
+   * Slovakia: freeSAT Česká republika
+   * Slovakia: Skylink
+   * Slovakia: UPC CZ
+   * Slovakia: Slovak Telekom
+   * Slovakia: Lepší.TV
+   * Slovakia: O2
+   * Slovakia: RIO Media
+   * Slovakia: UPC BROADBAND SLOVAKIA
+   * Slovakia: AIM
+   * Slovakia: T-Mobile Czech Republic a.s.
+   * Slovakia: Antik Telecom
+   * Slovakia: CentroNet, a. s.
+   * Slovakia: DIGI CZ s. r. o.
+   * Slovakia: DIGI SLOVAKIA s.r.o.
+   * Slovakia: FixPro
+   * Slovakia: flexiTV
+   * Slovakia: freeSAT Slovensko
+   * Slovakia: GRAPE SC
+   * Slovakia: HD Kabel
+   * Slovakia: Kuki
+   * Slovakia: MARTICO
+   * Slovakia: Nej.cz
+   * Slovakia: NETBOX
+   * Slovakia: Satro
+   * Slovakia: SATT
+   * Slovakia: SELFNET
+   * Slovakia: sledovanitv.cz s.r.o.
+   * Slovakia: Slovanet a.s.
+   * Slovakia: SWAN, a. s.
+   * Slovakia: Tesatel
+   * Slovakia: HBO GO special
+   * Slovakia: HBO GO Vip/Club Czech Republic
+   * Slovakia: HBO Development Czech
+   * Slovakia: HBO GO VIP/Club Slovakia
+
+* Slovenija
+   * WEB REGISTRATION: HBO Slovenia
+   * Slovenija: Ario d.o.o.
+   * Slovenija: HBO GO Promo (si)
+   * Slovenija: HBO GO Vip/Club Slovenia
+   * Slovenija: KRS CATV Selnica-Ruše
+   * Slovenija: T-2 d.o.o.
+   * Slovenija: Telekom Slovenije
+   * Slovenija: Telemach
+
 
 REQUIRMENTS:
 * Kodi 18 (Inputstream Adaptive), on any platform supported by Kodi http://kodi.tv
