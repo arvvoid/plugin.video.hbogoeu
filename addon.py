@@ -49,7 +49,7 @@ if operator == 'N/A':
 xbmc.log("OPERATOR SETTING_ID: " + operator)
 
 op_ids = {
-   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', 'ENG', '00000000-0000-0000-0000-000000000000', True],
+   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'hr', 'HRV', 'ENG', True],
    'WEB REGISTRATION: HBO Bosnia and Herzegovina': ['6e0fe238-3b45-4049-9206-fb46425c486f', 'ba', 'ba', 'BIH', 'HRV', True],
    'WEB REGISTRATION: HBO Bulgaria': ['b52fda48-25b2-4623-af6b-e8e30ae7d645', 'bg', 'bg', 'BGR', 'BUL', True],
    'WEB REGISTRATION: HBO Croatia': ['24a5e09c-4550-4cd3-a63c-8f6ab0508dd7', 'hr', 'hr', 'HRV', 'HRV', True],

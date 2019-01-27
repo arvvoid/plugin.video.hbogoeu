@@ -24,7 +24,7 @@ countries = [
     ['Slovenija', 'si', 'si', 'SVN', 'SLV'],
 ]
 
-web_operators = "   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'HRV', 'ENG', '00000000-0000-0000-0000-000000000000', True]," + os.linesep
+web_operators = "   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'hr', 'HRV', 'ENG', True]," + os.linesep
 extra_operators = ""
 settings_string = ""
 settings_string_operators = ""
