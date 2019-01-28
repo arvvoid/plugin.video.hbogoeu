@@ -20,6 +20,7 @@ This add-on covers all listend on http://hbogo.eu atm 12 countries. HBO España 
 Also this add-on don't cover HBO Go US (http://hbogo.com), HBO Go Asia (https://www.hbogoasia.com/), HBO Go Latin America (https://www.hbogo.com.br/) or other versions, maybe in the future but will need collaboration
 
 PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] don't currently work with the add-on becouse that login method is not yet implemented. ISSUE #5 https://github.com/arvvoid/plugin.video.hbogoeu/issues/5
+
 ALL OTHER OPERATORS SHOULD WORK.
 
 IT SEAMS SOME OPERATORS (FEW OF THEM) SUPPORT HBO LIVE STREAM BUT THAT'S NOT IMPLEMENTED ATM
