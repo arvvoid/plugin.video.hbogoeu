@@ -4,6 +4,7 @@
 # simple utility script to generate provider list for all Hbo Go Eu in a copy/pastable format
 # it will generate the provider map to paste in addon.py, the list of providers for settings.xml
 # and a list for readme.md
+# V1.1  -- include redirect login data
 
 import requests
 import os
@@ -24,7 +25,9 @@ countries = [
     ['Slovenija', 'si', 'si', 'SVN', 'SLV'],
 ]
 
-web_operators = "   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'hr', 'HRV', 'ENG', True]," + os.linesep
+# oerator name: [ OPERATOR ID, OPERATOR DOMAIN END, OPERATOR COUNTRY CODE, OPERATOR COUNTRY CODE LONG, DEFAULT LANGUAGE, IS DIRECT WEB REGISTRATION, LOGIN REDIRECTION URL]
+
+web_operators = "   'N/A': ['00000000-0000-0000-0000-000000000000', 'hr', 'hr', 'HRV', 'ENG', True, '']," + os.linesep
 extra_operators = ""
 settings_string = ""
 settings_string_operators = ""
@@ -41,15 +44,18 @@ for countrie in countries:
     json_web_operators = requests.get(url_basic).json()
     for operator in json_web_operators['Items']:
         print('WEB REGISTRATION: ' + operator['Name'])
-        web_operators = web_operators + "   'WEB REGISTRATION: " + operator['Name'] + "': ['" + operator['Id'] + "', '" + countrie[1] + "', '" + countrie[2] + "', '" + countrie[3] + "', '" + countrie[4] + "', True],"+os.linesep
+        web_operators = web_operators + "   'WEB REGISTRATION: " + operator['Name'] + "': ['" + operator['Id'] + "', '" + countrie[1] + "', '" + countrie[2] + "', '" + countrie[3] + "', '" + countrie[4] + "', True, ''],"+os.linesep
         settings_string = settings_string + 'WEB REGISTRATION: ' + operator['Name'] + "|"
         info_string = info_string + "   * " + 'WEB REGISTRATION: ' + operator['Name'] + os.linesep
     json_operators = requests.get(url_operators).json()
     for operator in json_operators['Items']:
         print(countrie[0]+': '+operator['Name'])
-        extra_operators = extra_operators + "   '"+countrie[0]+": "+operator['Name']+"': ['"+operator['Id']+"', '"+countrie[1]+"', '"+countrie[2]+"', '"+countrie[3]+"', '"+countrie[4]+"', False],"+os.linesep
+        extra_operators = extra_operators + "   '"+countrie[0]+": "+operator['Name']+"': ['"+operator['Id']+"', '"+countrie[1]+"', '"+countrie[2]+"', '"+countrie[3]+"', '"+countrie[4]+"', False, '"+operator['RedirectionUrl']+"'],"+os.linesep
         settings_string_operators = settings_string_operators + countrie[0]+': '+operator['Name'] + "|"
-        info_string = info_string + "   * " + countrie[0] + ': ' + operator['Name'] + os.linesep
+        info_string = info_string + "   * " + countrie[0] + ': ' + operator['Name']
+        if len(operator['RedirectionUrl']) > 0:
+            info_string = info_string + " ![REDIRECT LOGIN]"
+        info_string = info_string + os.linesep
 
 print("")
 print("Preparing output...")

@@ -15,7 +15,18 @@ Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for th
 Register on the official HBO® Go website http://hbogo.eu
 
 
-Included countries/operators in alphabetical order:
+This add-on covers all listend on http://hbogo.eu atm 12 countries. HBO España (https://en.hboespana.com/), HBO Nordic (https://www.hbonordic.com/) use a different API and that is not implemented here atm, maybe in the future but will need collaboration.
+
+Also this add-on don't cover HBO Go US (http://hbogo.com), HBO Go Asia (https://www.hbogoasia.com/), HBO Go Latin America (https://www.hbogo.com.br/) or other versions, maybe in the future but will need collaboration
+
+PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] don't currently work with the add-on becouse that login method is not yet implemented. ISSUE #5
+ALL OTHER OPERATORS SHOULD WORK.
+
+IT SEAMS SOME OPERATORS (FEW OF THEM) SUPPORT HBO LIVE STREAM BUT THAT'S NOT IMPLEMENTED ATM
+
+PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy
+
+Supported countries/operators in alphabetical order:
 
 * Bosnia and Herzegovina
    * WEB REGISTRATION: HBO Bosnia and Herzegovina
@@ -52,8 +63,8 @@ Included countries/operators in alphabetical order:
 * Czech Republic
    * WEB REGISTRATION: HBO Czech Republic
    * Czech Republic: freeSAT Česká republika
-   * Czech Republic: Skylink
-   * Czech Republic: UPC CZ
+   * Czech Republic: Skylink [REDIRECT LOGIN]
+   * Czech Republic: UPC CZ [REDIRECT LOGIN]
    * Czech Republic: Slovak Telekom
    * Czech Republic: Lepší.TV
    * Czech Republic: O2
@@ -128,7 +139,7 @@ Included countries/operators in alphabetical order:
 
 * Polonia
    * WEB REGISTRATION: HBO Poland
-   * Polonia: Cyfrowy Polsat
+   * Polonia: Cyfrowy Polsat [REDIRECT LOGIN]
    * Polonia: nc+
    * Polonia: Plus
    * Polonia: UPC
@@ -169,12 +180,12 @@ Included countries/operators in alphabetical order:
    * Romania: NextGen Communications
    * Romania: Orange Romania
    * Romania: RCS RDS
-   * Romania: Telekom Romania
+   * Romania: Telekom Romania [REDIRECT LOGIN]
    * Romania: Telekom Romania Business
    * Romania: TV SAT 2002
-   * Romania: UPC Romania
+   * Romania: UPC Romania [REDIRECT LOGIN]
    * Romania: Vodafone
-   * Romania: Vodafone Romania 4GTV+
+   * Romania: Vodafone Romania 4GTV+ [REDIRECT LOGIN]
    * Romania: Voucher HBOGO
 
 * Serbia
@@ -189,8 +200,8 @@ Included countries/operators in alphabetical order:
 * Slovakia
    * WEB REGISTRATION: HBO Slovakia
    * Slovakia: freeSAT Česká republika
-   * Slovakia: Skylink
-   * Slovakia: UPC CZ
+   * Slovakia: Skylink [REDIRECT LOGIN]
+   * Slovakia: UPC CZ [REDIRECT LOGIN]
    * Slovakia: Slovak Telekom
    * Slovakia: Lepší.TV
    * Slovakia: O2
