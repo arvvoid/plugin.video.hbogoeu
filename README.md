@@ -15,15 +15,19 @@ Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for th
 Register on the official HBO® Go website http://hbogo.eu
 
 
-This add-on covers all listend on http://hbogo.eu atm 12 countries. HBO España (https://en.hboespana.com/), HBO Nordic (https://www.hbonordic.com/) use a different API and that is not implemented here atm, maybe in the future but will need collaboration.
+This add-on covers all listend on http://hbogo.eu atm 12 countries. 
 
-Also this add-on don't cover HBO Go US (http://hbogo.com), HBO Go Asia (https://www.hbogoasia.com/), HBO Go Latin America (https://www.hbogo.com.br/) or other versions, maybe in the future but will need collaboration
+Other Hbo Go versions/regions that use diferent APIs, not covered by this add-on:
+HBO España (https://en.hboespana.com/)
+HBO Nordic (https://www.hbonordic.com/)
+HBO Go US (http://hbogo.com)
+HBO Go Asia (https://www.hbogoasia.com/)
+HBO Go Latin America (https://www.hbogo.com.br/)
+At the moment don't plan to work on and add support for those other versions, maybe in the future. If a working input-stream based kodi add-on for one of those regions become availible will add a link here.
 
 PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] don't currently work with the add-on becouse that login method is not yet implemented. ISSUE #5 https://github.com/arvvoid/plugin.video.hbogoeu/issues/5
 
 ALL OTHER OPERATORS SHOULD WORK.
-
-IT SEAMS SOME OPERATORS (FEW OF THEM) SUPPORT HBO LIVE STREAM BUT THAT'S NOT IMPLEMENTED ATM
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy
 
