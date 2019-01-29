@@ -15,15 +15,15 @@ Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for th
 Register on the official HBO® Go website http://hbogo.eu
 
 
-This add-on covers all listend on http://hbogo.eu atm 12 countries. 
+This add-on covers all listend on http://hbogo.eu atm 12 countries: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Romania, Serbia, Slovakia, Slovenija
 
 Other Hbo Go versions/regions that use diferent APIs, not covered by this add-on:
-HBO España (https://en.hboespana.com/)
-HBO Nordic (https://www.hbonordic.com/)
-HBO Go US (http://hbogo.com)
-HBO Go Asia (https://www.hbogoasia.com/)
-HBO Go Latin America (https://www.hbogo.com.br/)
-At the moment don't plan to work on and add support for those other versions, maybe in the future. If a working input-stream based kodi add-on for one of those regions become availible will add a link here.
+* HBO España (https://en.hboespana.com/) [NOT SUPPORTED BY THIS ADD-ON]
+* HBO Nordic (https://www.hbonordic.com/)  [NOT SUPPORTED BY THIS ADD-ON]
+* HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON]
+* HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON]
+* HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON]
+At the moment i don't plan to work on and add support for those other versions. If and when working add-ons for those versions become availible it would be possibl to put all toghether in a unified hbogo add-on.
 
 PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] don't currently work with the add-on becouse that login method is not yet implemented. ISSUE #5 https://github.com/arvvoid/plugin.video.hbogoeu/issues/5
 
