@@ -17,7 +17,7 @@ Register on the official HBO® Go website http://hbogo.eu
 
 This add-on covers all listend on http://hbogo.eu atm 12 countries: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Romania, Serbia, Slovakia, Slovenija
 
-Other Hbo Go versions/regions that use diferent APIs, not covered by this add-on:
+Other Hbo Go versions/regions that use diferent APIs, are curently not covered by this add-on:
 
 * HBO España (https://en.hboespana.com/) [NOT SUPPORTED BY THIS ADD-ON]
 * HBO Nordic (https://www.hbonordic.com/)  [NOT SUPPORTED BY THIS ADD-ON]
