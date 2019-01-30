@@ -265,6 +265,13 @@ https://github.com/arvvoid/plugin.video.hbogoeu/releases
 
 Get the latest release and use the install add-on from zip function in Kodi
 
+## Install instructions
+
+* Enable Input Stream Add-on in Kodi v18+: Add-ons >> Package icon >> My Add-ons >> Video Player Inputstream >> Inputstream Adaptive >> menu >> enable
+* Download and install the add-on from zip in Kodi
+* Configure the Add-on: select the correct operator and enter your hbogo username and password 
+(first check if you can login in your local hbo go website without problems)
+
 ## Tested
 
 PLATFORMS:
