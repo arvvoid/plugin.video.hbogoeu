@@ -273,6 +273,7 @@ Get the latest release and use the install add-on from zip function in Kodi
 * Download and install the add-on from zip in Kodi
 * Configure the Add-on: select the correct operator and enter your hbogo username and password 
 (first check if you can login in your local hbo go website without problems)
+* The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
 ## Tested
 
