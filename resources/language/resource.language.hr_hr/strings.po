@@ -107,3 +107,15 @@ msgstr "Titlovi"
 msgctxt "#33656"
 msgid "Automatically turn on default subtitles"
 msgstr "Uključi zadane titlove automatski"
+
+msgctxt "#33652"
+msgid "Always use original titles"
+msgstr ""
+
+msgctxt "#33670"
+msgid "Expert"
+msgstr ""
+
+msgctxt "#33671"
+msgid "Force scraper friendly titles"
+msgstr ""

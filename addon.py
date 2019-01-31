@@ -4,18 +4,23 @@ import base64
 import json
 import sys
 import urllib
-import requests
+
 import inputstreamhelper
+import requests
 import urllib2
 import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+from urlparse import parse_qsl
 
 __addon_id__ = 'plugin.video.hbogoeu'
 __Addon = xbmcaddon.Addon(__addon_id__)
-__settings__ = xbmcaddon.Addon(id='plugin.video.hbogoeu')
+__settings__ = xbmcaddon.Addon(id=__addon_id__)
 __language__ = __settings__.getLocalizedString
+
+__addonurl__ = sys.argv[0]
+__handle__ = int(sys.argv[1])
 
 DEBUG_ID_STRING = "["+str(__addon_id__)+"] "
 
@@ -41,6 +46,18 @@ LB_NOLOGIN = __language__(33708).encode('utf-8')
 LB_LOGIN_ERROR = __language__(33709).encode('utf-8')
 LB_NO_OPERATOR = __language__(33710).encode('utf-8')
 LB_SEARCH = __language__(33711).encode('utf-8')
+
+force_original_names = __settings__.getSetting('origtitles')
+if force_original_names == "true":
+    force_original_names = True
+else:
+    force_original_names = False
+
+force_scraper_names = __settings__.getSetting('forcescrap')
+if force_scraper_names == "true":
+    force_scraper_names = True
+else:
+    force_scraper_names = False
 
 operator = __settings__.getSetting('operator')
 if operator == 'N/A':
@@ -389,7 +406,6 @@ def GETFAVORITEGROUP():
     storeFavgroup(favgroupId)
 
 
-# belepes
 def LOGIN():
     global sessionId
     global goToken
@@ -543,14 +559,14 @@ def LOGIN():
 def CATEGORIES():
     global FavoritesGroupId
 
-    addDir(LB_SEARCH, 'search', '', 4, '')
+    addCat(LB_SEARCH, LB_SEARCH, '', 4)
 
     if (FavoritesGroupId == ""):
         GETFAVORITEGROUP()
 
     if (FavoritesGroupId != ""):
-        addDir(LB_MYPLAYLIST, API_URL_CUSTOMER_GROUP + FavoritesGroupId + '/-/-/-/1000/-/-/false', '', 1,
-               md + 'FavoritesFolder.png')
+        addCat(LB_MYPLAYLIST, API_URL_CUSTOMER_GROUP + FavoritesGroupId + '/-/-/-/1000/-/-/false',
+               md + 'FavoritesFolder.png', 1)
 
     req = urllib2.Request(API_URL_GROUPS, None, loggedin_headers)
     opener = urllib2.build_opener()
@@ -563,10 +579,10 @@ def CATEGORIES():
     except:
         pass
 
-    for cat in range(0, len(jsonrsp['Items'])):
-        addDir(jsonrsp['Items'][cat]['Name'].encode('utf-8', 'ignore'),
-               jsonrsp['Items'][cat]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-               '', 1, md + 'DefaultFolder.png')
+    for cat in jsonrsp['Items']:
+        addCat(cat['Name'].encode('utf-8', 'ignore'),
+               cat['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+               md + 'DefaultFolder.png', 1)
 
 
 # lista
@@ -591,57 +607,14 @@ def LIST(url):
     # If there is a subcategory / genres
     if len(jsonrsp['Container']) > 1:
         for Container in range(0, len(jsonrsp['Container'])):
-            addDir(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'),
-                   jsonrsp['Container'][Container]['ObjectUrl'], '', 1, md + 'DefaultFolder.png')
+            addCat(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'),
+                   jsonrsp['Container'][Container]['ObjectUrl'], md + 'DefaultFolder.png', 1)
     else:
-        for titles in range(0, len(jsonrsp['Container'][0]['Contents']['Items'])):
-            if jsonrsp['Container'][0]['Contents']['Items'][titles][
-                'ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
-                if 'AvailabilityTo' in jsonrsp['Container'][0]['Contents']['Items'][titles]:
-                    if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-                        plot = plot + ' ' + LB_FILM_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles][
-                            'AvailabilityTo'].encode('utf-8', 'ignore')
-                addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'], plot,
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],
-                        [jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'], 5)
-                xbmc.log(DEBUG_ID_STRING+"GO: FILM: DUMP: " + jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'])
-
-            elif jsonrsp['Container'][0]['Contents']['Items'][titles]['ContentType'] == 3:
-                plot = jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore')
-                if jsonrsp['Container'][0]['Contents']['Items'][titles]['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + LB_EPISODE_UNTILL + ' ' + jsonrsp['Container'][0]['Contents']['Items'][titles][
-                        'AvailabilityTo'].encode('utf-8', 'ignore')
-                addLink(jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'], plot,
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['AgeRating'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['ImdbRate'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'],
-                        [jsonrsp['Container'][0]['Contents']['Items'][titles]['Cast'].split(', ')][0],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Director'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Writer'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Duration'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['Genre'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['SeriesName'].encode('utf-8',
-                                                                                                  'ignore') + ' - ' + str(
-                            jsonrsp['Container'][0]['Contents']['Items'][titles][
-                                'SeasonIndex']) + '. ' + LB_SEASON + ' ' + str(
-                            jsonrsp['Container'][0]['Contents']['Items'][titles]['Index']) + '. ' + LB_EPISODE,
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['OriginalName'],
-                        jsonrsp['Container'][0]['Contents']['Items'][titles]['ProductionYear'], 5)
+        for title in jsonrsp['Container'][0]['Contents']['Items']:
+            if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                addLink(title,5)
             else:
-                addDir(jsonrsp['Container'][0]['Contents']['Items'][titles]['Name'].encode('utf-8', 'ignore'),
-                       jsonrsp['Container'][0]['Contents']['Items'][titles]['ObjectUrl'],
-                       jsonrsp['Container'][0]['Contents']['Items'][titles]['Abstract'].encode('utf-8', 'ignore'), 2,
-                       jsonrsp['Container'][0]['Contents']['Items'][titles]['BackgroundUrl'])
+                addDir(title, 2,"tvshow")
 
 
 # SEASON OK
@@ -657,11 +630,8 @@ def SEASON(url):
             xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['ErrorMessage'])
     except:
         pass
-    for season in range(0, len(jsonrsp['Parent']['ChildContents']['Items'])):
-        addDir(jsonrsp['Parent']['ChildContents']['Items'][season]['Name'].encode('utf-8', 'ignore'),
-               jsonrsp['Parent']['ChildContents']['Items'][season]['ObjectUrl'],
-               jsonrsp['Parent']['ChildContents']['Items'][season]['Abstract'].encode('utf-8', 'ignore'), 3,
-               jsonrsp['Parent']['ChildContents']['Items'][season]['BackgroundUrl'])
+    for season in jsonrsp['Parent']['ChildContents']['Items']:
+        addDir(season, 3, "season")
 
 
 # epizodok
@@ -678,27 +648,8 @@ def EPISODE(url):
     except:
         pass
 
-    for episode in range(0, len(jsonrsp['ChildContents']['Items'])):
-        # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
-        plot = jsonrsp['ChildContents']['Items'][episode]['Abstract'].encode('utf-8', 'ignore')
-        if 'AvailabilityTo' in jsonrsp['ChildContents']['Items'][episode]:
-            if jsonrsp['ChildContents']['Items'][episode]['AvailabilityTo'] is not None:
-                plot = plot + ' ' + LB_EPISODE_UNTILL + ' ' + jsonrsp['ChildContents']['Items'][episode][
-                    'AvailabilityTo'].encode('utf-8', 'ignore')
-        addLink(jsonrsp['ChildContents']['Items'][episode]['ObjectUrl'], plot,
-                jsonrsp['ChildContents']['Items'][episode]['AgeRating'],
-                jsonrsp['ChildContents']['Items'][episode]['ImdbRate'],
-                jsonrsp['ChildContents']['Items'][episode]['BackgroundUrl'],
-                [jsonrsp['ChildContents']['Items'][episode]['Cast'].split(', ')][0],
-                jsonrsp['ChildContents']['Items'][episode]['Director'],
-                jsonrsp['ChildContents']['Items'][episode]['Writer'],
-                jsonrsp['ChildContents']['Items'][episode]['Duration'],
-                jsonrsp['ChildContents']['Items'][episode]['Genre'],
-                jsonrsp['ChildContents']['Items'][episode]['SeriesName'].encode('utf-8', 'ignore') + ' - ' + str(
-                    jsonrsp['ChildContents']['Items'][episode]['SeasonIndex']) + '. ' + LB_SEASON + ' ' +
-                jsonrsp['ChildContents']['Items'][episode]['Name'].encode('utf-8', 'ignore'),
-                jsonrsp['ChildContents']['Items'][episode]['OriginalName'],
-                jsonrsp['ChildContents']['Items'][episode]['ProductionYear'], 5)
+    for episode in jsonrsp['ChildContents']['Items']:
+        addLink(episode, 5)
 
 
 # lejatszas
@@ -769,7 +720,7 @@ def PLAY(url):
     li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
     li.setProperty('inputstream.adaptive.license_key', license_key)
     xbmc.log(DEBUG_ID_STRING+"Play url: " + str(li))
-    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
+    xbmcplugin.setResolvedUrl(__handle__, True, li)
 
 
 def SEARCH():
@@ -779,7 +730,7 @@ def SEARCH():
     if (keyb.isConfirmed()):
         searchText = urllib.quote_plus(keyb.getText())
         if searchText == "":
-            addDir(LB_SEARCH_NORES, '', '', '', md + 'DefaultFolderBack.png')
+            addCat(LB_SEARCH_NORES, LB_SEARCH_NORES, md + 'DefaultFolderBack.png', '')
         else:
             __settings__.setSetting('lastsearch', searchText)
             xbmc.log(DEBUG_ID_STRING+"Performing search: " + str(API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
@@ -799,98 +750,87 @@ def SEARCH():
                 pass
 
             br = 0
-            for index in range(0, len(jsonrsp['Container'][0]['Contents']['Items'])):
-                if (jsonrsp['Container'][0]['Contents']['Items'][index]['ContentType'] == 1 or
-                        jsonrsp['Container'][0]['Contents']['Items'][index][
-                            'ContentType'] == 7):  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
-                    addLink(jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'),
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['AgeRating'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['ImdbRate'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'],
-                            [jsonrsp['Container'][0]['Contents']['Items'][index]['Cast'].split(', ')][0],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Director'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Writer'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Duration'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Genre'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['OriginalName'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['ProductionYear'], 5)
-                elif jsonrsp['Container'][0]['Contents']['Items'][index]['ContentType'] == 3:
-                    # addLink(ou,plot,ar,imdb,bu,cast,director,writer,duration,genre,name,on,py,mode)
-                    addLink(jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'),
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['AgeRating'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['ImdbRate'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'],
-                            [jsonrsp['Container'][0]['Contents']['Items'][index]['Cast'].split(', ')][0],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Director'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Writer'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Duration'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Genre'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['SeriesName'].encode('utf-8',
-                                                                                                     'ignore') + ' ' +
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['OriginalName'],
-                            jsonrsp['Container'][0]['Contents']['Items'][index]['ProductionYear'], 5)
+            for item in jsonrsp['Container'][0]['Contents']['Items']:
+                if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                    addLink(item, 5)
                 else:
-                    addDir(jsonrsp['Container'][0]['Contents']['Items'][index]['Name'].encode('utf-8', 'ignore'),
-                           jsonrsp['Container'][0]['Contents']['Items'][index]['ObjectUrl'],
-                           jsonrsp['Container'][0]['Contents']['Items'][index]['Abstract'].encode('utf-8', 'ignore'), 2,
-                           jsonrsp['Container'][0]['Contents']['Items'][index]['BackgroundUrl'])
+                    addDir(item, 2, "tvshow")
                 br = br + 1
             if br == 0:
-                addDir(LB_SEARCH_NORES, '', '', '', md + 'DefaultFolderBack.png')
+                addCat(LB_SEARCH_NORES, LB_SEARCH_NORES, md + 'DefaultFolderBack.png', '')
 
 
-def addLink(ou, plot, ar, imdb, bu, cast, director, writer, duration, genre, name, on, py, mode):
-    cid = ou.rsplit('/', 2)[1]
-    u = sys.argv[0] + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(
-        name) + "&cid=" + cid + "&thumbnail=" + bu
+def addLink(title, mode):
+    xbmc.log(DEBUG_ID_STRING + "Adding Link: " + str(title) + " MODE: "+ str(mode))
+    cid = title['ObjectUrl'].rsplit('/', 2)[1]
+
+    plot = ""
+    name = ""
+    media_type="movie"
+    if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+        name = title['Name'].encode('utf-8', 'ignore')
+        if force_original_names:
+            name = title['OriginalName'].encode('utf-8', 'ignore')
+        filename = title['OriginalName'].encode('utf-8', 'ignore') + " (" + str(title['ProductionYear']) + ")"
+        if force_scraper_names:
+            name = filename
+        plot = title['Abstract'].encode('utf-8', 'ignore')
+        if 'AvailabilityTo' in title:
+            if title['AvailabilityTo'] is not None:
+                plot = plot + ' ' + LB_FILM_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
+    elif title['ContentType'] == 3:
+        media_type = "episode"
+        name = title['SeriesName'].encode('utf-8', 'ignore') + " - " + str(title['SeasonIndex']) + " " + LB_SEASON + ", " + LB_EPISODE + str(title['Index'])
+        if force_original_names:
+            name = title['OriginalName'].encode('utf-8', 'ignore')
+        filename = title['Tracking']['ShowName'].encode('utf-8', 'ignore') + " - S" + str(title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
+        if force_scraper_names:
+            name = filename
+        plot = title['Abstract'].encode('utf-8', 'ignore')
+        if 'AvailabilityTo' in title:
+            plot = plot + ' ' + LB_EPISODE_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
+
+    u = __addonurl__ + "?url=" + urllib.quote_plus(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(
+        filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
+
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage=bu, thumbnailImage=bu)
-    liz.setArt({'thumb': bu, 'poster': bu, 'banner': bu, 'fanart': bu})
+    liz = xbmcgui.ListItem(name, iconImage=title['BackgroundUrl'], thumbnailImage=title['BackgroundUrl'])
+    liz.setArt({'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'], 'fanart': title['BackgroundUrl']})
     liz.setInfo(type="Video",
-                infoLabels={"plot": plot, "mpaa": str(ar) + '+', "rating": imdb, "cast": cast, "director": director,
-                            "writer": writer, "duration": duration, "genre": genre, "title": name, "originaltitle": on,
-                            "year": py})
+                infoLabels={"mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'], "season": title['Tracking']['SeasonNumber'], "tvshowtitle": title['Tracking']['ShowName'], "plot": plot, "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'], "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
+                            "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'], "title": name, "originaltitle": title['OriginalName'],
+                            "year": title['ProductionYear']})
     liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
     liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
     liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
     liz.setProperty("IsPlayable", "true")
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
+    ok = xbmcplugin.addDirectoryItem(handle=__handle__, url=u, listitem=liz, isFolder=False)
     return ok
 
 
-def addDir(name, url, plot, mode, iconimage):
-    u = sys.argv[0] + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+def addDir(item, mode, media_type):
+    xbmc.log(DEBUG_ID_STRING + "Adding Dir: " + str(item) + " MODE: "+ str(mode))
+    u = __addonurl__ + "?url=" + urllib.quote_plus(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+    liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage="DefaultFolder.png", thumbnailImage=item['BackgroundUrl'])
+    liz.setInfo(type="Video", infoLabels={"mediatype": media_type, "season": item['Tracking']['SeasonNumber'], "tvshowtitle": item['Tracking']['ShowName'], "title": item['Name'].encode('utf-8', 'ignore'), "Plot": item['Abstract'].encode('utf-8', 'ignore')})
+    liz.setProperty('isPlayable', "false")
+    ok = xbmcplugin.addDirectoryItem(handle=__handle__, url=u, listitem=liz, isFolder=True)
     return ok
 
 
-def get_params():
-    param = []
-    paramstring = sys.argv[2]
-    if len(paramstring) >= 2:
-        params = sys.argv[2]
-        cleanedparams = params.replace('?', '')
-        if (params[len(params) - 1] == '/'):
-            params = params[0:len(params) - 2]
-        pairsofparams = cleanedparams.split('&')
-        param = {}
-        for i in range(len(pairsofparams)):
-            splitparams = {}
-            splitparams = pairsofparams[i].split('=')
-            if (len(splitparams)) == 2:
-                param[splitparams[0]] = splitparams[1]
-    return param
+def addCat(name, url, icon, mode):
+    xbmc.log(DEBUG_ID_STRING + "Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) +  " MODE: " + str(mode))
+    u = __addonurl__ + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+    ok = True
+    liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
+    liz.setInfo(type="Video", infoLabels={"Title": name})
+    liz.setProperty('isPlayable', "false")
+    ok = xbmcplugin.addDirectoryItem(handle=__handle__, url=u, listitem=liz, isFolder=True)
+    return ok
 
 
-params = get_params()
+params = dict(parse_qsl(sys.argv[2][1:]))
 url = None
 name = None
 iconimage = None
@@ -941,4 +881,4 @@ elif mode == 6:
 elif mode == 7:
     LOGIN()
 
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+xbmcplugin.endOfDirectory(__handle__)

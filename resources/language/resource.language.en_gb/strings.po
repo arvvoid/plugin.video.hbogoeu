@@ -100,10 +100,23 @@ msgctxt "#33651"
 msgid "Always use default operator language"
 msgstr ""
 
+
 msgctxt "#33655"
 msgid "Subtitles"
 msgstr ""
 
 msgctxt "#33656"
 msgid "Automatically turn on default subtitles"
+msgstr ""
+
+msgctxt "#33652"
+msgid "Always use original titles"
+msgstr ""
+
+msgctxt "#33670"
+msgid "Expert"
+msgstr ""
+
+msgctxt "#33671"
+msgid "Force scraper friendly titles"
 msgstr ""

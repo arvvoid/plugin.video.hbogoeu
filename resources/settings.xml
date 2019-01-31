@@ -8,9 +8,12 @@
     <!-- Language -->
     <setting label="33650" type="lsep"/>
     <setting label="33651" type="bool" id="deflang" default="false"/>
+    <setting label="33652" type="bool" id="origtitles" default="false"/>
     <!-- Streaming -->
     <setting label="33660" type="lsep"/>
     <setting id="is_settings" type="action" label="33665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
     </category>
-
+	<category label="33670">
+    <setting label="33671" type="bool" id="forcescrap" default="false"/>
+    </category>
 </settings>
