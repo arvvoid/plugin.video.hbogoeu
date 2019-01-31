@@ -833,7 +833,7 @@ def addLink(title, mode):
                 plot = plot + ' ' + LB_FILM_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
     elif title['ContentType'] == 3:
         media_type = "episode"
-        name = title['SeriesName'].encode('utf-8', 'ignore') + " - " + str(title['SeasonIndex']) + " " + LB_SEASON + ", " + LB_EPISODE + str(title['Index'])
+        name = title['SeriesName'].encode('utf-8', 'ignore') + " - " + str(title['SeasonIndex']) + " " + LB_SEASON + ", " + LB_EPISODE + " " + str(title['Index'])
         if force_original_names:
             name = title['OriginalName'].encode('utf-8', 'ignore')
         filename = title['Tracking']['ShowName'].encode('utf-8', 'ignore') + " - S" + str(title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
