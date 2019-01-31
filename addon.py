@@ -13,6 +13,9 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 from urlparse import parse_qsl
+import hashlib
+import pickle
+import time
 
 __addon_id__ = 'plugin.video.hbogoeu'
 __Addon = xbmcaddon.Addon(__addon_id__)
@@ -23,6 +26,7 @@ __addonurl__ = sys.argv[0]
 __handle__ = int(sys.argv[1])
 
 DEBUG_ID_STRING = "["+str(__addon_id__)+"] "
+SESSION_VALIDITY = 2  # stored session valid for 2 hours
 
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'  # CHROME ON LINUX
 
@@ -406,6 +410,23 @@ def GETFAVORITEGROUP():
     storeFavgroup(favgroupId)
 
 
+def save_obj(obj, name ):
+    folder = xbmc.translatePath("special://temp")
+    xbmc.log(DEBUG_ID_STRING + "Saving: " + folder + name + '.pkl')
+    with open(folder + name + '.pkl', 'wb') as f:
+        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
+def load_obj(name):
+    folder = xbmc.translatePath("special://temp")
+    xbmc.log(DEBUG_ID_STRING + "Trying to load: "+folder + name + '.pkl')
+    try:
+        with open(folder + name + '.pkl', 'rb') as f:
+            return pickle.load(f)
+    except:
+        xbmc.log(DEBUG_ID_STRING + "OBJECT RELOAD ERROR")
+        return None
+
+
 def LOGIN():
     global sessionId
     global goToken
@@ -431,6 +452,29 @@ def LOGIN():
       xbmcgui.Dialog().ok(LB_ERROR, LB_NOLOGIN)
       xbmcaddon.Addon(id='plugin.video.hbogoeu').openSettings()
       return
+
+    login_hash = hashlib.sha224(individualization + customerId + FavoritesGroupId + username + password + op_id).hexdigest()
+    xbmc.log(DEBUG_ID_STRING + "LOGIN HASH: " + login_hash)
+
+    loaded_session=load_obj(__addon_id__ + "_session")
+
+    if loaded_session != None:
+        # sesion exist if valid restore
+        xbmc.log(DEBUG_ID_STRING + "SAVED SESSION LOADED")
+        if loaded_session["hash"] == login_hash:
+            xbmc.log(DEBUG_ID_STRING + "HASH IS VALID")
+            if time.time() < (loaded_session["time"]+(SESSION_VALIDITY*60*60)):
+                xbmc.log(DEBUG_ID_STRING + "NOT EXPIRED RESTORING...")
+                #valid loaded sesion restor and exit login
+                xbmc.log(DEBUG_ID_STRING + "Restoring login from saved: " + str(loaded_session))
+                loggedin_headers = loaded_session["headers"]
+                sessionId=loggedin_headers['GO-SessionId']
+                goToken=loggedin_headers['GO-Token']
+                GOcustomerId=loggedin_headers['GO-CustomerId']
+                xbmc.log(DEBUG_ID_STRING + "Login restored - Token" + str(goToken))
+                xbmc.log(DEBUG_ID_STRING + "Login restored - Customer Id" + str(GOcustomerId))
+                xbmc.log(DEBUG_ID_STRING + "Login restored - Session Id" + str(sessionId))
+                return
 
     headers = {
         'Origin': API_HOST_GATEWAY,
@@ -553,7 +597,16 @@ def LOGIN():
         loggedin_headers['GO-SessionId'] = str(sessionId)
         loggedin_headers['GO-Token'] = str(goToken)
         loggedin_headers['GO-CustomerId'] = str(GOcustomerId)
+        #save the session with validity of 2h to not relogin every run of the add-on
+        saved_session = {
 
+            "hash": login_hash,
+            "headers": loggedin_headers,
+            "time": time.time()
+
+        }
+        xbmc.log(DEBUG_ID_STRING + "SAVING SESSION: " + str(saved_session))
+        save_obj(saved_session, __addon_id__+"_session")
 
 # kategoria
 def CATEGORIES():
