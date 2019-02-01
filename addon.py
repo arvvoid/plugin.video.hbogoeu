@@ -608,7 +608,6 @@ def LOGIN():
         xbmc.log(DEBUG_ID_STRING + "SAVING SESSION: " + str(saved_session))
         save_obj(saved_session, __addon_id__+"_session")
 
-# kategoria
 def CATEGORIES():
     global FavoritesGroupId
 
@@ -638,7 +637,6 @@ def CATEGORIES():
                md + 'DefaultFolder.png', 1)
 
 
-# lista
 def LIST(url):
     xbmc.log(DEBUG_ID_STRING+"List: " + str(url))
     global sessionId
@@ -670,7 +668,6 @@ def LIST(url):
                 addDir(title, 2,"tvshow")
 
 
-# SEASON OK
 def SEASON(url):
     xbmc.log(DEBUG_ID_STRING+"Season: " + str(url))
     req = urllib2.Request(url, None, loggedin_headers)
@@ -687,7 +684,6 @@ def SEASON(url):
         addDir(season, 3, "season")
 
 
-# epizodok
 def EPISODE(url):
     xbmc.log(DEBUG_ID_STRING+"Episode: " + str(url))
     req = urllib2.Request(url, None, loggedin_headers)
@@ -705,7 +701,6 @@ def EPISODE(url):
         addLink(episode, 5)
 
 
-# lejatszas
 def PLAY(url):
     xbmc.log(DEBUG_ID_STRING+"Play: " + str(url))
     global goToken
