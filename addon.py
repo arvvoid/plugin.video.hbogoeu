@@ -4,7 +4,7 @@ import base64
 import json
 import sys
 import urllib
-
+import os
 import inputstreamhelper
 import requests
 import urllib2
@@ -26,7 +26,7 @@ __addonurl__ = sys.argv[0]
 __handle__ = int(sys.argv[1])
 
 DEBUG_ID_STRING = "["+str(__addon_id__)+"] "
-SESSION_VALIDITY = 2  # stored session valid for 2 hours
+SESSION_VALIDITY = int(__settings__.getSetting('sessionvalid'))  # stored session valid
 
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'  # CHROME ON LINUX
 
@@ -41,6 +41,7 @@ search_string = urllib.unquote_plus(__settings__.getSetting('lastsearch'))
 LB_SEARCH_DESC = __language__(33700).encode('utf-8')
 LB_SEARCH_NORES = __language__(33701).encode('utf-8')
 LB_ERROR = __language__(33702).encode('utf-8')
+LB_INFO = __language__(33713).encode('utf-8')
 LB_EPISODE_UNTILL = __language__(33703).encode('utf-8')
 LB_FILM_UNTILL = __language__(33704).encode('utf-8')
 LB_EPISODE = __language__(33705).encode('utf-8')
@@ -62,6 +63,17 @@ if force_scraper_names == "true":
     force_scraper_names = True
 else:
     force_scraper_names = False
+
+sensitive_debug = __settings__.getSetting('sensitivedebug')
+if sensitive_debug == "true":
+    sensitive_debug = True
+else:
+    sensitive_debug = False
+
+if sensitive_debug:
+    ret = xbmcgui.Dialog().yesno(LB_INFO, __language__(33712).encode('utf-8'), __language__(33714).encode('utf-8'), __language__(33715).encode('utf-8'))
+    if not ret:
+        sys.exit()
 
 operator = __settings__.getSetting('operator')
 if operator == 'N/A':
@@ -416,6 +428,7 @@ def save_obj(obj, name ):
     with open(folder + name + '.pkl', 'wb') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
+
 def load_obj(name):
     folder = xbmc.translatePath("special://temp")
     xbmc.log(DEBUG_ID_STRING + "Trying to load: "+folder + name + '.pkl')
@@ -466,14 +479,22 @@ def LOGIN():
             if time.time() < (loaded_session["time"]+(SESSION_VALIDITY*60*60)):
                 xbmc.log(DEBUG_ID_STRING + "NOT EXPIRED RESTORING...")
                 #valid loaded sesion restor and exit login
-                xbmc.log(DEBUG_ID_STRING + "Restoring login from saved: " + str(loaded_session))
+                if sensitive_debug:
+                    xbmc.log(DEBUG_ID_STRING + "Restoring login from saved: " + str(loaded_session))
+                else:
+                    xbmc.log(DEBUG_ID_STRING + "Restoring login from saved: [OMITTED FOR PRIVACY]")
                 loggedin_headers = loaded_session["headers"]
                 sessionId=loggedin_headers['GO-SessionId']
                 goToken=loggedin_headers['GO-Token']
                 GOcustomerId=loggedin_headers['GO-CustomerId']
-                xbmc.log(DEBUG_ID_STRING + "Login restored - Token" + str(goToken))
-                xbmc.log(DEBUG_ID_STRING + "Login restored - Customer Id" + str(GOcustomerId))
-                xbmc.log(DEBUG_ID_STRING + "Login restored - Session Id" + str(sessionId))
+                if sensitive_debug:
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Token" + str(goToken))
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Customer Id" + str(GOcustomerId))
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Session Id" + str(sessionId))
+                else:
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Token  [OMITTED FOR PRIVACY]")
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Customer Id  [OMITTED FOR PRIVACY]")
+                    xbmc.log(DEBUG_ID_STRING + "Login restored - Session Id [OMITTED FOR PRIVACY]")
                 return
 
     headers = {
@@ -567,8 +588,10 @@ def LOGIN():
     }
 
     data = json.dumps(data_obj)
-    # xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN: " + str(data))
-    xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN")
+    if sensitive_debug:
+        xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN: " + str(data))
+    else:
+        xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN")
     r = requests.post(url, headers=headers, data=data)
     jsonrspl = json.loads(r.text)
 
@@ -591,13 +614,16 @@ def LOGIN():
     else:
         goToken = jsonrspl['Token']
         GOcustomerId = jsonrspl['Customer']['Id']
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Token" + str(goToken))
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Customer Id" + str(GOcustomerId))
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Session Id" + str(sessionId))
+        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Token" + str(goToken))
+        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Customer Id" + str(GOcustomerId))
+        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Session Id" + str(sessionId))
+        xbmc.log(DEBUG_ID_STRING+"Login sucess - Token [OMITTED FOR PRIVACY]")
+        xbmc.log(DEBUG_ID_STRING+"Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
+        xbmc.log(DEBUG_ID_STRING+"Login sucess - Session Id [OMITTED FOR PRIVACY]")
         loggedin_headers['GO-SessionId'] = str(sessionId)
         loggedin_headers['GO-Token'] = str(goToken)
         loggedin_headers['GO-CustomerId'] = str(GOcustomerId)
-        #save the session with validity of 2h to not relogin every run of the add-on
+        #save the session with validity of n hours to not relogin every run of the add-on
         saved_session = {
 
             "hash": login_hash,
@@ -605,7 +631,10 @@ def LOGIN():
             "time": time.time()
 
         }
-        xbmc.log(DEBUG_ID_STRING + "SAVING SESSION: " + str(saved_session))
+        if sensitive_debug:
+            xbmc.log(DEBUG_ID_STRING + "SAVING SESSION: " + str(saved_session))
+        else:
+            xbmc.log(DEBUG_ID_STRING + "SAVING SESSION: [OMITTED FOR PRIVACY]")
         save_obj(saved_session, __addon_id__+"_session")
 
 def CATEGORIES():

@@ -92,6 +92,22 @@ msgctxt "#33711"
 msgid "Search..."
 msgstr "Traži..."
 
+msgctxt "#33712"
+msgid "WARNING. You enabled the [Include sensitive login data in debug log] option in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is enabled in Kodi, your sensitive and private login information and session data will be written to the debug log. Please don't share publicly such a log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you really have to send a log with that option enabled to debug a login/session related issue be very CAREFUL who you send that log too and do it privately and change your password as soon as possible. If you posted such a log publicly by accident, change your password as soon as possible. DO YOU WANT TO CONTINUE?"
+msgstr ""
+
+msgctxt "#33713"
+msgid "INFORMATION"
+msgstr ""
+
+msgctxt "#33714"
+msgid "I understand the risk continue"
+msgstr ""
+
+msgctxt "#33715"
+msgid "Stop, let me change the settings"
+msgstr ""
+
 msgctxt "#33650"
 msgid "Language"
 msgstr "Jezik"
@@ -118,4 +134,24 @@ msgstr ""
 
 msgctxt "#33671"
 msgid "Force scraper friendly titles"
+msgstr ""
+
+msgctxt "#33680"
+msgid "Session"
+msgstr ""
+
+msgctxt "#33681"
+msgid "Session valid for hours"
+msgstr ""
+
+msgctxt "#33682"
+msgid "Reset session, force re-login"
+msgstr ""
+
+msgctxt "#33690"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#33691"
+msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
 msgstr ""

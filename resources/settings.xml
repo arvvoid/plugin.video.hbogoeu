@@ -15,5 +15,9 @@
     </category>
 	<category label="33670">
     <setting label="33671" type="bool" id="forcescrap" default="false"/>
+    <setting label="33680" type="lsep"/>
+    <setting label="33681" type="number" id="sessionvalid" default="4"/>
+    <setting label="33690" type="lsep"/>
+    <setting label="33691" type="bool" id="sensitivedebug" default="false"/>
     </category>
 </settings>

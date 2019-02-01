@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.4.EU.BETA">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.5.EU.BETA">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -66,6 +66,10 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
+v.2.0.5.EU
+- Additional settings
+- WORK IN PROGRESS: Translations
+
 v.2.0.4.EU
 - Persistent session
 
@@ -100,13 +104,8 @@ v.1.1.EU
      <icon>resources/icon.png</icon>
      <fanart>resources/fanart.jpg</fanart>
      <screenshot>resources/screen1.png</screenshot>
-     <screenshot>resources/screen2.png</screenshot>
-     <screenshot>resources/screen3.png</screenshot>
-     <screenshot>resources/screen4.png</screenshot>
-     <screenshot>resources/screen6.png</screenshot>
      <screenshot>resources/screen7.png</screenshot>
      <screenshot>resources/screen8.png</screenshot>
-     <screenshot>resources/screen9.png</screenshot>
     </assets>
   </extension>
 </addon>
