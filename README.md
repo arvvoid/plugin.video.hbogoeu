@@ -263,14 +263,13 @@ Initial version derived from https://github.com/billsuxx/plugin.video.hbogohu wi
 
 ## Download
 
-https://github.com/arvvoid/plugin.video.hbogoeu/releases
-
-Get the latest release and use the install add-on from zip function in Kodi
+Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
+Folow the install instructions
 
 ## Install instructions
 
 * Enable Input Stream Add-on in Kodi v18+: Add-ons >> Package icon >> My Add-ons >> Video Player Inputstream >> Inputstream Adaptive >> menu >> enable
-* Download and install the add-on from zip in Kodi
+* Install the add-on from repository "Kodi ArvVoid Repository"
 * Configure the Add-on: select the correct operator and enter your hbogo username and password 
 (first check if you can login in your local hbo go website without problems)
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
