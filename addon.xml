@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.5.EU.BETA">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0-beta5">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -66,24 +66,24 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
-v.2.0.5.EU
+v.2.0-beta5
 - Additional settings
 - WORK IN PROGRESS: Translations
 
-v.2.0.4.EU
+v.2.0-beta4
 - Persistent session
 
-v.2.0.3.EU
+v.2.0-beta3
 - Code cleaning
 - More info in debug log
 - Option to force original movie/episode names
 - EXPERT OPTION: Show episode/movie names in scraper friendly format (useful only for some external library integration addons)
 
-v.2.0.2.EU
+v.2.0-beta2
 - More info in debug log
 - Providers using redirection login are identified (preparation for implementation of that login method)
 
-v.2.0.1.EU
+v.2.0-beta1
 -Added support for all hbogo.eu: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Romania, Serbia, Slovakia, Slovenija
 -Minor bugfixes
 

@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 
-import base64
-import json
 import sys
+import json
+import base64
+import hashlib
+import pickle
+import time
+
 import urllib
-import os
-import inputstreamhelper
+try:
+    import urllib.parse as parse
+except ImportError:
+    import urlparse as parse
+
 import requests
-import urllib2
+
 import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-from urlparse import parse_qsl
-import hashlib
-import pickle
-import time
+import inputstreamhelper
 
 __addon_id__ = 'plugin.video.hbogoeu'
 __Addon = xbmcaddon.Addon(__addon_id__)
@@ -385,6 +389,21 @@ def storeFavgroup(favgroupid):
         FavoritesGroupId = favgroupid
 
 
+def send_login_hbogo(url, headers, data):
+    r = requests.post(url, headers=headers, data=data)
+    return r.json()
+
+
+def get_from_hbogo(url):
+    r = requests.get(url, headers=loggedin_headers)
+    return r.json()
+
+
+def send_purchase_hbogo(url, purchase_payload, purchase_headers):
+    r = requests.post(url, headers=purchase_headers, data=purchase_payload)
+    return r.json()
+
+
 # silent registration
 def SILENTREGISTER():
     global goToken
@@ -392,11 +411,7 @@ def SILENTREGISTER():
     global customerId
     global sessionId
 
-    req = urllib2.Request(API_URL_SILENTREGISTER, None, loggedin_headers)
-
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(API_URL_SILENTREGISTER)
 
     if jsonrsp['Data']['ErrorMessage']:
         xbmcgui.Dialog().ok(LB_ERROR, jsonrsp['Data']['ErrorMessage'])
@@ -412,11 +427,7 @@ def SILENTREGISTER():
 def GETFAVORITEGROUP():
     global FavoritesGroupId
 
-    req = urllib2.Request(API_URL_SETTINGS, None, loggedin_headers)
-
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(API_URL_SETTINGS)
 
     favgroupId = jsonrsp['FavoritesGroupId']
     storeFavgroup(favgroupId)
@@ -592,8 +603,7 @@ def LOGIN():
         xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN: " + str(data))
     else:
         xbmc.log(DEBUG_ID_STRING+"PERFORMING LOGIN")
-    r = requests.post(url, headers=headers, data=data)
-    jsonrspl = json.loads(r.text)
+    jsonrspl = send_login_hbogo(url, headers, data)
 
     try:
         if jsonrspl['ErrorMessage']:
@@ -614,12 +624,14 @@ def LOGIN():
     else:
         goToken = jsonrspl['Token']
         GOcustomerId = jsonrspl['Customer']['Id']
-        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Token" + str(goToken))
-        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Customer Id" + str(GOcustomerId))
-        # xbmc.log(DEBUG_ID_STRING+"Login sucess - Session Id" + str(sessionId))
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Token [OMITTED FOR PRIVACY]")
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
-        xbmc.log(DEBUG_ID_STRING+"Login sucess - Session Id [OMITTED FOR PRIVACY]")
+        if sensitive_debug:
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Token" + str(goToken))
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Customer Id" + str(GOcustomerId))
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Session Id" + str(sessionId))
+        else:
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Token  [OMITTED FOR PRIVACY]")
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
+            xbmc.log(DEBUG_ID_STRING + "Login sucess - Session Id [OMITTED FOR PRIVACY]")
         loggedin_headers['GO-SessionId'] = str(sessionId)
         loggedin_headers['GO-Token'] = str(goToken)
         loggedin_headers['GO-CustomerId'] = str(GOcustomerId)
@@ -649,10 +661,7 @@ def CATEGORIES():
         addCat(LB_MYPLAYLIST, API_URL_CUSTOMER_GROUP + FavoritesGroupId + '/-/-/-/1000/-/-/false',
                md + 'FavoritesFolder.png', 1)
 
-    req = urllib2.Request(API_URL_GROUPS, None, loggedin_headers)
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(API_URL_GROUPS)
 
     try:
         if jsonrsp['ErrorMessage']:
@@ -674,10 +683,7 @@ def LIST(url):
     if sessionId == '00000000-0000-0000-0000-000000000000':
         LOGIN()
 
-    req = urllib2.Request(url, None, loggedin_headers)
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(url)
 
     try:
         if jsonrsp['ErrorMessage']:
@@ -699,10 +705,7 @@ def LIST(url):
 
 def SEASON(url):
     xbmc.log(DEBUG_ID_STRING+"Season: " + str(url))
-    req = urllib2.Request(url, None, loggedin_headers)
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(url)
 
     try:
         if jsonrsp['ErrorMessage']:
@@ -715,10 +718,7 @@ def SEASON(url):
 
 def EPISODE(url):
     xbmc.log(DEBUG_ID_STRING+"Episode: " + str(url))
-    req = urllib2.Request(url, None, loggedin_headers)
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrsp = json.loads(f.read())
+    jsonrsp = get_from_hbogo(url)
 
     try:
         if jsonrsp['ErrorMessage']:
@@ -761,10 +761,7 @@ def PLAY(url):
         'User-Agent': UA
     }
     xbmc.log(DEBUG_ID_STRING+"Requesting purchase: " + str(API_URL_PURCHASE))
-    req = urllib2.Request(API_URL_PURCHASE, purchase_payload, purchase_headers)
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    jsonrspp = json.loads(f.read())
+    jsonrspp = send_purchase_hbogo(API_URL_PURCHASE, purchase_payload, purchase_headers)
     xbmc.log(DEBUG_ID_STRING+"Purchase response: " + str(jsonrspp))
 
     try:
@@ -811,12 +808,7 @@ def SEARCH():
         else:
             __settings__.setSetting('lastsearch', searchText)
             xbmc.log(DEBUG_ID_STRING+"Performing search: " + str(API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
-            req = urllib2.Request(
-                API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0', None,
-                loggedin_headers)
-            opener = urllib2.build_opener()
-            f = opener.open(req)
-            jsonrsp = json.loads(f.read())
+            jsonrsp = get_from_hbogo(API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0')
             xbmc.log(str(jsonrsp))
 
             try:
@@ -907,7 +899,7 @@ def addCat(name, url, icon, mode):
     return ok
 
 
-params = dict(parse_qsl(sys.argv[2][1:]))
+params = dict(parse.parse_qsl(sys.argv[2][1:]))
 url = None
 name = None
 iconimage = None
