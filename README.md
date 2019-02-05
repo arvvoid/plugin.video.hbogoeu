@@ -29,7 +29,7 @@ Other Hbo Go versions/regions that use diferent APIs, are curently not covered b
 
 At the moment i don't plan to work on and add support for those other versions. If and when working add-ons for those versions become availible it would be possibl to put all toghether in a unified hbogo add-on.
 
-PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] don't currently work with the add-on becouse that login method is not yet implemented. ISSUE #5 https://github.com/arvvoid/plugin.video.hbogoeu/issues/5
+PLEASE NOTE OPERATORS MARKED AS [REDIRECT LOGIN] might currently not work with the add-on becouse that login method is not implemented, still waiting confirmation if the add-on works using standard operator login for those. ISSUE #5 https://github.com/arvvoid/plugin.video.hbogoeu/issues/5
 
 ALL OTHER OPERATORS SHOULD WORK.
 
