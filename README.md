@@ -264,7 +264,7 @@ Initial version derived from https://github.com/billsuxx/plugin.video.hbogohu wi
 ## Download
 
 Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
-Folow the install instructions
+follow the install instructions
 
 ## Install instructions
 
