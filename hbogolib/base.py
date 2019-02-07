@@ -43,11 +43,16 @@ class hbogo(object):
         c_id = int(self.addon.getSetting('country'))
 
         if c_id==0:
-            xbmcgui.Dialog().ok("ERROR", "Country not selected")
+            xbmcgui.Dialog().ok(self.language(33702).encode('utf-8'), self.language(32104).encode('utf-8'))
             xbmcaddon.Addon(id=self.addon_id).openSettings()
             sys.exit()
 
-        self.country = self.countries[c_id]
+        try:
+            self.country = self.countries[c_id]
+        except:
+            xbmcgui.Dialog().ok(self.language(33702).encode('utf-8'), self.language(32104).encode('utf-8'))
+            xbmcaddon.Addon(id=self.addon_id).openSettings()
+            sys.exit()
 
         if self.country[5] == 'hbogo.eu':
             self.handler=HbogoHandler_eu(self.addon_id, self.handle, self.base_url, self.country)

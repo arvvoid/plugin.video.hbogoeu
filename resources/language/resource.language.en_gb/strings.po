@@ -88,6 +88,10 @@ msgctxt "#32103"
 msgid "NO HBOGO OPERATOR SELECTED. Please select your operator to continue."
 msgstr ""
 
+msgctxt "#32104"
+msgid "Country not selected. Please select your country in the settings."
+msgstr ""
+
 msgctxt "#33440"
 msgid "Settings"
 msgstr ""
