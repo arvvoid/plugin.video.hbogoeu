@@ -18,7 +18,8 @@ Register on the official HBO® Go website http://hbogo.eu
 
 This add-on covers all listend on http://hbogo.eu atm 12 countries: 
 * Bosnia and Herzegovina
-* Bulgaria, Croatia
+* Bulgaria
+* Croatia
 * Czech Republic 
 * Hungary
 * Macedonia 
