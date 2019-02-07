@@ -1,3 +1,12 @@
+v.2.0.1-beta6
+- Complete rewrite and restructure of the add-on (missed errors might be present, testing welcome)
+- Operator selection improved: operators ar pulled from the API, and operator details are shown to the user.
+- More robust login
+- Persistent session
+- Navigation improvemnts
+- Structured to support multiple regions in the future, for now only http://hbogo.eu (covers 12 countries) is implemented
+- Please note: you will have to configure the add-on again (just select the country in settings)
+
 v.2.0-beta5
 - Code cleaning
 - Additional settings

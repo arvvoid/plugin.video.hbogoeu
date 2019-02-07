@@ -20,13 +20,81 @@ msgctxt "#32000"
 msgid "ENG"
 msgstr "HRV"
 
+msgctxt "#32001"
+msgid ""
+msgstr ""
+
+msgctxt "#32002"
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Bulgaria"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Croatia"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Czech Republic"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Hungary"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Macedonia"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Montenegro"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Polonia"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Romania"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Serbia"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Slovakia"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Slovenija"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Web registration on "
+msgstr ""
+
+msgctxt "#32101"
+msgid "PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Operators"
+msgstr ""
+
+msgctxt "#32103"
+msgid "NO HBOGO OPERATOR SELECTED. Please select your operator to continue."
+msgstr ""
+
 msgctxt "#33440"
 msgid "Settings"
 msgstr "Postavke"
 
 msgctxt "#33441"
-msgid "Chose operator"
-msgstr "Odaberite operatera"
+msgid "Chose country"
+msgstr "Odaberite državu"
 
 msgctxt "#33442"
 msgid "Username"
