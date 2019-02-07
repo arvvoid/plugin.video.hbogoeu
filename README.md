@@ -73,6 +73,10 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 (first check if you can login in your local hbo go website without problems)
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
+## Latest relese
+
+[plugin.video.hbogoeu-2.0.0.beta5.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0-beta5/plugin.video.hbogoeu-2.0.0.beta5.zip)
+
 ## Tested
 
 PLATFORMS:
