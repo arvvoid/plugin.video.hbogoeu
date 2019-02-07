@@ -39,6 +39,7 @@ Other Hbo Go versions/regions that use diferent APIs, are currently not covered 
 * HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 
 These operators might have a login procedure not supported by the add-on at the moment ([#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5)) :
+
 * Czech Republic: Skylink [REDIRECT LOGIN]
 * Czech Republic: UPC CZ [REDIRECT LOGIN]
 * Polonia: Cyfrowy Polsat [REDIRECT LOGIN]
@@ -47,6 +48,7 @@ These operators might have a login procedure not supported by the add-on at the 
 * Romania: Vodafone Romania 4GTV+ [REDIRECT LOGIN]
 * Slovakia: Skylink [REDIRECT LOGIN]
 * Slovakia: UPC CZ [REDIRECT LOGIN]
+
 A special login procedure might be necessary for those and is not implemented, still waiting for concrete confirmation if the add-on works using standard operator login for those. If you use one of these operators please try to play a video with the latest version and post a full debug log (https://kodi.wiki/view/Log_file/Easy) here or on github no matter the outcome. ISSUE [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5).
 
 ALL OTHER OPERATORS SHOULD WORK WITH NO ISSUE.
