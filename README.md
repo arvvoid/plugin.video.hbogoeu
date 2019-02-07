@@ -18,7 +18,8 @@ Register on the official HBO® Go website http://hbogo.eu
 
 This add-on covers all listend on http://hbogo.eu atm 12 countries: 
 * Bosnia and Herzegovina
-* Bulgaria, Croatia
+* Bulgaria
+* Croatia
 * Czech Republic 
 * Hungary
 * Macedonia 
@@ -71,6 +72,10 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 * Configure the Add-on: select the correct operator and enter your hbogo username and password 
 (first check if you can login in your local hbo go website without problems)
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
+
+## Latest relese
+
+[plugin.video.hbogoeu-2.0.0.beta5.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0-beta5/plugin.video.hbogoeu-2.0.0.beta5.zip)
 
 ## Tested
 
