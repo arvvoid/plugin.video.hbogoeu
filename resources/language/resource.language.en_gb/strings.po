@@ -85,11 +85,11 @@ msgid "Operators"
 msgstr ""
 
 msgctxt "#32103"
-msgid "NO HBOGO OPERATOR SELECTED. Please select your operator to continue."
+msgid "Sorry, you are not correctly logged in, aborting play. Try to login on the official site then try again, if the problem persist ask support with a full debug log"
 msgstr ""
 
 msgctxt "#32104"
-msgid "Country not selected. Please select your country in the settings."
+msgid "Operaotr not selected. Please select your country/operaotr in the settings."
 msgstr ""
 
 msgctxt "#33440"
@@ -97,7 +97,7 @@ msgid "Settings"
 msgstr ""
 
 msgctxt "#33441"
-msgid "Chose country"
+msgid "Chose country/operator"
 msgstr ""
 
 msgctxt "#33442"

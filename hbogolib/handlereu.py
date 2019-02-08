@@ -13,14 +13,11 @@
 from hbogolib.handler import HbogoHandler
 
 import sys
-import os
 import time
 import urllib
-import requests
 import json
 import base64
 import hashlib
-import re
 
 import xbmc
 import xbmcgui
@@ -29,10 +26,12 @@ import inputstreamhelper
 
 class HbogoHandler_eu(HbogoHandler):
 
-    def __init__(self, addon_id, handle, base_url, country):
+    def __init__(self, addon_id, handle, base_url, country, operator_name):
         HbogoHandler.__init__(self, addon_id, handle, base_url)
-
-
+        self.operator_name=operator_name
+        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR: " + self.operator_name)
+        self.op_id=country[0]
+        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR ID: " + self.op_id)
         self.COUNTRY_CODE_SHORT = country[2]
         xbmc.log(self.DEBUG_ID_STRING + "OPERATOR COUNTRY_CODE_SHORT: " + self.COUNTRY_CODE_SHORT)
         self.COUNTRY_CODE = country[3]
@@ -40,7 +39,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.DEFAULT_LANGUAGE = country[4]
         xbmc.log(self.DEBUG_ID_STRING + "DEFAULT HBO GO LANGUAGE: " + self.DEFAULT_LANGUAGE)
         self.DOMAIN_CODE = country[1]
-
+        self.is_web=country[5]
+        xbmc.log(self.DEBUG_ID_STRING + "WEB OPERATOR: " + str(self.is_web))
+        self.REDIRECT_URL=country[6]
+        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
         #GEN API URLS
 
         # API URLS
@@ -145,58 +147,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.favgroupId = jsonrsp['FavoritesGroupId']
         self.storeFavgroup(self.favgroupId)
 
-    def storeOperator(self, op_id, web, name, redirecturl):
-        xbmc.log(self.DEBUG_ID_STRING + "Storing operator: " + op_id + ", " + web + ", " + name + ", " + redirecturl)
-        self.del_login()
-        self.goToken = ""
-        self.customerId = ""
-        self.GOcustomerId = ""
-        self.sessionId = '00000000-0000-0000-0000-000000000000'
-        self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
-        self.loggedin_headers['GO-Token'] = str(self.goToken)
-        self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
-
-        self.addon.setSetting('OperatorId', op_id)
-        self.addon.setSetting('OperatorWeb', web)
-        self.addon.setSetting('OperatorName', name)
-        if redirecturl!='NOREDIR':
-            self.addon.setSetting('OperatorRedirUrl', redirecturl)
-        else:
-            self.addon.setSetting('OperatorRedirUrl', '')
-        self.categories()
-
-    def showOperators(self):
-        self.setDispCat(self.language(32102))
-        xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_NONE)
-        json_web_operators = requests.get(self.API_URL_GET_WEB_OPERATORS).json()
-        xbmc.log(self.DEBUG_ID_STRING + "Get web operators: "+str(json_web_operators))
-        cleanr = re.compile('<.*?>')
-        for operator in json_web_operators['Items']:
-            name = operator['Name']
-            liz = xbmcgui.ListItem(name, thumbnailImage=self.resources + "icon.png")
-            liz.setInfo(type="Video",
-                        infoLabels={"plot": self.language(32100)+" "+self.API_HOST_ORIGIN + os.linesep + os.linesep + self.language(32101)})
-            u = self.base_url + "?mode=8&op_id="+operator['Id']+"&op_name="+urllib.quote_plus(name.encode('utf-8', 'ignore'))+"&is_web=true&url=NOREDIR"
-            liz.setProperty('isPlayable', "false")
-            xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
-        json_operators = requests.get(self.API_URL_GET_OPERATORS).json()
-        xbmc.log(self.DEBUG_ID_STRING + "Get operators" + str(json_operators))
-        for operator in json_operators['Items']:
-            name = operator['Name']
-            desc = re.sub(cleanr, '', operator['Description'])
-            redirect = 'NOREDIR'
-            if len(operator['RedirectionUrl'])>0:
-                redirect=urllib.quote_plus(operator['RedirectionUrl'])
-            liz = xbmcgui.ListItem(name, thumbnailImage=operator['LogoUrl'])
-            liz.setInfo(type="Video",
-                        infoLabels={"plot":  desc + os.linesep + os.linesep + self.language(32101)})
-            u = self.base_url + "?mode=8&op_id="+operator['Id']+"&op_name="+urllib.quote_plus(name.encode('utf-8', 'ignore'))+"&is_web=false&url=" + redirect
-            liz.setProperty('isPlayable', "false")
-            xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
-        xbmcplugin.endOfDirectory(self.handle)
-        xbmcgui.Dialog().ok(self.LB_INFO, self.language(32103))
-        sys.exit()
-
     def chk_login(self):
         return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId'])!=0)
 
@@ -210,27 +160,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
         self.loggedin_headers['GO-Token'] = str(self.goToken)
         self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
-        self.showOperators()
 
 
     def login(self):
-        op_id = self.addon.getSetting('OperatorId')
-        if op_id == "":
-            xbmc.log(self.DEBUG_ID_STRING + "NO OPERATOR ID: Showing operators selection")
-            self.logout()
-            return
-        xbmc.log(self.DEBUG_ID_STRING + "Using operator: "+str(self.addon.getSetting('OperatorName')))
-        xbmc.log(self.DEBUG_ID_STRING + "Using operator: " + str(op_id))
-
-        is_op_web = self.addon.getSetting('OperatorWeb')
-        if is_op_web == "true":
-            is_op_web = True
-        else:
-            is_op_web = False
-        xbmc.log(self.DEBUG_ID_STRING + "Using operator: IS WEB ? " + str(is_op_web))
-
-        REDIRECT_URL = self.addon.getSetting('OperatorRedirUrl')
-        xbmc.log(self.DEBUG_ID_STRING + "Using operator: REDIRECTION URL:  " + str(REDIRECT_URL))
+        xbmc.log(self.DEBUG_ID_STRING + "Using operator: " + str(self.op_id))
 
         username = self.addon.getSetting('username')
         password = self.addon.getSetting('password')
@@ -250,7 +183,7 @@ class HbogoHandler_eu(HbogoHandler):
             sys.exit()
             return
 
-        login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + op_id).hexdigest()
+        login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
         xbmc.log(self.DEBUG_ID_STRING + "LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_session")
@@ -295,12 +228,12 @@ class HbogoHandler_eu(HbogoHandler):
             'Content-Type': 'application/json',
         }
 
-        if is_op_web:
+        if self.is_web:
             url = self.API_URL_AUTH_WEBBASIC
         else:
             url = self.API_URL_AUTH_OPERATOR
 
-        if len(REDIRECT_URL) > 0:
+        if len(self.REDIRECT_URL) > 0:
             xbmc.log(self.DEBUG_ID_STRING + "OPERATOR WITH LOGIN REDIRECT DETECTED, THE LOGIN WILL PROBABLY FAIL, NOT IMPLEMENTED, more details https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             # EXPLANATION
             # ------------
@@ -348,7 +281,7 @@ class HbogoHandler_eu(HbogoHandler):
             "LastName": "",
             "Nick": "",
             "NotificationChanges": 0,
-            "OperatorId": op_id,
+            "OperatorId": self.op_id,
             "OperatorName": "",
             "OperatorToken": "",
             "ParentalControl": {
@@ -394,7 +327,7 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             xbmc.log(self.DEBUG_ID_STRING + "GENERIC LOGIN ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
-            if len(REDIRECT_URL) > 0:
+            if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
             return
@@ -406,7 +339,7 @@ class HbogoHandler_eu(HbogoHandler):
         if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
             xbmc.log(self.DEBUG_ID_STRING + "GENERIC LOGIN ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
-            if len(REDIRECT_URL) > 0:
+            if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
             return
@@ -443,8 +376,7 @@ class HbogoHandler_eu(HbogoHandler):
     def categories(self):
         if not self.chk_login():
             self.login()
-        self.setDispCat("")
-        self.addCat(self.addon.getSetting('OperatorName')+" [LOGOUT]", "[LOGOUT]", self.md + 'logout.png', 9)
+        self.setDispCat(self.operator_name)
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.md + 'search.png', 4)
 
         if (self.FavoritesGroupId == ""):
@@ -463,6 +395,10 @@ class HbogoHandler_eu(HbogoHandler):
 
         for cat in jsonrsp['Items']:
             self.addCat(cat['Name'].encode('utf-8', 'ignore'), cat['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
+
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
         xbmcplugin.endOfDirectory(self.handle)
 
     def list(self, url):
@@ -491,6 +427,25 @@ class HbogoHandler_eu(HbogoHandler):
                     self.addLink(title, 5)
                 else:
                     self.addDir(title, 2, "tvshow")
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
+        xbmcplugin.setContent(self.handle, "files")
         xbmcplugin.endOfDirectory(self.handle)
 
     def season(self, url):
@@ -506,6 +461,25 @@ class HbogoHandler_eu(HbogoHandler):
             pass
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, 3, "season")
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
+        xbmcplugin.setContent(self.handle, "files")
         xbmcplugin.endOfDirectory(self.handle)
 
     def episode(self, url):
@@ -522,6 +496,25 @@ class HbogoHandler_eu(HbogoHandler):
 
         for episode in jsonrsp['ChildContents']['Items']:
             self.addLink(episode, 5)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
+        xbmcplugin.setContent(self.handle, "files")
         xbmcplugin.endOfDirectory(self.handle)
 
     def search(self):
@@ -551,10 +544,30 @@ class HbogoHandler_eu(HbogoHandler):
                     if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
                         self.addLink(item, 5)
                     else:
-                        self.addDir(item, 2, "tvshow")
+                        self.addDir(item, 2, "season")
                     br = br + 1
                 if br == 0:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.md + 'DefaultFolderBack.png', '')
+
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
+        xbmcplugin.addSortMethod(
+            handle=self.handle,
+            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
+        xbmcplugin.setContent(self.handle, "files")
         xbmcplugin.endOfDirectory(self.handle)
 
     def play(self, url, content_id):
@@ -562,8 +575,11 @@ class HbogoHandler_eu(HbogoHandler):
 
         if not self.chk_login():
             self.login()
-        op_id = self.addon.getSetting('OperatorId')
-        purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
+        if not self.chk_login():
+            xbmc.log(self.DEBUG_ID_STRING + "NO LOGED IN ABORTING PLAY")
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(32103))
+            sys.exit()
+        purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
         xbmc.log(self.DEBUG_ID_STRING + "Purchase payload: " + str(purchase_payload))
         purchase_headers = {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
