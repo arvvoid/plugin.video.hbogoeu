@@ -34,7 +34,7 @@ class HbogoHandler(object):
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = int(self.addon.getSetting('sessionvalid'))  # stored session valid
 
-        self.base_addon_cat="HBO GO /"
+        self.base_addon_cat=""
 
         self.md = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/media/")
         self.resources = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/")
