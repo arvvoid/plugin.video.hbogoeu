@@ -77,7 +77,7 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.0.beta5.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0-beta5/plugin.video.hbogoeu-2.0.0.beta5.zip)
+[plugin.video.hbogoeu-2.0.1-beta6.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0.1-beta6/plugin.video.hbogoeu-2.0.1-beta6.zip)
 
 ## Tested
 
