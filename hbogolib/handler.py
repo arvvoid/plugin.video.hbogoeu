@@ -39,6 +39,7 @@ class HbogoHandler(object):
         self.md = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/media/")
         self.resources = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/")
         self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))
+        xbmcplugin.setPluginFanart(self.handle, image=self.resources + "fanart.jpg")
 
         # LABELS
 
@@ -55,6 +56,8 @@ class HbogoHandler(object):
         self.LB_LOGIN_ERROR = self.language(33709).encode('utf-8')
         self.LB_NO_OPERATOR = self.language(33710).encode('utf-8')
         self.LB_SEARCH = self.language(33711).encode('utf-8')
+
+        self.use_content_type = "videos"
 
         self.force_original_names = self.addon.getSetting('origtitles')
         if self.force_original_names == "true":
@@ -83,7 +86,7 @@ class HbogoHandler(object):
         self.API_PLATFORM = 'COMP'
 
     def setDispCat(self, cur_loc):
-        xbmcplugin.setPluginCategory(self.handle, self.base_addon_cat + cur_loc)
+        xbmcplugin.setPluginCategory(self.handle, cur_loc)
 
     def send_login_hbogo(self, url, headers, data):
         r = requests.post(url, headers=headers, data=data)

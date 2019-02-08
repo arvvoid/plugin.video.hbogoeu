@@ -59,7 +59,6 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.API_HOST = self.COUNTRY_CODE_SHORT + 'api.hbogo.eu'
         self.API_HOST_REFERER = 'https://hbogo.' + self.DOMAIN_CODE + '/'
-        self.base_addon_cat = "hbogo." + self.DOMAIN_CODE + " / "
         self.API_HOST_ORIGIN = 'https://www.hbogo.' + self.DOMAIN_CODE
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
@@ -445,7 +444,7 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addSortMethod(
             handle=self.handle,
             sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, "files")
+        xbmcplugin.setContent(self.handle, self.use_content_type)
         xbmcplugin.endOfDirectory(self.handle)
 
     def season(self, url):
@@ -479,7 +478,7 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addSortMethod(
             handle=self.handle,
             sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, "files")
+        xbmcplugin.setContent(self.handle, self.use_content_type)
         xbmcplugin.endOfDirectory(self.handle)
 
     def episode(self, url):
@@ -514,7 +513,7 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addSortMethod(
             handle=self.handle,
             sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, "files")
+        xbmcplugin.setContent(self.handle, self.use_content_type)
         xbmcplugin.endOfDirectory(self.handle)
 
     def search(self):
@@ -567,7 +566,7 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addSortMethod(
             handle=self.handle,
             sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, "files")
+        xbmcplugin.setContent(self.handle, self.use_content_type)
         xbmcplugin.endOfDirectory(self.handle)
 
     def play(self, url, content_id):

@@ -1,3 +1,6 @@
+v.2.0.1-beta7
+- Minor cosmetic fixes
+        
 v.2.0.1-beta6
 - Complete rewrite and restructure of the add-on (missed errors might be present, testing welcome)
 - More robust login
