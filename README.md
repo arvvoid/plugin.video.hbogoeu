@@ -87,13 +87,16 @@ Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=
 
 PLATFORMS:
 
-Ubuntu 16.04 (Kodi 18 RC5.2)
+Ubuntu 16.04 (Kodi 18)
 WORKS HW Decoding up to 1080p
 
-Mac OS 10.14.1 (Kodi 18 RC5.2)
+Mac OS 10.14.1 (Kodi 18)
 WORKS  HW Decoding up to 1080p
 
-Libreelec v8.95.3 BETA (Kodi 18 RC5.2)
+Windows 10 64bit (Kodi 18)
+WORKS  HW Decoding up to 1080p
+
+Libreelec v9.00.0 (Kodi 18)
 on Raspberry Pi 3B+,3B,2B
 WORKS HW Decoding up to 1080p
 
