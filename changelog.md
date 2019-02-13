@@ -1,3 +1,6 @@
+v.2.0.2-beta8
+- Added support for Portugal (web registration operators, and Vodafon TV operator)
+
 v.2.0.1-beta7
 - Minor cosmetic fixes
         

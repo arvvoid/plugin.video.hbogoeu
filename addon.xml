@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.1~beta7">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.2~beta8">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -66,6 +66,9 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
+v.2.0.2-beta8
+- Added support for Portugal (web registration operators, and Vodafon TV operator)
+
 v.2.0.1-beta7
 - Minor cosmetic fixes
 

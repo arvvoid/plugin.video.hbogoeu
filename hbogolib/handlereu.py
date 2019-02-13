@@ -43,6 +43,8 @@ class HbogoHandler_eu(HbogoHandler):
         xbmc.log(self.DEBUG_ID_STRING + "WEB OPERATOR: " + str(self.is_web))
         self.REDIRECT_URL=country[6]
         xbmc.log(self.DEBUG_ID_STRING + "OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
+        self.SPECIALHOST_URL=country[8]
+        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR SPECIAL HOST URL: " + str(self.SPECIALHOST_URL))
         #GEN API URLS
 
         # API URLS
@@ -58,8 +60,14 @@ class HbogoHandler_eu(HbogoHandler):
         self.LICENSE_SERVER = 'https://lic.drmtoday.com/license-proxy-widevine/cenc/'
 
         self.API_HOST = self.COUNTRY_CODE_SHORT + 'api.hbogo.eu'
-        self.API_HOST_REFERER = 'https://hbogo.' + self.DOMAIN_CODE + '/'
-        self.API_HOST_ORIGIN = 'https://www.hbogo.' + self.DOMAIN_CODE
+
+        if len(self.SPECIALHOST_URL)>0:
+            self.API_HOST_REFERER = self.SPECIALHOST_URL
+            self.API_HOST_ORIGIN = self.SPECIALHOST_URL
+        else:
+            self.API_HOST_REFERER = 'https://hbogo.' + self.DOMAIN_CODE + '/'
+            self.API_HOST_ORIGIN = 'https://www.hbogo.' + self.DOMAIN_CODE
+
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
