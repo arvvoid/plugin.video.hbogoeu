@@ -16,7 +16,7 @@ Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) fr
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website http://hbogo.eu
 
-This add-on covers all listend on http://hbogo.eu atm 12 countries: 
+This add-on covers all listend on http://hbogo.eu atm 12 countries, plus Protugal that share the same api: 
 * Bosnia and Herzegovina
 * Bulgaria
 * Croatia
