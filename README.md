@@ -25,6 +25,7 @@ This add-on covers all listend on http://hbogo.eu atm 12 countries:
 * Macedonia 
 * Montenegro
 * Polonia
+* Portugal
 * Romania
 * Serbia
 * Slovakia
