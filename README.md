@@ -80,6 +80,8 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 [plugin.video.hbogoeu-2.0.2~beta8.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.2~beta8.zip)
 
+[CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
+
 ## Help
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
