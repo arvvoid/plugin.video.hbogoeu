@@ -57,7 +57,7 @@ class HbogoHandler(object):
         self.LB_NO_OPERATOR = self.language(33710).encode('utf-8')
         self.LB_SEARCH = self.language(33711).encode('utf-8')
 
-        self.use_content_type = "videos"
+        self.use_content_type = "episodes"
 
         self.force_original_names = self.addon.getSetting('origtitles')
         if self.force_original_names == "true":
@@ -85,6 +85,10 @@ class HbogoHandler(object):
         self.loggedin_headers = None  #DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
 
+    def log(self, msg, level=xbmc.LOGDEBUG):
+        xbmc.log(self.DEBUG_ID_STRING + msg, level)
+
+
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
 
@@ -103,7 +107,7 @@ class HbogoHandler(object):
     def del_login(self):
         try:
             folder = xbmc.translatePath("special://temp")
-            xbmc.log(self.DEBUG_ID_STRING + "Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
+            self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
             os.remove(folder + self.addon_id + "_session"+".pkl")
         except:
             pass
@@ -114,18 +118,18 @@ class HbogoHandler(object):
 
     def save_obj(self, obj, name):
         folder = xbmc.translatePath("special://temp")
-        xbmc.log(self.DEBUG_ID_STRING + "Saving: " + folder + name + '.pkl')
+        self.log("Saving: " + folder + name + '.pkl')
         with open(folder + name + '.pkl', 'wb') as f:
             pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     def load_obj(self, name):
         folder = xbmc.translatePath("special://temp")
-        xbmc.log(self.DEBUG_ID_STRING + "Trying to load: " + folder + name + '.pkl')
+        self.log("Trying to load: " + folder + name + '.pkl')
         try:
             with open(folder + name + '.pkl', 'rb') as f:
                 return pickle.load(f)
         except:
-            xbmc.log(self.DEBUG_ID_STRING + "OBJECT RELOAD ERROR")
+            self.log("OBJECT RELOAD ERROR")
             return None
 
     #IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER

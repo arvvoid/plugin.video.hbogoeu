@@ -29,22 +29,22 @@ class HbogoHandler_eu(HbogoHandler):
     def __init__(self, addon_id, handle, base_url, country, operator_name):
         HbogoHandler.__init__(self, addon_id, handle, base_url)
         self.operator_name=operator_name
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR: " + self.operator_name)
+        self.log("OPERATOR: " + self.operator_name)
         self.op_id=country[0]
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR ID: " + self.op_id)
+        self.log("OPERATOR ID: " + self.op_id)
         self.COUNTRY_CODE_SHORT = country[2]
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR COUNTRY_CODE_SHORT: " + self.COUNTRY_CODE_SHORT)
+        self.log("OPERATOR COUNTRY_CODE_SHORT: " + self.COUNTRY_CODE_SHORT)
         self.COUNTRY_CODE = country[3]
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR COUNTRY_CODE: " + self.COUNTRY_CODE)
+        self.log("OPERATOR COUNTRY_CODE: " + self.COUNTRY_CODE)
         self.DEFAULT_LANGUAGE = country[4]
-        xbmc.log(self.DEBUG_ID_STRING + "DEFAULT HBO GO LANGUAGE: " + self.DEFAULT_LANGUAGE)
+        self.log("DEFAULT HBO GO LANGUAGE: " + self.DEFAULT_LANGUAGE)
         self.DOMAIN_CODE = country[1]
         self.is_web=country[5]
-        xbmc.log(self.DEBUG_ID_STRING + "WEB OPERATOR: " + str(self.is_web))
+        self.log("WEB OPERATOR: " + str(self.is_web))
         self.REDIRECT_URL=country[6]
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
+        self.log("OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
         self.SPECIALHOST_URL=country[8]
-        xbmc.log(self.DEBUG_ID_STRING + "OPERATOR SPECIAL HOST URL: " + str(self.SPECIALHOST_URL))
+        self.log("OPERATOR SPECIAL HOST URL: " + str(self.SPECIALHOST_URL))
         #GEN API URLS
 
         # API URLS
@@ -128,9 +128,9 @@ class HbogoHandler_eu(HbogoHandler):
             self.FavoritesGroupId = favgroupid
 
     def silentRegister(self):
-        xbmc.log(self.DEBUG_ID_STRING + "DEVICE REGISTRATION")
+        self.log("DEVICE REGISTRATION")
         jsonrsp = self.get_from_hbogo(self.API_URL_SILENTREGISTER)
-        xbmc.log(self.DEBUG_ID_STRING + "DEVICE REGISTRATION: " + str(jsonrsp))
+        self.log("DEVICE REGISTRATION: " + str(jsonrsp))
         try:
             if jsonrsp['Data']['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['Data']['ErrorMessage'])
@@ -143,9 +143,9 @@ class HbogoHandler_eu(HbogoHandler):
             self.sessionId = jsonrsp['Data']['SessionId']
         except:
             self.logout()
-            xbmc.log(self.DEBUG_ID_STRING + "DEVICE REGISTRATION: UNEXPECTED PROBLEM")
+            self.log("DEVICE REGISTRATION: UNEXPECTED PROBLEM")
             return
-        xbmc.log(self.DEBUG_ID_STRING + "DEVICE REGISTRATION: OK")
+        self.log("DEVICE REGISTRATION: OK")
         return jsonrsp
 
     def getFavoriteGroup(self):
@@ -158,7 +158,7 @@ class HbogoHandler_eu(HbogoHandler):
         return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId'])!=0)
 
     def logout(self):
-        xbmc.log(self.DEBUG_ID_STRING + "Loging out")
+        self.log("Loging out")
         self.del_login()
         self.goToken = ""
         self.customerId = ""
@@ -170,7 +170,7 @@ class HbogoHandler_eu(HbogoHandler):
 
 
     def login(self):
-        xbmc.log(self.DEBUG_ID_STRING + "Using operator: " + str(self.op_id))
+        self.log("Using operator: " + str(self.op_id))
 
         username = self.addon.getSetting('username')
         password = self.addon.getSetting('password')
@@ -191,34 +191,34 @@ class HbogoHandler_eu(HbogoHandler):
             return
 
         login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
-        xbmc.log(self.DEBUG_ID_STRING + "LOGIN HASH: " + login_hash)
+        self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_session")
 
         if loaded_session != None:
             # sesion exist if valid restore
-            xbmc.log(self.DEBUG_ID_STRING + "SAVED SESSION LOADED")
+            self.log("SAVED SESSION LOADED")
             if loaded_session["hash"] == login_hash:
-                xbmc.log(self.DEBUG_ID_STRING + "HASH IS VALID")
+                self.log("HASH IS VALID")
                 if time.time() < (loaded_session["time"] + (self.SESSION_VALIDITY * 60 * 60)):
-                    xbmc.log(self.DEBUG_ID_STRING + "NOT EXPIRED RESTORING...")
+                    self.log("NOT EXPIRED RESTORING...")
                     # valid loaded sesion restor and exit login
                     if self.sensitive_debug:
-                        xbmc.log(self.DEBUG_ID_STRING + "Restoring login from saved: " + str(loaded_session))
+                        self.log("Restoring login from saved: " + str(loaded_session))
                     else:
-                        xbmc.log(self.DEBUG_ID_STRING + "Restoring login from saved: [OMITTED FOR PRIVACY]")
+                        self.log("Restoring login from saved: [OMITTED FOR PRIVACY]")
                     self.loggedin_headers = loaded_session["headers"]
                     self.sessionId = self.loggedin_headers['GO-SessionId']
                     self.goToken = self.loggedin_headers['GO-Token']
                     self.GOcustomerId = self.loggedin_headers['GO-CustomerId']
                     if self.sensitive_debug:
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Token" + str(self.goToken))
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Customer Id" + str(self.GOcustomerId))
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Session Id" + str(self.sessionId))
+                        self.log("Login restored - Token" + str(self.goToken))
+                        self.log("Login restored - Customer Id" + str(self.GOcustomerId))
+                        self.log("Login restored - Session Id" + str(self.sessionId))
                     else:
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Token  [OMITTED FOR PRIVACY]")
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Customer Id  [OMITTED FOR PRIVACY]")
-                        xbmc.log(self.DEBUG_ID_STRING + "Login restored - Session Id [OMITTED FOR PRIVACY]")
+                        self.log("Login restored - Token  [OMITTED FOR PRIVACY]")
+                        self.log("Login restored - Customer Id  [OMITTED FOR PRIVACY]")
+                        self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
                     return
 
         headers = {
@@ -241,7 +241,7 @@ class HbogoHandler_eu(HbogoHandler):
             url = self.API_URL_AUTH_OPERATOR
 
         if len(self.REDIRECT_URL) > 0:
-            xbmc.log(self.DEBUG_ID_STRING + "OPERATOR WITH LOGIN REDIRECT DETECTED, THE LOGIN WILL PROBABLY FAIL, NOT IMPLEMENTED, more details https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
+            self.log("OPERATOR WITH LOGIN REDIRECT DETECTED, THE LOGIN WILL PROBABLY FAIL, NOT IMPLEMENTED, more details https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             # EXPLANATION
             # ------------
             # For a few operators the login is not performed directly using the hbogo api. Instead the user is redirected to the operator website
@@ -312,14 +312,14 @@ class HbogoHandler_eu(HbogoHandler):
 
         data = json.dumps(data_obj)
         if self.sensitive_debug:
-            xbmc.log(self.DEBUG_ID_STRING + "PERFORMING LOGIN: " + str(data))
+            self.log("PERFORMING LOGIN: " + str(data))
         else:
-            xbmc.log(self.DEBUG_ID_STRING + "PERFORMING LOGIN")
+            self.log("PERFORMING LOGIN")
         jsonrspl = self.send_login_hbogo(url, headers, data)
 
         try:
             if jsonrspl['ErrorMessage']:
-                xbmc.log(self.DEBUG_ID_STRING + "LOGIN ERROR: " + str(jsonrspl['ErrorMessage']))
+                self.log("LOGIN ERROR: " + str(jsonrspl['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
                 if len(REDIRECT_URL) > 0:
                     xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
@@ -332,7 +332,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.customerId = jsonrspl['Customer']['CurrentDevice']['Id']
             self.individualization = jsonrspl['Customer']['CurrentDevice']['Individualization']
         except:
-            xbmc.log(self.DEBUG_ID_STRING + "GENERIC LOGIN ERROR")
+            self.log("GENERIC LOGIN ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
             if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
@@ -344,7 +344,7 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             self.sessionId = '00000000-0000-0000-0000-000000000000'
         if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
-            xbmc.log(self.DEBUG_ID_STRING + "GENERIC LOGIN ERROR")
+            self.log("GENERIC LOGIN ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
             if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
@@ -354,13 +354,13 @@ class HbogoHandler_eu(HbogoHandler):
             self.goToken = jsonrspl['Token']
             self.GOcustomerId = jsonrspl['Customer']['Id']
             if self.sensitive_debug:
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Token" + str(self.goToken))
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Customer Id" + str(self.GOcustomerId))
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Session Id" + str(self.sessionId))
+                self.log("Login sucess - Token" + str(self.goToken))
+                self.log("Login sucess - Customer Id" + str(self.GOcustomerId))
+                self.log("Login sucess - Session Id" + str(self.sessionId))
             else:
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Token  [OMITTED FOR PRIVACY]")
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
-                xbmc.log(self.DEBUG_ID_STRING + "Login sucess - Session Id [OMITTED FOR PRIVACY]")
+                self.log("Login sucess - Token  [OMITTED FOR PRIVACY]")
+                self.log("Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
+                self.log("Login sucess - Session Id [OMITTED FOR PRIVACY]")
             self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
             self.loggedin_headers['GO-Token'] = str(self.goToken)
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
@@ -373,9 +373,9 @@ class HbogoHandler_eu(HbogoHandler):
 
             }
             if self.sensitive_debug:
-                xbmc.log(self.DEBUG_ID_STRING + "SAVING SESSION: " + str(saved_session))
+                self.log("SAVING SESSION: " + str(saved_session))
             else:
-                xbmc.log(self.DEBUG_ID_STRING + "SAVING SESSION: [OMITTED FOR PRIVACY]")
+                self.log("SAVING SESSION: [OMITTED FOR PRIVACY]")
             self.save_obj(saved_session, self.addon_id + "_session")
 
 
@@ -411,7 +411,7 @@ class HbogoHandler_eu(HbogoHandler):
     def list(self, url):
         if not self.chk_login():
             self.login()
-        xbmc.log(self.DEBUG_ID_STRING + "List: " + str(url))
+        self.log("List: " + str(url))
 
         if not self.chk_login():
             self.login()
@@ -458,7 +458,7 @@ class HbogoHandler_eu(HbogoHandler):
     def season(self, url):
         if not self.chk_login():
             self.login()
-        xbmc.log(self.DEBUG_ID_STRING + "Season: " + str(url))
+        self.log("Season: " + str(url))
         jsonrsp = self.get_from_hbogo(url)
 
         try:
@@ -492,7 +492,7 @@ class HbogoHandler_eu(HbogoHandler):
     def episode(self, url):
         if not self.chk_login():
             self.login()
-        xbmc.log(self.DEBUG_ID_STRING + "Episode: " + str(url))
+        self.log("Episode: " + str(url))
         jsonrsp = self.get_from_hbogo(url)
 
         try:
@@ -535,13 +535,13 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.md + 'DefaultFolderBack.png', '')
             else:
                 self.addon.setSetting('lastsearch', searchText)
-                xbmc.log(self.DEBUG_ID_STRING + "Performing search: " + str(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
+                self.log("Performing search: " + str(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
                 jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0')
-                xbmc.log(str(jsonrsp))
+                self.log(str(jsonrsp))
 
                 try:
                     if jsonrsp['ErrorMessage']:
-                        xbmc.log(self.DEBUG_ID_STRING + "Search Error: " + str(jsonrsp['ErrorMessage']))
+                        self.log("Search Error: " + str(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
                 except:
                     pass
@@ -578,16 +578,17 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.endOfDirectory(self.handle)
 
     def play(self, url, content_id):
-        xbmc.log(self.DEBUG_ID_STRING + "Play: " + str(url))
+        self.log("Play: " + str(url))
 
         if not self.chk_login():
             self.login()
         if not self.chk_login():
-            xbmc.log(self.DEBUG_ID_STRING + "NO LOGED IN ABORTING PLAY")
+            self.log("NO LOGED IN ABORTING PLAY")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(32103))
-            sys.exit()
+            self.logout()
+            return
         purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
-        xbmc.log(self.DEBUG_ID_STRING + "Purchase payload: " + str(purchase_payload))
+        self.log("Purchase payload: " + str(purchase_payload))
         purchase_headers = {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': '',
@@ -604,29 +605,31 @@ class HbogoHandler_eu(HbogoHandler):
             'Origin': self.API_HOST_ORIGIN,
             'User-Agent': self.UA
         }
-        xbmc.log(self.DEBUG_ID_STRING + "Requesting purchase: " + str(self.API_URL_PURCHASE))
+        self.log("Requesting purchase: " + str(self.API_URL_PURCHASE))
         jsonrspp = self.send_purchase_hbogo(self.API_URL_PURCHASE, purchase_payload, purchase_headers)
-        xbmc.log(self.DEBUG_ID_STRING + "Purchase response: " + str(jsonrspp))
+        self.log("Purchase response: " + str(jsonrspp))
 
         try:
             if jsonrspp['ErrorMessage']:
-                xbmc.log(self.DEBUG_ID_STRING + "Purchase error: " + str(jsonrspp['ErrorMessage']))
+                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
+                self.logout()
+                return
         except:
             pass
 
         MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
-        xbmc.log(self.DEBUG_ID_STRING + "Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
+        self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
         PlayerSessionId = jsonrspp['Purchase']['PlayerSessionId']
-        xbmc.log(self.DEBUG_ID_STRING + "PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
+        self.log("PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
         x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
-        xbmc.log(self.DEBUG_ID_STRING + "Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
+        self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
         dt_custom_data = base64.b64encode("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
         li = xbmcgui.ListItem(path=MediaUrl)
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
-        xbmc.log(self.DEBUG_ID_STRING + "Licence key: " + str(license_key))
+        self.log("Licence key: " + str(license_key))
         protocol = 'ism'
         drm = 'com.widevine.alpha'
         is_helper = inputstreamhelper.Helper(protocol, drm=drm)
@@ -636,11 +639,11 @@ class HbogoHandler_eu(HbogoHandler):
         li.setProperty('inputstream.adaptive.license_type', drm)
         li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
         li.setProperty('inputstream.adaptive.license_key', license_key)
-        xbmc.log(self.DEBUG_ID_STRING + "Play url: " + str(li))
+        self.log("Play url: " + str(li))
         xbmcplugin.setResolvedUrl(self.handle, True, li)
 
     def addLink(self, title, mode):
-        xbmc.log(self.DEBUG_ID_STRING + "Adding Link: " + str(title) + " MODE: " + str(mode))
+        self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
 
         plot = ""
@@ -693,9 +696,11 @@ class HbogoHandler_eu(HbogoHandler):
 
 
     def addDir(self, item, mode, media_type):
-        xbmc.log(self.DEBUG_ID_STRING + "Adding Dir: " + str(item) + " MODE: " + str(mode))
+        self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
-        liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=self.md + "DefaultFolder.png", thumbnailImage=item['BackgroundUrl'])
+        liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
+        liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
+                    'fanart': item['BackgroundUrl']})
         liz.setInfo(type="Video", infoLabels={"mediatype": media_type, "season": item['Tracking']['SeasonNumber'],
                                               "tvshowtitle": item['Tracking']['ShowName'],
                                               "title": item['Name'].encode('utf-8', 'ignore'),
@@ -705,9 +710,10 @@ class HbogoHandler_eu(HbogoHandler):
 
 
     def addCat(self, name, url, icon, mode):
-        xbmc.log(self.DEBUG_ID_STRING + "Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
+        self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
+        liz.setArt({'fanart': self.resources + "fanart.jpg"})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
