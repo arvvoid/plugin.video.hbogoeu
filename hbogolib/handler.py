@@ -1,9 +1,9 @@
 # encoding: utf-8
-# base handler class for hbogo Kodi add-on
+# generic handler class for hbogo Kodi add-on
 # Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
 # Relesed under GPL version 2
 #########################################################
-# BASE HBOGO HANDLER CLASS
+# GENERIC HBOGO HANDLER CLASS
 #########################################################
 
 import sys
@@ -111,10 +111,14 @@ class HbogoHandler(object):
             os.remove(folder + self.addon_id + "_session"+".pkl")
         except:
             pass
-        self.addon.setSetting('OperatorId', "")
-        self.addon.setSetting('OperatorWeb', "true")
-        self.addon.setSetting('OperatorName', "")
-        self.addon.setSetting('OperatorRedirUrl', "")
+
+    def del_setup(self):
+        self.del_login()
+        self.addon.setSetting('country_code', "")
+        self.addon.setSetting('operator_id', "")
+        self.addon.setSetting('operator_name', "")
+        self.addon.setSetting('operator_is_web', "true")
+        self.addon.setSetting('operator_redirect_url', "")
 
     def save_obj(self, obj, name):
         folder = xbmc.translatePath("special://temp")
@@ -146,10 +150,7 @@ class HbogoHandler(object):
     def getFavoriteGroup(self):
         pass
 
-    def storeOperator(self, op_id):
-        pass
-
-    def showOperators(self):
+    def setup(self):
         pass
 
     def logout(self):

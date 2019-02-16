@@ -4,7 +4,7 @@
 # simple utility script to generate provider list for all Hbo Go Eu in a copy/pastable format
 # it will generate the provider map to paste in addon.py, the list of providers for settings.xml
 # and a list for readme.md
-# V1.3  -- include redirect login data, check type and special hosts
+# V1.4  -- include redirect login data, check type and special hosts
 
 import requests
 import os
@@ -72,7 +72,7 @@ web_operators = web_operators + extra_operators
 
 web_operators = "op_ids = {" + os.linesep + web_operators + os.linesep + "}"
 
-output = web_operators + os.linesep + os.linesep + settings_string + os.linesep + os.linesep + info_string + os.linesep + os.linesep
+output = info_string + os.linesep + os.linesep + web_operators + os.linesep + os.linesep + settings_string
 
 print("Writing to operators.md...")
 file = open("operators.md", "w")

@@ -92,6 +92,14 @@ msgctxt "#32104"
 msgid "Operator not selected. Please select your  in the settings."
 msgstr ""
 
+msgctxt "#32105"
+msgid "Logout (Reset setup)"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Destroy current session"
+msgstr ""
+
 msgctxt "#33440"
 msgid "Settings"
 msgstr "Postavke"

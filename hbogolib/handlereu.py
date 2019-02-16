@@ -1,5 +1,5 @@
 # encoding: utf-8
-# base handler class for hbogo Kodi add-on
+# HboGo EU handler class for hbogo Kodi add-on
 # Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
 # Derived from version v.2.0-beta5 of the add-on, witch was initialy
 # derived from https://github.com/billsuxx/plugin.video.hbogohu witch is
@@ -18,6 +18,7 @@ import urllib
 import json
 import base64
 import hashlib
+import requests
 
 import xbmc
 import xbmcgui
@@ -26,11 +27,63 @@ import inputstreamhelper
 
 class HbogoHandler_eu(HbogoHandler):
 
-    def __init__(self, addon_id, handle, base_url, country, operator_name):
+    def __init__(self, addon_id, handle, base_url, country):
         HbogoHandler.__init__(self, addon_id, handle, base_url)
-        self.operator_name=operator_name
+        self.operator_name = ""
+        self.op_id = ""
+        self.COUNTRY_CODE_SHORT = ""
+        self.COUNTRY_CODE = ""
+        self.DEFAULT_LANGUAGE = ""
+        self.DOMAIN_CODE = ""
+        self.is_web = True
+        self.REDIRECT_URL = ""
+        self.SPECIALHOST_URL= ""
+        #GEN API URLS
+
+        # API URLS
+        self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+
+        self.LICENSE_SERVER = ""
+
+        self.API_HOST = ""
+
+        self.API_HOST_REFERER = ""
+        self.API_HOST_ORIGIN = ""
+
+
+        self.API_HOST_GATEWAY = ""
+        self.API_HOST_GATEWAY_REFERER = ""
+
+        self.API_URL_SILENTREGISTER = ""
+
+        self.API_URL_SETTINGS = ""
+        self.API_URL_AUTH_WEBBASIC = ""
+        self.API_URL_AUTH_OPERATOR = ""
+        self.API_URL_CUSTOMER_GROUP = ""
+        self.API_URL_GROUPS = ""
+        self.API_URL_CONTENT = ""
+        self.API_URL_PURCHASE = ""
+        self.API_URL_SEARCH = ""
+
+        self.individualization = ""
+        self.goToken = ""
+        self.customerId = ""
+        self.GOcustomerId = ""
+        self.sessionId = '00000000-0000-0000-0000-000000000000'
+        self.FavoritesGroupId = ""
+
+        self.loggedin_headers = {}
+
+        #check operator_id
+        if len(self.addon.getSetting('operator_id')) == 0:
+            self.setup(country)
+        else:
+            self.init_api(country)
+
+    def init_api(self,country):
+        self.operator_name = self.addon.getSetting('operator_name')
         self.log("OPERATOR: " + self.operator_name)
-        self.op_id=country[0]
+        self.op_id=self.addon.getSetting('operator_id')
         self.log("OPERATOR ID: " + self.op_id)
         self.COUNTRY_CODE_SHORT = country[2]
         self.log("OPERATOR COUNTRY_CODE_SHORT: " + self.COUNTRY_CODE_SHORT)
@@ -39,11 +92,14 @@ class HbogoHandler_eu(HbogoHandler):
         self.DEFAULT_LANGUAGE = country[4]
         self.log("DEFAULT HBO GO LANGUAGE: " + self.DEFAULT_LANGUAGE)
         self.DOMAIN_CODE = country[1]
-        self.is_web=country[5]
+        if self.addon.getSetting('operator_is_web') == 'true':
+            self.is_web = True
+        else:
+            self.is_web = False
         self.log("WEB OPERATOR: " + str(self.is_web))
-        self.REDIRECT_URL=country[6]
+        self.REDIRECT_URL=self.addon.getSetting('operator_redirect_url')
         self.log("OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
-        self.SPECIALHOST_URL=country[8]
+        self.SPECIALHOST_URL=country[5]
         self.log("OPERATOR SPECIAL HOST URL: " + str(self.SPECIALHOST_URL))
         #GEN API URLS
 
@@ -109,6 +165,92 @@ class HbogoHandler_eu(HbogoHandler):
             'Connection': 'keep-alive',
             'Accept-Encoding': ''
         }
+
+    def setup(self, country):
+        #setup operator
+
+        url_basic_operator = 'https://api.ugw.hbogo.eu/v3.0/Operators/' + country[3] + '/JSON/' + country[4] + '/COMP'
+        url_operators = 'https://' + country[2] + 'gwapi.hbogo.eu/v2.1/Operators/json/' + country[3] + '/COMP'
+
+        json_basic_operators = requests.get(url_basic_operator).json()
+        json_operators = requests.get(url_operators).json()
+
+        op_list = []
+
+        for operator in json_basic_operators['Items']:
+            icon = self.resources + "icon.png"
+            try:
+                icon = operator['LogoUrl']
+            except:
+                pass
+
+            web = 'true'
+            try:
+                if operator['Type'] == "D2_C":
+                    web = 'true'
+                else:
+                    web = 'false'
+            except:
+                pass
+
+            redirect_url = ""
+            try:
+                redirect_url = operator['RedirectionUrl']
+            except:
+                pass
+
+            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+        for operator in json_operators['Items']:
+            icon = self.resources + "icon.png"
+            try:
+                icon = operator['LogoUrl']
+            except:
+                pass
+
+            web = 'false'
+
+            redirect_url = ""
+            try:
+                redirect_url = operator['RedirectionUrl']
+            except:
+                pass
+
+            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+
+        list = []
+
+        # 0 - operator name
+        # 1 - operator id
+        # 2 - icon
+        # 3 - is hbogo web or 3th party operator
+        # 4 - login redirection url
+
+        for o in op_list:
+            list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
+
+        index = xbmcgui.Dialog().select("Please select your operator", list, useDetails=True)
+        if index != -1:
+            self.addon.setSetting('operator_id', op_list[index][1])
+            self.addon.setSetting('operator_name', op_list[index][0])
+            self.addon.setSetting('operator_is_web', op_list[index][3])
+            self.addon.setSetting('operator_redirect_url', op_list[index][4])
+            # OPERATOR SETUP DONE
+
+            username = xbmcgui.Dialog().input("Enter e-mail/username", type=xbmcgui.INPUT_ALPHANUM,)
+            password = xbmcgui.Dialog().input("Enter password", type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            self.addon.setSetting('username', username)
+            self.addon.setSetting('password', password)
+
+            self.init_api(country)
+            if self.login():
+                self.categories()
+            else:
+                self.del_setup()
+                xbmcgui.Dialog().ok(self.LB_ERROR, "Setup failed, please try again")
+                sys.exit()
+        else:
+            self.del_setup()
+            sys.exit()
 
     def storeIndiv(self, indiv, custid):
         self.individualization = self.addon.getSetting('individualization')
@@ -188,7 +330,7 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.LB_NOLOGIN)
             self.addon.openSettings()
             sys.exit()
-            return
+            return False
 
         login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
         self.log("LOGIN HASH: " + login_hash)
@@ -219,7 +361,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Login restored - Token  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Customer Id  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
-                    return
+                    return False
 
         headers = {
             'Origin': self.API_HOST_GATEWAY,
@@ -324,7 +466,7 @@ class HbogoHandler_eu(HbogoHandler):
                 if len(REDIRECT_URL) > 0:
                     xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
                 self.logout()
-                return
+                return False
         except:
             pass
 
@@ -337,7 +479,7 @@ class HbogoHandler_eu(HbogoHandler):
             if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
-            return
+            return False
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         try:
             self.sessionId = jsonrspl['SessionId']
@@ -349,7 +491,7 @@ class HbogoHandler_eu(HbogoHandler):
             if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
-            return
+            return False
         else:
             self.goToken = jsonrspl['Token']
             self.GOcustomerId = jsonrspl['Customer']['Id']
@@ -377,6 +519,7 @@ class HbogoHandler_eu(HbogoHandler):
             else:
                 self.log("SAVING SESSION: [OMITTED FOR PRIVACY]")
             self.save_obj(saved_session, self.addon_id + "_session")
+            return True
 
 
 
