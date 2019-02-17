@@ -180,7 +180,8 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_basic_operators['Items']:
             icon = self.resources + "icon.png"
             try:
-                icon = operator['LogoUrl']
+                if len(operator['LogoUrl'])>0:
+                    icon = operator['LogoUrl']
             except:
                 pass
 
@@ -203,7 +204,8 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_operators['Items']:
             icon = self.resources + "icon.png"
             try:
-                icon = operator['LogoUrl']
+                if len(operator['LogoUrl'])>0:
+                    icon = operator['LogoUrl']
             except:
                 pass
 
@@ -228,7 +230,7 @@ class HbogoHandler_eu(HbogoHandler):
         for o in op_list:
             list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
 
-        index = xbmcgui.Dialog().select("Please select your operator", list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(33445), list, useDetails=True)
         if index != -1:
             self.addon.setSetting('operator_id', op_list[index][1])
             self.addon.setSetting('operator_name', op_list[index][0])
@@ -236,21 +238,23 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('operator_redirect_url', op_list[index][4])
             # OPERATOR SETUP DONE
 
-            username = xbmcgui.Dialog().input("Enter e-mail/username", type=xbmcgui.INPUT_ALPHANUM,)
-            password = xbmcgui.Dialog().input("Enter password", type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            username = xbmcgui.Dialog().input(self.language(33442), type=xbmcgui.INPUT_ALPHANUM,)
+            password = xbmcgui.Dialog().input(self.language(33443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
             self.addon.setSetting('username', username)
             self.addon.setSetting('password', password)
 
             self.init_api(country)
             if self.login():
-                self.categories()
+                return True
             else:
                 self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, "Setup failed, please try again")
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
                 sys.exit()
+                return False
         else:
             self.del_setup()
             sys.exit()
+            return False
 
     def storeIndiv(self, indiv, custid):
         self.individualization = self.addon.getSetting('individualization')

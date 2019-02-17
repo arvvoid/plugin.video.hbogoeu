@@ -114,11 +114,15 @@ class HbogoHandler(object):
 
     def del_setup(self):
         self.del_login()
-        self.addon.setSetting('country_code', "")
-        self.addon.setSetting('operator_id', "")
-        self.addon.setSetting('operator_name', "")
+        self.addon.setSetting('country_code', '')
+        self.addon.setSetting('operator_id', '')
+        self.addon.setSetting('operator_name', '')
         self.addon.setSetting('operator_is_web', "true")
-        self.addon.setSetting('operator_redirect_url', "")
+        self.addon.setSetting('operator_redirect_url', '')
+        self.addon.setSetting('individualization', '')
+        self.addon.setSetting('customerId', '')
+        self.addon.setSetting('FavoritesGroupId', '')
+        self.log("Removed stored setup")
 
     def save_obj(self, obj, name):
         folder = xbmc.translatePath("special://temp")

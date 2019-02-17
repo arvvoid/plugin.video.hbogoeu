@@ -20,58 +20,6 @@ msgctxt "#32000"
 msgid "ENG"
 msgstr "HUN"
 
-msgctxt "#32001"
-msgid ""
-msgstr ""
-
-msgctxt "#32002"
-msgid "Bosnia and Herzegovina"
-msgstr ""
-
-msgctxt "#32003"
-msgid "Bulgaria"
-msgstr ""
-
-msgctxt "#32004"
-msgid "Croatia"
-msgstr ""
-
-msgctxt "#32005"
-msgid "Czech Republic"
-msgstr ""
-
-msgctxt "#32006"
-msgid "Hungary"
-msgstr ""
-
-msgctxt "#32007"
-msgid "Macedonia"
-msgstr ""
-
-msgctxt "#32008"
-msgid "Montenegro"
-msgstr ""
-
-msgctxt "#32009"
-msgid "Polonia"
-msgstr ""
-
-msgctxt "#32010"
-msgid "Romania"
-msgstr ""
-
-msgctxt "#32011"
-msgid "Serbia"
-msgstr ""
-
-msgctxt "#32012"
-msgid "Slovakia"
-msgstr ""
-
-msgctxt "#32013"
-msgid "Slovenija"
-msgstr ""
-
 msgctxt "#32100"
 msgid "Web registration on "
 msgstr ""
@@ -105,16 +53,24 @@ msgid "Settings"
 msgstr "Beállítások"
 
 msgctxt "#33441"
-msgid "Chose country/operator"
+msgid "Chose your Country"
 msgstr ""
 
 msgctxt "#33442"
-msgid "Username"
-msgstr "Felhasználónév"
+msgid "Enter e-mail/username"
+msgstr ""
 
 msgctxt "#33443"
-msgid "Password"
-msgstr "Jelszó"
+msgid "Enter password"
+msgstr ""
+
+msgctxt "#33444"
+msgid "Setup failed, please try again"
+msgstr ""
+
+msgctxt "#33445"
+msgid "Chose your operator"
+msgstr ""
 
 msgctxt "#33660"
 msgid "Streaming"

@@ -6,6 +6,7 @@
 
 import urllib
 
+from hbogolib.handler import HbogoHandler
 from hbogolib.handlereu import HbogoHandler_eu
 
 try:
@@ -57,15 +58,18 @@ class hbogo(object):
         self.addon_id = addon_id
         self.addon = xbmcaddon.Addon(self.addon_id)
         self.language = self.addon.getLocalizedString
+        self.handler = None
 
+    def start(self):
         country_id = self.addon.getSetting('country_code')
 
         if country_id not in self.countries:
             self.setup()
-        else:
-            self.start(country_id)
+            country_id = self.addon.getSetting('country_code')
+            if country_id not in self.countries:
+                xbmcgui.Dialog().ok("ERROR", "Setup failed")
+                sys.exit()
 
-    def start(self, country_id):
         if self.countries[country_id][6] == self.HANDLER_EU:
             self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, self.countries[country_id])
         else:
@@ -81,11 +85,10 @@ class hbogo(object):
         for c in self.countries:
             list.append(xbmcgui.ListItem(label=self.countries[c][0], label2=self.countries[c][2], iconImage="https://www.countryflags.io/" + self.countries[c][2] + "/flat/64.png"))
 
-        index = xbmcgui.Dialog().select("Please your country", list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(33441), list, useDetails=True)
         if index != -1:
             country_id = list[index].getLabel2()
             self.addon.setSetting('country_code', country_id)
-            self.start(country_id)
         else:
             sys.exit()
 
@@ -121,33 +124,41 @@ class hbogo(object):
             pass
 
         if mode == None or url == None or len(url) < 1:
+            self.start()
             self.handler.categories()
 
         elif mode == 1:
+            self.start()
             self.handler.setDispCat(name)
             self.handler.list(url)
 
         elif mode == 2:
+            self.start()
             self.handler.setDispCat(name)
             self.handler.season(url)
 
         elif mode == 3:
+            self.start()
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
         elif mode == 4:
+            self.start()
             self.handler.setDispCat(self.language(33711).encode('utf-8'))
             self.handler.search()
 
         elif mode == 5:
+            self.start()
             self.handler.setDispCat(name)
             self.handler.play(url, content_id)
 
         elif mode == 6: #logout, destry setup
-            self.handler.del_setup()
+            handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
+            handler.del_setup()
 
         elif mode == 7: #reset session
-            self.handler.del_login()
+            handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
+            handler.del_login()
 
 
 
