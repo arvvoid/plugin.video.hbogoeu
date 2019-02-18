@@ -66,6 +66,9 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
+v.2.0.3-beta10
+- Country codes fix, flag api fix
+
 v.2.0.3-beta9
 - Guided user-friendly initial setup
 - Code cleanup
