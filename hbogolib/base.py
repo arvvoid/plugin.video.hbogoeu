@@ -36,21 +36,21 @@ class hbogo(object):
     HANDLER_LATIN_AMERICA = 3
     HANDLER_ASIA = 4
 
-    countries = {
-        "ba": ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
-        "bg": ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
-        "hr": ['Croatia', 'hr', 'hr', 'HRV', 'HRV', '', HANDLER_EU],
-        "cz": ['Czech Republic', 'cz', 'cz', 'CZE', 'CES', '', HANDLER_EU],
-        "hu": ['Hungary', 'hu', 'hu', 'HUN', 'HUN', '', HANDLER_EU],
-        "mk": ['Macedonia', 'mk', 'mk', 'MKD', 'MKD', '', HANDLER_EU],
-        "me": ['Montenegro', 'me', 'me', 'MNE', 'SRP', '', HANDLER_EU],
-        "pl": ['Polonia', 'pl', 'pl', 'POL', 'POL', '', HANDLER_EU],
-        "pt": ['Portugal', 'pt', 'pt', 'PRT', 'POR', 'https://hboportugal.com', HANDLER_EU],
-        "ro": ['Romania', 'ro', 'ro', 'ROU', 'RON', '', HANDLER_EU],
-        "rs": ['Serbia', 'rs', 'sr', 'SRB', 'SRP', '', HANDLER_EU],
-        "sk": ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
-        "si": ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
-    }
+    countries = [
+        ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
+        ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
+        ['Croatia', 'hr', 'hr', 'HRV', 'HRV', '', HANDLER_EU],
+        ['Czech Republic', 'cz', 'cz', 'CZE', 'CES', '', HANDLER_EU],
+        ['Hungary', 'hu', 'hu', 'HUN', 'HUN', '', HANDLER_EU],
+        ['Macedonia', 'mk', 'mk', 'MKD', 'MKD', '', HANDLER_EU],
+        ['Montenegro', 'me', 'me', 'MNE', 'SRP', '', HANDLER_EU],
+        ['Polonia', 'pl', 'pl', 'POL', 'POL', '', HANDLER_EU],
+        ['Portugal', 'pt', 'pt', 'PRT', 'POR', 'https://hboportugal.com', HANDLER_EU],
+        ['Romania', 'ro', 'ro', 'ROU', 'RON', '', HANDLER_EU],
+        ['Serbia', 'rs', 'sr', 'SRB', 'SRP', '', HANDLER_EU],
+        ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
+        ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
+    ]
 
     def __init__(self, addon_id, handle, base_url):
         self.base_url = base_url
@@ -60,18 +60,30 @@ class hbogo(object):
         self.language = self.addon.getLocalizedString
         self.handler = None
 
+    def country_index(self, country_id):
+        index = -1
+
+        for i in range(len(self.countries)):
+            if self.countries[i][2] == country_id:
+                index = i
+                break
+
+        return index
+
     def start(self):
         country_id = self.addon.getSetting('country_code')
+        country_index = self.country_index(country_id)
 
-        if country_id not in self.countries:
+        if country_index == -1:
             self.setup()
             country_id = self.addon.getSetting('country_code')
-            if country_id not in self.countries:
+            country_index = self.country_index(country_id)
+            if country_index == -1:
                 xbmcgui.Dialog().ok("ERROR", "Setup failed")
                 sys.exit()
 
-        if self.countries[country_id][6] == self.HANDLER_EU:
-            self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, self.countries[country_id])
+        if self.countries[country_index][6] == self.HANDLER_EU:
+            self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, self.countries[country_index])
         else:
             xbmcgui.Dialog().ok("ERROR", "Unsupported region")
             sys.exit()
@@ -83,7 +95,7 @@ class hbogo(object):
         list = []
 
         for c in self.countries:
-            list.append(xbmcgui.ListItem(label=self.countries[c][0], label2=self.countries[c][2], iconImage="https://www.countryflags.io/" + self.countries[c][2] + "/flat/64.png"))
+            list.append(xbmcgui.ListItem(label=c[0], label2=c[2], iconImage="https://www.countryflags.io/" + self.c[2] + "/flat/64.png"))
 
         index = xbmcgui.Dialog().select(self.language(33441), list, useDetails=True)
         if index != -1:
@@ -98,7 +110,7 @@ class hbogo(object):
         url = None
         name = None
         thumbnail = None
-        cid = None
+        content_id = None
         mode = None
 
 
@@ -155,10 +167,12 @@ class hbogo(object):
         elif mode == 6: #logout, destry setup
             handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
             handler.del_setup()
+            xbmc.executebuiltin('Container.Refresh')
 
         elif mode == 7: #reset session
             handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
             handler.del_login()
+            xbmc.executebuiltin('Container.Refresh')
 
 
 

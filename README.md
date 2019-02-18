@@ -109,7 +109,4 @@ Other platforms have not been tested at the moment
 
 ![Screenshot 1](/resources/screen1.png?raw=true "Screenshot 1")
 ![Screenshot 7](/resources/screen7.png?raw=true "Screenshot 7")
-![Screenshot 6](/resources/screen6.png?raw=true "Screenshot 6")
 ![Screenshot 8](/resources/screen8.png?raw=true "Screenshot 8")
-![Screenshot 2](/resources/screen2.png?raw=true "Screenshot 2")
-![Screenshot 4](/resources/screen4.png?raw=true "Screenshot 4")
