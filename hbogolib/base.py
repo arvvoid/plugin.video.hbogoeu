@@ -94,8 +94,8 @@ class hbogo(object):
 
         list = []
 
-        for c in self.countries:
-            list.append(xbmcgui.ListItem(label=c[0], label2=c[2], iconImage="https://www.countryflags.io/" + self.c[2] + "/flat/64.png"))
+        for country in self.countries:
+            list.append(xbmcgui.ListItem(label=country[0], label2=country[2], iconImage="https://www.countryflags.io/" + country[2] + "/flat/64.png"))
 
         index = xbmcgui.Dialog().select(self.language(33441), list, useDetails=True)
         if index != -1:

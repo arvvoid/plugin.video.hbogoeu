@@ -239,7 +239,17 @@ class HbogoHandler_eu(HbogoHandler):
             # OPERATOR SETUP DONE
 
             username = xbmcgui.Dialog().input(self.language(33442), type=xbmcgui.INPUT_ALPHANUM,)
+            if len(username) == 0:
+                self.del_setup()
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
+                sys.exit()
+                return False
             password = xbmcgui.Dialog().input(self.language(33443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            if len(password) == 0:
+                self.del_setup()
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
+                sys.exit()
+                return False
             self.addon.setSetting('username', username)
             self.addon.setSetting('password', password)
 
