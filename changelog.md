@@ -1,3 +1,9 @@
+v.2.0.3-beta11
+- Fixed individualization/device storing. This bug caused needles device re-registration. (You can delete old registred devices, but don't have to do so, from your Hbo Go account, leave just the last registred one, the devices this add-on register will appear as Chrome 71 on Linux in Hbo Go)
+
+v.2.0.3-beta10
+- Country codes fix, flag api fix
+
 v.2.0.3-beta9
 - Guided user-friendly initial setup
 - Code cleanup
