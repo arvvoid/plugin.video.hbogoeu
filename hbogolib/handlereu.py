@@ -493,8 +493,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.customerId = jsonrspl['Customer']['CurrentDevice']['Id']
             self.individualization = jsonrspl['Customer']['CurrentDevice']['Individualization']
         except:
-            self.log("GENERIC LOGIN ERROR")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
+            self.log("LOGIN: INDIVIDUALIZATION ERROR")
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
             if len(self.REDIRECT_URL) > 0:
                 xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
