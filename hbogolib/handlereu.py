@@ -264,15 +264,10 @@ class HbogoHandler_eu(HbogoHandler):
             return False
 
     def storeIndiv(self, indiv, custid):
-        self.individualization = self.addon.getSetting('individualization')
-        if self.individualization == "":
-            self.addon.setSetting('individualization', indiv)
-            self.addon.individualization = indiv
-
-        self.customerId = self.addon.getSetting('customerId')
-        if self.customerId == "":
-            self.addon.setSetting('customerId', custid)
-            self.customerId = custid
+        self.addon.setSetting('individualization', str(indiv))
+        self.individualization = str(indiv)
+        self.addon.setSetting('customerId', str(custid))
+        self.customerId = str(custid)
 
     def storeFavgroup(self, favgroupid):
         self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
@@ -294,7 +289,9 @@ class HbogoHandler_eu(HbogoHandler):
             pass
         try:
             indiv = jsonrsp['Data']['Customer']['CurrentDevice']['Individualization']
+            self.log("DEVICE REGISTRATION: INDIVIDUALIZATION: " + str(indiv))
             custid = jsonrsp['Data']['Customer']['CurrentDevice']['Id']
+            self.log("DEVICE REGISTRATION: CUSTOMER ID: " + str(custid))
             self.storeIndiv(indiv, custid)
         except:
             self.logout()

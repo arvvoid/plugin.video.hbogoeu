@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.3~beta10">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.3~beta11">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
@@ -66,6 +66,9 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
+v.2.0.3-beta11
+- Fixed individualization/device storing. This bug caused needles device re-registration. (You can delete old registred devices, but don't have to do so, from your Hbo Go account, leave just the last registred one, the devices this add-on register will appear as Chrome 71 on Linux in Hbo Go)
+
 v.2.0.3-beta10
 - Country codes fix, flag api fix
 
