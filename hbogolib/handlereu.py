@@ -138,9 +138,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v5/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v5/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
 
-        self.API_URL_GET_WEB_OPERATORS = 'https://api.ugw.hbogo.eu/v3.0/Operators/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
-        self.API_URL_GET_OPERATORS = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Operators/json/' + self.COUNTRY_CODE + '/' + self.API_PLATFORM
-
         self.individualization = ""
         self.goToken = ""
         self.customerId = ""
@@ -289,19 +286,27 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("DEVICE REGISTRATION: " + str(jsonrsp))
         try:
             if jsonrsp['Data']['ErrorMessage']:
+                self.log("DEVICE REGISTRATION: ERROR: " + jsonrsp['Data']['ErrorMessage'])
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['Data']['ErrorMessage'])
                 self.logout()
                 return
+        except:
+            pass
+        try:
             indiv = jsonrsp['Data']['Customer']['CurrentDevice']['Individualization']
             custid = jsonrsp['Data']['Customer']['CurrentDevice']['Id']
             self.storeIndiv(indiv, custid)
-
-            self.sessionId = jsonrsp['Data']['SessionId']
         except:
             self.logout()
-            self.log("DEVICE REGISTRATION: UNEXPECTED PROBLEM")
+            self.log("DEVICE REGISTRATION: READ/STORE INDIVIDUALIZATION PROBLEM")
             return
-        self.log("DEVICE REGISTRATION: OK")
+
+        try:
+            self.sessionId = jsonrsp['Data']['SessionId']
+        except:
+            self.log("DEVICE REGISTRATION: NO SESSION ID")
+
+        self.log("DEVICE REGISTRATION: COMPLETED")
         return jsonrsp
 
     def getFavoriteGroup(self):
