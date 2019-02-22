@@ -6,8 +6,7 @@
 
 import urllib
 
-from hbogolib.handler import HbogoHandler
-from hbogolib.handlereu import HbogoHandler_eu
+from hbogolib.constants import HbogoConstants
 
 try:
     import urllib.parse as parse
@@ -19,38 +18,8 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
+
 class hbogo(object):
-    #supported countrys:
-    #   0 name
-    #   1 national domain
-    #   2 country code short
-    #   3 country code long
-    #   4 default language code
-    #   5 special domain
-    #   6 hbogo region/handler to use
-
-    HANDLER_EU = 0
-    HANDLER_NORDIC = 1
-    HANDLER_SPAIN = 1
-    HANDLER_US = 2
-    HANDLER_LATIN_AMERICA = 3
-    HANDLER_ASIA = 4
-
-    countries = [
-        ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
-        ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
-        ['Croatia', 'hr', 'hr', 'HRV', 'HRV', '', HANDLER_EU],
-        ['Czech Republic', 'cz', 'cz', 'CZE', 'CES', '', HANDLER_EU],
-        ['Hungary', 'hu', 'hu', 'HUN', 'HUN', '', HANDLER_EU],
-        ['Macedonia', 'mk', 'mk', 'MKD', 'MKD', '', HANDLER_EU],
-        ['Montenegro', 'me', 'me', 'MNE', 'SRP', '', HANDLER_EU],
-        ['Polonia', 'pl', 'pl', 'POL', 'POL', '', HANDLER_EU],
-        ['Portugal', 'pt', 'pt', 'PRT', 'POR', 'https://hboportugal.com', HANDLER_EU],
-        ['Romania', 'ro', 'ro', 'ROU', 'RON', '', HANDLER_EU],
-        ['Serbia', 'rs', 'sr', 'SRB', 'SRP', '', HANDLER_EU],
-        ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
-        ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
-    ]
 
     def __init__(self, addon_id, handle, base_url):
         self.base_url = base_url
@@ -63,8 +32,8 @@ class hbogo(object):
     def country_index(self, country_id):
         index = -1
 
-        for i in range(len(self.countries)):
-            if self.countries[i][2] == country_id:
+        for i in range(len(HbogoConstants.countries)):
+            if HbogoConstants.countries[i][2] == country_id:
                 index = i
                 break
 
@@ -82,8 +51,9 @@ class hbogo(object):
                 xbmcgui.Dialog().ok("ERROR", "Setup failed")
                 sys.exit()
 
-        if self.countries[country_index][6] == self.HANDLER_EU:
-            self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, self.countries[country_index])
+        if HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_EU:
+            from hbogolib.handlereu import HbogoHandler_eu
+            self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, HbogoConstants.countries[country_index])
         else:
             xbmcgui.Dialog().ok("ERROR", "Unsupported region")
             sys.exit()
@@ -94,7 +64,7 @@ class hbogo(object):
 
         list = []
 
-        for country in self.countries:
+        for country in HbogoConstants.countries:
             list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
 
         index = xbmcgui.Dialog().select(self.language(33441), list, useDetails=True)
@@ -165,11 +135,13 @@ class hbogo(object):
             self.handler.play(url, content_id)
 
         elif mode == 6: #logout, destry setup
+            from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
             handler.del_setup()
             xbmc.executebuiltin('Container.Refresh')
 
         elif mode == 7: #reset session
+            from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
             handler.del_login()
             xbmc.executebuiltin('Container.Refresh')
