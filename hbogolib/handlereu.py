@@ -11,6 +11,7 @@
 
 
 from hbogolib.handler import HbogoHandler
+from hbogolib.constants import HbogoConstants
 
 import sys
 import time
@@ -19,6 +20,11 @@ import json
 import base64
 import hashlib
 import requests
+
+try:
+    import urllib.parse as parse
+except ImportError:
+    import urlparse as parse
 
 import xbmc
 import xbmcgui
@@ -326,6 +332,227 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers['GO-Token'] = str(self.goToken)
         self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
 
+    def OAuthLogin(self, username, password):
+
+        #Check if operator is supported
+        
+        if self.op_id in HbogoConstants.eu_redirect_login:
+            # perform login
+
+            self.log("Attempting OAuth login for: " + str(self.op_id))
+            self.log("Urls and data: " + str(HbogoConstants.eu_redirect_login[self.op_id]))
+
+            hbo_session = requests.session()
+
+            hbo_session.headers.update({
+                'Host': self.COUNTRY_CODE_SHORT+'gwapi.hbogo.eu',
+                'User-Agent': self.UA,
+                'Accept': 'application/json',
+                'Accept-Language': self.ACCEPT_LANGUAGE,
+                'Accept-Encoding': 'br, gzip, deflate',
+                'Referer': 'https://gateway.hbogo.eu/signin/sso',
+                'Content-Type': 'application/json',
+                'GO-CustomerId': '00000000-0000-0000-0000-000000000000',
+                'Origin': 'https://gateway.hbogo.eu',
+                'Connection': 'keep-alive'
+            })
+
+            hbo_payload = {
+                "Action": None,
+                "AppLanguage": None,
+                "ActivationCode": None,
+                "AllowedContents": [],
+                "AudioLanguage": None,
+                "AutoPlayNext": False,
+                "BirthYear": 0,
+                "CurrentDevice": {
+                    "AppLanguage": "",
+                    "AutoPlayNext": False,
+                    "Brand": "Chromium",
+                    "CreatedDate": "",
+                    "DeletedDate": "",
+                    "Id": "00000000-0000-0000-0000-000000000000",
+                    "Individualization": self.individualization,
+                    "IsDeleted": False,
+                    "LastUsed": "",
+                    "Modell": "71",
+                    "Name": "",
+                    "OSName": "Ubuntu",
+                    "OSVersion": "undefined",
+                    "Platform": self.API_PLATFORM,
+                    "SWVersion": "3.3.9.6418.2100",
+                    "SubtitleSize": ""
+                },
+                "CustomerCode": "",
+                "DebugMode": False,
+                "DefaultSubtitleLanguage": None,
+                "EmailAddress": "",
+                "FirstName": "",
+                "Gender": 0,
+                "Id": "00000000-0000-0000-0000-000000000000",
+                "IsAnonymus": True,
+                "IsPromo": False,
+                "Language": "",
+                "LastName": "",
+                "Nick": "",
+                "NotificationChanges": 0,
+                "OperatorId": "00000000-0000-0000-0000-000000000000",
+                "OperatorName": "",
+                "OperatorToken": "",
+                "ParentalControl": {
+                    "Active": False,
+                    "Password": "",
+                    "Rating": 0,
+                    "ReferenceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "Password": "",
+                "PromoCode": "",
+                "ReferenceId": "00000000-0000-0000-0000-000000000000",
+                "SecondaryEmailAddress": "",
+                "SecondarySpecificData": None,
+                "ServiceCode": "",
+                "SpecificData": None,
+                "SubscribeForNewsletter": False,
+                "SubscState": None,
+                "SubtitleSize": "",
+                "TVPinCode": "",
+                "ZipCode": "",
+                "PromoId": ""
+            }
+
+            hbo_session.headers.update({'GO-CustomerId': '00000000-0000-0000-0000-000000000000'})
+
+            response = hbo_session.post(
+                self.API_URL_AUTH_OPERATOR,
+                json=hbo_payload
+            )
+
+            jsonrspl = response.json()
+
+            token = str(jsonrspl['Token'])
+            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token) + "&t=signin"
+
+            hbo_session.headers.pop('GO-CustomerId')
+            hbo_session.headers.update({'GO-Token': token})
+            hbo_payload['CurrentDevice'] = jsonrspl['Customer']['CurrentDevice']
+            hbo_payload['Action'] = 'L'
+            hbo_payload['OperatorId'] = self.op_id
+
+            cp_session = requests.session()
+            cp_session.headers.update({
+                'Referer': self.API_HOST_REFERER,
+                'User-Agent': self.UA
+            })
+
+
+            payload = {
+                "caller": "GW",
+                "cid": str(jsonrspl['Customer']['Id']),
+                "oid": self.op_id,
+                "platform": self.API_PLATFORM,
+                "backuri": backuri
+            }
+
+            self.log("GET CP SESSION: " + self.REDIRECT_URL.split('?')[0])
+
+            cp_session.get(
+                self.REDIRECT_URL.split('?')[0],
+                params=payload
+            )
+
+            payload = HbogoConstants.eu_redirect_login[self.op_id][3]
+
+            self.log("LOGIN FORM PAYLOAD: " + str(payload))
+
+            payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
+            payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
+
+            if self.sensitive_debug:
+                self.log("LOGIN FORM PAYLOAD: " + str(payload))
+
+            response = cp_session.post(
+                HbogoConstants.eu_redirect_login[self.op_id][0],
+                data=payload
+            )
+
+            parsed_url = parse.urlparse(response.url)
+            ssoid = parse.parse_qs(parsed_url.query)['ssoid'][0]
+
+            response = hbo_session.post(
+                'https://' + self.COUNTRY_CODE_SHORT +'gwapi.hbogo.eu/v2.1/RetrieveCustomerByToken/json/'+ self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+            )
+
+            jsonrspl = response.json()
+
+            hbo_session.headers.update({
+                'GO-CustomerId': str(jsonrspl['Customer']['Id']),
+                'GO-SessionId': str(jsonrspl['SessionId'])
+            })
+
+            hbo_payload['Id'] = str(jsonrspl['Customer']['Id'])
+            hbo_payload['ReferenceId'] = ssoid
+
+            response = hbo_session.post(
+                self.API_URL_AUTH_OPERATOR,
+                json=hbo_payload
+            )
+
+            jsonrspl = response.json()
+
+            try:
+                if jsonrspl['ErrorMessage']:
+                    self.log("OAuth Login Error: " + str(str(jsonrspl['ErrorMessage'])))
+                    xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
+                    self.logout()
+                    return False
+            except:
+                pass
+
+            try:
+                self.sessionId = jsonrspl['SessionId']
+            except:
+                self.sessionId = '00000000-0000-0000-0000-000000000000'
+            if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
+                self.log("GENERIC LOGIN ERROR")
+                xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
+                self.logout()
+                return False
+            else:
+                self.goToken = jsonrspl['Token']
+                self.GOcustomerId = jsonrspl['Customer']['Id']
+                if self.sensitive_debug:
+                    self.log("Login sucess - Token" + str(self.goToken))
+                    self.log("Login sucess - Customer Id" + str(self.GOcustomerId))
+                    self.log("Login sucess - Session Id" + str(self.sessionId))
+                else:
+                    self.log("Login sucess - Token  [OMITTED FOR PRIVACY]")
+                    self.log("Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
+                    self.log("Login sucess - Session Id [OMITTED FOR PRIVACY]")
+                self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
+                self.loggedin_headers['GO-Token'] = str(self.goToken)
+                self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
+                # save the session with validity of n hours to not relogin every run of the add-on
+
+                login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
+                self.log("LOGIN HASH: " + login_hash)
+
+                saved_session = {
+
+                    "hash": login_hash,
+                    "headers": self.loggedin_headers,
+                    "time": time.time()
+
+                }
+                if self.sensitive_debug:
+                    self.log("SAVING SESSION: " + str(saved_session))
+                else:
+                    self.log("SAVING SESSION: [OMITTED FOR PRIVACY]")
+                self.save_obj(saved_session, self.addon_id + "_session")
+                return True
+        else:
+            self.log("OAuth operator not supported: " + str(self.op_id))
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "Sorry your operator require a special login procedure thats not supported at the moment.")
+        pass
 
     def login(self):
         self.log("Using operator: " + str(self.op_id))
@@ -377,7 +604,13 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Login restored - Token  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Customer Id  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
-                    return False
+                    return True
+
+        if len(self.REDIRECT_URL) > 0:
+            self.log("OPERATOR WITH LOGIN REDIRECTION DETECTED")
+            self.log("LOGIN WITH SPECIAL OAuth LOGIN PROCEDURE")
+            return self.OAuthLogin(username, password)
+
 
         headers = {
             'Origin': self.API_HOST_GATEWAY,
@@ -397,15 +630,6 @@ class HbogoHandler_eu(HbogoHandler):
             url = self.API_URL_AUTH_WEBBASIC
         else:
             url = self.API_URL_AUTH_OPERATOR
-
-        if len(self.REDIRECT_URL) > 0:
-            self.log("OPERATOR WITH LOGIN REDIRECT DETECTED, THE LOGIN WILL PROBABLY FAIL, NOT IMPLEMENTED, more details https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
-            # EXPLANATION
-            # ------------
-            # For a few operators the login is not performed directly using the hbogo api. Instead the user is redirected to the operator website
-            # the login is performed there, and then the operator login the user on hbogo and redirect back.
-            # What exactly happens and how, will have to be figured out and then implemented in the add-on for those operators to work.
-            # For more information go to https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5
 
         data_obj = {
             "Action": "L",
@@ -444,7 +668,7 @@ class HbogoHandler_eu(HbogoHandler):
             "IsPromo": False,
             "Language": self.LANGUAGE_CODE,
             "LastName": "",
-            "Nick": "",
+            "Nick": username,
             "NotificationChanges": 0,
             "OperatorId": self.op_id,
             "OperatorName": "",
@@ -479,8 +703,6 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrspl['ErrorMessage']:
                 self.log("LOGIN ERROR: " + str(jsonrspl['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
-                if len(REDIRECT_URL) > 0:
-                    xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
                 self.logout()
                 return False
         except:
@@ -492,8 +714,6 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             self.log("LOGIN: INDIVIDUALIZATION ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
-            if len(self.REDIRECT_URL) > 0:
-                xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
             return False
         self.sessionId = '00000000-0000-0000-0000-000000000000'
@@ -504,8 +724,6 @@ class HbogoHandler_eu(HbogoHandler):
         if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
             self.log("GENERIC LOGIN ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
-            if len(self.REDIRECT_URL) > 0:
-                xbmcgui.Dialog().ok(self.LB_ERROR, "OPERATOR WITH LOGIN REDIRECTION DETECTED. LOGIN REDIRECTION IS NOT CURRENTLY IMPLEMENTED. TO FIND OUT MORE ABOUTE THE ISSUE AND/OR CONTRIBUTE GO TO https://github.com/arvvoid/plugin.video.hbogoeu  ISSUE #5 ")
             self.logout()
             return False
         else:
