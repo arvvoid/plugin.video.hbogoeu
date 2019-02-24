@@ -709,8 +709,13 @@ class HbogoHandler_eu(HbogoHandler):
             pass
 
         try:
-            self.customerId = jsonrspl['Customer']['CurrentDevice']['Id']
-            self.individualization = jsonrspl['Customer']['CurrentDevice']['Individualization']
+            if self.customerId != jsonrspl['Customer']['CurrentDevice']['Id'] or self.individualization != jsonrspl['Customer']['CurrentDevice']['Individualization']:
+                self.log("Customer ID or Individualization Mismatch Showing diferences")
+                self.log("Customer ID: " + self.customerId + ":" + jsonrspl['Customer']['CurrentDevice']['Id'])
+                self.log("Individualization: " + self.individualization + ":" + jsonrspl['Customer']['CurrentDevice']['Individualization'])
+                self.storeIndiv(jsonrspl['Customer']['CurrentDevice']['Individualization'], jsonrspl['Customer']['CurrentDevice']['Id'])
+            else:
+                self.log("Customer ID and Individualization Match")
         except:
             self.log("LOGIN: INDIVIDUALIZATION ERROR")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
