@@ -288,7 +288,8 @@ class HbogoHandler_eu(HbogoHandler):
         try:
             if jsonrsp['Data']['ErrorMessage']:
                 self.log("DEVICE REGISTRATION: ERROR: " + jsonrsp['Data']['ErrorMessage'])
-                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['Data']['ErrorMessage'])
+                if jsonrsp['Data']['ErrorMessage'] != "GET FROM HBO ERROR":
+                    xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['Data']['ErrorMessage'])
                 self.logout()
                 return
         except:
@@ -325,7 +326,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("Loging out")
         self.del_login()
         self.goToken = ""
-        self.customerId = ""
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
@@ -509,6 +509,21 @@ class HbogoHandler_eu(HbogoHandler):
                 pass
 
             try:
+                if self.customerId != jsonrspl['Customer']['CurrentDevice']['Id'] or self.individualization != jsonrspl['Customer']['CurrentDevice']['Individualization']:
+                    self.log("Device ID or Individualization Mismatch Showing diferences")
+                    self.log("Device ID: " + self.customerId + " : " + jsonrspl['Customer']['CurrentDevice']['Id'])
+                    self.log("Individualization: " + self.individualization + " : " + jsonrspl['Customer']['CurrentDevice']['Individualization'])
+                    self.storeIndiv(jsonrspl['Customer']['CurrentDevice']['Individualization'],
+                                    jsonrspl['Customer']['CurrentDevice']['Id'])
+                else:
+                    self.log("Customer ID and Individualization Match")
+            except:
+                self.log("LOGIN: INDIVIDUALIZATION ERROR")
+                xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
+                self.logout()
+                return False
+
+            try:
                 self.sessionId = jsonrspl['SessionId']
             except:
                 self.sessionId = '00000000-0000-0000-0000-000000000000'
@@ -564,6 +579,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
 
         if (self.individualization == "" or self.customerId == ""):
+            self.log("NO REGISTRED DEVICE - trieng silent device registration. This step is not required for all operators. Even if this fails login can be sucessfull, depends on the operator used.")
             self.silentRegister()
 
         if (self.FavoritesGroupId == ""):
@@ -710,9 +726,9 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if self.customerId != jsonrspl['Customer']['CurrentDevice']['Id'] or self.individualization != jsonrspl['Customer']['CurrentDevice']['Individualization']:
-                self.log("Customer ID or Individualization Mismatch Showing diferences")
-                self.log("Customer ID: " + self.customerId + ":" + jsonrspl['Customer']['CurrentDevice']['Id'])
-                self.log("Individualization: " + self.individualization + ":" + jsonrspl['Customer']['CurrentDevice']['Individualization'])
+                self.log("Device ID or Individualization Mismatch Showing diferences")
+                self.log("Device ID: " + self.customerId + " : " + jsonrspl['Customer']['CurrentDevice']['Id'])
+                self.log("Individualization: " + self.individualization + " : " + jsonrspl['Customer']['CurrentDevice']['Individualization'])
                 self.storeIndiv(jsonrspl['Customer']['CurrentDevice']['Individualization'], jsonrspl['Customer']['CurrentDevice']['Id'])
             else:
                 self.log("Customer ID and Individualization Match")
@@ -746,6 +762,10 @@ class HbogoHandler_eu(HbogoHandler):
             self.loggedin_headers['GO-Token'] = str(self.goToken)
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
             # save the session with validity of n hours to not relogin every run of the add-on
+
+            login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
+            self.log("LOGIN HASH: " + login_hash)
+
             saved_session = {
 
                 "hash": login_hash,
