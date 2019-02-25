@@ -1,3 +1,6 @@
+v.2.0.5-beta13
+- Improved categories listings. Compatible with #11 Portugal.
+
 v.2.0.4-beta12
 - fix for #5 operators with login redirect (experimental need testing, please report)
 - fix for #11 Portugal (experimental need testing, please report)
