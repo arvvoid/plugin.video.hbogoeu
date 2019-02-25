@@ -586,12 +586,13 @@ class HbogoHandler_eu(HbogoHandler):
         self.customerId = self.addon.getSetting('customerId')
         self.individualization = self.addon.getSetting('individualization')
         self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
+        self.KidsGroupId = self.addon.getSetting('KidsGroupId')
 
         if (self.individualization == "" or self.customerId == ""):
             self.log("NO REGISTRED DEVICE - trieng silent device registration. This step is not required for all operators. Even if this fails login can be sucessfull, depends on the operator used.")
             self.silentRegister()
 
-        if (self.FavoritesGroupId == ""):
+        if (self.FavoritesGroupId == "" or self.KidsGroupId == ""):
             self.getFavoriteGroup()
 
         if (username == "" or password == ""):
