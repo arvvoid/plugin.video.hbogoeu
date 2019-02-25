@@ -77,6 +77,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
+        self.KidsGroupId = ""
 
         self.loggedin_headers = {}
 
@@ -139,7 +140,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v7/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_GROUPS = 'https://' + self.API_HOST + '/v5/Groups/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v7/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
         self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v5/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v5/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v5/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
@@ -281,6 +282,12 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('FavoritesGroupId', favgroupid)
             self.FavoritesGroupId = favgroupid
 
+    def storeKids(self, kidsid):
+        self.KidsGroupId = self.addon.getSetting('KidsGroupId')
+        if self.KidsGroupId == "":
+            self.addon.setSetting('KidsGroupId', kidsid)
+            self.KidsGroupId = kidsid
+
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
         jsonrsp = self.get_from_hbogo(self.API_URL_SILENTREGISTER)
@@ -317,7 +324,9 @@ class HbogoHandler_eu(HbogoHandler):
         jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
 
         self.favgroupId = jsonrsp['FavoritesGroupId']
+        self.KidsGroupId = jsonrsp['KidsGroupId']
         self.storeFavgroup(self.favgroupId)
+        self.storeKids(self.KidsGroupId)
 
     def chk_login(self):
         return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId'])!=0)
@@ -802,15 +811,19 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             pass
 
-        for cat in jsonrsp['Items']:
-            self.addCat(cat['Name'].encode('utf-8', 'ignore'), cat['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
+        for cat in range(1, 3):
+            self.addCat(jsonrsp['Items'][cat]['Name'].encode('utf-8', 'ignore'),jsonrsp['Items'][cat]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
+
+        self.addCat(jsonrsp['Items'][3]['Name'].encode('utf-8', 'ignore'), 'http://' + self.API_HOST + '/v7/Group/json/' + self.LANGUAGE_CODE + '/ANMO/' + self.KidsGroupId + '/0/0/0/0/0/0/True', self.md + 'DefaultFolder.png', 1)
+
+        self.list(jsonrsp['Items'][0]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
 
         xbmcplugin.addSortMethod(
             handle=self.handle,
             sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
         xbmcplugin.endOfDirectory(self.handle)
 
-    def list(self, url):
+    def list(self, url, simple=False):
         if not self.chk_login():
             self.login()
         self.log("List: " + str(url))
@@ -836,26 +849,15 @@ class HbogoHandler_eu(HbogoHandler):
                     self.addLink(title, 5)
                 else:
                     self.addDir(title, 2, "tvshow")
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, self.use_content_type)
-        xbmcplugin.endOfDirectory(self.handle)
+        if simple == False:
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_GENRE)
+            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
+            xbmcplugin.setContent(self.handle, self.use_content_type)
+            xbmcplugin.endOfDirectory(self.handle)
 
     def season(self, url):
         if not self.chk_login():

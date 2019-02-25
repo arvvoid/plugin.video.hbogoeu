@@ -137,6 +137,7 @@ class HbogoHandler(object):
         self.addon.setSetting('individualization', '')
         self.addon.setSetting('customerId', '')
         self.addon.setSetting('FavoritesGroupId', '')
+        self.addon.setSetting('KidsGroupId', '')
         self.log("Removed stored setup")
 
     def save_obj(self, obj, name):

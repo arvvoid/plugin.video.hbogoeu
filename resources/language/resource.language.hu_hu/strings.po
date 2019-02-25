@@ -109,7 +109,7 @@ msgid "SEASON"
 msgstr "ÉVSZAK"
 
 msgctxt "#33707"
-msgid "Favorites"
+msgid "My List"
 msgstr "Érdekes"
 
 msgctxt "#33708"
