@@ -77,7 +77,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
-        self.KidsGroupId = ""
 
         self.loggedin_headers = {}
 
@@ -282,12 +281,6 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('FavoritesGroupId', favgroupid)
             self.FavoritesGroupId = favgroupid
 
-    def storeKids(self, kidsid):
-        self.KidsGroupId = self.addon.getSetting('KidsGroupId')
-        if self.KidsGroupId == "":
-            self.addon.setSetting('KidsGroupId', kidsid)
-            self.KidsGroupId = kidsid
-
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
         jsonrsp = self.get_from_hbogo(self.API_URL_SILENTREGISTER)
@@ -324,9 +317,7 @@ class HbogoHandler_eu(HbogoHandler):
         jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
 
         self.favgroupId = jsonrsp['FavoritesGroupId']
-        self.KidsGroupId = jsonrsp['KidsGroupId']
         self.storeFavgroup(self.favgroupId)
-        self.storeKids(self.KidsGroupId)
 
     def chk_login(self):
         return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId'])!=0)
@@ -592,7 +583,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("NO REGISTRED DEVICE - trieng silent device registration. This step is not required for all operators. Even if this fails login can be sucessfull, depends on the operator used.")
             self.silentRegister()
 
-        if (self.FavoritesGroupId == "" or self.KidsGroupId == ""):
+        if (self.FavoritesGroupId == ""):
             self.getFavoriteGroup()
 
         if (username == "" or password == ""):
@@ -812,10 +803,8 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             pass
 
-        for cat in range(1, 3):
-            self.addCat(jsonrsp['Items'][cat]['Name'].encode('utf-8', 'ignore'),jsonrsp['Items'][cat]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
-
-        self.addCat(jsonrsp['Items'][3]['Name'].encode('utf-8', 'ignore'), 'http://' + self.API_HOST + '/v7/Group/json/' + self.LANGUAGE_CODE + '/ANMO/' + self.KidsGroupId + '/0/0/0/0/0/0/True', self.md + 'DefaultFolder.png', 1)
+        self.addCat(jsonrsp['Items'][1]['Name'].encode('utf-8', 'ignore'), jsonrsp['Items'][1]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'tv.png', 1)
+        self.addCat(jsonrsp['Items'][2]['Name'].encode('utf-8', 'ignore'), jsonrsp['Items'][2]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'movie.png', 1)
 
         self.list(jsonrsp['Items'][0]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
 
