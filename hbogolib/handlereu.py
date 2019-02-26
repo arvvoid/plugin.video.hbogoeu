@@ -817,6 +817,8 @@ class HbogoHandler_eu(HbogoHandler):
                 position_series = position
             if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Movies":
                 position_movies = position
+            if position_home > -1 and position_series > -1 and position_movies > -1:
+                break
             position += 1
 
         if position_series != -1:
