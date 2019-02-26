@@ -1,3 +1,7 @@
+v.2.0.5-beta16
+- Fixed a bug that prevented some countries from completing setup.
+- Bumped inputstream.adaptive requirement to 2.3.15
+
 v.2.0.5-beta15
 - Minor fix.
 

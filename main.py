@@ -18,7 +18,7 @@ REQUEST_PARAMS = sys.argv[2][1:]
 
 if __name__ == '__main__':
     id = "plugin.video.hbogoeu"
-    version = "2.0.4~beta12"
+    version = "2.0.5~beta16"
     xbmc.log("[" + id + "]  STARING VERSION: " + version, xbmc.LOGDEBUG)
     addon_main = hbogo(id, PLUGIN_HANDLE, BASE_URL)
     addon_main.router(REQUEST_PARAMS)

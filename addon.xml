@@ -1,8 +1,8 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.5~beta15">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.5~beta16">
   <requires>
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="xbmc.python" version="2.25.0" />
-    <import addon="inputstream.adaptive" version="2.1.0" />
+    <import addon="inputstream.adaptive" version="2.3.15" />
     <import addon="script.module.inputstreamhelper" version="0.3.3" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
@@ -66,6 +66,10 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <forum />
     <website>https://github.com/arvvoid/plugin.video.hbogoeu</website>
     <news>
+v.2.0.5-beta16
+- Fixed a bug that prevented some countries from completing setup.
+- Bumped inputstream.adaptive requirement to 2.3.15
+
 v.2.0.5-beta15
 - Minor fix.
 

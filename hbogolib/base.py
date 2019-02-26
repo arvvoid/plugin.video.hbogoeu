@@ -33,7 +33,7 @@ class hbogo(object):
         index = -1
 
         for i in range(len(HbogoConstants.countries)):
-            if HbogoConstants.countries[i][2] == country_id:
+            if HbogoConstants.countries[i][1] == country_id:
                 index = i
                 break
 

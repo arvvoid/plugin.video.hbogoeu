@@ -172,8 +172,10 @@ class HbogoHandler_eu(HbogoHandler):
     def setup(self, country):
         #setup operator
 
+        self.log("SHOWING OPERATORS FOR: " + str(country))
+
         url_basic_operator = 'https://api.ugw.hbogo.eu/v3.0/Operators/' + country[3] + '/JSON/' + country[4] + '/COMP'
-        url_operators = 'https://' + country[2] + 'gwapi.hbogo.eu/v2.1/Operators/json/' + country[3] + '/COMP'
+        url_operators = 'https://' + country[2] + 'gwapi.hbogo.eu/v2.1/Operators/json/' + country[4] + '/COMP'
 
         json_basic_operators = requests.get(url_basic_operator).json()
         json_operators = requests.get(url_operators).json()
