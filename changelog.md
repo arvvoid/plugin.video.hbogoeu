@@ -1,3 +1,6 @@
+v.2.0.5-beta15
+- Minor fix.
+
 v.2.0.5-beta14
 - More robust categories listings. Solves #11 Portugal.
 

@@ -806,7 +806,6 @@ class HbogoHandler_eu(HbogoHandler):
         position_home = -1
         position_series = -1
         position_movies = -1
-        position_trending = -1
 
         position = 0
 
@@ -818,10 +817,7 @@ class HbogoHandler_eu(HbogoHandler):
                 position_series = position
             if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Movies":
                 position_movies = position
-            if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Trending Now":
-                position_trending = position
             position += 1
-
 
         if position_series != -1:
             self.addCat(self.language(33716), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'tv.png', 1)
@@ -832,11 +828,6 @@ class HbogoHandler_eu(HbogoHandler):
             self.addCat(self.language(33717), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
-
-        if position_trending != -1:
-            self.addCat(self.language(33718), jsonrsp['Items'][position_trending]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
-        else:
-            self.log("No Trending Now Category found")
 
         if position_home != -1:
             self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
