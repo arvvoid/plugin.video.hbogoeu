@@ -63,32 +63,13 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.5~beta13.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.5~beta13.zip)
+[plugin.video.hbogoeu-2.0.5~beta15.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.5~beta15.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
 ## Help
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
-
-## Tested
-
-PLATFORMS:
-
-Ubuntu 16.04 (Kodi 18)
-WORKS HW Decoding up to 1080p
-
-Mac OS 10.14.1 (Kodi 18)
-WORKS  HW Decoding up to 1080p
-
-Windows 10 64bit (Kodi 18)
-WORKS  HW Decoding up to 1080p
-
-Libreelec v9.00.0 (Kodi 18)
-on Raspberry Pi 3B+,3B,2B
-WORKS HW Decoding up to 1080p
-
-Other platforms have not been tested at the moment
 
 ## Screenshots
 
