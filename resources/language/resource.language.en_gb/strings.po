@@ -145,7 +145,7 @@ msgid "Stop, let me change the settings"
 msgstr ""
 
 msgctxt "#33716"
-msgid "Series"
+msgid "TV Shows"
 msgstr ""
 
 msgctxt "#33717"

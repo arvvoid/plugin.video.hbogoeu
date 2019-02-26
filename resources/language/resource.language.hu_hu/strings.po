@@ -1,205 +1,244 @@
-# Kodi Media Center language file
-# Addon Name: HBO GO EU
-# Addon id: plugin.video.hbogoeu
-# Addon Provider: arvvoid
 msgid ""
 msgstr ""
-"Project-Id-Version: plugin.video.hbogoeu\n"
-"Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: arvvoid\n"
-"Language-Team: arvvoid\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu_HU\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: hbogo kodi addon\n"
+"Language: hu\n"
 
+#: 
 msgctxt "#32000"
 msgid "ENG"
 msgstr "HUN"
 
+#: 
 msgctxt "#32100"
 msgid "Web registration on "
-msgstr ""
+msgstr "Webes regisztráció"
 
+#: 
 msgctxt "#32101"
 msgid "PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
-msgstr ""
+msgstr "KÉRJÜK, HOGY KAPCSOLAT A SZERZŐDŐ TÁMOGATÁSÁRÓL EZT KIEGÉSZÍTÉSRŐL, HOGY NEM KIFEJEZETT KIEGÉSZÍTŐ ÉS NEM TÁMOGATOTT TÁMOGATÁS! A KÖZÖSSÉGI SEGÍTSÉG ALKALMAZHATÓ A KIEGÉSZÍTŐGÉP-OLDAL VAGY KODI FÓRUMBAN"
 
+#: 
 msgctxt "#32102"
 msgid "Operators"
-msgstr ""
+msgstr "Az üzemeltetők"
 
+#: 
 msgctxt "#32103"
-msgid "NO HBOGO OPERATOR SELECTED. Please select your operator to continue."
-msgstr ""
+msgid "Sorry, you are not correctly logged in, aborting play. Try to login on the official site then try again, if the problem persist ask support with a full debug log"
+msgstr "Sajnáljuk, nincs helyesen bejelentkezve, megszakítva a lejátszást. Próbáljon meg bejelentkezni a hivatalos webhelyre, majd próbálja újra, ha a probléma továbbra is fennáll, kérje a teljes hibakeresési napló támogatását"
 
+#: 
 msgctxt "#32104"
-msgid "Operator not selected. Please select your  in the settings."
-msgstr ""
+msgid "Operaotr not selected. Please select your country/operaotr in the settings."
+msgstr "Az Operaotr nincs kiválasztva. Kérjük, válassza ki az országot / operaotr-t a beállításokban."
 
+#: 
 msgctxt "#32105"
 msgid "Logout (Reset setup)"
-msgstr ""
+msgstr "Kijelentkezés (Beállítás visszaállítása)"
 
+#: 
 msgctxt "#32106"
 msgid "Destroy current session"
-msgstr ""
+msgstr "Elpusztítani az aktuális munkamenetet"
 
+#: 
 msgctxt "#33440"
 msgid "Settings"
 msgstr "Beállítások"
 
+#: 
 msgctxt "#33441"
 msgid "Chose your Country"
-msgstr ""
+msgstr "Válassza ki az országot"
 
+#: 
 msgctxt "#33442"
 msgid "Enter e-mail/username"
-msgstr ""
+msgstr "Adja meg az e-mail / felhasználónevet"
 
+#: 
 msgctxt "#33443"
 msgid "Enter password"
-msgstr ""
+msgstr "Írd be a jelszót"
 
+#: 
 msgctxt "#33444"
 msgid "Setup failed, please try again"
-msgstr ""
+msgstr "A telepítés nem sikerült, próbálkozzon újra"
 
+#: 
 msgctxt "#33445"
 msgid "Chose your operator"
-msgstr ""
+msgstr "Válassza ki az üzemeltetőt"
 
+#: 
 msgctxt "#33660"
 msgid "Streaming"
 msgstr "Folyó"
 
+#: 
 msgctxt "#33665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgstr "Inputstream Adaptive beállítások (max bitrate,resolution,ecc..)"
 
+#: 
 msgctxt "#33700"
 msgid "Find movies and TV Shows..."
 msgstr "Filmek és TV-műsorok keresése"
 
+#: 
 msgctxt "#33701"
 msgid "No result"
 msgstr "Nincs eredmény"
 
+#: 
 msgctxt "#33702"
 msgid "Error"
 msgstr "Hiba"
 
+#: 
 msgctxt "#33703"
 msgid "Episode can be watched until:"
 msgstr "Az epizód megtekinthető, amíg:"
 
+#: 
 msgctxt "#33704"
 msgid "The movie can be watched until:"
 msgstr "A film megtekinthető, amíg:"
 
+#: 
 msgctxt "#33705"
 msgid "EPISODE"
 msgstr "EEPIZÓD"
 
+#: 
 msgctxt "#33706"
 msgid "SEASON"
 msgstr "ÉVSZAK"
 
+#: 
 msgctxt "#33707"
 msgid "My List"
 msgstr "Érdekes"
 
+#: 
 msgctxt "#33708"
 msgid "Please enter your login details in the settings!"
 msgstr "Kérjük, adja meg a bejelentkezési adatait a beállításoknál!"
 
+#: 
 msgctxt "#33709"
 msgid "Login error, check your login details!"
 msgstr "Bejelentkezési hiba, ellenőrizze a bejelentkezési adatait!"
 
+#: 
 msgctxt "#33710"
 msgid "No operator defined! Check your settings!"
 msgstr "Nincs megadva üzemeltető! Ellenőrizze a beállításokat!"
 
+#: 
 msgctxt "#33711"
 msgid "Search..."
 msgstr "Keresés..."
 
+#: 
 msgctxt "#33712"
 msgid "WARNING. You enabled the [Include sensitive login data in debug log] option in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is enabled in Kodi, your sensitive and private login information and session data will be written to the debug log. Please don't share publicly such a log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you really have to send a log with that option enabled to debug a login/session related issue be very CAREFUL who you send that log too and do it privately and change your password as soon as possible. If you posted such a log publicly by accident, change your password as soon as possible. DO YOU WANT TO CONTINUE?"
-msgstr ""
+msgstr "FIGYELEM. A kiegészítő szakértői beállításokban engedélyezte a [Érzékeny bejelentkezési adatok debug-naplóban] opciót. HA NEM TUDJA TUDNIVALÓK, HOGY MÁSODIK MEGKÖZELÍTETE, HOGY KIZÁRÓLAG, NEM SZÜKSÉGES! Ez azt jelenti, hogy ha a hibakereső napló engedélyezve van a Kodi-ban, az érzékeny és privát bejelentkezési adatok és a munkamenetadatok a hibakereső naplóba kerülnek. Kérjük, ne ossza meg nyilvánosan egy ilyen naplót. HA SZÜKSÉGES KIEGÉSZÍTŐ KÖTELEZETTSÉGVÁLLALÁSOK KÖVETÉSE. Ha tényleg meg kell küldeni egy naplót azzal a lehetőséggel, amely lehetővé teszi a bejelentkezési / munkamenethez kapcsolódó probléma hibakeresését, nagyon gondoskodni kell arról, hogy ki is küldte ezt a naplót, és tegye meg magántulajdonban és változtassa meg a jelszavát a lehető leghamarabb. Ha ilyen naplót véletlenül közzétett, akkor a lehető leghamarabb változtassa meg a jelszavát. AKAROD FOLYTATNI?"
 
+#: 
 msgctxt "#33713"
 msgid "INFORMATION"
-msgstr ""
+msgstr "INFORMÁCIÓ"
 
+#: 
 msgctxt "#33714"
 msgid "I understand the risk continue"
-msgstr ""
+msgstr "Megértem, hogy a kockázat továbbra is fennáll"
 
+#: 
 msgctxt "#33715"
 msgid "Stop, let me change the settings"
-msgstr ""
+msgstr "Állítsa le, módosítsa a beállításokat"
 
+#: 
 msgctxt "#33716"
-msgid "Series"
-msgstr ""
+msgid "TV Shows"
+msgstr "TV műsorok"
 
+#: 
 msgctxt "#33717"
 msgid "Movies"
-msgstr ""
+msgstr "Filmek"
 
+#: 
 msgctxt "#33718"
 msgid "Trending Now"
-msgstr ""
+msgstr "Trendelő most"
 
+#: 
 msgctxt "#33650"
 msgid "Language"
 msgstr "Nyelv"
 
+#: 
 msgctxt "#33651"
 msgid "Always use default operator language"
 msgstr "Mindig használjon alapértelmezett kezelői nyelvet"
 
+#: 
 msgctxt "#33655"
 msgid "Subtitles"
 msgstr "Feliratok"
 
+#: 
 msgctxt "#33656"
 msgid "Automatically turn on default subtitles"
 msgstr "Az alapértelmezett feliratok automatikus bekapcsolása"
 
+#: 
 msgctxt "#33652"
 msgid "Always use original titles"
-msgstr ""
+msgstr "Mindig eredeti címeket használjon"
 
+#: 
 msgctxt "#33670"
 msgid "Expert"
-msgstr ""
+msgstr "Szakértő"
 
+#: 
 msgctxt "#33671"
 msgid "Force scraper friendly titles"
-msgstr ""
+msgstr "A kaparóbarát címek kényszerítése"
 
+#: 
 msgctxt "#33680"
 msgid "Session"
-msgstr ""
+msgstr "Ülés"
 
+#: 
 msgctxt "#33681"
 msgid "Session valid for hours"
-msgstr ""
+msgstr "A munkamenet órákra érvényes"
 
+#: 
 msgctxt "#33682"
 msgid "Reset session, force re-login"
-msgstr ""
+msgstr "A munkamenet visszaállítása, az újra-bejelentkezés kényszerítése"
 
+#: 
 msgctxt "#33690"
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
+#: 
 msgctxt "#33691"
 msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
-msgstr ""
+msgstr "Érzékeny belépési adatok beszúrása a hibakeresési naplóba"
+
