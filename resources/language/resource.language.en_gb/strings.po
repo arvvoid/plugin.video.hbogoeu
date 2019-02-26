@@ -144,6 +144,18 @@ msgctxt "#33715"
 msgid "Stop, let me change the settings"
 msgstr ""
 
+msgctxt "#33716"
+msgid "Series"
+msgstr ""
+
+msgctxt "#33717"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#33718"
+msgid "Trending Now"
+msgstr ""
+
 msgctxt "#33650"
 msgid "Language"
 msgstr ""
