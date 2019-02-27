@@ -71,8 +71,6 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
 
-## Screenshots
+## Video Demo and Install instructions
 
-![Screenshot 1](/resources/screen1.png?raw=true "Screenshot 1")
-![Screenshot 7](/resources/screen7.png?raw=true "Screenshot 7")
-![Screenshot 8](/resources/screen8.png?raw=true "Screenshot 8")
+[![Watch the video](https://img.youtube.com/vi/m326rV0vH8Q/hqdefault.jpg)](https://youtu.be/m326rV0vH8Q)
