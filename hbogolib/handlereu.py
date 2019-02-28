@@ -1,12 +1,13 @@
 # encoding: utf-8
-# HboGo EU handler class for hbogo Kodi add-on
+# HboGo EU handler class for Hbo Go Kodi add-on
 # Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
 # Derived from version v.2.0-beta5 of the add-on, witch was initialy
 # derived from https://github.com/billsuxx/plugin.video.hbogohu witch is
 # derived from https://kodibg.org/forum/thread-504.html
+# Oauth login/solution for providers with login redirection derived from https://github.com/kszaq/plugin.video.hbogopl
 # Relesed under GPL version 2
 #########################################################
-# http://hbogo.eu HBOGO HANDLER CLASS
+# http://hbogo.eu HBOGO EU HANDLER CLASS
 #########################################################
 
 
