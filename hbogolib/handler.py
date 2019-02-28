@@ -35,6 +35,7 @@ class HbogoHandler(object):
         self.SESSION_VALIDITY = int(self.addon.getSetting('sessionvalid'))  # stored session valid
 
         self.base_addon_cat=""
+        self.cur_loc = ""
 
         self.md = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/media/")
         self.resources = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/")
@@ -91,6 +92,7 @@ class HbogoHandler(object):
 
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
+        self.cur_loc = cur_loc
 
     def send_login_hbogo(self, url, headers, data):
         try:
@@ -195,6 +197,12 @@ class HbogoHandler(object):
         pass
 
     def play(self, url, cid):
+        pass
+
+    def procContext(self, type, content_id, optional=""):
+        pass
+
+    def genContextMenu(self, content_id):
         pass
 
     def addLink(self, title, mode):

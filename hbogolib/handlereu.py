@@ -71,6 +71,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_CONTENT = ""
         self.API_URL_PURCHASE = ""
         self.API_URL_SEARCH = ""
+        self.API_URL_ADD_RATING = ""
+        self.API_URL_ADD_MYLIST = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -144,6 +146,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v5/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v5/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v5/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+
+        self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v7/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v7/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v7/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
 
         self.individualization = ""
         self.goToken = ""
@@ -1067,6 +1073,66 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("Play url: " + str(li))
         xbmcplugin.setResolvedUrl(self.handle, True, li)
 
+    def procContext(self, type, content_id, optional=""):
+
+        if type == 9:
+            resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
+            try:
+                if resp["Success"]:
+                    self.log("ADDED TO MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification("ADD TO MY LIST", "Sucess")
+                else:
+                    self.log("FAILED ADD TO MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification("ADD TO MY LIST", "Error", xbmcgui.NOTIFICATION_ERROR)
+            except:
+                self.log("ERROR ADD TO MY LIST: " + content_id)
+                xbmcgui.Dialog().notification("ADD TO MY LIST", "Error", xbmcgui.NOTIFICATION_ERROR)
+
+        if type == 10:
+            resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
+            try:
+                if resp["Success"]:
+                    self.log("REMOVED FROM MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification("REMOVE FROM MY LIST", "Sucess")
+                    return xbmc.executebuiltin('Container.Refresh')
+                else:
+                    self.log("FAILED TO REMOVE MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification("REMOVE FROM MY LIST", "Error", xbmcgui.NOTIFICATION_ERROR)
+            except:
+                self.log("ERROR REMOVE FROM MY LIST: " + content_id)
+                xbmcgui.Dialog().notification("REMOVE FROM MY LIST", "Error", xbmcgui.NOTIFICATION_ERROR)
+
+        if type == 8:
+            resp = self.get_from_hbogo(self.API_URL_ADD_RATING + content_id + '/' + optional)
+            try:
+                if resp["Success"]:
+                    self.log("ADDED RATING: " + content_id + " " + optional)
+                    xbmcgui.Dialog().notification("RATING", "Sucess")
+                else:
+                    self.log("FAILED RATING: " + content_id + " " + optional)
+                    xbmcgui.Dialog().notification("RATING", "Error", xbmcgui.NOTIFICATION_ERROR)
+            except:
+                self.log("ERROR RATING: " + content_id + " " + optional)
+                xbmcgui.Dialog().notification("RATING", "Error", xbmcgui.NOTIFICATION_ERROR)
+
+
+
+    def genContextMenu(self, content_id):
+
+        add_mylist = (self.language(33719), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + content_id + ')')
+        remove_mylist = (self.language(33720), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + content_id + ')')
+
+        vote_5 = (self.language(33721), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
+        vote_4 = (self.language(33722), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
+        vote_3 = (self.language(33723), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
+        vote_2 = (self.language(33724), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
+        vote_1 = (self.language(33725), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+
+        if self.cur_loc == self.language(33707):
+            return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
+        else:
+            return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
+
     def addLink(self, title, mode):
         self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
@@ -1117,6 +1183,8 @@ class HbogoHandler_eu(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
+        if title['ContentType'] == 1:
+            liz.addContextMenuItems(items=self.genContextMenu(cid))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
 
@@ -1131,6 +1199,9 @@ class HbogoHandler_eu(HbogoHandler):
                                               "title": item['Name'].encode('utf-8', 'ignore'),
                                               "Plot": item['Abstract'].encode('utf-8', 'ignore')})
         liz.setProperty('isPlayable', "false")
+        if media_type == "tvshow":
+            cid = item['ObjectUrl'].rsplit('/', 2)[1]
+            liz.addContextMenuItems(items=self.genContextMenu(cid))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
 
 

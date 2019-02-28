@@ -82,6 +82,7 @@ class hbogo(object):
         thumbnail = None
         content_id = None
         mode = None
+        vote = None
 
 
         try:
@@ -102,6 +103,10 @@ class hbogo(object):
             pass
         try:
             content_id = str(params["cid"])
+        except:
+            pass
+        try:
+            vote = str(params["vote"])
         except:
             pass
 
@@ -145,6 +150,18 @@ class hbogo(object):
             handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
             handler.del_login()
             xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == 8: # vote
+            self.start()
+            self.handler.procContext(8, content_id, vote)
+
+        elif mode == 9: # add to my list
+            self.start()
+            self.handler.procContext(9, content_id)
+
+        elif mode == 10: # remove from my list
+            self.start()
+            self.handler.procContext(10, content_id)
 
 
 

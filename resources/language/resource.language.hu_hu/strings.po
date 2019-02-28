@@ -182,6 +182,34 @@ msgctxt "#33718"
 msgid "Trending Now"
 msgstr "Trendelő most"
 
+msgctxt "#33719"
+msgid "Add to My List"
+msgstr ""
+
+msgctxt "#33720"
+msgid "Remove from My List"
+msgstr ""
+
+msgctxt "#33721"
+msgid "Vote 5"
+msgstr ""
+
+msgctxt "#33722"
+msgid "Vote 4"
+msgstr ""
+
+msgctxt "#33723"
+msgid "Vote 3"
+msgstr ""
+
+msgctxt "#33724"
+msgid "Vote 2"
+msgstr ""
+
+msgctxt "#33725"
+msgid "Vote 1"
+msgstr ""
+
 #: 
 msgctxt "#33650"
 msgid "Language"
