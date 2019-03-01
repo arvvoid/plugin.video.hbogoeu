@@ -1,3 +1,9 @@
+v.2.0.6-beta17
+- Add to My List
+- Remove from My List
+- Rate Movies and TV Shows
+- If OAuth unexpectedly fail for Operators with login redirection the add-on won't crash but display an informative message and write data that can help fix it to the debug log.
+
 v.2.0.5-beta16
 - Fixed a bug that prevented some countries from completing setup.
 - Bumped inputstream.adaptive requirement to 2.3.15

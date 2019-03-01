@@ -48,6 +48,7 @@ class HbogoHandler(object):
         self.LB_SEARCH_NORES = self.language(33701).encode('utf-8')
         self.LB_ERROR = self.language(33702).encode('utf-8')
         self.LB_INFO = self.language(33713).encode('utf-8')
+        self.LB_SUCESS = self.language(33727).encode('utf-8')
         self.LB_EPISODE_UNTILL = self.language(33703).encode('utf-8')
         self.LB_FILM_UNTILL = self.language(33704).encode('utf-8')
         self.LB_EPISODE = self.language(33705).encode('utf-8')
@@ -200,9 +201,6 @@ class HbogoHandler(object):
         pass
 
     def procContext(self, type, content_id, optional=""):
-        pass
-
-    def genContextMenu(self, content_id):
         pass
 
     def addLink(self, title, mode):

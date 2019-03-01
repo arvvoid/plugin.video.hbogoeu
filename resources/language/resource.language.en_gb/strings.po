@@ -165,23 +165,31 @@ msgid "Remove from My List"
 msgstr ""
 
 msgctxt "#33721"
-msgid "Vote 5"
+msgid "Rate 5"
 msgstr ""
 
 msgctxt "#33722"
-msgid "Vote 4"
+msgid "Rate 4"
 msgstr ""
 
 msgctxt "#33723"
-msgid "Vote 3"
+msgid "Rate 3"
 msgstr ""
 
 msgctxt "#33724"
-msgid "Vote 2"
+msgid "Rate 2"
 msgstr ""
 
 msgctxt "#33725"
-msgid "Vote 1"
+msgid "Rate 1"
+msgstr ""
+
+msgctxt "#33726"
+msgid "Rate"
+msgstr ""
+
+msgctxt "#33727"
+msgid "Success"
 msgstr ""
 
 msgctxt "#33650"
