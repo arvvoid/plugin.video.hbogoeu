@@ -8,282 +8,282 @@ msgstr ""
 "Language: hr\n"
 
 #: 
-msgctxt "#32000"
+msgctxt "#30000"
 msgid "ENG"
 msgstr "HRV"
 
 #: 
-msgctxt "#32100"
+msgctxt "#30100"
 msgid "Web registration on "
 msgstr "Registracija web-mjesta "
 
 #: 
-msgctxt "#32101"
+msgctxt "#30101"
 msgid "PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
 msgstr "MOLIMO VAS DA NE KONTAKTIRATE PODRŠKU SVOG OPERATERA O OVOM ADD-ON, TO JE NESLUŽBENI ADD-ON I NEMA SLUŽBENU PODRŠKU! POMOĆ ZAJEDNICE MOŽETE PRONAĆ NA ADD-ON GITHUB STRANICI ILI NA KODI FORUMU"
 
 #: 
-msgctxt "#32102"
+msgctxt "#30102"
 msgid "Operators"
 msgstr "Operatori"
 
 #: 
-msgctxt "#32103"
+msgctxt "#30103"
 msgid "Sorry, you are not correctly logged in, aborting play. Try to login on the official site then try again, if the problem persist ask support with a full debug log"
 msgstr "Nažalost, niste ispravno prijavljeni, prekinuli igru. Pokušajte se prijaviti na službenu stranicu i pokušajte ponovno, ako se problem i dalje javlja, zatražite podršku s potpunim debug zapisnikom"
 
 #: 
-msgctxt "#32104"
+msgctxt "#30104"
 msgid "Operaotr not selected. Please select your country/operaotr in the settings."
 msgstr "Operater nije odabran. Molimo odaberite svoju zemlju / operatora u postavkama."
 
 #: 
-msgctxt "#32105"
+msgctxt "#30105"
 msgid "Logout (Reset setup)"
 msgstr "Odjava (Vraćanje izvornih postavki)"
 
 #: 
-msgctxt "#32106"
+msgctxt "#30106"
 msgid "Destroy current session"
 msgstr "Uništi trenutnu sesiju"
 
 #: 
-msgctxt "#33440"
+msgctxt "#30440"
 msgid "Settings"
 msgstr "Postavke"
 
 #: 
-msgctxt "#33441"
+msgctxt "#30441"
 msgid "Chose your Country"
 msgstr "Odabrali svoju zemlju"
 
 #: 
-msgctxt "#33442"
+msgctxt "#30442"
 msgid "Enter e-mail/username"
 msgstr "Unesite e-poštu/korisničko ime"
 
 #: 
-msgctxt "#33443"
+msgctxt "#30443"
 msgid "Enter password"
 msgstr "Upišite lozinku"
 
 #: 
-msgctxt "#33444"
+msgctxt "#30444"
 msgid "Setup failed, please try again"
 msgstr "Postavljanje nije uspjelo, pokušajte ponovno"
 
 #: 
-msgctxt "#33445"
+msgctxt "#30445"
 msgid "Chose your operator"
 msgstr "Odaberite svog operatera"
 
 #: 
-msgctxt "#33660"
+msgctxt "#30660"
 msgid "Streaming"
 msgstr "Streaming"
 
 #: 
-msgctxt "#33665"
+msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgstr "Inputstream Adaptive Postavke (max bitrate,rezolucija,itd...)"
 
 #: 
-msgctxt "#33700"
+msgctxt "#30700"
 msgid "Find movies and TV Shows..."
 msgstr "Traži filmove, serije..."
 
 #: 
-msgctxt "#33701"
+msgctxt "#30701"
 msgid "No result"
 msgstr "Nema rezultata"
 
 #: 
-msgctxt "#33702"
+msgctxt "#30702"
 msgid "Error"
 msgstr "Greška"
 
 #: 
-msgctxt "#33703"
+msgctxt "#30703"
 msgid "Episode can be watched until:"
 msgstr "Epizoda se može pogledati do:"
 
 #: 
-msgctxt "#33704"
+msgctxt "#30704"
 msgid "The movie can be watched until:"
 msgstr "Film se može pogledati do:"
 
 #: 
-msgctxt "#33705"
+msgctxt "#30705"
 msgid "EPISODE"
 msgstr "EPIZODA"
 
 #: 
-msgctxt "#33706"
+msgctxt "#30706"
 msgid "SEASON"
 msgstr "SEZONA"
 
 #: 
-msgctxt "#33707"
+msgctxt "#30707"
 msgid "My List"
 msgstr "Moj izbor"
 
 #: 
-msgctxt "#33708"
+msgctxt "#30708"
 msgid "Please enter your login details in the settings!"
 msgstr "Unesite podatke za prijavu u postavke!"
 
 #: 
-msgctxt "#33709"
+msgctxt "#30709"
 msgid "Login error, check your login details!"
 msgstr "Pogreška pri prijavi, provjerite podatke za prijavu!"
 
 #: 
-msgctxt "#33710"
+msgctxt "#30710"
 msgid "No operator defined! Check your settings!"
 msgstr "Operater nije definirat! Provjerite vaše postavke!"
 
 #: 
-msgctxt "#33711"
+msgctxt "#30711"
 msgid "Search..."
 msgstr "Traži..."
 
 #: 
-msgctxt "#33712"
+msgctxt "#30712"
 msgid "WARNING. You enabled the [Include sensitive login data in debug log] option in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is enabled in Kodi, your sensitive and private login information and session data will be written to the debug log. Please don't share publicly such a log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you really have to send a log with that option enabled to debug a login/session related issue be very CAREFUL who you send that log too and do it privately and change your password as soon as possible. If you posted such a log publicly by accident, change your password as soon as possible. DO YOU WANT TO CONTINUE?"
 msgstr "UPOZORENJE. Omogućili ste opciju [Uključi osjetljive podatke za prijavu u dnevnik otklanjanja pogrešaka] u ovim stručnim postavkama dodatka. AKO NE ZNATE ZNAŠ ZAŠTO STE POMOĆI DA NJEGOVO ISKLJUČITE, NIJE POTREBNO !! To znači da ako je debug dnevnik omogućen u Kodi, vaše osjetljive i privatne informacije za prijavu i podaci sesije bit će zapisani u dnevnik otklanjanja pogrešaka. Nemojte javno dijeliti takav dnevnik. AKO TREBATE POSTAVLJATI LOGOVNIK ZA ODBIJANJE JAVNO ISKLJUČUJEMO TU OPCIJU. Ako stvarno trebate poslati zapisnik s tom opcijom koja je omogućena za ispravljanje problema vezanih uz prijavu / sesiju, budite vrlo oprezni tko i vi šaljete taj dnevnik te to radite privatno i promijenite lozinku što je prije moguće. Ako ste takav zapisnik javno objavili slučajno, promijenite zaporku što je prije moguće. ŽELITE LI NASTAVITI?"
 
 #: 
-msgctxt "#33713"
+msgctxt "#30713"
 msgid "INFORMATION"
 msgstr "INFORMACIJA"
 
 #: 
-msgctxt "#33714"
+msgctxt "#30714"
 msgid "I understand the risk continue"
 msgstr "Razumijem da se rizik nastavlja"
 
 #: 
-msgctxt "#33715"
+msgctxt "#30715"
 msgid "Stop, let me change the settings"
 msgstr "Stani, dopusti mi da promijenim postavke"
 
 #: 
-msgctxt "#33716"
+msgctxt "#30716"
 msgid "TV Shows"
 msgstr "TV emisije"
 
 #: 
-msgctxt "#33717"
+msgctxt "#30717"
 msgid "Movies"
 msgstr "Filmovi"
 
 #: 
-msgctxt "#33718"
+msgctxt "#30718"
 msgid "Trending Now"
 msgstr "Sada u trendu"
 
 #: 
-msgctxt "#33650"
+msgctxt "#30650"
 msgid "Language"
 msgstr "Jezik"
 
 #: 
-msgctxt "#33651"
+msgctxt "#30651"
 msgid "Always use default operator language"
 msgstr "Uvijek koristi zadani jezik operatera"
 
 #: 
-msgctxt "#33655"
+msgctxt "#30655"
 msgid "Subtitles"
 msgstr "Titlovi"
 
 #: 
-msgctxt "#33656"
+msgctxt "#30656"
 msgid "Automatically turn on default subtitles"
 msgstr "Uključi zadane titlove automatski"
 
 #: 
-msgctxt "#33652"
+msgctxt "#30652"
 msgid "Always use original titles"
 msgstr "Uvijek koristite izvorne naslove"
 
 #: 
-msgctxt "#33670"
+msgctxt "#30670"
 msgid "Expert"
 msgstr "Stručnjak"
 
 #: 
-msgctxt "#33671"
+msgctxt "#30671"
 msgid "Force scraper friendly titles"
 msgstr "Prisiliti naslove prikladne za brisanje"
 
 #: 
-msgctxt "#33680"
+msgctxt "#30680"
 msgid "Session"
 msgstr "sjednica"
 
 #: 
-msgctxt "#33681"
+msgctxt "#30681"
 msgid "Session valid for hours"
 msgstr "Sjednica vrijedi satima"
 
 #: 
-msgctxt "#33682"
+msgctxt "#30682"
 msgid "Reset session, force re-login"
 msgstr "Resetiraj sesiju, prisili ponovno prijavljivanje"
 
 #: 
-msgctxt "#33690"
+msgctxt "#30690"
 msgid "Debug"
 msgstr "otkloniti neispravnost"
 
 #: 
-msgctxt "#33691"
+msgctxt "#30691"
 msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
 msgstr "Uključite osjetljive podatke za prijavu u dnevnik za ispravljanje pogrešaka [NE POŠTEJTE JAVNO]"
 
 #: 
-msgctxt "#33719"
+msgctxt "#30719"
 msgid "Add to My List"
 msgstr "Dodaj u Moj popis"
 
 #: 
-msgctxt "#33720"
+msgctxt "#30720"
 msgid "Remove from My List"
 msgstr "Ukloni s Mog popisa"
 
 #: 
-msgctxt "#33721"
+msgctxt "#30721"
 msgid "Rate 5"
 msgstr "Ocijenite 5"
 
 #: 
-msgctxt "#33722"
+msgctxt "#30722"
 msgid "Rate 4"
 msgstr "Ocijenite 4"
 
 #: 
-msgctxt "#33723"
+msgctxt "#30723"
 msgid "Rate 3"
 msgstr "Ocijenite 3"
 
 #: 
-msgctxt "#33724"
+msgctxt "#30724"
 msgid "Rate 2"
 msgstr "Ocijenite 2"
 
 #: 
-msgctxt "#33725"
+msgctxt "#30725"
 msgid "Rate 1"
 msgstr "Ocijenite 1"
 
 #: 
-msgctxt "#33726"
+msgctxt "#30726"
 msgid "Rate"
 msgstr "Ocijenite"
 
 #: 
-msgctxt "#33727"
+msgctxt "#30727"
 msgid "Success"
 msgstr "Uspjeh"
 

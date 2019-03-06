@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<!-- Account -->
-	<category label="33440">
+	<category label="30440">
         <setting type="text" id="country_code" visible="false" default=""/>
         <setting type="text" id="operator_id" visible="false" default=""/>
         <setting type="text" id="operator_name" visible="false" default=""/>
@@ -12,21 +12,21 @@
         <setting type="text" id="FavoritesGroupId" visible="false" default=""/>
         <setting type="text" id="username" visible="false" default=""/>
         <setting type="text" id="password" option="hidden" visible="false" default=""/>
-        <setting id="delsetup" type="action" label="32105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&mode=6)" option="close"/>
+        <setting id="delsetup" type="action" label="30105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&mode=6)" option="close"/>
     <!-- Language -->
-    <setting label="33650" type="lsep"/>
-    <setting label="33651" type="bool" id="deflang" default="false"/>
-    <setting label="33652" type="bool" id="origtitles" default="false"/>
+    <setting label="30650" type="lsep"/>
+    <setting label="30651" type="bool" id="deflang" default="false"/>
+    <setting label="30652" type="bool" id="origtitles" default="false"/>
     <!-- Streaming -->
-    <setting label="33660" type="lsep"/>
-    <setting id="is_settings" type="action" label="33665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
+    <setting label="30660" type="lsep"/>
+    <setting id="is_settings" type="action" label="30665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
     </category>
-	<category label="33670">
-    <setting label="33671" type="bool" id="forcescrap" default="false"/>
-    <setting label="33680" type="lsep"/>
-    <setting label="33681" type="number" id="sessionvalid" default="2"/>
-    <setting id="logout" type="action" label="32106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&mode=7)" option="close"/>
-    <setting label="33690" type="lsep"/>
-    <setting label="33691" type="bool" id="sensitivedebug" default="false"/>
+	<category label="30670">
+    <setting label="30671" type="bool" id="forcescrap" default="false"/>
+    <setting label="30680" type="lsep"/>
+    <setting label="30681" type="number" id="sessionvalid" default="2"/>
+    <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&mode=7)" option="close"/>
+    <setting label="30690" type="lsep"/>
+    <setting label="30691" type="bool" id="sensitivedebug" default="false"/>
     </category>
 </settings>

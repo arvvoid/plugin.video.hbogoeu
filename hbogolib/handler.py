@@ -44,20 +44,20 @@ class HbogoHandler(object):
 
         # LABELS
 
-        self.LB_SEARCH_DESC = self.language(33700).encode('utf-8')
-        self.LB_SEARCH_NORES = self.language(33701).encode('utf-8')
-        self.LB_ERROR = self.language(33702).encode('utf-8')
-        self.LB_INFO = self.language(33713).encode('utf-8')
-        self.LB_SUCESS = self.language(33727).encode('utf-8')
-        self.LB_EPISODE_UNTILL = self.language(33703).encode('utf-8')
-        self.LB_FILM_UNTILL = self.language(33704).encode('utf-8')
-        self.LB_EPISODE = self.language(33705).encode('utf-8')
-        self.LB_SEASON = self.language(33706).encode('utf-8')
-        self.LB_MYPLAYLIST = self.language(33707).encode('utf-8')
-        self.LB_NOLOGIN = self.language(33708).encode('utf-8')
-        self.LB_LOGIN_ERROR = self.language(33709).encode('utf-8')
-        self.LB_NO_OPERATOR = self.language(33710).encode('utf-8')
-        self.LB_SEARCH = self.language(33711).encode('utf-8')
+        self.LB_SEARCH_DESC = self.language(30700).encode('utf-8')
+        self.LB_SEARCH_NORES = self.language(30701).encode('utf-8')
+        self.LB_ERROR = self.language(30702).encode('utf-8')
+        self.LB_INFO = self.language(30713).encode('utf-8')
+        self.LB_SUCESS = self.language(30727).encode('utf-8')
+        self.LB_EPISODE_UNTILL = self.language(30703).encode('utf-8')
+        self.LB_FILM_UNTILL = self.language(30704).encode('utf-8')
+        self.LB_EPISODE = self.language(30705).encode('utf-8')
+        self.LB_SEASON = self.language(30706).encode('utf-8')
+        self.LB_MYPLAYLIST = self.language(30707).encode('utf-8')
+        self.LB_NOLOGIN = self.language(30708).encode('utf-8')
+        self.LB_LOGIN_ERROR = self.language(30709).encode('utf-8')
+        self.LB_NO_OPERATOR = self.language(30710).encode('utf-8')
+        self.LB_SEARCH = self.language(30711).encode('utf-8')
 
         self.use_content_type = "episodes"
 
@@ -80,7 +80,7 @@ class HbogoHandler(object):
             self.sensitive_debug = False
 
         if self.sensitive_debug:
-            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(33712).encode('utf-8'), self.language(33714).encode('utf-8'), self.language(33715).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712).encode('utf-8'), self.language(30714).encode('utf-8'), self.language(30715).encode('utf-8'))
             if not ret:
                 sys.exit()
 

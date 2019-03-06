@@ -115,7 +115,7 @@ class HbogoHandler_eu(HbogoHandler):
         # API URLS
         self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
 
-        if self.language(32000) == 'ENG':  # only englih or the default language for the selected operator is allowed
+        if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
             self.LANGUAGE_CODE = 'ENG'
 
         # check if default language is forced
@@ -242,7 +242,7 @@ class HbogoHandler_eu(HbogoHandler):
         for o in op_list:
             list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
 
-        index = xbmcgui.Dialog().select(self.language(33445), list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(30445).encode('utf-8'), list, useDetails=True)
         if index != -1:
             self.addon.setSetting('operator_id', op_list[index][1])
             self.addon.setSetting('operator_name', op_list[index][0])
@@ -250,16 +250,16 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('operator_redirect_url', op_list[index][4])
             # OPERATOR SETUP DONE
 
-            username = xbmcgui.Dialog().input(self.language(33442), type=xbmcgui.INPUT_ALPHANUM,)
+            username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM,)
             if len(username) == 0:
                 self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
                 sys.exit()
                 return False
-            password = xbmcgui.Dialog().input(self.language(33443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
             if len(password) == 0:
                 self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
                 sys.exit()
                 return False
             self.addon.setSetting('username', username)
@@ -270,7 +270,7 @@ class HbogoHandler_eu(HbogoHandler):
                 return True
             else:
                 self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(33444))
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
                 sys.exit()
                 return False
         else:
@@ -843,12 +843,12 @@ class HbogoHandler_eu(HbogoHandler):
             position += 1
 
         if position_series != -1:
-            self.addCat(self.language(33716), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'tv.png', 1)
+            self.addCat(self.language(30716).encode('utf-8'), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'tv.png', 1)
         else:
             self.log("No Series Category found")
 
         if position_movies != -1:
-            self.addCat(self.language(33717), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'movie.png', 1)
+            self.addCat(self.language(30717).encode('utf-8'), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
 
@@ -1027,7 +1027,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         if not self.chk_login():
             self.log("NO LOGED IN ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(32103))
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103).encode('utf-8'))
             self.logout()
             return
         purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
@@ -1096,53 +1096,53 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 if resp["Success"]:
                     self.log("ADDED TO MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(33719).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_SUCESS, icon)
                 else:
                     self.log("FAILED ADD TO MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(33719).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
             except:
                 self.log("ERROR ADD TO MY LIST: " + content_id)
-                xbmcgui.Dialog().notification(self.language(33719).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
 
         if type == 10:
             resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
             try:
                 if resp["Success"]:
                     self.log("REMOVED FROM MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(33720).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_SUCESS, icon)
                     return xbmc.executebuiltin('Container.Refresh')
                 else:
                     self.log("FAILED TO REMOVE MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(33720).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
             except:
                 self.log("ERROR REMOVE FROM MY LIST: " + content_id)
-                xbmcgui.Dialog().notification(self.language(33720).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
 
         if type == 8:
             resp = self.get_from_hbogo(self.API_URL_ADD_RATING + content_id + '/' + optional)
             try:
                 if resp["Success"]:
                     self.log("ADDED RATING: " + content_id + " " + optional)
-                    xbmcgui.Dialog().notification(self.language(33726).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_SUCESS, icon)
                 else:
                     self.log("FAILED RATING: " + content_id + " " + optional)
-                    xbmcgui.Dialog().notification(self.language(33726).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
             except:
                 self.log("ERROR RATING: " + content_id + " " + optional)
-                xbmcgui.Dialog().notification(self.language(33726).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
 
 
 
     def genContextMenu(self, content_id, media_id):
 
-        add_mylist = (self.language(33719), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (self.language(33720), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        add_mylist = (self.language(30719).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
+        remove_mylist = (self.language(30720).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
 
-        vote_5 = (self.language(33721), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (self.language(33722), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (self.language(33723), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (self.language(33724), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (self.language(33725), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        vote_5 = (self.language(30721).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
+        vote_4 = (self.language(30722).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
+        vote_3 = (self.language(30723).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
+        vote_2 = (self.language(30724).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
+        vote_1 = (self.language(30725).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]

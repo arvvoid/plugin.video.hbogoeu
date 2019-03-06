@@ -67,7 +67,7 @@ class hbogo(object):
         for country in HbogoConstants.countries:
             list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
 
-        index = xbmcgui.Dialog().select(self.language(33441), list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), list, useDetails=True)
         if index != -1:
             country_id = list[index].getLabel2()
             self.addon.setSetting('country_code', country_id)
@@ -131,7 +131,7 @@ class hbogo(object):
 
         elif mode == 4:
             self.start()
-            self.handler.setDispCat(self.language(33711).encode('utf-8'))
+            self.handler.setDispCat(self.language(30711).encode('utf-8'))
             self.handler.search()
 
         elif mode == 5:
