@@ -53,7 +53,7 @@ class hbogo(object):
 
         if HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_EU:
             from hbogolib.handlereu import HbogoHandler_eu
-            self.handler = HbogoHandler_eu(self.addon_id, self.handle, self.base_url, HbogoConstants.countries[country_index])
+            self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index])
         else:
             xbmcgui.Dialog().ok("ERROR", "Unsupported region")
             sys.exit()
@@ -141,13 +141,13 @@ class hbogo(object):
 
         elif mode == 6: #logout, destry setup
             from hbogolib.handler import HbogoHandler
-            handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
+            handler = HbogoHandler(self.handle, self.base_url)
             handler.del_setup()
             xbmc.executebuiltin('Container.Refresh')
 
         elif mode == 7: #reset session
             from hbogolib.handler import HbogoHandler
-            handler = HbogoHandler(self.addon_id, self.handle, self.base_url)
+            handler = HbogoHandler(self.handle, self.base_url)
             handler.del_login()
             xbmc.executebuiltin('Container.Refresh')
 
