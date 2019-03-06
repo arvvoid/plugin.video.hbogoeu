@@ -34,8 +34,8 @@ import inputstreamhelper
 
 class HbogoHandler_eu(HbogoHandler):
 
-    def __init__(self, addon_id, handle, base_url, country):
-        HbogoHandler.__init__(self, addon_id, handle, base_url)
+    def __init__(self, handle, base_url, country):
+        HbogoHandler.__init__(self, handle, base_url)
         self.operator_name = ""
         self.op_id = ""
         self.COUNTRY_CODE_SHORT = ""

@@ -1,4 +1,4 @@
-v.2.0.5-beta18
+v.2.0.6-beta18
 - Polonian language added (contribution of kowalmisiek).
 - Language files ID range fix
 

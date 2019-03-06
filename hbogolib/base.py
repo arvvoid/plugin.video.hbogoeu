@@ -21,11 +21,11 @@ import xbmcgui
 
 class hbogo(object):
 
-    def __init__(self, addon_id, handle, base_url):
+    def __init__(self, handle, base_url):
         self.base_url = base_url
         self.handle = handle
-        self.addon_id = addon_id
-        self.addon = xbmcaddon.Addon(self.addon_id)
+        self.addon = xbmcaddon.Addon()
+        self.addon_id = self.addon.getAddonInfo('id')
         self.language = self.addon.getLocalizedString
         self.handler = None
 

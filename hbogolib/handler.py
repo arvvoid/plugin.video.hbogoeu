@@ -25,9 +25,9 @@ class HbogoHandler(object):
     GO_REQUIRED_PLATFORM = 'CHBR'  # emulate chrome
     ACCEPT_LANGUAGE = 'en-us,en;q=0.8'
 
-    def __init__(self, addon_id, handle, base_url):
-        self.addon_id = addon_id
-        self.addon = xbmcaddon.Addon(addon_id)
+    def __init__(self, handle, base_url):
+        self.addon = xbmcaddon.Addon()
+        self.addon_id = self.addon.getAddonInfo('id')
         self.language = self.addon.getLocalizedString
         self.base_url = base_url
         self.handle = handle
