@@ -7,6 +7,7 @@
 from hbogolib.base import hbogo
 import sys
 import xbmc
+import xbmcaddon
 
 
 # Setup plugin
@@ -17,8 +18,9 @@ REQUEST_PARAMS = sys.argv[2][1:]
 
 
 if __name__ == '__main__':
-    id = "plugin.video.hbogoeu"
-    version = "2.0.5~beta18"
+    add_on = xbmcaddon.Addon()
+    id = add_on.getAddonInfo('id')
+    version = add_on.getAddonInfo('version')
     xbmc.log("[" + id + "]  STARING VERSION: " + version, xbmc.LOGDEBUG)
     addon_main = hbogo(id, PLUGIN_HANDLE, BASE_URL)
     addon_main.router(REQUEST_PARAMS)
