@@ -262,8 +262,9 @@ class HbogoHandler_eu(HbogoHandler):
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
                 sys.exit()
                 return False
-            self.addon.setSetting('username', username)
-            self.addon.setSetting('password', password)
+
+            self.setCredential('username', username)
+            self.setCredential('password', password)
 
             self.init_api(country)
             if self.login():
@@ -593,8 +594,8 @@ class HbogoHandler_eu(HbogoHandler):
     def login(self):
         self.log("Using operator: " + str(self.op_id))
 
-        username = self.addon.getSetting('username')
-        password = self.addon.getSetting('password')
+        username = self.getCredential('username')
+        password = self.getCredential('password')
         self.customerId = self.addon.getSetting('customerId')
         self.individualization = self.addon.getSetting('individualization')
         self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')

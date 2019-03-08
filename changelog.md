@@ -1,3 +1,6 @@
+v.2.0.7-beta19
+- Security Update: Credentials are no longer stored in cleartext and are encrypted based on a calculated key from hardware info (but this is not to be considered secure, if your device is compromised in any way the credentials should be considered compromised) (NOTE: If your network hardware change, your hostname change, storage device change your decryption key might change and you will have to resetup the add-on becouse your credentials will no longer be readable. Curent users don't have to do anything after the update the add-on will encrypt your credentials at next run and remove the cleartext ones)
+
 v.2.0.6-beta18
 - Polonian language added (contribution of kowalmisiek).
 - Language files ID range fix

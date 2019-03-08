@@ -18,6 +18,16 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 
+import uuid
+import base64
+import codecs
+import hashlib
+from Cryptodome import Random
+from Cryptodome.Cipher import AES
+from Cryptodome.Util import Padding
+
+
+
 class HbogoHandler(object):
 
     UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
@@ -144,13 +154,13 @@ class HbogoHandler(object):
         self.log("Removed stored setup")
 
     def save_obj(self, obj, name):
-        folder = xbmc.translatePath("special://temp")
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
         self.log("Saving: " + folder + name + '.pkl')
         with open(folder + name + '.pkl', 'wb') as f:
             pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     def load_obj(self, name):
-        folder = xbmc.translatePath("special://temp")
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
         self.log("Trying to load: " + folder + name + '.pkl')
         try:
             with open(folder + name + '.pkl', 'rb') as f:
@@ -159,7 +169,45 @@ class HbogoHandler(object):
             self.log("OBJECT RELOAD ERROR")
             return None
 
-    #IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
+    def getCredential(self, credential_id):
+        value = self.addon.getSetting(credential_id)
+        if value.startswith(self.addon_id + '.credentials.v1.'):
+            # this is an encrypted credential
+            encoded = value[len(self.addon_id + '.credentials.v1.'):]
+            return self.decrypt_credential_v1(encoded)
+        else:
+            # this are old plaintext credentials convert
+            if len(value) > 0:
+                self.setCrediantial(credential_id, value)
+                return self.getCredential(credential_id)
+            else:
+                return ''
+
+    def setCrediantial(self, credential_id, value):
+        self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + str(self.encrypt_credential_v1(value)))
+
+    def get_device_id_v1(self):
+        space = xbmc.getInfoLabel('System.TotalSpace')
+        mac = uuid.getnode()
+        if (mac >> 40) % 2:
+            from platform import node
+            mac = node()
+        return hashlib.sha256(codecs.encode(str(mac), 'rot_13') + self.addon_id + '.credentials.v1.' + codecs.encode(str(space), 'rot_13')).digest()
+
+    def encrypt_credential_v1(self, raw):
+        raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
+        return base64.b64encode(iv + cipher.encrypt(raw))
+
+    def decrypt_credential_v1(self, enc):
+        enc = base64.b64decode(enc)
+        iv = enc[:AES.block_size]
+        cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
+        decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
+        return decoded
+
+    # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
     def storeIndiv(self, indiv, custid):
         pass
