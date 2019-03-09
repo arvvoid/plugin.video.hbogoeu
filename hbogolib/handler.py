@@ -18,6 +18,7 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 
+import random
 import uuid
 import base64
 import codecs
@@ -25,6 +26,7 @@ import hashlib
 from Cryptodome import Random
 from Cryptodome.Cipher import AES
 from Cryptodome.Util import Padding
+
 
 
 
@@ -100,7 +102,6 @@ class HbogoHandler(object):
     def log(self, msg, level=xbmc.LOGDEBUG):
         xbmc.log(self.DEBUG_ID_STRING + msg, level)
 
-
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc
@@ -174,16 +175,31 @@ class HbogoHandler(object):
         if value.startswith(self.addon_id + '.credentials.v1.'):
             # this is an encrypted credential
             encoded = value[len(self.addon_id + '.credentials.v1.'):]
-            return self.decrypt_credential_v1(encoded)
+            decrypted = self.decrypt_credential_v1(encoded)
+            if decrypted is not None:
+                return decrypted
+            else:
+                # decrypt failed ask for credentials again
+                username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
+                if len(username) == 0:
+                    return ''
+                password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+                if len(password) == 0:
+                    return ''
+
+                self.setCredential('username', username)
+                self.setCredential('password', password)
+                return self.getCredential(credential_id)
+
         else:
             # this are old plaintext credentials convert
             if len(value) > 0:
-                self.setCrediantial(credential_id, value)
+                self.setCredential(credential_id, value)
                 return self.getCredential(credential_id)
             else:
                 return ''
 
-    def setCrediantial(self, credential_id, value):
+    def setCredential(self, credential_id, value):
         self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + str(self.encrypt_credential_v1(value)))
 
     def get_device_id_v1(self):
@@ -201,11 +217,14 @@ class HbogoHandler(object):
         return base64.b64encode(iv + cipher.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
-        enc = base64.b64decode(enc)
-        iv = enc[:AES.block_size]
-        cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
-        return decoded
+        try:
+            enc = base64.b64decode(enc)
+            iv = enc[:AES.block_size]
+            cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
+            decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
+            return decoded
+        except:
+            return None
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 

@@ -12,6 +12,7 @@
         <setting type="text" id="FavoritesGroupId" visible="false" default=""/>
         <setting type="text" id="username" visible="false" default=""/>
         <setting type="text" id="password" option="hidden" visible="false" default=""/>
+        <setting type="text" id="lastsearch" visible="false" default=""/>
         <setting id="delsetup" type="action" label="30105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&mode=6)" option="close"/>
     <!-- Language -->
     <setting label="30650" type="lsep"/>

@@ -643,6 +643,12 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Login restored - Token  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Customer Id  [OMITTED FOR PRIVACY]")
                         self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
+                    loaded_session['time'] = time.time()
+                    if self.sensitive_debug:
+                        self.log("REFRESHING SAVED SESSION: " + str(saved_session))
+                    else:
+                        self.log("REFRESHING SAVED SESSION: [OMITTED FOR PRIVACY]")
+                    self.save_obj(loaded_session, self.addon_id + "_session")
                     return True
 
         if len(self.REDIRECT_URL) > 0:
