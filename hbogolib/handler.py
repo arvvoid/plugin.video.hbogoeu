@@ -175,7 +175,7 @@ class HbogoHandler(object):
     def inputCredentials(self):
         username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
@@ -184,7 +184,7 @@ class HbogoHandler(object):
                 return self.inputCredentials()
         password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
@@ -199,7 +199,7 @@ class HbogoHandler(object):
         if self.login():
             return True
         else:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
             if not ret:
                 return False
             else:
