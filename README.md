@@ -42,8 +42,12 @@ Other Hbo Go versions/regions that use diferent APIs, are currently not covered 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
 REQUIRMENTS:
-* Kodi 18 (Inputstream Adaptive), on any platform supported by Kodi
-* Libwidevine (Your device might include it already or might not, not all devices have the same widevine certification level, witch can impact playback ability and max quality of DRM content, please make sure to read the licence agreement that comes with it, so you know what you´re getting yourself into.)
+* Kodi 18+
+* script.module.requests 2.12.4+ (should get installed automatically in Kodi 18)
+* script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
+* inputstream.adaptive 2.3.15+ (should get installed automatically in Kodi 18)
+* script.module.inputstreamhelper 0.3.3+ (should get installed automatically in Kodi 18)
+* Libwidevine (Your device might include it already or might not, not all devices have the same widevine certification level, witch can impact playback ability and max quality of DRM content, please make sure to read the licence agreement that comes with it, so you know what you´re getting yourself into.) 
 * playback quality (resolution) of DRM content in Kodi, and if the playback will work at all, depends on Inputstream Adaptive and Libwidevine and widevine certification level on your device, and the service provider requirments and restrictions for the specific content. HDCP support can play a role as well.
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
