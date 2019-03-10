@@ -61,8 +61,8 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 * Enable Input Stream Add-on in Kodi v18+: Add-ons >> Package icon >> My Add-ons >> Video Player Inputstream >> Inputstream Adaptive >> menu >> enable
 * Install the add-on from repository "Kodi ArvVoid Repository"
-* Configure the Add-on: select the correct operator and enter your hbogo username and password 
-(first check if you can login in your local hbo go website without problems)
+* Follow the setup wizard at first add-on run
+* OPTIONAL: Configure aditional preferences in the add-on config
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
 ## Latest relese
