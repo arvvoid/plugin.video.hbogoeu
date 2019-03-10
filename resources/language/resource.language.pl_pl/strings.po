@@ -283,3 +283,7 @@ msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
 msgstr ""
 "Uwzględnij poufne dane logowania w dzienniku debugowania [NIE PODAWAJ "
 "PUBLICZNIE]"
+
+msgctxt "#30728"
+msgid "Login failed, do you want to input your credentials again?"
+msgstr "Logowanie nie powiodło się, czy chcesz ponownie wprowadzić swoje dane uwierzytelniające?"

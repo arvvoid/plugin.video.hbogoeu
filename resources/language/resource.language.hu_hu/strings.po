@@ -287,3 +287,7 @@ msgctxt "#30727"
 msgid "Success"
 msgstr "Siker"
 
+msgctxt "#30728"
+msgid "Login failed, do you want to input your credentials again?"
+msgstr "A bejelentkezés sikertelen, meg szeretné adni a hitelesítő adatait?"
+

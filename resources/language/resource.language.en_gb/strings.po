@@ -192,6 +192,10 @@ msgctxt "#30727"
 msgid "Success"
 msgstr ""
 
+msgctxt "#30728"
+msgid "Login failed, do you want to input your credentials again?"
+msgstr ""
+
 msgctxt "#30650"
 msgid "Language"
 msgstr ""

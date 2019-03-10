@@ -250,24 +250,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('operator_redirect_url', op_list[index][4])
             # OPERATOR SETUP DONE
 
-            username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM,)
-            if len(username) == 0:
-                self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
-                sys.exit()
-                return False
-            password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
-            if len(password) == 0:
-                self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
-                sys.exit()
-                return False
-
-            self.setCredential('username', username)
-            self.setCredential('password', password)
-
             self.init_api(country)
-            if self.login():
+            if self.inputCredentials():
                 return True
             else:
                 self.del_setup()

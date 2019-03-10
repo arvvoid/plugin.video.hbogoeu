@@ -135,7 +135,7 @@ class HbogoHandler(object):
 
     def del_login(self):
         try:
-            folder = xbmc.translatePath("special://temp")
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
             os.remove(folder + self.addon_id + "_session"+".pkl")
         except:
@@ -152,6 +152,8 @@ class HbogoHandler(object):
         self.addon.setSetting('customerId', '')
         self.addon.setSetting('FavoritesGroupId', '')
         self.addon.setSetting('KidsGroupId', '')
+        self.addon.setSetting('username', '')
+        self.addon.setSetting('password', '')
         self.log("Removed stored setup")
 
     def save_obj(self, obj, name):
@@ -170,6 +172,39 @@ class HbogoHandler(object):
             self.log("OBJECT RELOAD ERROR")
             return None
 
+    def inputCredentials(self):
+        username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
+        if len(username) == 0:
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            if not ret:
+                self.addon.setSetting('username', '')
+                self.addon.setSetting('password', '')
+                return False
+            else:
+                return self.inputCredentials()
+        password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+        if len(password) == 0:
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            if not ret:
+                self.addon.setSetting('username', '')
+                self.addon.setSetting('password', '')
+                return False
+            else:
+                return self.inputCredentials()
+
+        self.setCredential('username', username)
+        self.setCredential('password', password)
+
+        self.del_login()
+        if self.login():
+            return True
+        else:
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, 'Login failed, do you want to input your credentials again?')
+            if not ret:
+                return False
+            else:
+                return self.inputCredentials()
+
     def getCredential(self, credential_id):
         value = self.addon.getSetting(credential_id)
         if value.startswith(self.addon_id + '.credentials.v1.'):
@@ -180,17 +215,11 @@ class HbogoHandler(object):
                 return decrypted
             else:
                 # decrypt failed ask for credentials again
-                username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
-                if len(username) == 0:
-                    return ''
-                password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
-                if len(password) == 0:
-                    return ''
 
-                self.setCredential('username', username)
-                self.setCredential('password', password)
-                return self.getCredential(credential_id)
-
+                if self.inputCredentials():
+                    return self.getCredential(credential_id)
+                else:
+                    return ''
         else:
             # this are old plaintext credentials convert
             if len(value) > 0:
@@ -247,7 +276,7 @@ class HbogoHandler(object):
         pass
 
     def login(self):
-        pass
+        return False
 
     def categories(self):
         pass
