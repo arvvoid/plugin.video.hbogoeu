@@ -59,7 +59,6 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Install instructions
 
-* Enable Input Stream Add-on in Kodi v18+: Add-ons >> Package icon >> My Add-ons >> Video Player Inputstream >> Inputstream Adaptive >> menu >> enable
 * Install the add-on from repository "Kodi ArvVoid Repository"
 * Follow the setup wizard at first add-on run
 * OPTIONAL: Configure aditional preferences in the add-on config
