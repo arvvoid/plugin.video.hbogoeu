@@ -60,7 +60,7 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 * Install the add-on from repository "Kodi ArvVoid Repository"
 * Follow the setup wizard at first add-on run
-* OPTIONAL: Configure aditional preferences in the add-on config
+* OPTIONAL: Configure additional preferences in the add-on config
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
 ## Latest relese
