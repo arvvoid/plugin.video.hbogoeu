@@ -1,5 +1,5 @@
 v.2.0.7-beta19
-- Credentials are no longer stored in cleartext and are encrypted based on a calculated key from hardware info (this is not to be considered secure, if your device is compromised the credentials should be considered compromised)
+- Credentials are no longer stored in cleartext and are encrypted using a calculated key from hardware info (this is not to be considered secure if your device is compromised the credentials should be considered compromised)
 - Refresh session timer on reloading session
 
 v.2.0.6-beta18
