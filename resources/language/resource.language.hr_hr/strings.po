@@ -290,3 +290,11 @@ msgstr "Uspjeh"
 msgctxt "#30728"
 msgid "Login failed, do you want to input your credentials again?"
 msgstr "Prijava nije uspjela, želite li ponovno unijeti svoje vjerodajnice?"
+
+msgctxt "#30729"
+msgid "KIDS"
+msgstr "DJECA"
+
+msgctxt "#30730"
+msgid "Weekly Top"
+msgstr "Tjedni vrh"

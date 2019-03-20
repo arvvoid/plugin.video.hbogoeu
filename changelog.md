@@ -1,3 +1,6 @@
+v.2.0.7-beta20
+- Kids category and weekly top (might not be present for all countries)
+
 v.2.0.7-beta19
 - Credentials are no longer stored in cleartext and are encrypted using a calculated key from hardware info (this is not to be considered secure if your device is compromised the credentials should be considered compromised)
 - Refresh session timer on reloading session

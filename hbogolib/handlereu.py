@@ -68,6 +68,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_AUTH_OPERATOR = ""
         self.API_URL_CUSTOMER_GROUP = ""
         self.API_URL_GROUPS = ""
+        self.API_URL_GROUPS_OLD = ""
         self.API_URL_CONTENT = ""
         self.API_URL_PURCHASE = ""
         self.API_URL_SEARCH = ""
@@ -143,6 +144,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v7/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v7/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
+        self.API_URL_GROUPS_OLD = 'https://' + API_HOST + '/v5/Groups/json/' + LANGUAGE_CODE + '/'+ API_PLATFORM
         self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v5/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v5/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v5/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
@@ -808,6 +810,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.md + 'FavoritesFolder.png', 1)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
+        jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -818,6 +821,8 @@ class HbogoHandler_eu(HbogoHandler):
         position_home = -1
         position_series = -1
         position_movies = -1
+        position_week_top = -1
+        position_kids = -1
 
         position = 0
 
@@ -832,6 +837,15 @@ class HbogoHandler_eu(HbogoHandler):
             if position_home > -1 and position_series > -1 and position_movies > -1:
                 break
             position += 1
+        position = 0
+        for cat in jsonrsp2['Items']:
+            if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Weekly Top":
+                position_week_top = position
+            if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Kids":
+                position_kids = position
+            if position_week_top > -1 and position_kids > -1:
+                break
+            position += 1
 
         if position_series != -1:
             self.addCat(self.language(30716).encode('utf-8'), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'tv.png', 1)
@@ -842,6 +856,16 @@ class HbogoHandler_eu(HbogoHandler):
             self.addCat(self.language(30717).encode('utf-8'), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
+
+        if position_kids != -1:
+            self.addCat(self.language(30729).encode('utf-8'), jsonrsp['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'kids.png', 1)
+        else:
+            self.log("No Kids Category found")
+
+        if position_week_top != -1:
+            self.addCat(self.language(30730).encode('utf-8'), jsonrsp['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.md + 'DefaultFolder.png', 1)
+        else:
+            self.log("No Week Top Category found")
 
         if position_home != -1:
             self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)

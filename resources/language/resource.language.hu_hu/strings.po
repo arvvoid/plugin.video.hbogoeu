@@ -291,3 +291,10 @@ msgctxt "#30728"
 msgid "Login failed, do you want to input your credentials again?"
 msgstr "A bejelentkezés sikertelen, meg szeretné adni a hitelesítő adatait?"
 
+msgctxt "#30729"
+msgid "KIDS"
+msgstr "GYEREKEK"
+
+msgctxt "#30730"
+msgid "Weekly Top"
+msgstr "Heti top"

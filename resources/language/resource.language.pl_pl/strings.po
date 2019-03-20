@@ -287,3 +287,11 @@ msgstr ""
 msgctxt "#30728"
 msgid "Login failed, do you want to input your credentials again?"
 msgstr "Logowanie nie powiodło się, czy chcesz ponownie wprowadzić swoje dane uwierzytelniające?"
+
+msgctxt "#30729"
+msgid "KIDS"
+msgstr "DZIECI"
+
+msgctxt "#30730"
+msgid "Weekly Top"
+msgstr "Tygodniowy top"
