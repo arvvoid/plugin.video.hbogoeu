@@ -7,7 +7,7 @@ import random
 import math
 import urllib
 import copy
-from lxml import etree as ET
+import xml.etree.ElementTree as ET
 
 import xbmcgui
 import xbmcplugin
@@ -25,6 +25,11 @@ class HbogoHandler_sp(HbogoHandler):
         self.API_DEVICE_TOKEN = ''
         self.API_IDENTITY_GUID = ''
         self.API_ACCOUNT_GUID = ''
+
+        self.NAMESPACES = {
+            'clearleap': 'http://www.clearleap.com/namespace/clearleap/1.0/',
+            'media': 'http://search.yahoo.com/mrss/',
+        }
 
         self.API_HOST = 'api-hboe.hbo.clearleap.com'
         self.API_HOST_GATEWAY = 'https://es.hboespana.com'
@@ -86,10 +91,10 @@ class HbogoHandler_sp(HbogoHandler):
         response = self.send_login_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
 
 
-        if response.xpath('status')[0].text == 'Success':
-            self.API_DEVICE_TOKEN = response.xpath('token')[0].text
-            self.API_IDENTITY_GUID = response.xpath('identityGuid')[0].text
-            self.API_ACCOUNT_GUID = response.xpath('accountGuid')[0].text
+        if response.find('status').text == 'Success':
+            self.API_DEVICE_TOKEN = response.find('token').text
+            self.API_IDENTITY_GUID = response.find('identityGuid').text
+            self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
             return True
         else:
@@ -133,35 +138,35 @@ class HbogoHandler_sp(HbogoHandler):
         movies = None
         kids = None
 
-        for item in browse_xml.xpath('.//item'):
-            if item.xpath('category')[0].text == 'Home':
+        for item in browse_xml.findall('.//item'):
+            if item.find('category').text == 'Home':
                 home = item
-            elif item.xpath('category')[0].text == 'Series':
+            elif item.find('category').text == 'Series':
                 series = item
-            elif item.xpath('category')[0].text == 'Movies':
+            elif item.find('category').text == 'Movies':
                 movies = item
-            elif item.xpath('category')[0].text == 'Kids':
+            elif item.find('category').text == 'Kids':
                 kids = item
             else:
                 pass
 
         if series != None:
-            self.addCat(self.language(30716).encode('utf-8'), series.xpath('link')[0].text, self.md + 'tv.png', 1)
+            self.addCat(self.language(30716).encode('utf-8'), series.find('link').text, self.md + 'tv.png', 1)
         else:
             self.log("No Series Category found")
         
         if movies != None:
-            self.addCat(self.language(30717).encode('utf-8'), movies.xpath('link')[0].text, self.md + 'movie.png', 1)
+            self.addCat(self.language(30717).encode('utf-8'), movies.find('link').text, self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
 
         if kids != None:
-            self.addCat(self.language(30729).encode('utf-8'), kids.xpath('link')[0].text, self.md + 'kids.png', 1)
+            self.addCat(self.language(30729).encode('utf-8'), kids.find('link').text, self.md + 'kids.png', 1)
         else:
             self.log("No Kids Category found")
 
         if home != None:
-            self.list(home.xpath('link')[0].text, True)
+            self.list(home.find('link').text, True)
         else:
             self.log("No Home Category found")
 
@@ -172,7 +177,7 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.endOfDirectory(self.handle)
 
     def get_thumbnail_url(self, item):
-        thumbnail_url = item.xpath('media:thumbnail', namespaces=item.nsmap)
+        thumbnail_url = item.findall('media:thumbnail', namespaces=self.NAMESPACES)
         return thumbnail_url[0].get('url') if thumbnail_url else '' 
 
     def list(self, url, simple=False):
@@ -185,15 +190,16 @@ class HbogoHandler_sp(HbogoHandler):
 
         response = self.get_from_hbogo(url, 'xml')
 
-        for item in response.xpath('.//item'):
-            item_link = item.xpath('link')[0].text
+        for item in response.findall('.//item'):
+            item_link = item.find('link').text
 
             if len(item_link) > 0:
-                item_type = item.xpath('clearleap:itemType', namespaces=response.nsmap)[0].text.encode('utf-8')
+                self.log(ET.tostring(item, encoding='utf8'))
+                item_type = item.find('clearleap:itemType', namespaces=self.NAMESPACES).text.encode('utf-8')
                 if item_type == 'LEAF':
                     self.addDir(item)
                 elif item_type == 'CATEGORY':
-                    self.addCat(item.xpath('title')[0].text.encode('utf-8'), item_link, self.get_thumbnail_url(item), 1)
+                    self.addCat(item.find('title').text.encode('utf-8'), item_link, self.get_thumbnail_url(item), 1)
                 elif item_type == 'media':
                     self.addLink(item, 5)
                 else:
@@ -223,11 +229,11 @@ class HbogoHandler_sp(HbogoHandler):
 
         media_item = self.get_from_hbogo(url, 'xml')
 
-        mpd_pre_url = media_item.xpath('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=media_item.nsmap)[0].get('url') + '&responseType=xml'
+        mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
-        mpd_url = self.get_from_hbogo(mpd_pre_url, 'xml').xpath('.//url')[0].text
+        mpd_url = self.get_from_hbogo(mpd_pre_url, 'xml').find('.//url').text
 
-        media_guid = media_item.xpath('.//guid')[0].text
+        media_guid = media_item.find('.//guid').text
 
         license_headers = 'X-Clearleap-AssetID=' + media_guid + '&X-Clearleap-DeviceId=' + self.API_DEVICE_ID + \
             '&X-Clearleap-DeviceToken=' + self.API_DEVICE_TOKEN + '&Content-Type='
@@ -253,10 +259,10 @@ class HbogoHandler_sp(HbogoHandler):
     def addLink(self, title, mode):
         self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
-        name = title.xpath('title')[0].text.encode('utf-8')
+        name = title.find('title').text.encode('utf-8')
         media_type = "episode"
 
-        u = self.base_url + "?url=" + urllib.quote_plus(title.xpath('link')[0].text) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+        u = self.base_url + "?url=" + urllib.quote_plus(title.find('link').text) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
 
         liz = xbmcgui.ListItem(name)
         liz.setInfo(type="Video",
@@ -269,10 +275,10 @@ class HbogoHandler_sp(HbogoHandler):
 
 
     def addDir(self, item):
-        showtitle = item.xpath('clearleap:shortTitle', namespaces=item.nsmap)
+        showtitle = item.findall('clearleap:shortTitle', namespaces=self.NAMESPACES)
         showtitle = showtitle[0].text.encode('utf-8') if showtitle else ''
 
-        self.addCat(item.xpath('title')[0].text.encode('utf-8'), item.xpath('link')[0].text, self.get_thumbnail_url(item), 1)
+        self.addCat(item.find('title').text.encode('utf-8'), item.find('link').text, self.get_thumbnail_url(item), 1)
 
     def addCat(self, name, url, icon, mode):
         self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))

@@ -23,7 +23,7 @@ import uuid
 import base64
 import codecs
 import hashlib
-from lxml import etree as ET
+import xml.etree.ElementTree as ET
 from Cryptodome import Random
 from Cryptodome.Cipher import AES
 from Cryptodome.Util import Padding

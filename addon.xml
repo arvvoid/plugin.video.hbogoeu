@@ -5,7 +5,6 @@
     <import addon="script.module.pycryptodome" version="3.4.3"/>
     <import addon="inputstream.adaptive" version="2.3.15" />
     <import addon="script.module.inputstreamhelper" version="0.3.3" />
-    <import addon="script.module.lxml" version="4.3.3" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
