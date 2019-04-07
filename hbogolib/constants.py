@@ -36,6 +36,7 @@ class HbogoConstants(object):
         ['Serbia', 'rs', 'sr', 'SRB', 'SRP', '', HANDLER_EU],
         ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
         ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
+        ['Spain', 'es', 'es', '', '', '', HANDLER_SPAIN],
     ]
 
     platforms = {
