@@ -30,7 +30,7 @@ This add-on covers all listend on http://hbogo.eu or sharing the same api atm 13
 * Serbia
 * Slovakia
 * Slovenija
-* Spain [WORK IN PROGRESS] [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
+* Spain [WORK IN PROGRESS] Spain Test Relese: [plugin.video.hbogoeu-spain.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3053190/plugin.video.hbogoeu-spain.zip) [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
 
 Other Hbo Go versions/regions that use diferent APIs, are currently not covered by this add-on, but there is hope for future support and transforming this in a general hbogo add-on, but that will take time and collaboration with local developers using and having access to those services:
 
