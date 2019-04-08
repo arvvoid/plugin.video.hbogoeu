@@ -69,6 +69,10 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
+## Test release
+
+Spain: [plugin.video.hbogoeu-spain.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3053190/plugin.video.hbogoeu-spain.zip)
+
 ## Help
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
