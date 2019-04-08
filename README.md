@@ -33,7 +33,7 @@ This add-on covers all listend on http://hbogo.eu or sharing the same api atm 13
 
 Other Hbo Go versions/regions that use diferent APIs, are currently not covered by this add-on, but there is hope for future support and transforming this in a general hbogo add-on, but that will take time and collaboration with local developers using and having access to those services:
 
-* HBO España (https://en.hboespana.com/) [NOT SUPPORTED BY THIS ADD-ON] [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
+* HBO España (https://en.hboespana.com/) [WORK IN PROGRESS] [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
 * HBO Nordic (https://www.hbonordic.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#7](https://github.com/arvvoid/plugin.video.hbogoeu/issues/7)
 * HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 * HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
