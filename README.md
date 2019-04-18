@@ -16,7 +16,7 @@ Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) fr
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website http://hbogo.eu
 
-This add-on covers all listend on http://hbogo.eu or sharing the same api atm 13 countries: 
+This add-on covers all listend on http://hbogo.eu or sharing the same api, HBO Spain+Nordic region atm 18 countries: 
 * Bosnia and Herzegovina
 * Bulgaria
 * Croatia
@@ -30,8 +30,11 @@ This add-on covers all listend on http://hbogo.eu or sharing the same api atm 13
 * Serbia
 * Slovakia
 * Slovenija
-* Spain [WORK IN PROGRESS] Spain Test Relese: [plugin.video.hbogoeu-spain.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3053190/plugin.video.hbogoeu-spain.zip) [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
-* HBO Nordic [WORK IN PROGRESS] Nordic Test Relese: [plugin.video.hbogoeu-nordicex.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3067193/plugin.video.hbogoeu-nordicex.zip) [#7](https://github.com/arvvoid/plugin.video.hbogoeu/issues/7)
+* Spain [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Norway [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Denmark [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Sweden [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Finland [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
 
 Other Hbo Go versions/regions that use diferent APIs, are currently not covered by this add-on, but there is hope for future support and transforming this in a general hbogo add-on, but that will take time and collaboration with local developers using and having access to those services:
 
@@ -68,12 +71,6 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 [plugin.video.hbogoeu-2.0.7~beta20.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.7~beta20.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
-
-## Test release
-
-Spain: [plugin.video.hbogoeu-spain.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3053190/plugin.video.hbogoeu-spain.zip)
-
-Nordic: [plugin.video.hbogoeu-nordicex.zip](https://github.com/arvvoid/plugin.video.hbogoeu/files/3067193/plugin.video.hbogoeu-nordicex.zip)
 
 ## Help
 
