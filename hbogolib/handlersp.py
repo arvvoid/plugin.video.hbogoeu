@@ -13,6 +13,7 @@ from hbogolib.constants import HbogoConstants
 import sys
 import base64
 import urllib
+import time
 import hashlib
 import xml.etree.ElementTree as ET
 
@@ -95,7 +96,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.API_DEVICE_ID = self.addon.getSetting('individualization')
 
-        if (self.API_DEVICE_ID == ""):
+        if self.API_DEVICE_ID == "":
             self.log("NO REGISTRED DEVICE - generating")
             self.API_DEVICE_ID = self.generate_device_id()
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
@@ -123,7 +124,6 @@ class HbogoHandler_sp(HbogoHandler):
 
         response = self.send_login_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
 
-
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
             self.API_IDENTITY_GUID = response.find('identityGuid').text
@@ -146,7 +146,6 @@ class HbogoHandler_sp(HbogoHandler):
             return True
         else:
             return False
-
 
     def setup(self):
         self.init_api()
@@ -197,22 +196,22 @@ class HbogoHandler_sp(HbogoHandler):
             else:
                 pass
 
-        if series != None:
+        if series is not None:
             self.addCat(self.language(30716).encode('utf-8'), series.find('link').text, self.md + 'tv.png', 1)
         else:
             self.log("No Series Category found")
         
-        if movies != None:
+        if movies is not None:
             self.addCat(self.language(30717).encode('utf-8'), movies.find('link').text, self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
 
-        if kids != None:
+        if kids is not None:
             self.addCat(self.language(30729).encode('utf-8'), kids.find('link').text, self.md + 'kids.png', 1)
         else:
             self.log("No Kids Category found")
 
-        if home != None:
+        if home is not None:
             self.list(home.find('link').text, True)
         else:
             self.log("No Home Category found")
@@ -320,7 +319,6 @@ class HbogoHandler_sp(HbogoHandler):
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
-
 
     def addDir(self, item):
         showtitle = item.findall('clearleap:shortTitle', namespaces=self.NAMESPACES)
