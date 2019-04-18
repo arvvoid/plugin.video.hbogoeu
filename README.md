@@ -16,19 +16,19 @@ Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) fr
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website http://hbogo.eu
 
-This add-on covers all listend on http://hbogo.eu or sharing the same api, HBO Spain+Nordic region atm 18 countries: 
+This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries: 
 * Bosnia and Herzegovina
 * Bulgaria
 * Croatia
-* Czech Republic 
+* Czech Republic (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
 * Hungary
-* Macedonia 
+* Macedonia
 * Montenegro
 * Polonia
 * Portugal
-* Romania
+* Romania (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
 * Serbia
-* Slovakia
+* Slovakia (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
 * Slovenija
 * Spain [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
 * Norway [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
