@@ -1,12 +1,19 @@
+# encoding: utf-8
+# Hbo Spain and Nordic handler class for Hbo Go Kodi add-on
+# Copyright (C) 2019 Sakerdot (https://github.com/Sakerdot)
+# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
+# Relesed under GPL version 2
+#########################################################
+# HBO Spain and Nordic HANDLER CLASS
+#########################################################
+
 from hbogolib.handler import HbogoHandler
-from hbogolib.handlereu import HbogoHandler_eu
+from hbogolib.constants import HbogoConstants
 
 import sys
 import base64
-import random
-import math
 import urllib
-import copy
+import hashlib
 import xml.etree.ElementTree as ET
 
 import xbmcgui
@@ -15,7 +22,7 @@ import inputstreamhelper
 
 class HbogoHandler_sp(HbogoHandler):
 
-    def __init__(self, handle, base_url):
+    def __init__(self, handle, base_url, country):
         HbogoHandler.__init__(self, handle, base_url)
 
         self.LICENSE_SERVER = ""
@@ -31,12 +38,16 @@ class HbogoHandler_sp(HbogoHandler):
             'media': 'http://search.yahoo.com/mrss/',
         }
 
-        self.API_HOST = 'api-hboe.hbo.clearleap.com'
-        self.API_HOST_GATEWAY = 'https://es.hboespana.com'
+        if country[1] == 'es':
+            self.API_HOST = 'api-hboe.hbo.clearleap.com'
+        else:
+            self.API_HOST = 'api-hbon.hbo.clearleap.com'
+
+        self.API_HOST_GATEWAY = country[5]
         self.API_HOST_GATEWAY_REFERER = self.API_HOST_GATEWAY + '/sign-in'
 
-        self.API_URL_BROWSE = 'https://api-hboe.hbo.clearleap.com/cloffice/client/web/browse/'
-        self.API_URL_AUTH_WEBBASIC = 'https://api-hboe.hbo.clearleap.com/cloffice/client/device/login'
+        self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
+        self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
 
         if len(self.getCredential('username')) == 0:
             self.setup()
@@ -59,10 +70,8 @@ class HbogoHandler_sp(HbogoHandler):
             return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
 
     def generate_device_id(self):
-        def rand_hex():
-            return hex(random.getrandbits(16))[2:].zfill(4)
-
-        return rand_hex() + rand_hex() + "-" + rand_hex() + "-" + rand_hex() + "-" + rand_hex() + "-" + rand_hex() + rand_hex() + rand_hex()
+        import uuid
+        return uuid.uuid4()
 
     def chk_login(self):
         return self.API_DEVICE_TOKEN != ''
@@ -84,7 +93,31 @@ class HbogoHandler_sp(HbogoHandler):
             'Connection': 'keep-alive',
         }
 
-        self.API_DEVICE_ID = self.generate_device_id()
+        self.API_DEVICE_ID = self.addon.getSetting('individualization')
+
+        if (self.API_DEVICE_ID == ""):
+            self.log("NO REGISTRED DEVICE - generating")
+            self.API_DEVICE_ID = self.generate_device_id()
+            self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
+
+        login_hash = hashlib.sha224(self.API_DEVICE_ID + username + password).hexdigest()
+        self.log("LOGIN HASH: " + login_hash)
+
+        loaded_session = self.load_obj(self.addon_id + "_es_session")
+
+        if loaded_session is not None:
+            self.log("SAVED SESSION LOADED")
+            if loaded_session["hash"] == login_hash:
+                self.log("HASH IS VALID")
+                if time.time() < (loaded_session["time"] + (self.SESSION_VALIDITY * 60 * 60)):
+                    self.log("NOT EXPIRED RESTORING...")
+                    self.API_DEVICE_TOKEN = loaded_session["API_DEVICE_TOKEN"]
+                    self.API_IDENTITY_GUID = loaded_session["API_IDENTITY_GUID"]
+                    self.API_ACCOUNT_GUID = loaded_session["API_ACCOUNT_GUID"]
+                    self.init_api()
+                    loaded_session['time'] = time.time()
+                    self.save_obj(loaded_session, self.addon_id + "_es_session")
+                    return True
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
@@ -96,6 +129,20 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_IDENTITY_GUID = response.find('identityGuid').text
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
+
+            login_hash = hashlib.sha224(self.API_DEVICE_ID + username + password).hexdigest()
+            self.log("LOGIN HASH: " + login_hash)
+            saved_session = {
+
+                "hash": login_hash,
+                "API_DEVICE_TOKEN": self.API_DEVICE_TOKEN,
+                "API_IDENTITY_GUID": self.API_IDENTITY_GUID,
+                "API_ACCOUNT_GUID": self.API_ACCOUNT_GUID,
+                "time": time.time()
+
+            }
+            self.save_obj(saved_session, self.addon_id + "_es_session")
+
             return True
         else:
             return False
@@ -232,13 +279,14 @@ class HbogoHandler_sp(HbogoHandler):
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd_url = self.get_from_hbogo(mpd_pre_url, 'xml').find('.//url').text
+        self.log("Manifest: " + str(mpd_url));
 
         media_guid = media_item.find('.//guid').text
 
         license_headers = 'X-Clearleap-AssetID=' + media_guid + '&X-Clearleap-DeviceId=' + self.API_DEVICE_ID + \
             '&X-Clearleap-DeviceToken=' + self.API_DEVICE_TOKEN + '&Content-Type='
     
-        license_url = 'https://api-hboe.hbo.clearleap.com/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
+        license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
         protocol = 'mpd'

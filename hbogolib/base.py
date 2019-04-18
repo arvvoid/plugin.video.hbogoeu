@@ -56,7 +56,7 @@ class hbogo(object):
             self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index])
         elif HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_SPAIN:
             from hbogolib.handlersp import HbogoHandler_sp
-            self.handler = HbogoHandler_sp(self.handle, self.base_url)
+            self.handler = HbogoHandler_sp(self.handle, self.base_url, HbogoConstants.countries[country_index])
         else:
             xbmcgui.Dialog().ok("ERROR", "Unsupported region")
             sys.exit()
