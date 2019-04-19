@@ -1,7 +1,7 @@
 # Disclaimer
 
 This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
-For more information on visit the official HBO® Go website for your region.
+For more information visit the official HBO® Go website for your region.
 
 This is also not an "official Add-on" by the Kodi team. I have no affiliation with the Kodi team.
 
