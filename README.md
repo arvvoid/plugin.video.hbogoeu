@@ -13,6 +13,14 @@ If an official app is available for your platform, use it instead of this.
 
 Simple, great Kodi add-on to access HBO® Go Europe, HBO® España and HBO® Nordic content from Kodi Media Center (http://kodi.tv).
 
+HBO Go Regions:
+* HBO Go Europe (http://hbogo.eu) [SUPPORTED]
+* HBO España (https://hboespana.com/) [WORK IN PROGRESS, BASIC SUPPORT]
+* HBO Nordic (hhttps://www.hbonordic.com/) [WORK IN PROGRESS, BASIC SUPPORT]
+* HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
+* HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
+* HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
+
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website for your region
 
@@ -35,12 +43,6 @@ This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries:
 * Denmark [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
 * Sweden [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
 * Finland [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
-
-Other Hbo Go versions/regions that use diferent APIs, are currently not covered by this add-on, but there is hope for future support and transforming this in a general hbogo add-on, but that will take time and collaboration with local developers using and having access to those services:
-
-* HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
-* HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
-* HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
