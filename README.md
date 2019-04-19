@@ -14,7 +14,7 @@ If an official app is available for your platform, use it instead of this.
 Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) from Kodi Media Center (http://kodi.tv).
 
 Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
-Register on the official HBO® Go website http://hbogo.eu
+Register on the official HBO® Go website for your region
 
 This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries: 
 * Bosnia and Herzegovina
