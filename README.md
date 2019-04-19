@@ -15,8 +15,8 @@ Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (htt
 
 HBO Go Regions:
 * HBO Go Europe (http://hbogo.eu) [SUPPORTED]
-* HBO España (https://hboespana.com/) [WORK IN PROGRESS, BASIC SUPPORT]
-* HBO Nordic (hhttps://www.hbonordic.com/) [WORK IN PROGRESS, BASIC SUPPORT]
+* HBO España (https://hboespana.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
+* HBO Nordic (hhttps://www.hbonordic.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
 * HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 * HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 * HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
