@@ -236,17 +236,22 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.endOfDirectory(self.handle)
 
     def get_thumbnail_url(self, item):
-        thumbnails = item.findall('media:thumbnail', namespaces=self.NAMESPACES)
-        for thumb in thumbnails:
-            if thumb.get('profile') == 'NORDIC-POSTER-HUGE':
-                self.log("Huge Poster found, using as thumbnail")
-                return thumb.get('url')
-        for thumb in thumbnails:
-            if thumb.get('profile') == 'NORDIC-POSTER-LARGE':
-                self.log("Large Poster found, using as thumbnail")
-                return thumb.get('url')
-        self.log("Poster not found using first one")
-        return thumbnails[0].get('url')
+        self.log("get thumbnail xml" + ET.tostring(item, encoding='utf8'))
+        try:
+            thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
+            self.log("Thumbnails: " + str(thumbnails))
+            for thumb in thumbnails:
+                if thumb.get('height') == '1080':
+                    self.log("Huge Poster found, using as thumbnail")
+                    return str(thumb.get('url'))
+            for thumb in thumbnails:
+                if thumb.get('height') == '720':
+                    self.log("Large Poster found, using as thumbnail")
+                    return str(thumb.get('url'))
+            self.log("Poster not found using first one")
+            return str(thumbnails[0].get('url'))
+        except:
+            return self.resources + 'fanart.jpg'
 
     def list(self, url, simple=False):
         if not self.chk_login():
@@ -332,7 +337,7 @@ class HbogoHandler_sp(HbogoHandler):
         media_type = "episode"
         name = title.find('title').text.encode('utf-8')
 
-        original_name = title.find('clearleap:analyticsLabel').text.encode('utf-8')
+        original_name = title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text.encode('utf-8')
         if self.force_original_names:
             name = original_name
 
@@ -341,9 +346,9 @@ class HbogoHandler_sp(HbogoHandler):
         episode = 0
         series_name = ""
         try:
-            season = int(title.find('clearleap:season'))
-            episode = int(title.find('clearleap:episodeInSeason'))
-            series_name = title.find('clearleap:series')
+            season = int(title.find('clearleap:season', namespaces=self.NAMESPACES).text)
+            episode = int(title.find('clearleap:episodeInSeason', namespaces=self.NAMESPACES).text)
+            series_name = title.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
         except:
             pass
         if episode == 0:
