@@ -47,7 +47,20 @@ class HbogoHandler_sp(HbogoHandler):
         self.API_HOST_GATEWAY = country[5]
         self.API_HOST_GATEWAY_REFERER = self.API_HOST_GATEWAY + '/sign-in'
 
+        self.DEFAULT_LANGUAGE = country[4]
+        self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+        if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
+            if country[1] == 'es':
+                self.LANGUAGE_CODE = 'en_hboespana'
+            else:
+                self.LANGUAGE_CODE = 'en_hbon'
+
+        # check if default language is forced
+        if self.addon.getSetting('deflang') == 'true':
+            self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+
         self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
+        self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
 
         if len(self.getCredential('username')) == 0:
@@ -177,7 +190,7 @@ class HbogoHandler_sp(HbogoHandler):
         if not self.chk_login():
             self.login()
 
-        browse_xml = self.get_from_hbogo(self.API_URL_BROWSE, response_format='xml')
+        browse_xml = self.get_from_hbogo(self.API_URL_BROWSE+self.LANGUAGE_CODE, response_format='xml')
 
         home = None
         series = None
@@ -191,23 +204,23 @@ class HbogoHandler_sp(HbogoHandler):
                 series = item
             elif item.find('category').text == 'Movies':
                 movies = item
-            elif item.find('category').text == 'Kids':
+            elif item.find('category').text == 'Kids' or item.find('category').text == 'Toonix':
                 kids = item
             else:
                 pass
 
         if series is not None:
-            self.addCat(self.language(30716).encode('utf-8'), series.find('link').text, self.md + 'tv.png', 1)
+            self.addCat(series.find('title').text, series.find('link').text, self.md + 'tv.png', 1)
         else:
             self.log("No Series Category found")
         
         if movies is not None:
-            self.addCat(self.language(30717).encode('utf-8'), movies.find('link').text, self.md + 'movie.png', 1)
+            self.addCat(movies.find('title').text, movies.find('link').text, self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
 
         if kids is not None:
-            self.addCat(self.language(30729).encode('utf-8'), kids.find('link').text, self.md + 'kids.png', 1)
+            self.addCat(kids.find('title').text, kids.find('link').text, self.md + 'kids.png', 1)
         else:
             self.log("No Kids Category found")
 
@@ -223,8 +236,17 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.endOfDirectory(self.handle)
 
     def get_thumbnail_url(self, item):
-        thumbnail_url = item.findall('media:thumbnail', namespaces=self.NAMESPACES)
-        return thumbnail_url[0].get('url') if thumbnail_url else '' 
+        thumbnails = item.findall('media:thumbnail', namespaces=self.NAMESPACES)
+        for thumb in thumbnails:
+            if thumb.get('profile') == 'NORDIC-POSTER-HUGE':
+                self.log("Huge Poster found, using as thumbnail")
+                return thumb.get('url')
+        for thumb in thumbnails:
+            if thumb.get('profile') == 'NORDIC-POSTER-LARGE':
+                self.log("Large Poster found, using as thumbnail")
+                return thumb.get('url')
+        self.log("Poster not found using first one")
+        return thumbnails[0].get('url')
 
     def list(self, url, simple=False):
         if not self.chk_login():
@@ -234,7 +256,7 @@ class HbogoHandler_sp(HbogoHandler):
         if not self.chk_login():
             self.login()
 
-        response = self.get_from_hbogo(url, 'xml')
+        response = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
         for item in response.findall('.//item'):
             item_link = item.find('link').text
@@ -273,7 +295,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.logout()
             return
 
-        media_item = self.get_from_hbogo(url, 'xml')
+        media_item = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
@@ -306,14 +328,38 @@ class HbogoHandler_sp(HbogoHandler):
     def addLink(self, title, mode):
         self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
-        name = title.find('title').text.encode('utf-8')
+
         media_type = "episode"
+        name = title.find('title').text.encode('utf-8')
+
+        original_name = title.find('clearleap:analyticsLabel').text.encode('utf-8')
+        if self.force_original_names:
+            name = original_name
+
+        plot = title.find('description').text.encode('utf-8')
+        season = 0
+        episode = 0
+        series_name = ""
+        try:
+            season = int(title.find('clearleap:season'))
+            episode = int(title.find('clearleap:episodeInSeason'))
+            series_name = title.find('clearleap:series')
+        except:
+            pass
+        if episode == 0:
+            media_type = "movie"
 
         u = self.base_url + "?url=" + urllib.quote_plus(title.find('link').text) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
 
-        liz = xbmcgui.ListItem(name)
+        thunb = self.get_thumbnail_url(title)
+
+        liz = xbmcgui.ListItem(name, iconImage=thunb, thumbnailImage=thunb)
+        liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
         liz.setInfo(type="Video",
-                    infoLabels={"mediatype": media_type,})
+                    infoLabels={"mediatype": media_type, "episode": episode,
+                                "season": season,
+                                "tvshowtitle": series_name, "plot": plot,
+                                "title": name, "originaltitle": original_name})
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
@@ -321,16 +367,16 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
     def addDir(self, item):
-        showtitle = item.findall('clearleap:shortTitle', namespaces=self.NAMESPACES)
-        showtitle = showtitle[0].text.encode('utf-8') if showtitle else ''
-
         self.addCat(item.find('title').text.encode('utf-8'), item.find('link').text, self.get_thumbnail_url(item), 1)
 
     def addCat(self, name, url, icon, mode):
         self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        liz.setArt({'fanart': self.resources + "fanart.jpg"})
+        if mode == 1:
+            liz.setArt({'thumb': icon, 'poster': icon, 'banner': icon, 'fanart': icon})
+        else:
+            liz.setArt({'fanart': self.resources + "fanart.jpg"})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
