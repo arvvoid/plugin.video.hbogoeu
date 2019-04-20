@@ -210,17 +210,17 @@ class HbogoHandler_sp(HbogoHandler):
                 pass
 
         if series is not None:
-            self.addCat(series.find('title').text, series.find('link').text, self.md + 'tv.png', 1)
+            self.addCat(series.find('title').text.encode('utf-8'), series.find('link').text, self.md + 'tv.png', 1)
         else:
             self.log("No Series Category found")
         
         if movies is not None:
-            self.addCat(movies.find('title').text, movies.find('link').text, self.md + 'movie.png', 1)
+            self.addCat(movies.find('title').text.encode('utf-8'), movies.find('link').text, self.md + 'movie.png', 1)
         else:
             self.log("No Movies Category found")
 
         if kids is not None:
-            self.addCat(kids.find('title').text, kids.find('link').text, self.md + 'kids.png', 1)
+            self.addCat(kids.find('title').text.encode('utf-8'), kids.find('link').text, self.md + 'kids.png', 1)
         else:
             self.log("No Kids Category found")
 
