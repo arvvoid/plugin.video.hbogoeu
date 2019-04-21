@@ -269,10 +269,8 @@ class HbogoHandler_sp(HbogoHandler):
             if len(item_link) > 0:
                 self.log(ET.tostring(item, encoding='utf8'))
                 item_type = item.find('clearleap:itemType', namespaces=self.NAMESPACES).text.encode('utf-8')
-                if item_type == 'LEAF':
+                if item_type != 'media':
                     self.addDir(item)
-                elif item_type == 'CATEGORY':
-                    self.addCat(item.find('title').text.encode('utf-8'), item_link, self.get_thumbnail_url(item), 1)
                 elif item_type == 'media':
                     self.addLink(item, 5)
                 else:
@@ -333,7 +331,6 @@ class HbogoHandler_sp(HbogoHandler):
     def addLink(self, title, mode):
         self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
-
         media_type = "episode"
         name = title.find('title').text.encode('utf-8')
 
@@ -341,7 +338,11 @@ class HbogoHandler_sp(HbogoHandler):
         if self.force_original_names:
             name = original_name
 
-        plot = title.find('description').text.encode('utf-8')
+        plot = ""
+        try:
+            plot = title.find('description').text.encode('utf-8')
+        except:
+            pass
         season = 0
         episode = 0
         series_name = ""
@@ -371,17 +372,43 @@ class HbogoHandler_sp(HbogoHandler):
         liz.setProperty("IsPlayable", "true")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
-    def addDir(self, item):
-        self.addCat(item.find('title').text.encode('utf-8'), item.find('link').text, self.get_thumbnail_url(item), 1)
+    def addDir(self, item, mode=1):
+        self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
+
+        media_type = "tvshow"
+
+        plot = ""
+        try:
+            plot = item.find('description').text.encode('utf-8')
+        except:
+            pass
+
+        u = self.base_url + "?url=" + urllib.quote_plus(item.find('link').text) + "&mode=" + str(
+            mode) + "&name=" + item.find('title').text.encode('utf-8')
+
+        series_name = ""
+        try:
+            series_name = item.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
+        except:
+            pass
+
+        thumb = self.get_thumbnail_url(item)
+
+        liz = xbmcgui.ListItem(item.find('title').text.encode('utf-8'), iconImage=thumb, thumbnailImage=thumb)
+        liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
+                    'fanart': thumb})
+        liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
+                                              "tvshowtitle": series_name,
+                                              "title": item.find('title').text.encode('utf-8'),
+                                              "Plot": plot})
+        liz.setProperty('isPlayable', "false")
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
         self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        if mode == 1:
-            liz.setArt({'thumb': icon, 'poster': icon, 'banner': icon, 'fanart': icon})
-        else:
-            liz.setArt({'fanart': self.resources + "fanart.jpg"})
+        liz.setArt({'fanart': self.resources + "fanart.jpg"})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
