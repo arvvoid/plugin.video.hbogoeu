@@ -27,6 +27,7 @@ import xml.etree.ElementTree as ET
 from Cryptodome import Random
 from Cryptodome.Cipher import AES
 from Cryptodome.Util import Padding
+import re
 
 
 
@@ -243,6 +244,7 @@ class HbogoHandler(object):
 
     def get_device_id_v1(self):
         space = xbmc.getInfoLabel('System.TotalSpace')
+        space = re.sub('[^A-Za-z0-9 ]+', '', space)
         mac = uuid.getnode()
         if (mac >> 40) % 2:
             from platform import node

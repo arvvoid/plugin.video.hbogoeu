@@ -1,7 +1,7 @@
 # Disclaimer
 
 This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
-For more information on HBO® Go Europe visit the official website: http://hbogo.eu
+For more information visit the official HBO® Go website for your region.
 
 This is also not an "official Add-on" by the Kodi team. I have no affiliation with the Kodi team.
 
@@ -11,33 +11,38 @@ If an official app is available for your platform, use it instead of this.
 
 # HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
 
-Simple, great Kodi add-on to access HBO® Go Europe content (http://hbogo.eu) from Kodi Media Center (http://kodi.tv).
+Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
-Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
-Register on the official HBO® Go website http://hbogo.eu
-
-This add-on covers all listend on http://hbogo.eu or sharing the same api atm 13 countries: 
-* Bosnia and Herzegovina
-* Bulgaria
-* Croatia
-* Czech Republic 
-* Hungary
-* Macedonia 
-* Montenegro
-* Polonia
-* Portugal
-* Romania
-* Serbia
-* Slovakia
-* Slovenija
-
-Other Hbo Go versions/regions that use diferent APIs, are currently not covered by this add-on, but there is hope for future support and transforming this in a general hbogo add-on, but that will take time and collaboration with local developers using and having access to those services:
-
-* HBO España (https://en.hboespana.com/) [NOT SUPPORTED BY THIS ADD-ON] [#6](https://github.com/arvvoid/plugin.video.hbogoeu/issues/6)
-* HBO Nordic (https://www.hbonordic.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#7](https://github.com/arvvoid/plugin.video.hbogoeu/issues/7)
+HBO Go Regions:
+* HBO Go Europe (http://hbogo.eu) [SUPPORTED]
+* HBO España (https://hboespana.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
+* HBO Nordic (hhttps://www.hbonordic.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
 * HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 * HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
 * HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
+
+Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
+Register on the official HBO® Go website for your region
+
+This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries: 
+* Bosnia and Herzegovina
+* Bulgaria
+* Croatia
+* Czech Republic (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* Hungary
+* Macedonia
+* Montenegro
+* Polonia
+* Portugal
+* Romania (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* Serbia
+* Slovakia (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* Slovenija
+* Spain [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Norway [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Denmark [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Sweden [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Finland [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
