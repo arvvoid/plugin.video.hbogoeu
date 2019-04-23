@@ -1,3 +1,6 @@
+v.2.0.7-beta21
+- Fix device ID if characters outside of ASCII are present
+
 v.2.0.7-beta20
 - Kids category and weekly top (might not be present for all countries)
 
