@@ -605,7 +605,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         loaded_session = self.load_obj(self.addon_id + "_session")
 
-        if loaded_session != None:
+        if loaded_session is not None:
             # sesion exist if valid restore
             self.log("SAVED SESSION LOADED")
             if loaded_session["hash"] == login_hash:
