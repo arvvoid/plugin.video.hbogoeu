@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.7~beta21">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.8~beta22">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="script.module.requests" version="2.12.4" />
@@ -69,6 +69,9 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
+v.2.0.8-beta22
+- Enhanced media info
+
 v.2.0.7-beta21
 - Fix device ID if characters outside of ASCII are present
 

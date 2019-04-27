@@ -1,3 +1,6 @@
+v.2.0.8-beta22
+- Enhanced media info
+
 v.2.0.7-beta21
 - Fix device ID if characters outside of ASCII are present
 
