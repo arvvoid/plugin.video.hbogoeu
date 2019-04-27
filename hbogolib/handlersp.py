@@ -9,6 +9,7 @@
 
 from hbogolib.handler import HbogoHandler
 from hbogolib.constants import HbogoConstants
+from hbogolib.ttml2srt import Ttml2srt
 
 import sys
 import base64
@@ -17,9 +18,13 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 
+import xbmc
 import xbmcgui
 import xbmcplugin
 import inputstreamhelper
+
+import requests
+import os
 
 class HbogoHandler_sp(HbogoHandler):
 
@@ -85,7 +90,7 @@ class HbogoHandler_sp(HbogoHandler):
 
     def generate_device_id(self):
         import uuid
-        return uuid.uuid4()
+        return str(uuid.uuid4())
 
     def chk_login(self):
         return self.API_DEVICE_TOKEN != ''
@@ -114,7 +119,8 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_DEVICE_ID = self.generate_device_id()
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
-        login_hash = hashlib.sha224(self.API_DEVICE_ID + username + password).hexdigest()
+        self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
+        login_hash = hashlib.sha224(str(self.API_DEVICE_ID) + str(username) + str(password)).hexdigest()
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -143,7 +149,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
 
-            login_hash = hashlib.sha224(self.API_DEVICE_ID + username + password).hexdigest()
+            login_hash = hashlib.sha224(str(self.API_DEVICE_ID) + str(username) + str(password)).hexdigest()
             self.log("LOGIN HASH: " + login_hash)
             saved_session = {
 
@@ -300,6 +306,33 @@ class HbogoHandler_sp(HbogoHandler):
 
         media_item = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
+        #GET SUBTITLES
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+        try:
+            os.remove(folder + "sub.xml")
+        except:
+            pass
+        try:
+            os.remove(folder + "sub.srt")
+        except:
+            pass
+        force_sub = False
+        if self.addon.getSetting('forcesubs') == 'true':
+            self.log("get subtitles xml" + ET.tostring(media_item, encoding='utf8'))
+            try:
+                subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
+                self.log("Subtitles: " + str(subs))
+                for sub in subs:
+                    if sub.get('lang') == self.DEFAULT_LANGUAGE:
+                        r = requests.get(sub.get('href'))
+                        with open(folder+"sub.xml", 'wb') as f:
+                            f.write(r.content)
+                        ttml = Ttml2srt(folder+"sub.xml", 25)
+                        ttml.write_srt_file(folder+"sub.srt")
+                        force_sub = True
+            except:
+                pass
+
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd_url = self.get_from_hbogo(mpd_pre_url, 'xml').find('.//url').text
@@ -324,6 +357,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         li.setMimeType('application/dash+xml')
         li.setContentLookup(False)
+        if force_sub:
+            li.setSubtitles([folder+"sub.srt"])
 
         self.log("Play url: " + str(li))
         xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
