@@ -1179,6 +1179,9 @@ class HbogoHandler_eu(HbogoHandler):
             if self.force_scraper_names:
                 name = filename
             plot = title['Abstract'].encode('utf-8', 'ignore')
+            if 'Description' in title:
+                if title['Description'] is not None:
+                    plot = title['Description'].encode('utf-8', 'ignore')
             if 'AvailabilityTo' in title:
                 if title['AvailabilityTo'] is not None:
                     plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
@@ -1193,6 +1196,9 @@ class HbogoHandler_eu(HbogoHandler):
             if self.force_scraper_names:
                 name = filename
             plot = title['Abstract'].encode('utf-8', 'ignore')
+            if 'Description' in title:
+                if title['Description'] is not None:
+                    plot = title['Description'].encode('utf-8', 'ignore')
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
 
@@ -1229,10 +1235,14 @@ class HbogoHandler_eu(HbogoHandler):
         liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
+        plot = item['Abstract'].encode('utf-8', 'ignore')
+        if 'Description' in item:
+            if item['Description'] is not None:
+                plot = item['Description'].encode('utf-8', 'ignore')
         liz.setInfo(type="Video", infoLabels={"mediatype": media_type, "season": item['Tracking']['SeasonNumber'],
                                               "tvshowtitle": item['Tracking']['ShowName'],
                                               "title": item['Name'].encode('utf-8', 'ignore'),
-                                              "Plot": item['Abstract'].encode('utf-8', 'ignore')})
+                                              "Plot": plot})
         liz.setProperty('isPlayable', "false")
         if media_type == "tvshow":
             cid = item['ObjectUrl'].rsplit('/', 2)[1]
