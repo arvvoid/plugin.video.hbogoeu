@@ -343,7 +343,7 @@ class HbogoHandler_sp(HbogoHandler):
             try:
                 subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
                 self.log("Subtitles: " + ET.tostring(subs, encoding='utf8'))
-                subs = []
+                subs_paths = []
                 for sub in subs:
                     self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: "+ str(sub.get('href')))
                     r = requests.get(sub.get('href'))
@@ -352,9 +352,9 @@ class HbogoHandler_sp(HbogoHandler):
                     ttml = Ttml2srt(folder + str(sub.get('lang')) + ".xml", 25)
                     ttml.write_srt_file(folder + str(sub.get('lang')) + ".srt")
                     self.log("Subtitle converted to srt format")
-                    subs.append(folder + str(sub.get('lang')) + ".srt")
-                self.log("Setting subtitles: " + str(subs))
-                li.setSubtitles(subs)
+                    subs_paths.append(str(folder + str(sub.get('lang')) + ".srt"))
+                self.log("Setting subtitles: " + str(subs_paths))
+                li.setSubtitles(subs_paths)
                 self.log("Subtitles set")
             except:
                 self.log("Unexpected error in subtitles processing")
