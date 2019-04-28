@@ -18,7 +18,7 @@
     <setting label="30650" type="lsep"/>
     <setting label="30651" type="bool" id="deflang" default="false"/>
     <setting label="30652" type="bool" id="origtitles" default="false"/>
-    <setting label="30652" type="bool" id="forcesubs" default="true"/>
+    <setting label="30653" type="bool" id="forcesubs" default="true"/>
     <!-- Streaming -->
     <setting label="30660" type="lsep"/>
     <setting id="is_settings" type="action" label="30665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
