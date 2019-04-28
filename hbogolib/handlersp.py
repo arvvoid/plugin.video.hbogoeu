@@ -245,7 +245,7 @@ class HbogoHandler_sp(HbogoHandler):
         self.log("get thumbnail xml" + ET.tostring(item, encoding='utf8'))
         try:
             thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
-            self.log("Thumbnails: " + str(thumbnails))
+            self.log("Thumbnails: " + ET.tostring(thumbnails, encoding='utf8'))
             for thumb in thumbnails:
                 if thumb.get('height') == '1080':
                     self.log("Huge Poster found, using as thumbnail")
@@ -306,37 +306,15 @@ class HbogoHandler_sp(HbogoHandler):
 
         media_item = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
-        #GET SUBTITLES
-        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        try:
-            os.remove(folder + "sub.xml")
-        except:
-            pass
-        try:
-            os.remove(folder + "sub.srt")
-        except:
-            pass
-        force_sub = False
-        if self.addon.getSetting('forcesubs') == 'true':
-            self.log("get subtitles xml" + ET.tostring(media_item, encoding='utf8'))
-            try:
-                subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
-                self.log("Subtitles: " + str(subs))
-                for sub in subs:
-                    if sub.get('lang') == self.DEFAULT_LANGUAGE:
-                        r = requests.get(sub.get('href'))
-                        with open(folder+"sub.xml", 'wb') as f:
-                            f.write(r.content)
-                        ttml = Ttml2srt(folder+"sub.xml", 25)
-                        ttml.write_srt_file(folder+"sub.srt")
-                        force_sub = True
-            except:
-                pass
+        self.log("Media: " + ET.tostring(media_item, encoding='utf8'))
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
-        mpd_url = self.get_from_hbogo(mpd_pre_url, 'xml').find('.//url').text
-        self.log("Manifest: " + str(mpd_url));
+        mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        self.log("Manifest: " + + ET.tostring(mpd, encoding='utf8'))
+
+        mpd_url = mpd.find('.//url').text
+        self.log("Manifest url: " + str(mpd_url))
 
         media_guid = media_item.find('.//guid').text
 
@@ -357,8 +335,29 @@ class HbogoHandler_sp(HbogoHandler):
 
         li.setMimeType('application/dash+xml')
         li.setContentLookup(False)
-        if force_sub:
-            li.setSubtitles([folder+"sub.srt"])
+        #GET SUBTITLES
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+        folder = folder + 'subs/'+media_guid+'/'
+        if self.addon.getSetting('forcesubs') == 'true':
+            self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
+            try:
+                subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
+                self.log("Subtitles: " + ET.tostring(subs, encoding='utf8'))
+                subs = []
+                for sub in subs:
+                    self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: "+ str(sub.get('href')))
+                    r = requests.get(sub.get('href'))
+                    with open(folder + str(sub.get('lang')) + ".xml", 'wb') as f:
+                        f.write(r.content)
+                    ttml = Ttml2srt(folder + str(sub.get('lang')) + ".xml", 25)
+                    ttml.write_srt_file(folder + str(sub.get('lang')) + ".srt")
+                    self.log("Subtitle converted to srt format")
+                    subs.append(folder + str(sub.get('lang')) + ".srt")
+                self.log("Setting subtitles: " + str(subs))
+                li.setSubtitles(subs)
+                self.log("Subtitles set")
+            except:
+                self.log("Unexpected error in subtitles processing")
 
         self.log("Play url: " + str(li))
         xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
