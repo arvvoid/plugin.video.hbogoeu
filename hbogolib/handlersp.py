@@ -245,7 +245,6 @@ class HbogoHandler_sp(HbogoHandler):
         self.log("get thumbnail xml" + ET.tostring(item, encoding='utf8'))
         try:
             thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
-            self.log("Thumbnails: " + ET.tostring(thumbnails, encoding='utf8'))
             for thumb in thumbnails:
                 if thumb.get('height') == '1080':
                     self.log("Huge Poster found, using as thumbnail")
@@ -257,6 +256,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Poster not found using first one")
             return str(thumbnails[0].get('url'))
         except:
+            self.log("Find thumbnail failed")
             return self.resources + 'fanart.jpg'
 
     def list(self, url, simple=False):
@@ -306,12 +306,12 @@ class HbogoHandler_sp(HbogoHandler):
 
         media_item = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
-        self.log("Media: " + ET.tostring(media_item, encoding='utf8'))
+        self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
-        self.log("Manifest: " + + ET.tostring(mpd, encoding='utf8'))
+        self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
 
         mpd_url = mpd.find('.//url').text
         self.log("Manifest url: " + str(mpd_url))
@@ -337,22 +337,22 @@ class HbogoHandler_sp(HbogoHandler):
         li.setContentLookup(False)
         #GET SUBTITLES
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        folder = folder + 'subs/'+media_guid+'/'
+        folder = folder + 'subs/' + media_guid + '/'
         if self.addon.getSetting('forcesubs') == 'true':
             self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
             try:
                 subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
-                self.log("Subtitles: " + ET.tostring(subs, encoding='utf8'))
                 subs_paths = []
                 for sub in subs:
-                    self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: "+ str(sub.get('href')))
+                    self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: " + str(sub.get('href')))
                     r = requests.get(sub.get('href'))
-                    with open(folder + str(sub.get('lang')) + ".xml", 'wb') as f:
+                    with open(str(folder) + str(sub.get('lang')) + ".xml", 'wb') as f:
                         f.write(r.content)
-                    ttml = Ttml2srt(folder + str(sub.get('lang')) + ".xml", 25)
-                    ttml.write_srt_file(folder + str(sub.get('lang')) + ".srt")
+                    ttml = Ttml2srt(str(folder) + str(sub.get('lang')) + ".xml", 25)
+                    ttml.write_srt_file(str(folder) + str(sub.get('lang')) + ".srt")
                     self.log("Subtitle converted to srt format")
-                    subs_paths.append(str(folder + str(sub.get('lang')) + ".srt"))
+                    subs_paths.append(str(folder) + str(sub.get('lang')) + ".srt")
+                    self.log("Subtitle added: " + str(folder) + str(sub.get('lang')) + ".srt")
                 self.log("Setting subtitles: " + str(subs_paths))
                 li.setSubtitles(subs_paths)
                 self.log("Subtitles set")
