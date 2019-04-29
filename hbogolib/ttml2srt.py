@@ -1,3 +1,4 @@
+# encoding: utf-8
 #based on https://github.com/yuppity/ttml2srt
 
 from xml.dom import minidom
@@ -10,8 +11,12 @@ class Ttml2srt(object):
             self.subtitle['fps'] = default_fps
 
     def write_srt_file(self, str_file, shift=0):
-        f = open(str_file, 'wb')
+        filename = str_file + '.srt'
+        if self.subtitle['lang'] is not None:
+            filename = str_file + '.' + self.subtitle['lang'] + '.srt'
+        f = open(filename, 'wb')
         self.subrip_writer(f, self.subtitle['lines'], f, shift, self.subtitle['fps'], self.subtitle['tick_rate'])
+        return filename
 
     #######################################################################
     #                                TTML                                 #
@@ -25,7 +30,7 @@ class Ttml2srt(object):
             elif node.nodeValue:
                 dialogue = dialogue + node.nodeValue
             if node.hasChildNodes():
-                dialogue = dialogue + extract_dialogue(node.childNodes)
+                dialogue = dialogue + self.extract_dialogue(node.childNodes)
         return dialogue
 
     def extract_subtitle_data(self, ttml_file):
@@ -41,6 +46,12 @@ class Ttml2srt(object):
         # a single subtitle document)
         tt_element = data.getElementsByTagName('tt')[0]
 
+        # Get Language
+        try:
+            lang = str(tt_element.attributes['xml:lang'].value)
+        except KeyError:
+            lang = None
+
         # Detect source FPS and tick rate
         try:
             fps = int(tt_element.attributes['ttp:frameRate'].value)
@@ -54,7 +65,7 @@ class Ttml2srt(object):
         lines = [i for i in data.getElementsByTagName('p') if 'begin' \
                  in i.attributes.keys()]
 
-        return {'fps': fps, 'tick_rate': tick_rate, 'lines': lines}
+        return {'fps': fps, 'tick_rate': tick_rate, 'lines': lines, 'lang': lang}
 
     def get_start_end(self, parag):
         return [parag.attributes['begin'].value, parag.attributes['end'].value]

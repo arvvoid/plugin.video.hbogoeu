@@ -338,7 +338,7 @@ class HbogoHandler_sp(HbogoHandler):
         li.setContentLookup(False)
         #GET SUBTITLES
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        folder = folder + 'subs/' + media_guid + '/'
+        folder = folder + 'subs' + os.sep + media_guid + os.sep
         if self.addon.getSetting('forcesubs') == 'true':
             self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
             if not os.path.exists(os.path.dirname(folder)):
@@ -356,10 +356,10 @@ class HbogoHandler_sp(HbogoHandler):
                     with open(str(folder) + str(sub.get('lang')) + ".xml", 'wb') as f:
                         f.write(r.content)
                     ttml = Ttml2srt(str(folder) + str(sub.get('lang')) + ".xml", 25)
-                    ttml.write_srt_file(str(folder) + str(sub.get('lang')) + ".srt")
+                    srt_file = ttml.write_srt_file(str(folder) + str(sub.get('lang')))
                     self.log("Subtitle converted to srt format")
-                    subs_paths.append(str(folder) + str(sub.get('lang')) + ".srt")
-                    self.log("Subtitle added: " + str(folder) + str(sub.get('lang')) + ".srt")
+                    subs_paths.append(srt_file)
+                    self.log("Subtitle added: " + srt_file)
                 self.log("Setting subtitles: " + str(subs_paths))
                 li.setSubtitles(subs_paths)
                 self.log("Subtitles set")
