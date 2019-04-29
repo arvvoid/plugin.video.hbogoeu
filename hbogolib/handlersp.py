@@ -25,6 +25,7 @@ import inputstreamhelper
 
 import requests
 import os
+import errno
 
 class HbogoHandler_sp(HbogoHandler):
 
@@ -340,6 +341,12 @@ class HbogoHandler_sp(HbogoHandler):
         folder = folder + 'subs/' + media_guid + '/'
         if self.addon.getSetting('forcesubs') == 'true':
             self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
+            if not os.path.exists(os.path.dirname(folder)):
+                try:
+                    os.makedirs(os.path.dirname(folder))
+                except OSError as exc:  # Guard against race condition
+                    if exc.errno != errno.EEXIST:
+                        raise
             try:
                 subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
                 subs_paths = []
