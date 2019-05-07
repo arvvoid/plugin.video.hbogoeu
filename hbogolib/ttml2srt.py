@@ -89,7 +89,7 @@ class Ttml2srt(object):
     def ms_to_subrip(self, ms):
         return '{:02d}:{:02d}:{:02d},{:03d}'.format(
             int(ms / (3600 * 1000)),  # hh
-            int(ms / 60000),  # mm
+            int(ms / 60000 - (ms / (3600 * 1000) * 60)),  # mm
             int((ms % 60000) / 1000),  # ss
             int((ms % 60000) % 1000))  # ms
 
