@@ -9,22 +9,29 @@ THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
 If an official app is available for your platform, use it instead of this.
 
+Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
+Register on the official HBO® Go website for your region
+
 # HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
 
 Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
-HBO Go Regions:
-* HBO Go Europe (http://hbogo.eu) [SUPPORTED]
-* HBO España (https://hboespana.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
-* HBO Nordic (hhttps://www.hbonordic.com/) [WORK IN PROGRESS, BASIC SUPPORT] [#13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13)
-* HBO Go US (http://hbogo.com)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
-* HBO Go Asia (https://www.hbogoasia.com/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
-* HBO Go Latin America (https://www.hbogo.com.br/)  [NOT SUPPORTED BY THIS ADD-ON] [#8](https://github.com/arvvoid/plugin.video.hbogoeu/issues/8)
+| REGION / Feature        | HBO GO EU | HBO Spain + Nordic | HBO USA | HBO Latin America | HBO Asia |
+|-------------------------|-----------|--------------------|---------|-------------------|----------|
+| Listing Content         | STABLE    | STABLE             | N/A     | N/A               | N/A      |
+| Content Info            | STABLE    | STABLE             | N/A     | N/A               | N/A      |
+| Search                  | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| Login                   | STABLE    | STABLE             | N/A     | N/A               | N/A      |
+| Playback                | STABLE    | STABLE             | N/A     | N/A               | N/A      |
+| Subtitles               | STABLE    | STABLE             | N/A     | N/A               | N/A      |
+| My List                 | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| Add/Remove from My List | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| Voting                  | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| TMDB Integration        | N/A       | N/A                | N/A     | N/A               | N/A      |
+| Kodi Library Sync       | N/A       | N/A                | N/A     | N/A               | N/A      |
 
-Important, HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
-Register on the official HBO® Go website for your region
 
-This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries: 
+This add-on covers atm HBO Go Eu, HBO Spain, HBO Nordic, 18 countries: 
 * Bosnia and Herzegovina
 * Bulgaria
 * Croatia
@@ -38,11 +45,11 @@ This add-on covers HBO Go Eu, HBO Spain, HBO Nordic regions atm, 18 countries:
 * Serbia
 * Slovakia (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
 * Slovenija
-* Spain [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
-* Norway [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
-* Denmark [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
-* Sweden [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
-* Finland [WORK IN PROGRESS, [TEST VERSION ONLY in Pull Request #13](https://github.com/arvvoid/plugin.video.hbogoeu/pull/13) ]
+* Spain
+* Norway
+* Denmark
+* Sweden
+* Finland
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
@@ -70,7 +77,7 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.8~beta22.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.8~beta22.zip)
+[plugin.video.hbogoeu-2.0.9~beta23.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.9~beta23.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
