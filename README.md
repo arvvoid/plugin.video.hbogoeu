@@ -74,7 +74,7 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 * OPTIONAL: Configure additional preferences in the add-on config
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
-On OSMC/Raspbian you might have to install some dependency manualy:
+On OSMC/Raspbian you might have to install some dependency manualy from shell:
 ```
 sudo apt install python-pip
 sudo pip install pycryptodomex
