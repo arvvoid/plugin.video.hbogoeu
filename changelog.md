@@ -1,3 +1,6 @@
+v.2.0.9-beta23
+- HBO Spain+Nordic basic support (Spain, Norway, Denmark, Sweden, Finland)
+
 v.2.0.8-beta22
 - Enhanced media info
 
