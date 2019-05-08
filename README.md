@@ -16,19 +16,19 @@ Register on the official HBO® Go website for your region
 
 Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
-| REGION / Feature        | HBO GO EU | HBO Spain + Nordic | HBO USA | HBO Latin America | HBO Asia |
-|-------------------------|-----------|--------------------|---------|-------------------|----------|
-| Listing Content         | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Content Info            | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Search                  | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| Login                   | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Playback                | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Subtitles               | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| My List                 | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| Add/Remove from My List | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| Voting                  | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| TMDB Integration        | N/A       | N/A                | N/A     | N/A               | N/A      |
-| Kodi Library Sync       | N/A       | N/A                | N/A     | N/A               | N/A      |
+| REGION / Feature        | HBO GO EU + HBO Portugal | HBO Spain + HBO Nordic | HBO USA | HBO Latin America | HBO Asia |
+|-------------------------|--------------------------|------------------------|---------|-------------------|----------|
+| Listing Content         | STABLE                   | STABLE                 | N/A     | N/A               | N/A      |
+| Content Info            | STABLE                   | STABLE                 | N/A     | N/A               | N/A      |
+| Search                  | STABLE                   | N/A                    | N/A     | N/A               | N/A      |
+| Login                   | STABLE                   | STABLE                 | N/A     | N/A               | N/A      |
+| Playback                | STABLE                   | STABLE                 | N/A     | N/A               | N/A      |
+| Subtitles               | STABLE                   | STABLE                 | N/A     | N/A               | N/A      |
+| My List                 | STABLE                   | N/A                    | N/A     | N/A               | N/A      |
+| Add/Remove from My List | STABLE                   | N/A                    | N/A     | N/A               | N/A      |
+| Voting                  | STABLE                   | N/A                    | N/A     | N/A               | N/A      |
+| TMDB Integration        | N/A                      | N/A                    | N/A     | N/A               | N/A      |
+| Kodi Library Sync       | N/A                      | N/A                    | N/A     | N/A               | N/A      |
 
 
 This add-on covers atm HBO Go Eu, HBO Spain, HBO Nordic, 18 countries: 
