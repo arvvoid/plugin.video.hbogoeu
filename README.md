@@ -31,24 +31,24 @@ Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (htt
 
 
 This add-on covers atm HBO Go Eu, HBO Spain, HBO Nordic, 18 countries: 
-* __Bosnia and Herzegovina__ * *[HBO Go EU]* *
-* __Bulgaria__ * *[HBO Go EU]* *
-* __Croatia__ * *[HBO Go EU]* *
-* __Czech Republic__ * *[HBO Go EU]* * (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-* __Hungary__ * *[HBO Go EU]* *
-* __Macedonia__ * *[HBO Go EU]* *
-* __Montenegro__ * *[HBO Go EU]* *
-* __Polonia__ * *[HBO Go EU]* *
-* __Portugal__ * *[HBO Go EU]* *
-* __Romania__ * *[HBO Go EU]* * (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-* __Serbia__ * *[HBO Go EU]* *
-* __Slovakia__ * *[HBO Go EU]* * (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-* __Slovenija__ * *[HBO Go EU]* *
-* __Spain__ * *[HBO Spain]* *
-* __Norway__ * *[HBO Nordic]* *
-* __Denmark__ * *[HBO Nordic]* *
-* __Sweden__ * *[HBO Nordic]* *
-* __Finland__ * *[HBO Nordic]* *
+* __Bosnia and Herzegovina__ *[HBO Go EU]* 
+* __Bulgaria__ *[HBO Go EU]* 
+* __Croatia__ *[HBO Go EU]* 
+* __Czech Republic__ *[HBO Go EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* __Hungary__ *[HBO Go EU]* 
+* __Macedonia__ *[HBO Go EU]* 
+* __Montenegro__ *[HBO Go EU]* 
+* __Polonia__ *[HBO Go EU]* 
+* __Portugal__ *[HBO Go EU]* 
+* __Romania__ *[HBO Go EU]*  (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* __Serbia__ *[HBO Go EU]* 
+* __Slovakia__ *[HBO Go EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+* __Slovenija__ *[HBO Go EU]* 
+* __Spain__ *[HBO Spain]* 
+* __Norway__ *[HBO Nordic]* 
+* __Denmark__ *[HBO Nordic]* 
+* __Sweden__ *[HBO Nordic]* 
+* __Finland__ *[HBO Nordic]*
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
