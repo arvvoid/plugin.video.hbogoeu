@@ -23,6 +23,7 @@ import uuid
 import base64
 import codecs
 import hashlib
+import xml.etree.ElementTree as ET
 from Cryptodome import Random
 from Cryptodome.Cipher import AES
 from Cryptodome.Util import Padding
@@ -107,28 +108,37 @@ class HbogoHandler(object):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc
 
-    def send_login_hbogo(self, url, headers, data):
+    def send_login_hbogo(self, url, headers, data, response_format='json'):
         try:
             r = requests.post(url, headers=headers, data=data)
-            return r.json()
+            if response_format == 'json':
+                return r.json()
+            elif response_format == 'xml':
+                return ET.fromstring(r.text.encode('utf-8'))
         except:
             self.log("SEND LOGIN ERROR")
             resp = {"Data": {"ErrorMessage": "SEND LOGIN ERROR"}, "ErrorMessage": "SEND LOGIN ERROR"}
             return resp
 
-    def get_from_hbogo(self, url):
+    def get_from_hbogo(self, url, response_format='json'):
         try:
             r = requests.get(url, headers=self.loggedin_headers)
-            return r.json()
+            if response_format == 'json':
+                return r.json()
+            elif response_format == 'xml':
+                return ET.fromstring(r.text.encode('utf-8'))
         except:
             self.log("GET FROM HBO ERROR")
             resp = {"Data": {"ErrorMessage": "GET FROM HBO ERROR"}, "ErrorMessage": "GET FROM HBO ERROR"}
             return resp
 
-    def send_purchase_hbogo(self, url, purchase_payload, purchase_headers):
+    def send_purchase_hbogo(self, url, purchase_payload, purchase_headers, response_format='json'):
         try:
             r = requests.post(url, headers=purchase_headers, data=purchase_payload)
-            return r.json()
+            if response_format == 'json':
+                return r.json()
+            elif response_format == 'xml':
+                return ET.fromstring(r.text.encode('utf-8'))
         except:
             self.log("SEND HBO PURCHASE ERROR")
             resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}

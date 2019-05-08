@@ -36,6 +36,11 @@ class HbogoConstants(object):
         ['Serbia', 'rs', 'sr', 'SRB', 'SRP', '', HANDLER_EU],
         ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
         ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
+        ['Spain', 'es', 'es', 'ESP', 'es_hboespana', 'https://es.hboespana.com', HANDLER_SPAIN],
+        ['Norway', 'no', 'no', 'NOR', 'no_hbon', 'https://no.hbonordic.com/', HANDLER_NORDIC],
+        ['Denmark', 'dk', 'dk', 'DNK', 'da_hbon', 'https://dk.hbonordic.com/', HANDLER_NORDIC],
+        ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC],
+        ['Finland', 'fi', 'fi', 'FIN', 'fi_hbon', 'https://fi.hbonordic.com/', HANDLER_NORDIC],
     ]
 
     platforms = {
