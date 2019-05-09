@@ -72,9 +72,10 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 * Install the add-on from repository "Kodi ArvVoid Repository"
 * *OPTIONAL: On OSMC/Raspbian you might have to install some dependency manualy from shell:*
 ```
+sudo apt-get update
 sudo apt install python-pip
 sudo pip install pycryptodomex
-sudo apt install libnss3
+sudo apt-get install libnss3 libnspr4
 ```
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
