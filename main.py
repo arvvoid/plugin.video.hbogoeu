@@ -1,5 +1,5 @@
 # encoding: utf-8
-# base handler class for hbogo Kodi add-on
+# Hbo Go Kodi Add-on start
 # Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
 # Relesed under GPL version 2
 #########################################################
