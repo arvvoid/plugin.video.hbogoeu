@@ -1,3 +1,6 @@
+v.2.0.9-beta24
+- Added Romanian translation by tmihai20
+
 v.2.0.9-beta23
 - HBO Spain+Nordic basic support (Spain, Norway, Denmark, Sweden, Finland)
 
