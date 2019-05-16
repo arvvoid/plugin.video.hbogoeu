@@ -83,7 +83,7 @@ sudo apt install libnss3 libnspr4
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.9~beta23.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.9~beta23.zip)
+[plugin.video.hbogoeu-2.0.9~beta24.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.9~beta24.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
