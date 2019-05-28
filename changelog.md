@@ -1,3 +1,6 @@
+v.2.0.9-beta25
+- Added Czech translation by Ike201
+
 v.2.0.9-beta24
 - Added Romanian translation by tmihai20
 

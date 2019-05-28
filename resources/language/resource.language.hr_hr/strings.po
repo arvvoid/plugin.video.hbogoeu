@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: hbogo kodi addon\n"
-"Language: hr\n"
+"Language: hr_hr\n"
 
 #: 
 msgctxt "#30000"
