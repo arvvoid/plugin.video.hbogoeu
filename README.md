@@ -74,6 +74,9 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 ```
 sudo apt update
 sudo apt install python-pip
+sudo apt install python-setuptools
+sudo apt install build-essential
+sudo pip install wheel
 sudo pip install pycryptodomex
 sudo apt install libnss3 libnspr4
 ```
