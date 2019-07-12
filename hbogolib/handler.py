@@ -109,8 +109,12 @@ class HbogoHandler(object):
         self.cur_loc = cur_loc
 
     def send_login_hbogo(self, url, headers, data, response_format='json'):
+        self.log("SEND LOGIN URL: " + url)
         try:
             r = requests.post(url, headers=headers, data=data)
+            self.log("SEND LOGIN RESPONSE STATUS: " + r.status_code)
+            self.log("SEND LOGIN RESPONSE RAW: " + r.text)
+            self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
@@ -121,8 +125,12 @@ class HbogoHandler(object):
             return resp
 
     def get_from_hbogo(self, url, response_format='json'):
+        self.log("GET FROM HBO URL: " + url)
         try:
             r = requests.get(url, headers=self.loggedin_headers)
+            self.log("GET FROM HBO STATUS: " + r.status_code)
+            self.log("GET FROM HBO RAW: " + r.text)
+            self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
@@ -133,8 +141,12 @@ class HbogoHandler(object):
             return resp
 
     def send_purchase_hbogo(self, url, purchase_payload, purchase_headers, response_format='json'):
+        self.log("SEND PURCHASE URL: " + url)
         try:
             r = requests.post(url, headers=purchase_headers, data=purchase_payload)
+            self.log("SEND PURCHASE STATUS: " + r.status_code)
+            self.log("SEND PURCHASE RAW: " + r.text)
+            self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
