@@ -110,46 +110,43 @@ class HbogoHandler(object):
 
     def send_login_hbogo(self, url, headers, data, response_format='json'):
         self.log("SEND LOGIN URL: " + url)
+        self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=headers, data=data)
-            self.log("SEND LOGIN RESPONSE RAW: " + r.text)
-            self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
                 return ET.fromstring(r.text.encode('utf-8'))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + e.error)
+            self.log("SEND LOGIN ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "SEND LOGIN ERROR"}, "ErrorMessage": "SEND LOGIN ERROR"}
             return resp
 
     def get_from_hbogo(self, url, response_format='json'):
         self.log("GET FROM HBO URL: " + url)
+        self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
         try:
             r = requests.get(url, headers=self.loggedin_headers)
-            self.log("GET FROM HBO RAW: " + r.text)
-            self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
                 return ET.fromstring(r.text.encode('utf-8'))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + e.error)
+            self.log("SEND LOGIN ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "GET FROM HBO ERROR"}, "ErrorMessage": "GET FROM HBO ERROR"}
             return resp
 
     def send_purchase_hbogo(self, url, purchase_payload, purchase_headers, response_format='json'):
         self.log("SEND PURCHASE URL: " + url)
+        self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=purchase_headers, data=purchase_payload)
-            self.log("SEND PURCHASE RAW: " + r.text)
-            self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
                 return ET.fromstring(r.text.encode('utf-8'))
-         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + e.error)
+        except requests.RequestException as e:
+            self.log("SEND LOGIN ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}
             return resp
 
