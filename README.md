@@ -69,7 +69,6 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Install instructions
 
-* Install the add-on from repository "Kodi ArvVoid Repository"
 * *OPTIONAL: On OSMC/Raspbian you might have to install some dependency manualy from shell:*
 ```
 sudo apt update
@@ -79,7 +78,9 @@ sudo apt install build-essential
 sudo pip install wheel
 sudo pip install pycryptodomex
 sudo apt install libnss3 libnspr4
+sudo reboot
 ```
+* Install the add-on from repository "Kodi ArvVoid Repository"
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
