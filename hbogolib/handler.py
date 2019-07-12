@@ -132,7 +132,7 @@ class HbogoHandler(object):
             elif response_format == 'xml':
                 return ET.fromstring(r.text.encode('utf-8'))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + repr(e))
+            self.log("GET FROM HBO ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "GET FROM HBO ERROR"}, "ErrorMessage": "GET FROM HBO ERROR"}
             return resp
 
@@ -146,7 +146,7 @@ class HbogoHandler(object):
             elif response_format == 'xml':
                 return ET.fromstring(r.text.encode('utf-8'))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + repr(e))
+            self.log("SEND PURCHASE ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}
             return resp
 
