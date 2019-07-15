@@ -285,15 +285,10 @@ class HbogoHandler_eu(HbogoHandler):
         except:
             self.logout()
             self.log("DEVICE REGISTRATION: READ/STORE INDIVIDUALIZATION PROBLEM")
-            return
-
-        try:
-            self.sessionId = jsonrsp['Data']['SessionId']
-        except:
-            self.log("DEVICE REGISTRATION: NO SESSION ID")
+            return False
 
         self.log("DEVICE REGISTRATION: COMPLETED")
-        return jsonrsp
+        return True
 
     def getFavoriteGroup(self):
         jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
