@@ -113,6 +113,9 @@ class HbogoHandler(object):
         self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=headers, data=data)
+            self.log("SEND LOGIN RETURNED STATUS: " + str(r.status_code))
+            if self.sensitive_debug:
+                self.log("SEND LOGIN RETURNED RAW: " + r.text.encode('utf-8'))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
@@ -127,6 +130,7 @@ class HbogoHandler(object):
         self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
         try:
             r = requests.get(url, headers=self.loggedin_headers)
+            self.log("GET FROM HBO STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
@@ -141,6 +145,7 @@ class HbogoHandler(object):
         self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=purchase_headers, data=purchase_payload)
+            self.log("SEND PURCHASE STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':

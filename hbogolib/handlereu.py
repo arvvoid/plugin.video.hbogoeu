@@ -61,8 +61,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY = ""
         self.API_HOST_GATEWAY_REFERER = ""
 
-        self.API_URL_SILENTREGISTER = ""
-
         self.API_URL_SETTINGS = ""
         self.API_URL_AUTH_WEBBASIC = ""
         self.API_URL_AUTH_OPERATOR = ""
@@ -136,8 +134,6 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
-
-        self.API_URL_SILENTREGISTER = 'https://' + self.COUNTRY_CODE_SHORT + '.hbogo.eu/services/settings/silentregister.aspx'
 
         self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v7/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
@@ -279,21 +275,11 @@ class HbogoHandler_eu(HbogoHandler):
 
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
-        jsonrsp = self.get_from_hbogo(self.API_URL_SILENTREGISTER)
-        self.log("DEVICE REGISTRATION: " + str(jsonrsp))
+        import uuid
         try:
-            if jsonrsp['Data']['ErrorMessage']:
-                self.log("DEVICE REGISTRATION: ERROR: " + jsonrsp['Data']['ErrorMessage'])
-                if jsonrsp['Data']['ErrorMessage'] != "GET FROM HBO ERROR":
-                    xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['Data']['ErrorMessage'])
-                self.logout()
-                return
-        except:
-            pass
-        try:
-            indiv = jsonrsp['Data']['Customer']['CurrentDevice']['Individualization']
+            indiv = str(uuid.uuid4())
             self.log("DEVICE REGISTRATION: INDIVIDUALIZATION: " + str(indiv))
-            custid = jsonrsp['Data']['Customer']['CurrentDevice']['Id']
+            custid = str(uuid.uuid4())
             self.log("DEVICE REGISTRATION: CUSTOMER ID: " + str(custid))
             self.storeIndiv(indiv, custid)
         except:
@@ -588,7 +574,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.KidsGroupId = self.addon.getSetting('KidsGroupId')
 
         if (self.individualization == "" or self.customerId == ""):
-            self.log("NO REGISTRED DEVICE - trieng silent device registration. This step is not required for all operators. Even if this fails login can be sucessfull, depends on the operator used.")
+            self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
             self.silentRegister()
 
         if (self.FavoritesGroupId == ""):
