@@ -1,3 +1,7 @@
+v.2.0.10-beta26
+- Removed silent register api (removed on hbo go side)
+- Initial individualization and device id get generated client side.
+
 v.2.0.9-beta25
 - Added Czech translation by Ike201
 
