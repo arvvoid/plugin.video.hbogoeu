@@ -1,3 +1,6 @@
+v.2.0.11-beta27
+- ttml2srt: add support for timestamp format in seconds.
+
 v.2.0.10-beta26
 - Removed silent register api (removed on hbo go side)
 - Initial individualization and device id get generated client side.
