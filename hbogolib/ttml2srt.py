@@ -102,6 +102,13 @@ class Ttml2srt(object):
                       int(hhmmss[2]) * 1000]
         return self.scaler(hh + mm + ss + ms, scale)
 
+    def seconds_to_ms(self, time, scale=1):
+        ss, cc = time.rsplit('.', 1)
+        # Remove the unit signifier before converting to ms.
+        cc = int(cc[:-1]) * 10
+        ss = int(ss) * 1000
+        return self.scaler(ss + cc, scale)
+
     def get_sb_timestamp_be(self, time, shift=0, fps=23.976, tick_rate=None, scale=1):
         """Return SubRip timestamp after conversion from source timestamp.
         Assumes source timestamp to be in either the form of
@@ -117,6 +124,8 @@ class Ttml2srt(object):
         delim = ''.join([i for i in time if not i.isdigit()])[-1]
         if delim.lower() == 't':
             ms = self.ticks_to_ms(tick_rate, time, scale)
+        elif delim.lower() == 's':
+            ms = self.seconds_to_ms(time, scale);
         else:
             ms = self.timestamp_to_ms(time, fps, delim, scale)
 
