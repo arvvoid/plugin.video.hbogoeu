@@ -58,7 +58,7 @@ REQUIRMENTS:
 * script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
 * inputstream.adaptive 2.3.15+ (should get installed automatically in Kodi 18)
 * script.module.inputstreamhelper 0.3.3+ (should get installed automatically in Kodi 18)
-* Libwidevine (Your device might include it already or might not, not all devices have the same widevine certification level, which can impact playback ability and max quality of DRM content, please make sure to read the license agreement that comes with it, so you know what you´re getting yourself into.)
+* Libwidevine 4.10.1440+
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
 
