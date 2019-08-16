@@ -260,17 +260,14 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Find thumbnail failed")
             return self.resources + 'fanart.jpg'
 
-    def list(self, url, simple=False):
-        if not self.chk_login():
-            self.login()
-        self.log("List: " + str(url))
+    def list_pages(self, url, max = 200, offset = 0):
 
-        if not self.chk_login():
-            self.login()
+        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max) + "&offset=" + str(offset), 'xml')
 
-        response = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
+        count = 0
 
         for item in response.findall('.//item'):
+            count += 1
             item_link = item.find('link').text
 
             if len(item_link) > 0:
@@ -282,6 +279,21 @@ class HbogoHandler_sp(HbogoHandler):
                     self.addLink(item, 5)
                 else:
                     self.log('Unknown item type: ' + item_type)
+        self.log('List pages total items: ' + str(count))
+        if count == max:
+            self.log('List pages calling next page... max: '+ str(max) + ' offset: ' + str(offset+max))
+            self.list_pages(url, max, offset+max)
+
+
+    def list(self, url, simple=False):
+        if not self.chk_login():
+            self.login()
+        self.log("List: " + str(url))
+
+        if not self.chk_login():
+            self.login()
+
+        self.list_pages(url, 200, 0)
     
         if simple == False:
             xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
