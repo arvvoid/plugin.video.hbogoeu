@@ -56,7 +56,7 @@ REQUIRMENTS:
 * Kodi 18+
 * script.module.requests 2.12.4+ (should get installed automatically in Kodi 18)
 * script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
-* inputstream.adaptive 2.3.22+ (should get installed automatically in Kodi 18)
+* inputstream.adaptive 2.3.19+ (should get installed automatically in Kodi 18)
 * script.module.inputstreamhelper 0.3.5+ (should get installed automatically in Kodi 18)
 * Libwidevine 4.10.1440+
 
@@ -87,7 +87,7 @@ sudo reboot
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.11~beta27.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.11~beta27.zip)
+[plugin.video.hbogoeu-2.0.12~beta28.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.12~beta28.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
