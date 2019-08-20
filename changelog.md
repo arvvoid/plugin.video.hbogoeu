@@ -1,3 +1,7 @@
+v.2.0.12-beta28
+- updated dependencies
+- fix listing limit for Hbo Nordic/Spain
+
 v.2.0.11-beta27
 - ttml2srt: add support for timestamp format in seconds.
 
