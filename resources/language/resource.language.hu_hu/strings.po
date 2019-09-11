@@ -25,7 +25,7 @@ msgstr "KÉRJÜK, HOGY KAPCSOLAT A SZERZŐDŐ TÁMOGATÁSÁRÓL EZT KIEGÉSZÍT�
 #: 
 msgctxt "#30102"
 msgid "Operators"
-msgstr "Az üzemeltetők"
+msgstr "Szolgáltatók"
 
 #: 
 msgctxt "#30103"
@@ -45,7 +45,7 @@ msgstr "Kijelentkezés (Beállítás visszaállítása)"
 #: 
 msgctxt "#30106"
 msgid "Destroy current session"
-msgstr "Elpusztítani az aktuális munkamenetet"
+msgstr "Eltávolítani az aktuális munkamenetet"
 
 #: 
 msgctxt "#30440"
@@ -75,12 +75,12 @@ msgstr "A telepítés nem sikerült, próbálkozzon újra"
 #: 
 msgctxt "#30445"
 msgid "Chose your operator"
-msgstr "Válassza ki az üzemeltetőt"
+msgstr "Válassza ki a szolgáltatót"
 
 #: 
 msgctxt "#30660"
 msgid "Streaming"
-msgstr "Folyó"
+msgstr "Streamelés"
 
 #: 
 msgctxt "#30665"
@@ -105,27 +105,27 @@ msgstr "Hiba"
 #: 
 msgctxt "#30703"
 msgid "Episode can be watched until:"
-msgstr "Az epizód megtekinthető, amíg:"
+msgstr "Az epizód megtekinthető eddig:"
 
 #: 
 msgctxt "#30704"
 msgid "The movie can be watched until:"
-msgstr "A film megtekinthető, amíg:"
+msgstr "A film megtekinthető eddig:"
 
 #: 
 msgctxt "#30705"
 msgid "EPISODE"
-msgstr "EEPIZÓD"
+msgstr "EPIZÓD"
 
 #: 
 msgctxt "#30706"
 msgid "SEASON"
-msgstr "ÉVSZAK"
+msgstr "ÉVAD"
 
 #: 
 msgctxt "#30707"
 msgid "My List"
-msgstr "Érdekes"
+msgstr "Saját lista"
 
 #: 
 msgctxt "#30708"
@@ -170,7 +170,7 @@ msgstr "Állítsa le, módosítsa a beállításokat"
 #: 
 msgctxt "#30716"
 msgid "TV Shows"
-msgstr "TV műsorok"
+msgstr "Sorozatok"
 
 #: 
 msgctxt "#30717"
@@ -180,7 +180,7 @@ msgstr "Filmek"
 #: 
 msgctxt "#30718"
 msgid "Trending Now"
-msgstr "Trendelő most"
+msgstr "Népszerű most"
 
 #: 
 msgctxt "#30650"
@@ -215,12 +215,12 @@ msgstr "Szakértő"
 #: 
 msgctxt "#30671"
 msgid "Force scraper friendly titles"
-msgstr "A kaparóbarát címek kényszerítése"
+msgstr "Keresóbarát címek kényszerítése"
 
 #: 
 msgctxt "#30680"
 msgid "Session"
-msgstr "Ülés"
+msgstr "Munkamenet"
 
 #: 
 msgctxt "#30681"
@@ -255,37 +255,37 @@ msgstr "Eltávolítás a listáról"
 #: 
 msgctxt "#30721"
 msgid "Rate 5"
-msgstr "Küldje 5"
+msgstr "Értékelés: 5"
 
 #: 
 msgctxt "#30722"
 msgid "Rate 4"
-msgstr "Küldje 4"
+msgstr "Értékelés: 4"
 
 #: 
 msgctxt "#30723"
 msgid "Rate 3"
-msgstr "Küldje 3"
+msgstr "Értékelés: 3"
 
 #: 
 msgctxt "#30724"
 msgid "Rate 2"
-msgstr "Küldje 2"
+msgstr "Értékelés: 2"
 
 #: 
 msgctxt "#30725"
 msgid "Rate 1"
-msgstr "Küldje 1"
+msgstr "Értékelés: 1"
 
 #: 
 msgctxt "#30726"
 msgid "Rate"
-msgstr "Küldje"
+msgstr "Értékelés"
 
 #: 
 msgctxt "#30727"
 msgid "Success"
-msgstr "Siker"
+msgstr "Sikerült"
 
 msgctxt "#30728"
 msgid "Login failed, do you want to input your credentials again?"
