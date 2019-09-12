@@ -18,7 +18,6 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 
-import random
 import uuid
 import base64
 import codecs
@@ -46,7 +45,7 @@ class HbogoHandler(object):
         self.base_url = base_url
         self.handle = handle
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
-        self.SESSION_VALIDITY = int(self.addon.getSetting('sessionvalid'))  # stored session valid
+        self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
 
         self.base_addon_cat=""
         self.cur_loc = ""

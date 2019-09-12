@@ -91,8 +91,8 @@ msgid "Chose your operator"
 msgstr "Wybierz swojego operatora"
 
 msgctxt "#30660"
-msgid "Input.Stream/CDM"
-msgstr "Input.Stream/CDM"
+msgid "DRM"
+msgstr "DRM"
 
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
@@ -311,3 +311,7 @@ msgstr "DZIECI"
 msgctxt "#30730"
 msgid "Weekly Top"
 msgstr "Tygodniowy top"
+
+msgctxt "#30692"
+msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
+msgstr "Are you sure you want to completely reset your setup (device registration will be lost ) ?"

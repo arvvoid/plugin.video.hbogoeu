@@ -73,7 +73,7 @@ msgid "Chose your operator"
 msgstr ""
 
 msgctxt "#30660"
-msgid "Input.Stream/CDM"
+msgid "DRM"
 msgstr ""
 
 msgctxt "#30665"
@@ -272,4 +272,8 @@ msgstr ""
 
 msgctxt "#30691"
 msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
+msgstr ""
+
+msgctxt "#30692"
+msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
 msgstr ""

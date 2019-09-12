@@ -1,9 +1,15 @@
+v.2.0.13-beta29
+- updated dependencies
+- minor fixes
+- better integration with inputstream.helper
+- improvements to Hungarian translation (contribution mrthosi)
+
 v.2.0.12-beta28
 - updated dependencies
 - fix listing limit for Hbo Nordic/Spain
 
 v.2.0.11-beta27
-- ttml2srt: add support for timestamp format in seconds.
+- ttml2srt: add support for timestamp format in seconds (contribution of awdAvenger).
 
 v.2.0.10-beta26
 - Removed silent register api (removed on hbo go side)

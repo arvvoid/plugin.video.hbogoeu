@@ -74,8 +74,8 @@ msgid "Chose your operator"
 msgstr "Valitse palveluntarjoaja"
 
 msgctxt "#30660"
-msgid "Input.Stream/CDM"
-msgstr "Input.Stream/CDM"
+msgid "DRM"
+msgstr "DRM"
 
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
@@ -268,3 +268,7 @@ msgstr "Debug"
 msgctxt "#30691"
 msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
 msgstr "Sisällytä henkilökohtaisia käyttäjätunnuksia debug-logiin [ÄLÄ JULKAISE LOGIA JULKISESTI]"
+
+msgctxt "#30692"
+msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
+msgstr "Are you sure you want to completely reset your setup (device registration will be lost ) ?"

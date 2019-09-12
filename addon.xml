@@ -1,10 +1,10 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.12~beta28">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.13~beta29">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3"/>
-    <import addon="inputstream.adaptive" version="2.3.19" />
-    <import addon="script.module.inputstreamhelper" version="0.3.5" />
+    <import addon="inputstream.adaptive" version="2.3.22" />
+    <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
@@ -69,12 +69,18 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
+v.2.0.13-beta29
+- updated dependencies
+- minor fixes
+- better integration with inputstream.helper
+- improvements to Hungarian translation (contribution mrthosi)
+
 v.2.0.12-beta28
 - updated dependencies
 - fix listing limit for Hbo Nordic/Spain
 
 v.2.0.11-beta27
-- ttml2srt: add support for timestamp format in seconds.
+- ttml2srt: add support for timestamp format in seconds (contribution of awdAvenger).
         
 v.2.0.10-beta26
 - Removed silent register api (removed on hbo go side)

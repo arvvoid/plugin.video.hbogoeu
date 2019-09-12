@@ -143,10 +143,12 @@ class hbogo(object):
             self.handler.play(url, content_id)
 
         elif mode == 6: #logout, destry setup
-            from hbogolib.handler import HbogoHandler
-            handler = HbogoHandler(self.handle, self.base_url)
-            handler.del_setup()
-            xbmc.executebuiltin('Container.Refresh')
+            #ask confirm
+            if xbmcgui.Dialog().yesno(self.addon.getAddonInfo('name'), self.language(30692).encode('utf-8')):
+                from hbogolib.handler import HbogoHandler
+                handler = HbogoHandler(self.handle, self.base_url)
+                handler.del_setup()
+                xbmc.executebuiltin('Container.Refresh')
 
         elif mode == 7: #reset session
             from hbogolib.handler import HbogoHandler
