@@ -14,19 +14,20 @@
         <setting type="text" id="password" option="hidden" visible="false" default=""/>
         <setting type="text" id="lastsearch" visible="false" default=""/>
         <setting id="delsetup" type="action" label="30105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&mode=6)" option="close"/>
-    <!-- Language -->
-    <setting label="30650" type="lsep"/>
-    <setting label="30651" type="bool" id="deflang" default="false"/>
-    <setting label="30652" type="bool" id="origtitles" default="false"/>
-    <setting label="30653" type="bool" id="forcesubs" default="true"/>
+        <!-- Language -->
+        <setting label="30650" type="lsep"/>
+        <setting label="30651" type="bool" id="deflang" default="false"/>
+        <setting label="30652" type="bool" id="origtitles" default="false"/>
+        <setting label="30653" type="bool" id="forcesubs" default="true"/>
     </category>
     <!-- Streaming -->
-    <category label="30660"/>
+    <category label="30660">
         <setting label="30666" type="action" id="ishelper_info" action="RunScript(script.module.inputstreamhelper,info)"/>
         <setting id="is_settings" type="action" label="30665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
         <setting label="30667" type="action" id="install_widevine" action="RunScript(script.module.inputstreamhelper,widevine_install)" visible="!system.platform.android"/>
         <setting label="30668" type="action" id="remove_widevine" action="RunScript(script.module.inputstreamhelper, widevine_remove)" visible="!system.platform.android"/>
     </category>
+    <!-- Advanced -->
 	<category label="30670">
     <setting label="30671" type="bool" id="forcescrap" default="false"/>
     <setting label="30680" type="lsep"/>
