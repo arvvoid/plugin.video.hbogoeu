@@ -25,7 +25,6 @@
         <setting id="is_settings" type="action" label="30665" action="Addon.OpenSettings(inputstream.adaptive)" enable="System.HasAddon(inputstream.adaptive)" option="close"/>
         <setting label="Inputstream Helper" type="lsep"/>
         <setting label="30666" type="action" id="ishelper_info" action="RunScript(script.module.inputstreamhelper,info)"/>
-        <setting label="30669" type="action" id="ishelper_settings" option="close" action="Addon.OpenSettings(script.module.inputstreamhelper)"/>
         <setting label="30667" type="action" id="install_widevine" action="RunScript(script.module.inputstreamhelper,widevine_install)" visible="!system.platform.android"/>
         <setting label="30668" type="action" id="remove_widevine" action="RunScript(script.module.inputstreamhelper, widevine_remove)" visible="!system.platform.android"/>
     </category>
