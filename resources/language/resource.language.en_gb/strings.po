@@ -92,6 +92,10 @@ msgctxt "#30668"
 msgid "Remove Widevine CDM..."
 msgstr ""
 
+msgctxt "#30669"
+msgid "InputStream Helper settings..."
+msgstr ""
+
 
 msgctxt "#30700"
 msgid "Find movies and TV Shows..."
