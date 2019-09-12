@@ -73,12 +73,25 @@ msgid "Chose your operator"
 msgstr ""
 
 msgctxt "#30660"
-msgid "Streaming"
+msgid "Input.Stream/CDM"
 msgstr ""
 
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgstr ""
+
+msgctxt "#30666"
+msgid "InputStream Helper information"
+msgstr ""
+
+msgctxt "#30667"
+msgid "(Re)install Widevine CDM..."
+msgstr ""
+
+msgctxt "#30668"
+msgid "Remove Widevine CDM..."
+msgstr ""
+
 
 msgctxt "#30700"
 msgid "Find movies and TV Shows..."

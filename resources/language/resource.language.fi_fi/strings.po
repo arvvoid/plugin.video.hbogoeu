@@ -74,12 +74,24 @@ msgid "Chose your operator"
 msgstr "Valitse palveluntarjoaja"
 
 msgctxt "#30660"
-msgid "Streaming"
-msgstr "Lataus"
+msgid "Input.Stream/CDM"
+msgstr "Input.Stream/CDM"
 
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgstr "Latauksen Adaptiiviset Asetukset (resoluutio, yms.)"
+
+msgctxt "#30666"
+msgid "InputStream Helper information"
+msgstr "InputStream Helper information"
+
+msgctxt "#30667"
+msgid "(Re)install Widevine CDM..."
+msgstr "(Re)install Widevine CDM..."
+
+msgctxt "#30668"
+msgid "Remove Widevine CDM..."
+msgstr "Remove Widevine CDM..."
 
 msgctxt "#30700"
 msgid "Find movies and TV Shows..."
