@@ -25,6 +25,9 @@ class Ttml2srt(object):
     def extract_dialogue(self, nodes):
         dialogue = ''
         for node in nodes:
+            if node.localName == 'span' and node.hasChildNodes():
+                dialogue = dialogue + "<i>" + self.extract_dialogue(node.childNodes) + "</i>"
+                continue
             if node.localName == 'br':
                 dialogue = dialogue + '\n'
             elif node.nodeValue:
