@@ -1,3 +1,6 @@
+v.2.0.14-beta30
+- Add support for italics in subtitles [Hbo Nordic/Spain] (contribution Paco8)
+
 v.2.0.13-beta29
 - updated dependencies
 - minor fixes
