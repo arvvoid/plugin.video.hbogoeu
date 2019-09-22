@@ -56,8 +56,8 @@ REQUIRMENTS:
 * Kodi 18+
 * script.module.requests 2.12.4+ (should get installed automatically in Kodi 18)
 * script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
-* inputstream.adaptive 2.3.19+ (should get installed automatically in Kodi 18)
-* script.module.inputstreamhelper 0.3.5+ (should get installed automatically in Kodi 18)
+* inputstream.adaptive 2.3.22+ (should get installed automatically in Kodi 18)
+* script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18)
 * Libwidevine 4.10.1440+
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
