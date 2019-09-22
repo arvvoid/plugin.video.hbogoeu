@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.14~beta30.GIT">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.14~beta31.GIT">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="script.module.requests" version="2.12.4" />
@@ -71,6 +71,7 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <news>
 CURRENT DEV MASTER
 - Better exception handling (easier debug)
+- Simplify and fix minute counting in ms to SRT conversion      
 
 v.2.0.14-beta30
 - Add support for italics in subtitles [Hbo Nordic/Spain] (contribution Paco8)
