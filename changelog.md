@@ -1,3 +1,7 @@
+v.2.0.15-beta31
+- Better exception handling (easier debug)
+- Simplify and fix minute counting in ms to SRT conversion (contribution yuppity)
+
 v.2.0.14-beta30
 - Add support for italics in subtitles [Hbo Nordic/Spain] (contribution Paco8)
 

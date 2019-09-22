@@ -128,7 +128,7 @@ class Ttml2srt(object):
         if delim.lower() == 't':
             ms = self.ticks_to_ms(tick_rate, time, scale)
         elif delim.lower() == 's':
-            ms = self.seconds_to_ms(time, scale);
+            ms = self.seconds_to_ms(time, scale)
         else:
             ms = self.timestamp_to_ms(time, fps, delim, scale)
 
