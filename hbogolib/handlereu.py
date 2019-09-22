@@ -502,7 +502,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.logout()
                     return False
             except:
-                self.log("Unexpected problem with login, trace back: " + traceback.format_exc())
+                self.log("No login error: " + traceback.format_exc())
                 pass
 
             try:
@@ -727,7 +727,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.logout()
                 return False
         except:
-            self.log("Unexpected login error, stack trace: " + traceback.format_exc())
+            self.log("No login error: " + traceback.format_exc())
             pass
 
         try:
@@ -808,7 +808,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
-            self.log("Unexpected error, get initial categories groups: " + traceback.format_exc())
+            self.log("No categories groups error: " + traceback.format_exc())
             pass
 
         position_home = -1
@@ -888,7 +888,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
-            self.log("Unexpected, list error: " + traceback.format_exc())
+            self.log("No list error: " + traceback.format_exc())
             pass
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
@@ -921,7 +921,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
-            self.log("Unexpected season error: " + traceback.format_exc())
+            self.log("No season error: " + traceback.format_exc())
             pass
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, 3, "season")
@@ -956,7 +956,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
-            self.log("Unexpected episode error: " + traceback.format_exc())
+            self.log("No episode error: " + traceback.format_exc())
             pass
 
         for episode in jsonrsp['ChildContents']['Items']:
@@ -1002,7 +1002,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Search Error: " + str(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
                 except:
-                    self.log("Unexpected search error: " + traceback.format_exc())
+                    self.log("No search error: " + traceback.format_exc())
                     pass
 
                 br = 0
@@ -1075,7 +1075,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.logout()
                 return
         except:
-            self.log("Unexpected play error: " + traceback.format_exc())
+            self.log("No play error: " + traceback.format_exc())
             pass
 
         MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
