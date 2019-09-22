@@ -90,11 +90,11 @@ class Ttml2srt(object):
         return self.scaler(((1.0 / tickrate) * int(ticks.rstrip('t'))) * 1000, scale)
 
     def ms_to_subrip(self, ms):
-        return '{:02d}:{:02d}:{:02d},{:03d}'.format(
-            int(ms / (3600 * 1000)),  # hh
-            int(ms / 60000 - (ms / (3600 * 1000) * 60)),  # mm
-            int((ms % 60000) / 1000),  # ss
-            int((ms % 60000) % 1000))  # ms
+        hh = int(ms / 3.6e6)
+        mm = int((ms % 3.6e6) / 60000)
+        ss = int((ms % 60000) / 1000)
+        ms = int(ms % 1000)
+        return '{:02d}:{:02d}:{:02d},{:03d}'.format(hh, mm, ss, ms)
 
     def timestamp_to_ms(self, time, fps=23.976, delim='.', scale=1):
         hhmmss, frames = time.rsplit(delim, 1)
