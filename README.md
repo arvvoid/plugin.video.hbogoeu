@@ -87,7 +87,7 @@ sudo reboot
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.14~beta30.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.14~beta30.zip)
+[plugin.video.hbogoeu-2.0.15~beta31.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.15~beta31.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
