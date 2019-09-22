@@ -161,7 +161,7 @@ class HbogoHandler(object):
             self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
             os.remove(folder + self.addon_id + "_session"+".pkl")
         except:
-            self.log("Stack trace: " + traceback.format_exc())
+            self.log("Delete login error: " + traceback.format_exc())
             pass
 
     def del_setup(self):
@@ -278,7 +278,7 @@ class HbogoHandler(object):
             decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
             return decoded
         except:
-            self.log("Stack trace: " + traceback.format_exc())
+            self.log("Decrypt credentials error: " + traceback.format_exc())
             return None
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER

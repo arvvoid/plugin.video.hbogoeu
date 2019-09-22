@@ -806,9 +806,12 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
+                self.log("Categories Error: " + str(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+        except KeyError:
+            pass    #all is ok no error message just pass
         except:
-            self.log("No categories groups error: " + traceback.format_exc())
+            self.log("Unexpected error: " + traceback.format_exc())
             pass
 
         position_home = -1
@@ -886,9 +889,12 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
+                self.log("List Error: " + str(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
         except:
-            self.log("No list error: " + traceback.format_exc())
+            self.log("Unexpected error: " + traceback.format_exc())
             pass
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
@@ -919,9 +925,12 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
+                self.log("Season list Error: " + str(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
         except:
-            self.log("No season error: " + traceback.format_exc())
+            self.log("Unexpected error: " + traceback.format_exc())
             pass
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, 3, "season")
@@ -954,9 +963,12 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
+                self.log("Episode list error: " + str(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
         except:
-            self.log("No episode error: " + traceback.format_exc())
+            self.log("Unexpected error: " + traceback.format_exc())
             pass
 
         for episode in jsonrsp['ChildContents']['Items']:
@@ -1001,8 +1013,10 @@ class HbogoHandler_eu(HbogoHandler):
                     if jsonrsp['ErrorMessage']:
                         self.log("Search Error: " + str(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                except KeyError:
+                    pass  # all is ok no error message just pass
                 except:
-                    self.log("No search error: " + traceback.format_exc())
+                    self.log("Unexpected error: " + traceback.format_exc())
                     pass
 
                 br = 0
@@ -1074,8 +1088,10 @@ class HbogoHandler_eu(HbogoHandler):
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 self.logout()
                 return
+        except KeyError:
+            pass  # all is ok no error message just pass
         except:
-            self.log("No play error: " + traceback.format_exc())
+            self.log("Unexpected error: " + traceback.format_exc())
             pass
 
         MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
@@ -1230,8 +1246,10 @@ class HbogoHandler_eu(HbogoHandler):
             media_id = cid
             try:
                 media_id = title['Id']
+            except KeyError:
+                pass  # all is ok got from first method just ignore
             except:
-                self.log("Get media id unexpected error: " + traceback.format_exc())
+                self.log("Unexpected error for get media id: " + traceback.format_exc())
                 pass
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
@@ -1256,8 +1274,10 @@ class HbogoHandler_eu(HbogoHandler):
             media_id = cid
             try:
                 media_id = item['SeriesId']
+            except KeyError:
+                pass  # all is ok media id got from first method ignore
             except:
-                self.log("Get media id unexpected error: " + traceback.format_exc())
+                self.log("Unexpected get media id error: " + traceback.format_exc())
                 pass
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)

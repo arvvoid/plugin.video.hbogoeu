@@ -91,31 +91,49 @@ class hbogo(object):
 
         try:
             url = urllib.unquote_plus(params["url"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No url")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             name = urllib.unquote_plus(params["name"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No name")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             thumbnail = str(params["thumbnail"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No thumbnail: ")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             mode = int(params["mode"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No mode")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             content_id = str(params["cid"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No content id")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             vote = str(params["vote"])
+        except KeyError:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No vote")
+            pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
