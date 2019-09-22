@@ -21,6 +21,7 @@ import json
 import base64
 import hashlib
 import requests
+import traceback
 
 try:
     import urllib.parse as parse
@@ -193,6 +194,7 @@ class HbogoHandler_eu(HbogoHandler):
                 if len(operator['LogoUrl'])>0:
                     icon = operator['LogoUrl']
             except:
+                self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
                 pass
 
             web = 'true'
@@ -202,12 +204,14 @@ class HbogoHandler_eu(HbogoHandler):
                 else:
                     web = 'false'
             except:
+                self.log("Generic error, operator type, Stack trace: " + traceback.format_exc())
                 pass
 
             redirect_url = ""
             try:
                 redirect_url = operator['RedirectionUrl']
             except:
+                self.log("Generic error, redirect url, Stack trace: " + traceback.format_exc())
                 pass
 
             op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
@@ -217,6 +221,7 @@ class HbogoHandler_eu(HbogoHandler):
                 if len(operator['LogoUrl'])>0:
                     icon = operator['LogoUrl']
             except:
+                self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
                 pass
 
             web = 'false'
@@ -225,6 +230,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 redirect_url = operator['RedirectionUrl']
             except:
+                self.log("Generic error, operator custom url, Stack trace: " + traceback.format_exc())
                 pass
 
             op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
@@ -283,8 +289,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("DEVICE REGISTRATION: CUSTOMER ID: " + str(custid))
             self.storeIndiv(indiv, custid)
         except:
+            self.log("DEVICE REGISTRATION: READ/STORE INDIVIDUALIZATION PROBLEM: " + traceback.format_exc())
             self.logout()
-            self.log("DEVICE REGISTRATION: READ/STORE INDIVIDUALIZATION PROBLEM")
             return False
 
         self.log("DEVICE REGISTRATION: COMPLETED")
@@ -461,6 +467,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 ssoid = parse.parse_qs(parsed_url.query)['ssoid'][0]
             except:
+                self.log("OAuth login attempt failed, operator not supported, stack trace: " + traceback.format_exc())
                 self.log("OAuth login attempt failed, operator not supported: " + str(self.op_id))
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "Sorry the OAuth login attempt have failed. Your operator require a special login procedure thats not supported at the moment. Please report with a full debug log")
                 self.del_setup()
@@ -495,6 +502,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.logout()
                     return False
             except:
+                self.log("Unexpected problem with login, trace back: " + traceback.format_exc())
                 pass
 
             try:
@@ -507,7 +515,7 @@ class HbogoHandler_eu(HbogoHandler):
                 else:
                     self.log("Device ID and Individualization Match")
             except:
-                self.log("LOGIN: INDIVIDUALIZATION ERROR")
+                self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
                 self.logout()
                 return False
@@ -515,6 +523,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 self.sessionId = jsonrspl['SessionId']
             except:
+                self.log("Session Id error, stack trace: " + traceback.format_exc())
                 self.sessionId = '00000000-0000-0000-0000-000000000000'
             if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
                 self.log("GENERIC LOGIN ERROR")
@@ -718,6 +727,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.logout()
                 return False
         except:
+            self.log("Unexpected login error, stack trace: " + traceback.format_exc())
             pass
 
         try:
@@ -729,7 +739,7 @@ class HbogoHandler_eu(HbogoHandler):
             else:
                 self.log("Customer ID and Individualization Match")
         except:
-            self.log("LOGIN: INDIVIDUALIZATION ERROR")
+            self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "LOGIN: INDIVIDUALIZATION ERROR")
             self.logout()
             return False
@@ -737,6 +747,7 @@ class HbogoHandler_eu(HbogoHandler):
         try:
             self.sessionId = jsonrspl['SessionId']
         except:
+            self.log("Session Id unexpected error: " + traceback.format_exc())
             self.sessionId = '00000000-0000-0000-0000-000000000000'
         if self.sessionId == '00000000-0000-0000-0000-000000000000' or len(self.sessionId) != 36:
             self.log("GENERIC LOGIN ERROR")
@@ -797,6 +808,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
+            self.log("Unexpected error, get initial categories groups: " + traceback.format_exc())
             pass
 
         position_home = -1
@@ -829,6 +841,7 @@ class HbogoHandler_eu(HbogoHandler):
                     break
                 position += 1
         except:
+            self.log("Unexpected error in find key categories: " + traceback.format_exc())
             pass
 
         if position_series != -1:
@@ -875,6 +888,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
+            self.log("Unexpected, list error: " + traceback.format_exc())
             pass
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
@@ -907,6 +921,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
+            self.log("Unexpected season error: " + traceback.format_exc())
             pass
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, 3, "season")
@@ -941,6 +956,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except:
+            self.log("Unexpected episode error: " + traceback.format_exc())
             pass
 
         for episode in jsonrsp['ChildContents']['Items']:
@@ -986,6 +1002,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Search Error: " + str(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
                 except:
+                    self.log("Unexpected search error: " + traceback.format_exc())
                     pass
 
                 br = 0
@@ -1058,6 +1075,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.logout()
                 return
         except:
+            self.log("Unexpected play error: " + traceback.format_exc())
             pass
 
         MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
@@ -1100,6 +1118,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.log("FAILED ADD TO MY LIST: " + content_id)
                     xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
             except:
+                self.log("Add to mylist unexpected error: " + traceback.format_exc())
                 self.log("ERROR ADD TO MY LIST: " + content_id)
                 xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
 
@@ -1114,6 +1133,8 @@ class HbogoHandler_eu(HbogoHandler):
                     self.log("FAILED TO REMOVE MY LIST: " + content_id)
                     xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
             except:
+                self.log("Remove from mylist unexpected error: " + traceback.format_exc())
+                self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
                 self.log("ERROR REMOVE FROM MY LIST: " + content_id)
                 xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
 
@@ -1127,6 +1148,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.log("FAILED RATING: " + content_id + " " + optional)
                     xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
             except:
+                self.log("Unexpected rating error: " + traceback.format_exc())
                 self.log("ERROR RATING: " + content_id + " " + optional)
                 xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
 
@@ -1209,6 +1231,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 media_id = title['Id']
             except:
+                self.log("Get media id unexpected error: " + traceback.format_exc())
                 pass
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
@@ -1234,6 +1257,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 media_id = item['SeriesId']
             except:
+                self.log("Get media id unexpected error: " + traceback.format_exc())
                 pass
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)

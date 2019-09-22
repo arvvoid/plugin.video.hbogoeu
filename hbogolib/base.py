@@ -17,6 +17,7 @@ import sys
 import xbmc
 import xbmcaddon
 import xbmcgui
+import traceback
 
 
 class hbogo(object):
@@ -91,26 +92,32 @@ class hbogo(object):
         try:
             url = urllib.unquote_plus(params["url"])
         except:
+            self.log("ROUTER - url warning: " + traceback.format_exc())
             pass
         try:
             name = urllib.unquote_plus(params["name"])
         except:
+            self.log("ROUTER - name warning: " + traceback.format_exc())
             pass
         try:
             thumbnail = str(params["thumbnail"])
         except:
+            self.log("ROUTER - thumbnail warning: " + traceback.format_exc())
             pass
         try:
             mode = int(params["mode"])
         except:
+            self.log("ROUTER - mode warning: " + traceback.format_exc())
             pass
         try:
             content_id = str(params["cid"])
         except:
+            self.log("ROUTER - content_id warning: " + traceback.format_exc())
             pass
         try:
             vote = str(params["vote"])
         except:
+            self.log("ROUTER - vote warning: " + traceback.format_exc())
             pass
 
         if mode == None or url == None or len(url) < 1:
