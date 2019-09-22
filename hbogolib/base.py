@@ -108,7 +108,7 @@ class hbogo(object):
         try:
             thumbnail = str(params["thumbnail"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No thumbnail: ")
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No thumbnail")
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
