@@ -92,32 +92,32 @@ class hbogo(object):
         try:
             url = urllib.unquote_plus(params["url"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             name = urllib.unquote_plus(params["name"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             thumbnail = str(params["thumbnail"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             mode = int(params["mode"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             content_id = str(params["cid"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             vote = str(params["vote"])
         except:
-            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
 
         if mode == None or url == None or len(url) < 1:
