@@ -92,32 +92,32 @@ class hbogo(object):
         try:
             url = urllib.unquote_plus(params["url"])
         except:
-            self.log("ROUTER - url warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             name = urllib.unquote_plus(params["name"])
         except:
-            self.log("ROUTER - name warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             thumbnail = str(params["thumbnail"])
         except:
-            self.log("ROUTER - thumbnail warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             mode = int(params["mode"])
         except:
-            self.log("ROUTER - mode warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             content_id = str(params["cid"])
         except:
-            self.log("ROUTER - content_id warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             vote = str(params["vote"])
         except:
-            self.log("ROUTER - vote warning: " + traceback.format_exc())
+            xbmc.log(self.DEBUG_ID_STRING + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
 
         if mode == None or url == None or len(url) < 1:
