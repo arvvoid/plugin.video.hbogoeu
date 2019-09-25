@@ -1,3 +1,6 @@
+v.2.0.15-beta32
+- Lowered inputstream.adaptive requirement
+
 v.2.0.15-beta31
 - Better exception handling (easier debug)
 - Simplify and fix minute counting in ms to SRT conversion (contribution yuppity)
