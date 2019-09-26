@@ -1063,7 +1063,10 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
         purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
-        self.log("Purchase payload: " + str(purchase_payload))
+        if self.sensitive_debug:
+            self.log("Purchase payload: " + str(purchase_payload))
+        else:
+            self.log("Purchase payload: [OMITTED FOR PRIVACY]")
         purchase_headers = {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': '',
