@@ -1082,11 +1082,14 @@ class HbogoHandler_eu(HbogoHandler):
         }
         self.log("Requesting purchase: " + str(self.API_URL_PURCHASE))
         jsonrspp = self.send_purchase_hbogo(self.API_URL_PURCHASE, purchase_payload, purchase_headers)
-        self.log("Purchase response: " + str(jsonrspp))
+        if self.sensitive_debug:
+            self.log("Purchase response: " + str(jsonrspp))
+        else:
+            self.log("Purchase response: [OMITTED FOR PRIVACY]")
 
         try:
             if jsonrspp['ErrorMessage']:
-                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
+                self.log("Purchase error: " + str(jsonrspp['E   rrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 self.logout()
                 return
@@ -1099,15 +1102,24 @@ class HbogoHandler_eu(HbogoHandler):
         MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
         PlayerSessionId = jsonrspp['Purchase']['PlayerSessionId']
-        self.log("PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
+        if self.sensitive_debug:
+            self.log("PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
+        else:
+            self.log("PlayerSessionId: [OMITTED FOR PRIVACY]")
         x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
-        self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
+        if self.sensitive_debug:
+            self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
+        else:
+            self.log("Auth token: [OMITTED FOR PRIVACY]")
         dt_custom_data = base64.b64encode("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
         li = xbmcgui.ListItem(path=MediaUrl)
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
-        self.log("Licence key: " + str(license_key))
+        if self.sensitive_debug:
+            self.log("Licence key: " + str(license_key))
+        else:
+            self.log("Licence key: [OMITTED FOR PRIVACY]")
         protocol = 'ism'
         drm = 'com.widevine.alpha'
         is_helper = inputstreamhelper.Helper(protocol, drm=drm)
