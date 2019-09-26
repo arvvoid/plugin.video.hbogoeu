@@ -56,8 +56,8 @@ REQUIRMENTS:
 * Kodi 18+
 * script.module.requests 2.12.4+ (should get installed automatically in Kodi 18)
 * script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
-* inputstream.adaptive 2.3.19+ (should get installed automatically in Kodi 18)
-* script.module.inputstreamhelper 0.3.5+ (should get installed automatically in Kodi 18)
+* inputstream.adaptive 2.3.18+ (recommended most recent version, should get installed automatically in Kodi 18)
+* script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18)
 * Libwidevine 4.10.1440+
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
@@ -87,7 +87,7 @@ sudo reboot
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.13~beta29.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.13~beta29.zip)
+[plugin.video.hbogoeu-2.0.15~beta32.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.15~beta32.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 

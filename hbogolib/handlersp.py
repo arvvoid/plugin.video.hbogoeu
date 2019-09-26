@@ -22,6 +22,7 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 import inputstreamhelper
+import traceback
 
 import requests
 import os
@@ -257,7 +258,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Poster not found using first one")
             return str(thumbnails[0].get('url'))
         except:
-            self.log("Find thumbnail failed")
+            self.log("Unexpected find thumbnail error: " + traceback.format_exc())
             return self.resources + 'fanart.jpg'
 
     def list_pages(self, url, max = 200, offset = 0):
@@ -376,7 +377,7 @@ class HbogoHandler_sp(HbogoHandler):
                 li.setSubtitles(subs_paths)
                 self.log("Subtitles set")
             except:
-                self.log("Unexpected error in subtitles processing")
+                self.log("Unexpected error in subtitles processing: " + traceback.format_exc())
 
         self.log("Play url: " + str(li))
         xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
@@ -395,6 +396,7 @@ class HbogoHandler_sp(HbogoHandler):
         try:
             plot = title.find('description').text.encode('utf-8')
         except:
+            self.log("Error in find plot: " + traceback.format_exc())
             pass
         season = 0
         episode = 0
@@ -404,6 +406,7 @@ class HbogoHandler_sp(HbogoHandler):
             episode = int(title.find('clearleap:episodeInSeason', namespaces=self.NAMESPACES).text)
             series_name = title.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
         except:
+            self.log("Error in season find processing: " + traceback.format_exc())
             pass
         if episode == 0:
             media_type = "movie"
@@ -434,6 +437,7 @@ class HbogoHandler_sp(HbogoHandler):
         try:
             plot = item.find('description').text.encode('utf-8')
         except:
+            self.log("Error in description processing: " + traceback.format_exc())
             pass
 
         u = self.base_url + "?url=" + urllib.quote_plus(item.find('link').text) + "&mode=" + str(
@@ -443,6 +447,7 @@ class HbogoHandler_sp(HbogoHandler):
         try:
             series_name = item.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
         except:
+            self.log("Error in searies name processing: " + traceback.format_exc())
             pass
 
         thumb = self.get_thumbnail_url(item)

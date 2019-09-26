@@ -17,6 +17,7 @@ import sys
 import xbmc
 import xbmcaddon
 import xbmcgui
+import traceback
 
 
 class hbogo(object):
@@ -90,27 +91,45 @@ class hbogo(object):
 
         try:
             url = urllib.unquote_plus(params["url"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             name = urllib.unquote_plus(params["name"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             thumbnail = str(params["thumbnail"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             mode = int(params["mode"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             content_id = str(params["cid"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
         try:
             vote = str(params["vote"])
+        except KeyError:
+            pass
         except:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
             pass
 
         if mode == None or url == None or len(url) < 1:

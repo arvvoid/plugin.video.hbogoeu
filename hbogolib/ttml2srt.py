@@ -1,5 +1,34 @@
 # encoding: utf-8
-#based on https://github.com/yuppity/ttml2srt
+#
+#  --------------------------------------------
+#  based on https://github.com/yuppity/ttml2srt
+#  --------------------------------------------
+
+#  THIS FILE IS RELESED UNDER the http://unlicense.org license
+#  This is free and unencumbered software released into the public domain.
+
+#  Anyone is free to copy, modify, publish, use, compile, sell, or
+#  distribute this software, either in source code form or as a compiled
+#  binary, for any purpose, commercial or non-commercial, and by any
+#  means.
+
+#  In jurisdictions that recognize copyright laws, the author or authors
+#  of this software dedicate any and all copyright interest in the
+#  software to the public domain. We make this dedication for the benefit
+#  of the public at large and to the detriment of our heirs and
+#  successors. We intend this dedication to be an overt act of
+#  relinquishment in perpetuity of all present and future rights to this
+#  software under copyright law.
+
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+#  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+#  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+#  OTHER DEALINGS IN THE SOFTWARE.
+
+#  For more information, please refer to <http://unlicense.org>
 
 from xml.dom import minidom
 
@@ -90,11 +119,11 @@ class Ttml2srt(object):
         return self.scaler(((1.0 / tickrate) * int(ticks.rstrip('t'))) * 1000, scale)
 
     def ms_to_subrip(self, ms):
-        return '{:02d}:{:02d}:{:02d},{:03d}'.format(
-            int(ms / (3600 * 1000)),  # hh
-            int(ms / 60000 - (ms / (3600 * 1000) * 60)),  # mm
-            int((ms % 60000) / 1000),  # ss
-            int((ms % 60000) % 1000))  # ms
+        hh = int(ms / 3.6e6)
+        mm = int((ms % 3.6e6) / 60000)
+        ss = int((ms % 60000) / 1000)
+        ms = int(ms % 1000)
+        return '{:02d}:{:02d}:{:02d},{:03d}'.format(hh, mm, ss, ms)
 
     def timestamp_to_ms(self, time, fps=23.976, delim='.', scale=1):
         hhmmss, frames = time.rsplit(delim, 1)
@@ -128,7 +157,7 @@ class Ttml2srt(object):
         if delim.lower() == 't':
             ms = self.ticks_to_ms(tick_rate, time, scale)
         elif delim.lower() == 's':
-            ms = self.seconds_to_ms(time, scale);
+            ms = self.seconds_to_ms(time, scale)
         else:
             ms = self.timestamp_to_ms(time, fps, delim, scale)
 
