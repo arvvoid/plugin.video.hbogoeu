@@ -726,8 +726,10 @@ class HbogoHandler_eu(HbogoHandler):
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
                 self.logout()
                 return False
+        except KeyError:
+            pass    #all is ok no error message just pass
         except:
-            self.log("No login error: " + traceback.format_exc())
+            self.log("Unexpected login error: " + traceback.format_exc())
             pass
 
         try:

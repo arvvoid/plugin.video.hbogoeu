@@ -92,7 +92,6 @@ class hbogo(object):
         try:
             url = urllib.unquote_plus(params["url"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No url", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
@@ -100,7 +99,6 @@ class hbogo(object):
         try:
             name = urllib.unquote_plus(params["name"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No name", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
@@ -108,7 +106,6 @@ class hbogo(object):
         try:
             thumbnail = str(params["thumbnail"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No thumbnail", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
@@ -116,7 +113,6 @@ class hbogo(object):
         try:
             mode = int(params["mode"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No mode", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
@@ -124,7 +120,6 @@ class hbogo(object):
         try:
             content_id = str(params["cid"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No content id", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
@@ -132,7 +127,6 @@ class hbogo(object):
         try:
             vote = str(params["vote"])
         except KeyError:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - No vote", xbmc.LOGDEBUG)
             pass
         except:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
