@@ -277,3 +277,7 @@ msgstr ""
 msgctxt "#30692"
 msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
 msgstr ""
+
+msgctxt "#30693"
+msgid "Include full details/RAW retrived data in Debug log"
+msgstr ""

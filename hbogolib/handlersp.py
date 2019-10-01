@@ -320,12 +320,14 @@ class HbogoHandler_sp(HbogoHandler):
 
         media_item = self.get_from_hbogo(url+self.LANGUAGE_CODE, 'xml')
 
-        self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
+        if self.lograwdata:
+            self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
-        self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
+        if self.lograwdata:
+            self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
 
         mpd_url = mpd.find('.//url').text
         self.log("Manifest url: " + str(mpd_url))
@@ -383,7 +385,8 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
 
     def addLink(self, title, mode):
-        self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
         media_type = "episode"
         name = title.find('title').text.encode('utf-8')
@@ -429,7 +432,8 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode=1):
-        self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
         media_type = "tvshow"
 
@@ -463,7 +467,8 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
-        self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
         liz.setArt({'fanart': self.resources + "fanart.jpg"})

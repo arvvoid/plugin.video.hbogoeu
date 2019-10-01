@@ -93,6 +93,13 @@ class HbogoHandler(object):
         else:
             self.sensitive_debug = False
 
+        self.lograwdata = self.addon.getSetting('lograwdata')
+        if self.lograwdata == "true":
+            self.lograwdata = True
+        else:
+            self.lograwdata = False
+
+
         if self.sensitive_debug:
             ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712).encode('utf-8'), self.language(30714).encode('utf-8'), self.language(30715).encode('utf-8'))
             if not ret:

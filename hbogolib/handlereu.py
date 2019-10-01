@@ -568,7 +568,7 @@ class HbogoHandler_eu(HbogoHandler):
         pass
 
     def login(self):
-        self.log("Using operator: " + str(self.op_id))
+        self.log("Login using operator: " + str(self.op_id))
 
         username = self.getCredential('username')
         password = self.getCredential('password')
@@ -1009,7 +1009,8 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addon.setSetting('lastsearch', searchText)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
                 jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0')
-                self.log(str(jsonrsp))
+                if self.lograwdata:
+                    self.log(str(jsonrsp))
 
                 try:
                     if jsonrsp['ErrorMessage']:
@@ -1092,7 +1093,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrspp['ErrorMessage']:
-                self.log("Purchase error: " + str(jsonrspp['E   rrorMessage']))
+                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 self.logout()
                 return
@@ -1204,7 +1205,8 @@ class HbogoHandler_eu(HbogoHandler):
             return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
 
     def addLink(self, title, mode):
-        self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
 
         plot = ""
@@ -1272,7 +1274,8 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode, media_type):
-        self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
         liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
@@ -1301,7 +1304,8 @@ class HbogoHandler_eu(HbogoHandler):
 
 
     def addCat(self, name, url, icon, mode):
-        self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
+        if self.lograwdata:
+            self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
         liz.setArt({'fanart': self.resources + "fanart.jpg"})

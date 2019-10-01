@@ -1,3 +1,6 @@
+v.2.0.16-beta33
+- Removed unecessary data from debug log (full loggin can be enabled from options if necessary)
+
 v.2.0.15-beta32
 - Lowered inputstream.adaptive requirement
 
