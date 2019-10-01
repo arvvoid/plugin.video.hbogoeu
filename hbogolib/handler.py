@@ -51,10 +51,10 @@ class HbogoHandler(object):
         self.base_addon_cat=""
         self.cur_loc = ""
 
-        self.md = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/media/")
-        self.resources = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/")
+        self.md = os.path.join(self.addon.getAddonInfo('path'), "resources", "media")
+        self.resources = os.path.join(self.addon.getAddonInfo('path'), "resources")
         self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))
-        xbmcplugin.setPluginFanart(self.handle, image=self.resources + "fanart.jpg")
+        xbmcplugin.setPluginFanart(self.handle, image=os.path.join(self.resources, "fanart.jpg"))
 
         # LABELS
 

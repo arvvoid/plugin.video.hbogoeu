@@ -71,6 +71,7 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <news>
 v.2.0.16-beta33
 - Removed unecessary data from debug log (full loggin can be enabled from options if necessary)
+- Kodi 19 Matrix (ALPHA)/Python3 Compatibility
 
 v.2.0.15-beta32
 - Lowered inputstream.adaptive requirement
