@@ -800,7 +800,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.getFavoriteGroup()
 
         if (self.FavoritesGroupId != ""):
-            self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.md + 'FavoritesFolder.png', 1)
+            self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.get_media_resource('FavoritesFolder.png'), 1)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
