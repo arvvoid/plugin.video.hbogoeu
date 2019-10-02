@@ -339,6 +339,7 @@ class HbogoHandler_sp(HbogoHandler):
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
+        #TODO add all media info to ListItem
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
         is_helper = inputstreamhelper.Helper(protocol, drm=drm)
@@ -470,7 +471,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        liz.setArt({'fanart': self.get_resource("fanart.jpg")})
+        liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)

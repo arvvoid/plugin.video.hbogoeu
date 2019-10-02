@@ -244,6 +244,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         for o in op_list:
             list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
+            list[-1].setArt({'thumb': o[2], 'icon': o[2]})
 
         index = xbmcgui.Dialog().select(self.language(30445).encode('utf-8'), list, useDetails=True)
         if index != -1:
@@ -1117,6 +1118,7 @@ class HbogoHandler_eu(HbogoHandler):
         dt_custom_data = base64.b64encode("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
         li = xbmcgui.ListItem(path=MediaUrl)
+        #TODO: add all media info to ListItem
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
         if self.sensitive_debug:
@@ -1307,7 +1309,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        liz.setArt({'fanart': self.get_resource("fanart.jpg")})
+        liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
