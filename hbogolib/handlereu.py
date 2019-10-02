@@ -29,9 +29,7 @@ try:
 except ImportError:
     import urlparse as parse
 
-import xbmc
-import xbmcgui
-import xbmcplugin
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 import inputstreamhelper
 
 class HbogoHandler_eu(HbogoHandler):
@@ -190,7 +188,7 @@ class HbogoHandler_eu(HbogoHandler):
         op_list = []
 
         for operator in json_basic_operators['Items']:
-            icon = os.path.join(self.resources, "icon.png")
+            icon = self.get_resource("icon.png")
             try:
                 if len(operator['LogoUrl'])>0:
                     icon = operator['LogoUrl']
@@ -217,7 +215,7 @@ class HbogoHandler_eu(HbogoHandler):
 
             op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
         for operator in json_operators['Items']:
-            icon = os.path.join(self.resources, "icon.png")
+            icon = self.get_resource("icon.png")
             try:
                 if len(operator['LogoUrl'])>0:
                     icon = operator['LogoUrl']
@@ -796,7 +794,7 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.setDispCat(self.operator_name)
-        self.addCat(self.LB_SEARCH, self.LB_SEARCH, os.path.join(self.md, 'search.png'), 4)
+        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), 4)
 
         if (self.FavoritesGroupId == ""):
             self.getFavoriteGroup()
@@ -851,22 +849,22 @@ class HbogoHandler_eu(HbogoHandler):
             pass
 
         if position_series != -1:
-            self.addCat(self.language(30716).encode('utf-8'), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), os.path.join(self.md, 'tv.png'), 1)
+            self.addCat(self.language(30716).encode('utf-8'), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
 
         if position_movies != -1:
-            self.addCat(self.language(30717).encode('utf-8'), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), os.path.join(self.md, 'movie.png'), 1)
+            self.addCat(self.language(30717).encode('utf-8'), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('movie.png'), 1)
         else:
             self.log("No Movies Category found")
 
         if position_kids != -1:
-            self.addCat(self.language(30729).encode('utf-8'), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), os.path.join(self.md, 'kids.png'), 1)
+            self.addCat(self.language(30729).encode('utf-8'), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('kids.png'), 1)
         else:
             self.log("No Kids Category found")
 
         if position_week_top != -1:
-            self.addCat(self.language(30730).encode('utf-8'), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), os.path.join(self.md, 'DefaultFolder.png'), 1)
+            self.addCat(self.language(30730).encode('utf-8'), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('DefaultFolder.png'), 1)
         else:
             self.log("No Week Top Category found")
 
@@ -903,7 +901,7 @@ class HbogoHandler_eu(HbogoHandler):
         if len(jsonrsp['Container']) > 1:
             for Container in range(0, len(jsonrsp['Container'])):
                 self.addCat(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'),
-                       jsonrsp['Container'][Container]['ObjectUrl'], os.path.join(self.md, 'DefaultFolder.png'), 1)
+                       jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
@@ -1005,7 +1003,7 @@ class HbogoHandler_eu(HbogoHandler):
         if (keyb.isConfirmed()):
             searchText = urllib.quote_plus(keyb.getText())
             if searchText == "":
-                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, os.path.join(self.md, 'DefaultFolderBack.png'), '')
+                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
             else:
                 self.addon.setSetting('lastsearch', searchText)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
@@ -1031,7 +1029,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.addDir(item, 2, "tvshow")
                     br = br + 1
                 if br == 0:
-                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, os.path.join(self.md, 'DefaultFolderBack.png'), '')
+                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
 
         xbmcplugin.addSortMethod(
             handle=self.handle,
@@ -1141,7 +1139,7 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
 
-        icon = os.path.join(self.resources, "icon.png")
+        icon = self.get_resource("icon.png")
 
         if type == 9:
             resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
@@ -1309,7 +1307,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        liz.setArt({'fanart': os.path.join(self.resources, "fanart.jpg")})
+        liz.setArt({'fanart': self.get_resource("fanart.jpg")})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)

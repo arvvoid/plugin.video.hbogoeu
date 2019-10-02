@@ -31,6 +31,7 @@
 #  For more information, please refer to <http://unlicense.org>
 
 from xml.dom import minidom
+import sys
 
 class Ttml2srt(object):
 
@@ -43,7 +44,11 @@ class Ttml2srt(object):
         filename = str_file + '.srt'
         if self.subtitle['lang'] is not None:
             filename = str_file + '.' + self.subtitle['lang'] + '.srt'
-        f = open(filename, 'wb')
+        f = None
+        if (sys.version_info > (3, 0)):
+            f = open(filename, 'w', encoding='utf-8')
+        else:
+            f = open(filename, 'wb',)
         self.subrip_writer(f, self.subtitle['lines'], f, shift, self.subtitle['fps'], self.subtitle['tick_rate'])
         return filename
 
@@ -168,15 +173,20 @@ class Ttml2srt(object):
     #######################################################################
 
     def subrip_dialogue(self, count, start, end, dialogue):
-        return '{}\n{} --> {}\n{}\n\n'.format(count, start, end, dialogue)
+        return "{}\n{} --> {}\n{}\n\n".format(count, start, end, dialogue)
 
     def subrip_writer(self, f, lines, dst, shift, fps, tick_rate, scale=1):
         subs = []
         for line in lines:
             start, end = self.get_start_end(line)
-            subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
-                         self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
-                         self.extract_dialogue(line.childNodes).encode('utf8')])
+            if (sys.version_info > (3, 0)):
+                subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
+                            self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
+                            self.extract_dialogue(line.childNodes)])
+            else:
+                subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
+                             self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
+                             self.extract_dialogue(line.childNodes).encode('utf8')])
 
         # Sort by the start time
         subs.sort(key=lambda x: x[0])

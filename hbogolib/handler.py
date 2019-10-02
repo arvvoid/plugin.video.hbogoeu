@@ -14,10 +14,7 @@ import traceback
 
 import requests
 
-import xbmc
-import xbmcaddon
-import xbmcgui
-import xbmcplugin
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 
 import uuid
 import base64
@@ -51,10 +48,8 @@ class HbogoHandler(object):
         self.base_addon_cat=""
         self.cur_loc = ""
 
-        self.md = os.path.join(self.addon.getAddonInfo('path'), "resources", "media")
-        self.resources = os.path.join(self.addon.getAddonInfo('path'), "resources")
         self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))
-        xbmcplugin.setPluginFanart(self.handle, image=os.path.join(self.resources, "fanart.jpg"))
+        xbmcplugin.setPluginFanart(self.handle, image=self.get_resource("fanart.jpg"))
 
         # LABELS
 
@@ -107,6 +102,12 @@ class HbogoHandler(object):
 
         self.loggedin_headers = None  #DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
+
+    def get_resource(self, file):
+        return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/'+file).decode('utf-8')
+
+    def get_media_resource(self, file):
+        return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file).decode('utf-8')
 
     def log(self, msg, level=xbmc.LOGDEBUG):
         xbmc.log(self.DEBUG_ID_STRING + msg, level)

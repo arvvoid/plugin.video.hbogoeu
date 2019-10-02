@@ -14,9 +14,7 @@ except ImportError:
     import urlparse as parse
 
 import sys
-import xbmc
-import xbmcaddon
-import xbmcgui
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 import traceback
 
 

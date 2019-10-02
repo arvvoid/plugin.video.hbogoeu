@@ -18,9 +18,7 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 
-import xbmc
-import xbmcgui
-import xbmcplugin
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 import inputstreamhelper
 import traceback
 
@@ -218,17 +216,17 @@ class HbogoHandler_sp(HbogoHandler):
                 pass
 
         if series is not None:
-            self.addCat(series.find('title').text.encode('utf-8'), series.find('link').text, os.path.join(self.md, 'tv.png'), 1)
+            self.addCat(series.find('title').text.encode('utf-8'), series.find('link').text, self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
         
         if movies is not None:
-            self.addCat(movies.find('title').text.encode('utf-8'), movies.find('link').text, os.path.join(self.md, 'movie.png'), 1)
+            self.addCat(movies.find('title').text.encode('utf-8'), movies.find('link').text, self.get_media_resource('movie.png'), 1)
         else:
             self.log("No Movies Category found")
 
         if kids is not None:
-            self.addCat(kids.find('title').text.encode('utf-8'), kids.find('link').text, os.path.join(self.md, 'kids.png'), 1)
+            self.addCat(kids.find('title').text.encode('utf-8'), kids.find('link').text, self.get_media_resource('kids.png'), 1)
         else:
             self.log("No Kids Category found")
 
@@ -260,7 +258,7 @@ class HbogoHandler_sp(HbogoHandler):
             return str(thumbnails[0].get('url'))
         except:
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
-            return os.path.join(self.resources, 'fanart.jpg')
+            return self.get_resource('fanart.jpg')
 
     def list_pages(self, url, max = 200, offset = 0):
 
@@ -472,7 +470,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
-        liz.setArt({'fanart': os.path.join(self.resources, "fanart.jpg")})
+        liz.setArt({'fanart': self.get_resource("fanart.jpg")})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
