@@ -1142,7 +1142,7 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcplugin.setResolvedUrl(self.handle, True, li)
         else:
             self.log("DRM problem playback not possible")
-            xbmcplugin.setResolvedUrl(self.handle, False)
+            xbmcplugin.setResolvedUrl(self.handle, False, li)
 
     def procContext(self, type, content_id, optional=""):
         if not self.chk_login():

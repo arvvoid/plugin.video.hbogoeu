@@ -391,7 +391,7 @@ class HbogoHandler_sp(HbogoHandler):
             xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
         else:
             self.log("DRM problem playback not possible")
-            xbmcplugin.setResolvedUrl(self.handle, False)
+            xbmcplugin.setResolvedUrl(self.handle, False, listitem=li)
 
     def addLink(self, title, mode):
         if self.lograwdata:
