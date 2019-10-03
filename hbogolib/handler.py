@@ -270,7 +270,7 @@ class HbogoHandler(object):
 
     def get_device_id_v1(self):
         from .uuid_device import get_crypt_key
-        return get_crypt_key()
+        return hashlib.sha256(get_crypt_key())
 
     def encrypt_credential_v1(self, raw):
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))

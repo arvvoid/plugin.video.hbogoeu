@@ -63,7 +63,7 @@ def _get_system_uuid():
     if not uuid_value:
         debug('It is not possible to get a system UUID creating a new UUID')
         uuid_value = _get_fake_uuid(system != 'android')
-    return uuid.uuid5(uuid.NAMESPACE_DNS, text(uuid_value)).bytes
+    return text(uuid_value)
 
 
 def _get_windows_uuid():
