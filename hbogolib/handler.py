@@ -21,13 +21,18 @@ import base64
 import codecs
 import hashlib
 import xml.etree.ElementTree as ET
-from Cryptodome import Random
-from Cryptodome.Cipher import AES
-from Cryptodome.Util import Padding
 import re
 
-
-
+try:
+    from Cryptodome import Random
+    from Cryptodome.Cipher import AES
+    from Cryptodome.Util import Padding
+except ImportError:
+    # no Cryptodome gracefully fail with an informative message
+    msg = xbmcaddon.Addon().getLocalizedString(30694)
+    xbmc.log("[" + str(xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(), xbmc.LOGDEBUG)
+    xbmcgui.Dialog().ok(xbmcaddon.Addon().getAddonInfo('name') + " ERROR", msg)
+    sys.exit()
 
 class HbogoHandler(object):
 
