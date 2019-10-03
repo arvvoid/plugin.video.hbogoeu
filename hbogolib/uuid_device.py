@@ -185,7 +185,6 @@ def _get_fake_uuid(with_hostname=True):
     """
     Generate a uuid based on various system information
     """
-    import xbmc
     import platform
     list_values = [xbmc.getInfoLabel('System.Memory(total)')]
     if with_hostname:
