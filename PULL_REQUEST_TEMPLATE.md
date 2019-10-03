@@ -12,6 +12,5 @@
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
 - [ ] Adding a new region/hbo go version
-- [ ] I have added tests to cover my changes.
 
 ## Description:
