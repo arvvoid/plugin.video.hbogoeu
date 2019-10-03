@@ -1,5 +1,5 @@
 v.2.0.16-beta33
-- Removed unecessary data from debug log (full loggin can be enabled from options if necessary)
+- Removed unnecessary data from debug log (full loggin can be enabled from options if necessary)
 - Added support for Kodi 19 Matrix (ALPHA)/Python3
 - Check for widevine and setup widevine during setup
 - Gracefully fail on missing cryptodome
