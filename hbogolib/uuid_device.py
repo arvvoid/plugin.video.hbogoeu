@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # based on https://github.com/CastagnaIT/plugin.video.netflix/blob/master/resources/lib/common/uuid_device.py
-# this file is relesed under the MIT license
 
 from __future__ import absolute_import, division, unicode_literals
 
