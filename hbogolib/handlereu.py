@@ -30,7 +30,6 @@ except ImportError:
     import urlparse as parse
 
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
-import inputstreamhelper
 
 class HbogoHandler_eu(HbogoHandler):
 
@@ -253,6 +252,10 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('operator_is_web', op_list[index][3])
             self.addon.setSetting('operator_redirect_url', op_list[index][4])
             # OPERATOR SETUP DONE
+
+            from inputstreamhelper import Helper
+            is_helper = Helper('ism', drm='com.widevine.alpha')
+            is_helper.check_inputstream()
 
             self.init_api(country)
             if self.inputCredentials():
@@ -1127,15 +1130,19 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Licence key: [OMITTED FOR PRIVACY]")
         protocol = 'ism'
         drm = 'com.widevine.alpha'
-        is_helper = inputstreamhelper.Helper(protocol, drm=drm)
-        is_helper.check_inputstream()
-        li.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        li.setProperty('inputstream.adaptive.manifest_type', protocol)
-        li.setProperty('inputstream.adaptive.license_type', drm)
-        li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
-        li.setProperty('inputstream.adaptive.license_key', license_key)
-        self.log("Play url: " + str(li))
-        xbmcplugin.setResolvedUrl(self.handle, True, li)
+        from inputstreamhelper import Helper
+        is_helper = Helper(protocol, drm=drm)
+        if is_helper.check_inputstream():
+            li.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            li.setProperty('inputstream.adaptive.manifest_type', protocol)
+            li.setProperty('inputstream.adaptive.license_type', drm)
+            li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
+            li.setProperty('inputstream.adaptive.license_key', license_key)
+            self.log("Play url: " + str(li))
+            xbmcplugin.setResolvedUrl(self.handle, True, li)
+        else:
+            self.log("DRM problem playback not possible")
+            xbmcplugin.setResolvedUrl(self.handle, False)
 
     def procContext(self, type, content_id, optional=""):
         if not self.chk_login():

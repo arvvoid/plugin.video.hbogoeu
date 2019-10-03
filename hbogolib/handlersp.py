@@ -19,7 +19,6 @@ import hashlib
 import xml.etree.ElementTree as ET
 
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
-import inputstreamhelper
 import traceback
 
 import requests
@@ -167,6 +166,12 @@ class HbogoHandler_sp(HbogoHandler):
             return False
 
     def setup(self):
+
+        #check inputstream adaptive and widevine
+        from inputstreamhelper import Helper
+        is_helper = Helper('mpd', drm='com.widevine.alpha')
+        is_helper.check_inputstream()
+
         self.init_api()
         if self.inputCredentials():
             return True
@@ -342,47 +347,51 @@ class HbogoHandler_sp(HbogoHandler):
         #TODO add all media info to ListItem
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
-        is_helper = inputstreamhelper.Helper(protocol, drm=drm)
-        is_helper.check_inputstream()
-        li.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        li.setProperty('inputstream.adaptive.license_type', drm)
-        li.setProperty('inputstream.adaptive.manifest_type', protocol)
-        li.setProperty('inputstream.adaptive.license_key', license_url)
+        from inputstreamhelper import Helper
+        is_helper = Helper(protocol, drm=drm)
+        if is_helper.check_inputstream():
+            li.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            li.setProperty('inputstream.adaptive.license_type', drm)
+            li.setProperty('inputstream.adaptive.manifest_type', protocol)
+            li.setProperty('inputstream.adaptive.license_key', license_url)
 
-        li.setMimeType('application/dash+xml')
-        li.setContentLookup(False)
-        #GET SUBTITLES
-        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        folder = folder + 'subs' + os.sep + media_guid + os.sep
-        if self.addon.getSetting('forcesubs') == 'true':
-            self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
-            if not os.path.exists(os.path.dirname(folder)):
+            li.setMimeType('application/dash+xml')
+            li.setContentLookup(False)
+            #GET SUBTITLES
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+            folder = folder + 'subs' + os.sep + media_guid + os.sep
+            if self.addon.getSetting('forcesubs') == 'true':
+                self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
+                if not os.path.exists(os.path.dirname(folder)):
+                    try:
+                        os.makedirs(os.path.dirname(folder))
+                    except OSError as exc:  # Guard against race condition
+                        if exc.errno != errno.EEXIST:
+                            raise
                 try:
-                    os.makedirs(os.path.dirname(folder))
-                except OSError as exc:  # Guard against race condition
-                    if exc.errno != errno.EEXIST:
-                        raise
-            try:
-                subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
-                subs_paths = []
-                for sub in subs:
-                    self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: " + str(sub.get('href')))
-                    r = requests.get(sub.get('href'))
-                    with open(str(folder) + str(sub.get('lang')) + ".xml", 'wb') as f:
-                        f.write(r.content)
-                    ttml = Ttml2srt(str(folder) + str(sub.get('lang')) + ".xml", 25)
-                    srt_file = ttml.write_srt_file(str(folder) + str(sub.get('lang')))
-                    self.log("Subtitle converted to srt format")
-                    subs_paths.append(srt_file)
-                    self.log("Subtitle added: " + srt_file)
-                self.log("Setting subtitles: " + str(subs_paths))
-                li.setSubtitles(subs_paths)
-                self.log("Subtitles set")
-            except:
-                self.log("Unexpected error in subtitles processing: " + traceback.format_exc())
+                    subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
+                    subs_paths = []
+                    for sub in subs:
+                        self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: " + str(sub.get('href')))
+                        r = requests.get(sub.get('href'))
+                        with open(str(folder) + str(sub.get('lang')) + ".xml", 'wb') as f:
+                            f.write(r.content)
+                        ttml = Ttml2srt(str(folder) + str(sub.get('lang')) + ".xml", 25)
+                        srt_file = ttml.write_srt_file(str(folder) + str(sub.get('lang')))
+                        self.log("Subtitle converted to srt format")
+                        subs_paths.append(srt_file)
+                        self.log("Subtitle added: " + srt_file)
+                    self.log("Setting subtitles: " + str(subs_paths))
+                    li.setSubtitles(subs_paths)
+                    self.log("Subtitles set")
+                except:
+                    self.log("Unexpected error in subtitles processing: " + traceback.format_exc())
 
-        self.log("Play url: " + str(li))
-        xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
+            self.log("Play url: " + str(li))
+            xbmcplugin.setResolvedUrl(self.handle, True, listitem=li)
+        else:
+            self.log("DRM problem playback not possible")
+            xbmcplugin.setResolvedUrl(self.handle, False)
 
     def addLink(self, title, mode):
         if self.lograwdata:
