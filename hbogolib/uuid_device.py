@@ -2,9 +2,9 @@
 # based on https://github.com/CastagnaIT/plugin.video.netflix/blob/master/resources/lib/common/uuid_device.py
 # this file is relesed under the MIT license
 
-from kodi_six import xbmc, xbmcaddon
-
 from __future__ import absolute_import, division, unicode_literals
+
+from kodi_six import xbmc, xbmcaddon
 
 try:  # Python 2
     from __builtin__ import str as text
