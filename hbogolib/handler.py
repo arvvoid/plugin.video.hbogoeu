@@ -269,13 +269,9 @@ class HbogoHandler(object):
         self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + str(self.encrypt_credential_v1(value)))
 
     def get_device_id_v1(self):
-        space = xbmc.getInfoLabel('System.TotalSpace')
-        space = re.sub('[^A-Za-z0-9 ]+', '', space)
-        mac = uuid.getnode()
-        if (mac >> 40) % 2:
-            from platform import node
-            mac = node()
-        return hashlib.sha256(codecs.encode(str(mac), 'rot_13') + self.addon_id + '.credentials.v1.' + codecs.encode(str(space), 'rot_13')).digest()
+        from .uuid_device import get_crypt_key
+        device_id = get_crypt_key()
+        return hashlib.sha256(device_id + self.addon_id + '.credentials.v1.' + codecs.encode(str(device_id), 'rot_13')).digest()
 
     def encrypt_credential_v1(self, raw):
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
