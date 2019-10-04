@@ -74,7 +74,7 @@ class Ttml2srt(object):
             tick_rate = None
 
         lines = [i for i in data.getElementsByTagName('p') if 'begin' \
-                 in i.attributes.keys()]
+                 in list(i.attributes.keys())]
 
         return {'fps': fps, 'tick_rate': tick_rate, 'lines': lines, 'lang': lang}
 
