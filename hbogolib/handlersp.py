@@ -17,7 +17,7 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from kodi_six import xbmc, xbmcplugin, xbmcgui
 import traceback
 
 import requests
