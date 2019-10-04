@@ -16,12 +16,10 @@ import requests
 
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 
-import uuid
 import base64
 import codecs
 import hashlib
 import xml.etree.ElementTree as ET
-import re
 
 try:
     from Cryptodome import Random
@@ -173,7 +171,7 @@ class HbogoHandler(object):
             folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
             os.remove(folder + self.addon_id + "_session"+".pkl")
-        except:
+        except Exception:
             self.log("Delete login error: " + traceback.format_exc())
             pass
 
@@ -316,7 +314,7 @@ class HbogoHandler(object):
     def categories(self):
         pass
 
-    def list(self, url):
+    def list(self, url, simple=False):
         pass
 
     def season(self, url):
@@ -328,10 +326,10 @@ class HbogoHandler(object):
     def search(self):
         pass
 
-    def play(self, url, cid):
+    def play(self, url, content_id):
         pass
 
-    def procContext(self, type, content_id, optional=""):
+    def procContext(self, action_type, content_id, optional=""):
         pass
 
     def addLink(self, title, mode):

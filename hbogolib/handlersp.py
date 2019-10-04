@@ -261,7 +261,7 @@ class HbogoHandler_sp(HbogoHandler):
                     return str(thumb.get('url'))
             self.log("Poster not found using first one")
             return str(thumbnails[0].get('url'))
-        except:
+        except Exception:
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
             return self.get_resource('fanart.jpg')
 
@@ -288,7 +288,6 @@ class HbogoHandler_sp(HbogoHandler):
         if count == max:
             self.log('List pages calling next page... max: '+ str(max) + ' offset: ' + str(offset+max))
             self.list_pages(url, max, offset+max)
-
 
     def list(self, url, simple=False):
         if not self.chk_login():
@@ -384,7 +383,7 @@ class HbogoHandler_sp(HbogoHandler):
                     self.log("Setting subtitles: " + str(subs_paths))
                     li.setSubtitles(subs_paths)
                     self.log("Subtitles set")
-                except:
+                except Exception:
                     self.log("Unexpected error in subtitles processing: " + traceback.format_exc())
 
             self.log("Play url: " + str(li))
@@ -407,9 +406,8 @@ class HbogoHandler_sp(HbogoHandler):
         plot = ""
         try:
             plot = title.find('description').text.encode('utf-8')
-        except:
+        except Exception:
             self.log("Error in find plot: " + traceback.format_exc())
-            pass
         season = 0
         episode = 0
         series_name = ""
@@ -417,9 +415,8 @@ class HbogoHandler_sp(HbogoHandler):
             season = int(title.find('clearleap:season', namespaces=self.NAMESPACES).text)
             episode = int(title.find('clearleap:episodeInSeason', namespaces=self.NAMESPACES).text)
             series_name = title.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
-        except:
+        except Exception:
             self.log("Error in season find processing: " + traceback.format_exc())
-            pass
         if episode == 0:
             media_type = "movie"
 
@@ -449,9 +446,8 @@ class HbogoHandler_sp(HbogoHandler):
         plot = ""
         try:
             plot = item.find('description').text.encode('utf-8')
-        except:
+        except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
-            pass
 
         u = self.base_url + "?url=" + urllib.quote_plus(item.find('link').text) + "&mode=" + str(
             mode) + "&name=" + item.find('title').text.encode('utf-8')
@@ -459,9 +455,8 @@ class HbogoHandler_sp(HbogoHandler):
         series_name = ""
         try:
             series_name = item.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
-        except:
+        except Exception:
             self.log("Error in searies name processing: " + traceback.format_exc())
-            pass
 
         thumb = self.get_thumbnail_url(item)
 

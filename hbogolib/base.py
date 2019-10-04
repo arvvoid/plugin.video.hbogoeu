@@ -62,16 +62,22 @@ class hbogo(object):
 
 
     def setup(self):
+        # STEP 0 - SETUP DRM
+        from inputstreamhelper import Helper
+        is_helper = Helper('mpd', drm='com.widevine.alpha')
+        if is_helper.check_inputstream():
+            sys.exit()
+
         # STEP 1, show country selection dialog
 
-        list = []
+        li_items_list = []
 
         for country in HbogoConstants.countries:
-            list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
-            list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png",'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
-        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), list, useDetails=True)
+            li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
+            li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png",'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
+        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), li_items_list, useDetails=True)
         if index != -1:
-            country_id = list[index].getLabel2()
+            country_id = li_items_list[index].getLabel2()
             self.addon.setSetting('country_code', country_id)
         else:
             sys.exit()
@@ -81,7 +87,6 @@ class hbogo(object):
 
         url = None
         name = None
-        thumbnail = None
         content_id = None
         mode = None
         vote = None
@@ -91,44 +96,32 @@ class hbogo(object):
             url = urllib.unquote_plus(params["url"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
         try:
             name = urllib.unquote_plus(params["name"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
-        try:
-            thumbnail = str(params["thumbnail"])
-        except KeyError:
-            pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
         try:
             mode = int(params["mode"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
         try:
             content_id = str(params["cid"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
         try:
             vote = str(params["vote"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
 
         if mode == None or url == None or len(url) < 1:
             self.start()
