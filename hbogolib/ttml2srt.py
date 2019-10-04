@@ -44,7 +44,8 @@ class Ttml2srt(object):
                 dialogue = dialogue + self.extract_dialogue(node.childNodes)
         return dialogue
 
-    def extract_subtitle_data(self, ttml_file):
+    @staticmethod
+    def extract_subtitle_data(ttml_file):
         data = minidom.parse(ttml_file)
 
         s_encoding = data.encoding
