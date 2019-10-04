@@ -106,10 +106,12 @@ class HbogoHandler(object):
         self.loggedin_headers = None  #DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
 
-    def get_resource(self, file):
+    @staticmethod
+    def get_resource(file):
         return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/'+file).decode('utf-8')
 
-    def get_media_resource(self, file):
+    @staticmethod
+    def get_media_resource(file):
         return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file).decode('utf-8')
 
     def log(self, msg, level=xbmc.LOGDEBUG):
@@ -202,7 +204,7 @@ class HbogoHandler(object):
         try:
             with open(folder + name + '.pkl', 'rb') as f:
                 return pickle.load(f)
-        except:
+        except Exception:
             self.log("OBJECT RELOAD ERROR")
             self.log("Stack trace: " + traceback.format_exc())
             return None
@@ -284,7 +286,7 @@ class HbogoHandler(object):
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
             decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
             return decoded
-        except:
+        except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None
 

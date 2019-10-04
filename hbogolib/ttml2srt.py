@@ -101,7 +101,8 @@ class Ttml2srt(object):
     def ticks_to_ms(self, tickrate, ticks, scale=1):
         return self.scaler(((1.0 / tickrate) * int(ticks.rstrip('t'))) * 1000, scale)
 
-    def ms_to_subrip(self, ms):
+    @staticmethod
+    def ms_to_subrip(ms):
         hh = int(ms / 3.6e6)
         mm = int((ms % 3.6e6) / 60000)
         ss = int((ms % 60000) / 1000)
