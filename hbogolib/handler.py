@@ -175,7 +175,6 @@ class HbogoHandler(object):
             os.remove(folder + self.addon_id + "_session"+".pkl")
         except Exception:
             self.log("Delete login error: " + traceback.format_exc())
-            pass
 
     def del_setup(self):
         self.del_login()
