@@ -28,7 +28,8 @@ class hbogo(object):
         self.language = self.addon.getLocalizedString
         self.handler = None
 
-    def country_index(self, country_id):
+    @staticmethod
+    def country_index(country_id):
         index = -1
 
         for i in range(len(HbogoConstants.countries)):
