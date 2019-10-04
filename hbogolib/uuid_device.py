@@ -47,7 +47,6 @@ def _get_system_uuid():
     Try to get an uuid from the system, if it's not possible generates a fake uuid
     :return: an uuid converted to MD5
     """
-    import uuid
     uuid_value = None
 
     system = get_system_platform()

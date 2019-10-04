@@ -165,13 +165,7 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             return False
 
-    def setup(self):
-
-        #check inputstream adaptive and widevine
-        from inputstreamhelper import Helper
-        is_helper = Helper('mpd', drm='com.widevine.alpha')
-        is_helper.check_inputstream()
-
+    def setup(self, country=None):
         self.init_api()
         if self.inputCredentials():
             return True

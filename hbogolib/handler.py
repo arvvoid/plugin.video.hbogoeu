@@ -302,7 +302,7 @@ class HbogoHandler(object):
     def getFavoriteGroup(self):
         pass
 
-    def setup(self):
+    def setup(self, country):
         pass
 
     def logout(self):

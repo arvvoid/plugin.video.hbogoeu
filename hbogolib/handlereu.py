@@ -558,7 +558,6 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("OAuth operator not supported: " + str(self.op_id))
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "Sorry your operator require a special login procedure thats not supported at the moment.")
-        pass
 
     def login(self):
         self.log("Login using operator: " + str(self.op_id))
@@ -614,7 +613,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
                     loaded_session['time'] = time.time()
                     if self.sensitive_debug:
-                        self.log("REFRESHING SAVED SESSION: " + str(saved_session))
+                        self.log("REFRESHING SAVED SESSION: " + str(loaded_session))
                     else:
                         self.log("REFRESHING SAVED SESSION: [OMITTED FOR PRIVACY]")
                     self.save_obj(loaded_session, self.addon_id + "_session")
