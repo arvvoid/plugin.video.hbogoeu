@@ -78,20 +78,24 @@ class Ttml2srt(object):
 
         return {'fps': fps, 'tick_rate': tick_rate, 'lines': lines, 'lang': lang}
 
-    def get_start_end(self, parag):
+    @staticmethod
+    def get_start_end(parag):
         return [parag.attributes['begin'].value, parag.attributes['end'].value]
 
     #######################################################################
     #                           TIME/TIMESTAMPS                           #
     #######################################################################
 
-    def calc_scale(self, sdur, tdur):
+    @staticmethod
+    def calc_scale(sdur, tdur):
         return (tdur * 1.0) / sdur
 
-    def scaler(self, time, scale):
+    @staticmethod
+    def scaler(time, scale):
         return scale * time
 
-    def frames_to_ms(self, frames, fps=23.976):
+    @staticmethod
+    def frames_to_ms(frames, fps=23.976):
         return int(int(frames) * (1000 / fps))
 
     def ticks_to_ms(self, tickrate, ticks, scale=1):
@@ -146,7 +150,8 @@ class Ttml2srt(object):
     #                            SubRip output                            #
     #######################################################################
 
-    def subrip_dialogue(self, count, start, end, dialogue):
+    @staticmethod
+    def subrip_dialogue(count, start, end, dialogue):
         return "{}\n{} --> {}\n{}\n\n".format(count, start, end, dialogue)
 
     def subrip_writer(self, f, lines, dst, shift, fps, tick_rate, scale=1):
