@@ -309,9 +309,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
 
     def OAuthLogin(self, username, password):
+        # Check if operator is supported
 
-        #Check if operator is supported
-        
         if self.op_id in HbogoConstants.eu_redirect_login:
             # perform login
 
@@ -496,7 +495,6 @@ class HbogoHandler_eu(HbogoHandler):
                     return False
             except Exception:
                 self.log("No login error: " + traceback.format_exc())
-                pass
 
             try:
                 if self.customerId != jsonrspl['Customer']['CurrentDevice']['Id'] or self.individualization != jsonrspl['Customer']['CurrentDevice']['Individualization']:

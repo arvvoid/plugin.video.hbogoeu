@@ -8,7 +8,6 @@
 #########################################################
 
 from hbogolib.handler import HbogoHandler
-from hbogolib.constants import HbogoConstants
 from hbogolib.ttml2srt import Ttml2srt
 
 import sys
@@ -87,7 +86,8 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
 
-    def generate_device_id(self):
+    @staticmethod
+    def generate_device_id():
         import uuid
         return str(uuid.uuid4())
 
@@ -259,9 +259,9 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
             return self.get_resource('fanart.jpg')
 
-    def list_pages(self, url, max = 200, offset = 0):
+    def list_pages(self, url, max_items = 200, offset = 0):
 
-        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max) + "&offset=" + str(offset), 'xml')
+        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
 
         count = 0
 
@@ -279,9 +279,9 @@ class HbogoHandler_sp(HbogoHandler):
                 else:
                     self.log('Unknown item type: ' + item_type)
         self.log('List pages total items: ' + str(count))
-        if count == max:
-            self.log('List pages calling next page... max: '+ str(max) + ' offset: ' + str(offset+max))
-            self.list_pages(url, max, offset+max)
+        if count == max_items:
+            self.log('List pages calling next page... max: '+ str(max_items) + ' offset: ' + str(offset+max_items))
+            self.list_pages(url, max_items, offset+max_items)
 
     def list(self, url, simple=False):
         if not self.chk_login():
@@ -431,7 +431,7 @@ class HbogoHandler_sp(HbogoHandler):
         liz.setProperty("IsPlayable", "true")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
 
-    def addDir(self, item, mode=1):
+    def addDir(self, item, mode=1, media_type=None):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
