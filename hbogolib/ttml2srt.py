@@ -4,7 +4,7 @@
 #  based on https://github.com/yuppity/ttml2srt
 #  --------------------------------------------
 
-from xml.dom import minidom
+from defusedxml import minidom
 import sys
 
 class Ttml2srt(object):

@@ -19,7 +19,7 @@ from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 import base64
 import codecs
 import hashlib
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 
 try:
     from Cryptodome import Random

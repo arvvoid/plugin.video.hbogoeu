@@ -15,7 +15,7 @@ import base64
 import urllib
 import time
 import hashlib
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 import traceback
