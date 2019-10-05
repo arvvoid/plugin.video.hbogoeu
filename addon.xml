@@ -3,8 +3,8 @@
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
     <import addon="script.module.requests" version="2.12.4" />
-    <import addon="script.module.pycryptodome" version="3.4.3"/>
-    <import addon="script.module.defusedxml" version="0.5.0"/>
+    <import addon="script.module.pycryptodome" version="3.4.3" />
+    <import addon="script.module.defusedxml" version="0.6.0" />
     <import addon="inputstream.adaptive" version="2.3.18" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
