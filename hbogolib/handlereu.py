@@ -188,7 +188,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_basic_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl'])>0:
+                if len(operator['LogoUrl']) > 0:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
@@ -296,7 +296,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.storeFavgroup(self.favgroupId)
 
     def chk_login(self):
-        return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId']) != 0)
+        return (self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token']) != 0 and len(self.loggedin_headers['GO-CustomerId']) != 0)
 
     def logout(self):
         self.log("Loging out")
