@@ -7,7 +7,7 @@
 #########################################################
 
 import sys
-import pickle
+import json
 import urllib
 import os
 import traceback
@@ -193,16 +193,16 @@ class HbogoHandler(object):
 
     def save_obj(self, obj, name):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        self.log("Saving: " + folder + name + '.pkl')
-        with open(folder + name + '.pkl', 'wb') as f:
-            pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+        self.log("Saving: " + folder + name + '.ecdata')
+        with open(folder + name + '.ecdata', 'wb') as f:
+            f.write(self.encrypt_credential_v1(json.dumps(obj)))
 
     def load_obj(self, name):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        self.log("Trying to load: " + folder + name + '.pkl')
+        self.log("Trying to load: " + folder + name + '.ecdata')
         try:
-            with open(folder + name + '.pkl', 'rb') as f:
-                return pickle.load(f)
+            with open(folder + name + '.ecdata', 'rb') as f:
+                return json.loads(self.decrypt_credential_v1(f.read()))
         except Exception:
             self.log("OBJECT RELOAD ERROR")
             self.log("Stack trace: " + traceback.format_exc())
