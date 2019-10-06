@@ -1,6 +1,15 @@
+v.2.0.17-beta34
+- THIS IS A RELEASE CANDIDATE VERSION
+- SECURITY: make use of defusedxml
+- SECURITY: removed pickle, implemented alternative more secure method for storing the session
+- Code style fixes
+- add-on passing all kodi-addon-checker tests
+- moved widevine check/setup to initial step of add-on setup
+- update to Hungarian translation (contribution Ajnasz)
+
 v.2.0.16-beta33
 - Removed unnecessary data from debug log (full loggin can be enabled from options if necessary)
-- Added support for Kodi 19 Matrix (ALPHA)/Python3
+- Added support for Kodi 19 Matrix (ALPHA)/Python3 (have to install defusedxml manually in Kodi)
 - Check for widevine and setup widevine during setup
 - Gracefully fail on missing cryptodome
 - Changed get device unique identifier for credential encryption (used code from @CastagnaIT Netflix add-on)
