@@ -259,7 +259,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
             return self.get_resource('fanart.jpg')
 
-    def list_pages(self, url, max_items = 200, offset = 0):
+    def list_pages(self, url, max_items=200, offset=0):
 
         response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
 

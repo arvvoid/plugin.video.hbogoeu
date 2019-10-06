@@ -48,7 +48,7 @@ class HbogoHandler(object):
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
 
-        self.base_addon_cat=""
+        self.base_addon_cat = ""
         self.cur_loc = ""
 
         self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))

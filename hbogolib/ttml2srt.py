@@ -162,8 +162,8 @@ class Ttml2srt(object):
             start, end = self.get_start_end(line)
             if (sys.version_info > (3, 0)):
                 subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
-                            self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
-                            self.extract_dialogue(line.childNodes)])
+                             self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
+                             self.extract_dialogue(line.childNodes)])
             else:
                 subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
                              self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),

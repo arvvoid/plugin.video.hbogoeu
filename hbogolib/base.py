@@ -75,7 +75,7 @@ class hbogo(object):
 
         for country in HbogoConstants.countries:
             li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
-            li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png",'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
+            li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png", 'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
         index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), li_items_list, useDetails=True)
         if index != -1:
             country_id = li_items_list[index].getLabel2()

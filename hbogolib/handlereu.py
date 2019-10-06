@@ -42,7 +42,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.DOMAIN_CODE = ""
         self.is_web = True
         self.REDIRECT_URL = ""
-        self.SPECIALHOST_URL= ""
+        self.SPECIALHOST_URL = ""
         #GEN API URLS
 
         # API URLS
@@ -86,10 +86,10 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.init_api(country)
 
-    def init_api(self,country):
+    def init_api(self, country):
         self.operator_name = self.addon.getSetting('operator_name')
         self.log("OPERATOR: " + self.operator_name)
-        self.op_id=self.addon.getSetting('operator_id')
+        self.op_id = self.addon.getSetting('operator_id')
         self.log("OPERATOR ID: " + self.op_id)
         self.COUNTRY_CODE_SHORT = country[2]
         self.log("OPERATOR COUNTRY_CODE_SHORT: " + self.COUNTRY_CODE_SHORT)
@@ -103,9 +103,9 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.is_web = False
         self.log("WEB OPERATOR: " + str(self.is_web))
-        self.REDIRECT_URL=self.addon.getSetting('operator_redirect_url')
+        self.REDIRECT_URL = self.addon.getSetting('operator_redirect_url')
         self.log("OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
-        self.SPECIALHOST_URL=country[5]
+        self.SPECIALHOST_URL = country[5]
         self.log("OPERATOR SPECIAL HOST URL: " + str(self.SPECIALHOST_URL))
         #GEN API URLS
 
@@ -123,7 +123,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.API_HOST = self.COUNTRY_CODE_SHORT + 'api.hbogo.eu'
 
-        if len(self.SPECIALHOST_URL)>0:
+        if len(self.SPECIALHOST_URL) > 0:
             self.API_HOST_REFERER = self.SPECIALHOST_URL
             self.API_HOST_ORIGIN = self.SPECIALHOST_URL
         else:
@@ -212,7 +212,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl'])>0:
+                if len(operator['LogoUrl']) > 0:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
@@ -296,7 +296,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.storeFavgroup(self.favgroupId)
 
     def chk_login(self):
-        return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId'])!=0)
+        return (self.loggedin_headers['GO-SessionId']!='00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token'])!=0 and len(self.loggedin_headers['GO-CustomerId']) != 0)
 
     def logout(self):
         self.log("Loging out")
@@ -887,8 +887,7 @@ class HbogoHandler_eu(HbogoHandler):
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
             for Container in range(0, len(jsonrsp['Container'])):
-                self.addCat(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'),
-                       jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
+                self.addCat(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'), jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
