@@ -66,7 +66,7 @@ class hbogo(object):
         # STEP 0 - SETUP DRM
         from inputstreamhelper import Helper
         is_helper = Helper('mpd', drm='com.widevine.alpha')
-        if is_helper.check_inputstream():
+        if not is_helper.check_inputstream():
             sys.exit()
 
         # STEP 1, show country selection dialog
