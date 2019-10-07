@@ -89,7 +89,7 @@ sudo reboot
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
-## Latest relese
+## [Latest relese](#pre-rel)
 
 [plugin.video.hbogoeu-2.0.17~beta34.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.17~beta34.zip)
 
