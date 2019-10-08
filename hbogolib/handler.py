@@ -6,6 +6,8 @@
 # GENERIC HBOGO HANDLER CLASS
 #########################################################
 
+from __future__ import absolute_import, division, unicode_literals
+
 import sys
 import json
 import urllib

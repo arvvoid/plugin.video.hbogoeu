@@ -4,6 +4,8 @@
 # Relesed under GPL version 2
 #########################################################
 
+from __future__ import absolute_import, division, unicode_literals
+
 import urllib
 
 from hbogolib.constants import HbogoConstants

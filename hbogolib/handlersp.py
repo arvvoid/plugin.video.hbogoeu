@@ -7,6 +7,8 @@
 # HBO Spain and Nordic HANDLER CLASS
 #########################################################
 
+from __future__ import absolute_import, division, unicode_literals
+
 from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
 
