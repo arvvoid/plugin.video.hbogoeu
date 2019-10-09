@@ -105,6 +105,11 @@ class HbogoHandler_sp(HbogoHandler):
         username = self.getCredential('username')
         password = self.getCredential('password')
 
+        if sys.version_info < (3, 0):
+            auth_str = str(base64.b64encode(bytes(username) + bytes(":") + base64.b64encode(bytes(password))))
+        else:
+            auth_str = str(base64.b64encode(bytes(username, 'utf8') + bytes(":", 'utf8') + base64.b64encode(bytes(password, 'utf8'))))
+
         headers = {
             'Host': self.API_HOST,
             'User-Agent': self.UA,
@@ -113,7 +118,7 @@ class HbogoHandler_sp(HbogoHandler):
             'Accept-Encoding': 'gzip, deflate, br',
             'Referer': self.API_HOST_GATEWAY_REFERER,
             'Content-Type': 'application/xml',
-            'Authorization': 'Basic ' + base64.b64encode(username + ':' + base64.b64encode(password)),
+            'Authorization': 'Basic ' + auth_str,
             'Origin': self.API_HOST_GATEWAY,
             'Connection': 'keep-alive',
         }

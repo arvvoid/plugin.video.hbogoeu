@@ -410,8 +410,12 @@ class HbogoHandler_eu(HbogoHandler):
 
             jsonrspl = response.json()
 
-            token = str(jsonrspl['Token'])
-            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token.encode('ascii')) + "&t=signin"
+            token = jsonrspl['Token']
+            if sys.version_info < (3, 0):
+                token = bytes(token)
+            else:
+                token = bytes(token, 'ascii')
+            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token) + "&t=signin"
 
             hbo_session.headers.pop('GO-CustomerId')
             hbo_session.headers.update({'GO-Token': token})
@@ -1105,7 +1109,13 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
-        dt_custom_data = base64.b64encode(str("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}").encode('ascii'))
+
+        dt_custom_data = "{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}"
+        if sys.version_info < (3, 0):
+            dt_custom_data = bytes(dt_custom_data)
+        else:
+            dt_custom_data = bytes(dt_custom_data, 'ascii')
+        dt_custom_data = base64.b64encode(dt_custom_data)
 
         li = xbmcgui.ListItem(path=MediaUrl)
         #TODO: add all media info to ListItem
@@ -1270,7 +1280,7 @@ class HbogoHandler_eu(HbogoHandler):
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
+        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(py2_encode(item['OriginalName']) + " (" + str(item['ProductionYear']) + ")")
         liz = xbmcgui.ListItem(item['Name'], iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})

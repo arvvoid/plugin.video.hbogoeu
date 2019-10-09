@@ -277,9 +277,17 @@ class HbogoHandler(object):
     def get_device_id_v1(self):
         from .uuid_device import get_crypt_key
         dev_key = get_crypt_key()
-        return hashlib.sha256(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13')).digest()
+        if sys.version_info < (3, 0):
+            dev_key2 = bytes(dev_key)
+        else:
+            dev_key2 = bytes(dev_key, 'ascii')
+        return hashlib.sha256(dev_key + self.addon_id + '.credentials.v1.' + str(codecs.encode(dev_key2, 'rot_13'))).digest()
 
     def encrypt_credential_v1(self, raw):
+        if sys.version_info < (3, 0):
+            raw = bytes(raw)
+        else:
+            raw = bytes(raw, 'utf-8')
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
