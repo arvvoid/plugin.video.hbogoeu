@@ -1283,7 +1283,11 @@ class HbogoHandler_eu(HbogoHandler):
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(py2_encode(item['OriginalName']) + " (" + str(item['ProductionYear']) + ")")
+        u = self.base_url + \
+            py2_encode("?url=") + quote(item['ObjectUrl']) + \
+            py2_encode("&mode=") + str(mode) + \
+            py2_encode("&name=") + quote(py2_encode(item['OriginalName']) + \
+            py2_encode(" (") + str(item['ProductionYear']) + py2_encode(")"))
         liz = xbmcgui.ListItem(item['Name'], iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
