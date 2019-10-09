@@ -5,7 +5,7 @@
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3" />
     <import addon="script.module.defusedxml" version="0.6.0" />
-    <import addon="inputstream.adaptive" version="2.3.18" />
+    <!-- <import addon="inputstream.adaptive" version="2.3.18" /> -->
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">

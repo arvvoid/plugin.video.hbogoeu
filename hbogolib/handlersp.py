@@ -79,14 +79,14 @@ class HbogoHandler_sp(HbogoHandler):
             self.init_api()
 
     def genContextMenu(self, content_id, media_id):
-        add_mylist = (self.language(30719).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (self.language(30720).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        add_mylist = (py2_encode(self.language(30719)), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
+        remove_mylist = (py2_encode(self.language(30720)), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
 
-        vote_5 = (self.language(30721).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (self.language(30722).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (self.language(30723).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (self.language(30724).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (self.language(30725).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        vote_5 = (py2_encode(self.language(30721)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
+        vote_4 = (py2_encode(self.language(30722)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
+        vote_3 = (py2_encode(self.language(30723)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
+        vote_2 = (py2_encode(self.language(30724)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
+        vote_1 = (py2_encode(self.language(30725)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
@@ -178,7 +178,7 @@ class HbogoHandler_sp(HbogoHandler):
             return True
         else:
             self.del_setup()
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
             sys.exit()
             return False
 
@@ -222,17 +222,17 @@ class HbogoHandler_sp(HbogoHandler):
                 pass
 
         if series is not None:
-            self.addCat(series.find('title').text.encode('utf-8'), series.find('link').text, self.get_media_resource('tv.png'), 1)
+            self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
         
         if movies is not None:
-            self.addCat(movies.find('title').text.encode('utf-8'), movies.find('link').text, self.get_media_resource('movie.png'), 1)
+            self.addCat(py2_encode(movies.find('title').text), movies.find('link').text, self.get_media_resource('movie.png'), 1)
         else:
             self.log("No Movies Category found")
 
         if kids is not None:
-            self.addCat(kids.find('title').text.encode('utf-8'), kids.find('link').text, self.get_media_resource('kids.png'), 1)
+            self.addCat(py2_encode(kids.find('title').text), kids.find('link').text, self.get_media_resource('kids.png'), 1)
         else:
             self.log("No Kids Category found")
 
@@ -278,7 +278,7 @@ class HbogoHandler_sp(HbogoHandler):
 
             if len(item_link) > 0:
                 self.log(ET.tostring(item, encoding='utf8'))
-                item_type = item.find('clearleap:itemType', namespaces=self.NAMESPACES).text.encode('utf-8')
+                item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
                 if item_type != 'media':
                     self.addDir(item)
                 elif item_type == 'media':
@@ -318,7 +318,7 @@ class HbogoHandler_sp(HbogoHandler):
         
         if not self.chk_login():
             self.log("NOT LOGGED IN, ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103).encode('utf-8'))
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
             self.logout()
             return
 
@@ -398,15 +398,15 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
         media_type = "episode"
-        name = title.find('title').text.encode('utf-8')
+        name = py2_encode(title.find('title').text)
 
-        original_name = title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text.encode('utf-8')
+        original_name = py2_encode(title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text)
         if self.force_original_names:
             name = original_name
 
         plot = ""
         try:
-            plot = title.find('description').text.encode('utf-8')
+            plot = py2_encode(title.find('description').text)
         except Exception:
             self.log("Error in find plot: " + traceback.format_exc())
         season = 0
@@ -415,7 +415,7 @@ class HbogoHandler_sp(HbogoHandler):
         try:
             season = int(title.find('clearleap:season', namespaces=self.NAMESPACES).text)
             episode = int(title.find('clearleap:episodeInSeason', namespaces=self.NAMESPACES).text)
-            series_name = title.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
+            series_name = py2_encode(title.find('clearleap:series', namespaces=self.NAMESPACES).text)
         except Exception:
             self.log("Error in season find processing: " + traceback.format_exc())
         if episode == 0:
@@ -446,27 +446,27 @@ class HbogoHandler_sp(HbogoHandler):
 
         plot = ""
         try:
-            plot = item.find('description').text.encode('utf-8')
+            plot = py2_encode(item.find('description').text)
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
         u = self.base_url + "?url=" + quote(item.find('link').text) + "&mode=" + str(
-            mode) + "&name=" + item.find('title').text.encode('utf-8')
+            mode) + "&name=" + py2_encode(item.find('title').text)
 
         series_name = ""
         try:
-            series_name = item.find('clearleap:series', namespaces=self.NAMESPACES).text.encode('utf-8')
+            series_name = py2_encode(item.find('clearleap:series', namespaces=self.NAMESPACES).text)
         except Exception:
             self.log("Error in searies name processing: " + traceback.format_exc())
 
         thumb = self.get_thumbnail_url(item)
 
-        liz = xbmcgui.ListItem(item.find('title').text.encode('utf-8'), iconImage=thumb, thumbnailImage=thumb)
+        liz = xbmcgui.ListItem(item.find('title').text, iconImage=thumb, thumbnailImage=thumb)
         liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
                     'fanart': thumb})
         liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
                                               "tvshowtitle": series_name,
-                                              "title": item.find('title').text.encode('utf-8'),
+                                              "title": item.find('title').text,
                                               "Plot": plot})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
