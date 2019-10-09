@@ -10,7 +10,6 @@ from __future__ import absolute_import, division, unicode_literals
 
 import sys
 import json
-import urllib
 import os
 import traceback
 
@@ -22,6 +21,11 @@ import base64
 import codecs
 import hashlib
 import defusedxml.ElementTree as ET
+
+try:
+    import urllib.unquote_plus as unquote
+except ImportError:
+    from urllib.parse import unquote_plus as unquote
 
 try:
     from Cryptodome import Random
@@ -53,7 +57,7 @@ class HbogoHandler(object):
         self.base_addon_cat = ""
         self.cur_loc = ""
 
-        self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))
+        self.search_string = unquote(self.addon.getSetting('lastsearch'))
         xbmcplugin.setPluginFanart(self.handle, image=self.get_resource("fanart.jpg"))
 
         # LABELS

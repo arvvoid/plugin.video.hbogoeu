@@ -17,7 +17,6 @@ from hbogolib.constants import HbogoConstants
 
 import sys
 import time
-import urllib
 import json
 import base64
 import hashlib
@@ -25,9 +24,14 @@ import requests
 import traceback
 
 try:
-    import urllib.parse as parse
+    import urllib.quote_plus as quote
 except ImportError:
+    from urllib.parse import quote_plus as quote
+
+try:
     import urlparse as parse
+except ImportError:
+    import urllib.parse as parse
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 
@@ -986,7 +990,7 @@ class HbogoHandler_eu(HbogoHandler):
         keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
         keyb.doModal()
         if (keyb.isConfirmed()):
-            searchText = urllib.quote_plus(keyb.getText())
+            searchText = quote(keyb.getText())
             if searchText == "":
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
             else:
@@ -1233,7 +1237,7 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
 
-        u = self.base_url + "?url=" + urllib.quote_plus(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
+        u = self.base_url + "?url=" + quote(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
 
         liz = xbmcgui.ListItem(name, iconImage=title['BackgroundUrl'], thumbnailImage=title['BackgroundUrl'])
         liz.setArt({'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
@@ -1265,7 +1269,7 @@ class HbogoHandler_eu(HbogoHandler):
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + urllib.quote_plus(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
+        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
         liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
@@ -1294,7 +1298,7 @@ class HbogoHandler_eu(HbogoHandler):
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+        u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})

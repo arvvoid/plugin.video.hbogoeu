@@ -14,7 +14,6 @@ from hbogolib.ttml2srt import Ttml2srt
 
 import sys
 import base64
-import urllib
 import time
 import hashlib
 import defusedxml.ElementTree as ET
@@ -25,6 +24,11 @@ import traceback
 import requests
 import os
 import errno
+
+try:
+    import urllib.quote_plus as quote
+except ImportError:
+    from urllib.parse import quote_plus as quote
 
 class HbogoHandler_sp(HbogoHandler):
 
@@ -416,7 +420,7 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
-        u = self.base_url + "?url=" + urllib.quote_plus(title.find('link').text) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+        u = self.base_url + "?url=" + quote(title.find('link').text) + "&mode=" + str(mode) + "&name=" + quote(name)
 
         thunb = self.get_thumbnail_url(title)
 
@@ -445,7 +449,7 @@ class HbogoHandler_sp(HbogoHandler):
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
-        u = self.base_url + "?url=" + urllib.quote_plus(item.find('link').text) + "&mode=" + str(
+        u = self.base_url + "?url=" + quote(item.find('link').text) + "&mode=" + str(
             mode) + "&name=" + item.find('title').text.encode('utf-8')
 
         series_name = ""
@@ -469,7 +473,7 @@ class HbogoHandler_sp(HbogoHandler):
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + urllib.quote_plus(url) + "&mode=" + str(mode) + "&name=" + urllib.quote_plus(name)
+        u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
         liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})

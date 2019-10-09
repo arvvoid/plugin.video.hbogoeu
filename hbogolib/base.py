@@ -6,14 +6,18 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-import urllib
 
 from hbogolib.constants import HbogoConstants
 
 try:
-    import urllib.parse as parse
+    import urllib.unquote_plus as unquote
 except ImportError:
+    from urllib.parse import unquote_plus as unquote
+
+try:
     import urlparse as parse
+except ImportError:
+    import urllib.parse as parse
 
 import sys
 from kodi_six import xbmc, xbmcaddon, xbmcgui
@@ -96,13 +100,13 @@ class hbogo(object):
 
 
         try:
-            url = urllib.unquote_plus(params["url"])
+            url = unquote(params["url"])
         except KeyError:
             pass
         except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
         try:
-            name = urllib.unquote_plus(params["name"])
+            name = unquote(params["name"])
         except KeyError:
             pass
         except Exception:
