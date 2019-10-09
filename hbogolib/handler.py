@@ -277,7 +277,12 @@ class HbogoHandler(object):
     def get_device_id_v1(self):
         from .uuid_device import get_crypt_key
         dev_key = get_crypt_key()
-        return hashlib.sha256(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13')).digest()
+        dev_key_str = dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13')
+        if sys.version_info < (3, 0):
+            dev_key_str = bytes(dev_key_str)
+        else:
+            dev_key_str = bytes(dev_key_str, 'utf8')
+        return hashlib.sha256(dev_key_str).digest()
 
     def encrypt_credential_v1(self, raw):
         if sys.version_info < (3, 0):
@@ -294,8 +299,7 @@ class HbogoHandler(object):
             enc = base64.b64decode(enc)
             iv = enc[:AES.block_size]
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-            decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
-            return decoded
+            return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None

@@ -106,9 +106,9 @@ class HbogoHandler_sp(HbogoHandler):
         password = self.getCredential('password')
 
         if sys.version_info < (3, 0):
-            auth_str = str(base64.b64encode(bytes(username) + bytes(":") + base64.b64encode(bytes(password))))
+            auth_str = base64.b64encode(bytes(username) + bytes(":") + base64.b64encode(bytes(password)))
         else:
-            auth_str = str(base64.b64encode(bytes(username, 'utf8') + bytes(":", 'utf8') + base64.b64encode(bytes(password, 'utf8'))))
+            auth_str = base64.b64encode(bytes(username, 'utf8') + bytes(":", 'utf8') + base64.b64encode(bytes(password, 'utf8')))
 
         headers = {
             'Host': self.API_HOST,
