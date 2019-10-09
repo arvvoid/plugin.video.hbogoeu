@@ -27,7 +27,7 @@ import os
 import errno
 
 try:
-    import urllib.quote_plus as quote
+    from urllib import quote_plus as quote
 except ImportError:
     from urllib.parse import quote_plus as quote
 

@@ -10,7 +10,7 @@ from __future__ import absolute_import, division, unicode_literals
 from hbogolib.constants import HbogoConstants
 
 try:
-    import urllib.unquote_plus as unquote
+    from urllib import unquote_plus as unquote
 except ImportError:
     from urllib.parse import unquote_plus as unquote
 
