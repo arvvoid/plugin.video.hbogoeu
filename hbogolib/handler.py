@@ -16,6 +16,7 @@ import traceback
 import requests
 
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from kodi_six.utils import py2_encode, py2_decode
 
 import base64
 import codecs
@@ -62,20 +63,20 @@ class HbogoHandler(object):
 
         # LABELS
 
-        self.LB_SEARCH_DESC = self.language(30700).encode('utf-8')
-        self.LB_SEARCH_NORES = self.language(30701).encode('utf-8')
-        self.LB_ERROR = self.language(30702).encode('utf-8')
-        self.LB_INFO = self.language(30713).encode('utf-8')
-        self.LB_SUCESS = self.language(30727).encode('utf-8')
-        self.LB_EPISODE_UNTILL = self.language(30703).encode('utf-8')
-        self.LB_FILM_UNTILL = self.language(30704).encode('utf-8')
-        self.LB_EPISODE = self.language(30705).encode('utf-8')
-        self.LB_SEASON = self.language(30706).encode('utf-8')
-        self.LB_MYPLAYLIST = self.language(30707).encode('utf-8')
-        self.LB_NOLOGIN = self.language(30708).encode('utf-8')
-        self.LB_LOGIN_ERROR = self.language(30709).encode('utf-8')
+        self.LB_SEARCH_DESC = py2_encode(self.language)
+        self.LB_SEARCH_NORES = py2_encode(self.language(30701))
+        self.LB_ERROR = py2_encode(self.language(30702))
+        self.LB_INFO = py2_encode(self.language(30713))
+        self.LB_SUCESS = py2_encode(self.language(30727))
+        self.LB_EPISODE_UNTILL = py2_encode(self.language(30703))
+        self.LB_FILM_UNTILL = py2_encode(self.language(30704))
+        self.LB_EPISODE = py2_encode(self.language(30705))
+        self.LB_SEASON = py2_encode(self.language(30706))
+        self.LB_MYPLAYLIST = py2_encode(self.language(30707))
+        self.LB_NOLOGIN = py2_encode(self.language(30708))
+        self.LB_LOGIN_ERROR = py2_encode(self.language(30709))
         self.LB_NO_OPERATOR = self.language(30710).encode('utf-8')
-        self.LB_SEARCH = self.language(30711).encode('utf-8')
+        self.LB_SEARCH = py2_encode(self.language(30711))
 
         self.use_content_type = "episodes"
 
@@ -105,7 +106,7 @@ class HbogoHandler(object):
 
 
         if self.sensitive_debug:
-            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712).encode('utf-8'), self.language(30714).encode('utf-8'), self.language(30715).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
             if not ret:
                 sys.exit()
 
@@ -114,11 +115,11 @@ class HbogoHandler(object):
 
     @staticmethod
     def get_resource(file):
-        return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/'+file).decode('utf-8')
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/'+file))
 
     @staticmethod
     def get_media_resource(file):
-        return xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file).decode('utf-8')
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file))
 
     def log(self, msg, level=xbmc.LOGDEBUG):
         xbmc.log(self.DEBUG_ID_STRING + msg, level)
@@ -134,11 +135,11 @@ class HbogoHandler(object):
             r = requests.post(url, headers=headers, data=data)
             self.log("SEND LOGIN RETURNED STATUS: " + str(r.status_code))
             if self.sensitive_debug:
-                self.log("SEND LOGIN RETURNED RAW: " + r.text.encode('utf-8'))
+                self.log("SEND LOGIN RETURNED RAW: " + py2_encode(r.text))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
             self.log("SEND LOGIN ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "SEND LOGIN ERROR"}, "ErrorMessage": "SEND LOGIN ERROR"}
@@ -153,7 +154,7 @@ class HbogoHandler(object):
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
             self.log("GET FROM HBO ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "GET FROM HBO ERROR"}, "ErrorMessage": "GET FROM HBO ERROR"}
@@ -168,7 +169,7 @@ class HbogoHandler(object):
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
             self.log("SEND PURCHASE ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}
@@ -215,18 +216,18 @@ class HbogoHandler(object):
             return None
 
     def inputCredentials(self):
-        username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
+        username = xbmcgui.Dialog().input(self.language(30442), type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
                 return False
             else:
                 return self.inputCredentials()
-        password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
@@ -241,7 +242,7 @@ class HbogoHandler(object):
         if self.login():
             return True
         else:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
                 return False
             else:

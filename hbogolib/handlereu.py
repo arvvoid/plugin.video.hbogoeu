@@ -34,6 +34,7 @@ except ImportError:
     import urllib.parse as parse
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
+from kodi_six.utils import py2_encode, py2_decode
 
 class HbogoHandler_eu(HbogoHandler):
 
@@ -244,7 +245,7 @@ class HbogoHandler_eu(HbogoHandler):
             li_items_list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
             li_items_list[-1].setArt({'thumb': o[2], 'icon': o[2]})
 
-        index = xbmcgui.Dialog().select(self.language(30445).encode('utf-8'), li_items_list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(30445), li_items_list, useDetails=True)
         if index != -1:
             self.addon.setSetting('operator_id', op_list[index][1])
             self.addon.setSetting('operator_name', op_list[index][0])
@@ -257,7 +258,7 @@ class HbogoHandler_eu(HbogoHandler):
                 return True
             else:
                 self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444).encode('utf-8'))
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
                 sys.exit()
                 return False
         else:
@@ -410,7 +411,7 @@ class HbogoHandler_eu(HbogoHandler):
             jsonrspl = response.json()
 
             token = str(jsonrspl['Token'])
-            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token) + "&t=signin"
+            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token.encode('ascii')) + "&t=signin"
 
             hbo_session.headers.pop('GO-CustomerId')
             hbo_session.headers.update({'GO-Token': token})
@@ -820,20 +821,20 @@ class HbogoHandler_eu(HbogoHandler):
         # Find key categories positions
         try:
             for cat in jsonrsp['Items']:
-                if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Home":
+                if py2_encode(cat["Tracking"]['Name']) == "Home":
                     position_home = position
-                if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Series":
+                if py2_encode(cat["Tracking"]['Name']) == "Series":
                     position_series = position
-                if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Movies":
+                if py2_encode(cat["Tracking"]['Name']) == "Movies":
                     position_movies = position
                 if position_home > -1 and position_series > -1 and position_movies > -1:
                     break
                 position += 1
             position = 0
             for cat in jsonrsp2['Items']:
-                if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Weekly Top":
+                if py2_encode(cat["Tracking"]['Name']) == "Weekly Top":
                     position_week_top = position
-                if cat["Tracking"]['Name'].encode('utf-8', 'ignore') == "Kids":
+                if py2_encode(cat["Tracking"]['Name']) == "Kids":
                     position_kids = position
                 if position_week_top > -1 and position_kids > -1:
                     break
@@ -842,22 +843,22 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error in find key categories: " + traceback.format_exc())
 
         if position_series != -1:
-            self.addCat(self.language(30716).encode('utf-8'), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('tv.png'), 1)
+            self.addCat(py2_encode(self.language(30716)), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
 
         if position_movies != -1:
-            self.addCat(self.language(30717).encode('utf-8'), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('movie.png'), 1)
+            self.addCat(py2_encode(self.language(30717)), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('movie.png'), 1)
         else:
             self.log("No Movies Category found")
 
         if position_kids != -1:
-            self.addCat(self.language(30729).encode('utf-8'), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('kids.png'), 1)
+            self.addCat(py2_encode(self.language(30729)), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('kids.png'), 1)
         else:
             self.log("No Kids Category found")
 
         if position_week_top != -1:
-            self.addCat(self.language(30730).encode('utf-8'), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('DefaultFolder.png'), 1)
+            self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('DefaultFolder.png'), 1)
         else:
             self.log("No Week Top Category found")
 
@@ -892,7 +893,7 @@ class HbogoHandler_eu(HbogoHandler):
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
             for Container in range(0, len(jsonrsp['Container'])):
-                self.addCat(jsonrsp['Container'][Container]['Name'].encode('utf-8', 'ignore'), jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
+                self.addCat(py2_encode(jsonrsp['Container'][Container]['Name']), jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
@@ -995,8 +996,8 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
             else:
                 self.addon.setSetting('lastsearch', searchText)
-                self.log("Performing search: " + str(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0'))
-                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + searchText.decode('utf-8', 'ignore').encode('utf-8', 'ignore') + '/0')
+                self.log("Performing search: " + str(self.API_URL_SEARCH + searchText + '/0'))
+                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + searchText + '/0')
                 if self.lograwdata:
                     self.log(str(jsonrsp))
 
@@ -1047,7 +1048,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         if not self.chk_login():
             self.log("NO LOGED IN ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103).encode('utf-8'))
+            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
             self.logout()
             return
         purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
@@ -1104,7 +1105,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
-        dt_custom_data = base64.b64encode("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
+        dt_custom_data = base64.b64encode(str("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}").encode('ascii'))
 
         li = xbmcgui.ListItem(path=MediaUrl)
         #TODO: add all media info to ListItem
@@ -1141,57 +1142,57 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 if resp["Success"]:
                     self.log("ADDED TO MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30719), self.LB_SUCESS, icon)
                 else:
                     self.log("FAILED ADD TO MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
             except Exception:
                 self.log("Add to mylist unexpected error: " + traceback.format_exc())
                 self.log("ERROR ADD TO MY LIST: " + content_id)
-                xbmcgui.Dialog().notification(self.language(30719).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
 
         if action_type == 10:
             resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
             try:
                 if resp["Success"]:
                     self.log("REMOVED FROM MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30720), self.LB_SUCESS, icon)
                     return xbmc.executebuiltin('Container.Refresh')
                 else:
                     self.log("FAILED TO REMOVE MY LIST: " + content_id)
-                    xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
             except Exception:
                 self.log("Remove from mylist unexpected error: " + traceback.format_exc())
                 self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
                 self.log("ERROR REMOVE FROM MY LIST: " + content_id)
-                xbmcgui.Dialog().notification(self.language(30720).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
 
         if action_type == 8:
             resp = self.get_from_hbogo(self.API_URL_ADD_RATING + content_id + '/' + optional)
             try:
                 if resp["Success"]:
                     self.log("ADDED RATING: " + content_id + " " + optional)
-                    xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_SUCESS, icon)
+                    xbmcgui.Dialog().notification(self.language(30726), self.LB_SUCESS, icon)
                 else:
                     self.log("FAILED RATING: " + content_id + " " + optional)
-                    xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
+                    xbmcgui.Dialog().notification(self.language(30726), self.LB_ERROR, icon)
             except Exception:
                 self.log("Unexpected rating error: " + traceback.format_exc())
                 self.log("ERROR RATING: " + content_id + " " + optional)
-                xbmcgui.Dialog().notification(self.language(30726).encode('utf-8'), self.LB_ERROR, icon)
+                xbmcgui.Dialog().notification(self.language(30726), self.LB_ERROR, icon)
 
 
 
     def genContextMenu(self, content_id, media_id):
 
-        add_mylist = (self.language(30719).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (self.language(30720).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        add_mylist = (py2_encode(self.language(30719)), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
+        remove_mylist = (py2_encode(self.language(30720)), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
 
-        vote_5 = (self.language(30721).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (self.language(30722).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (self.language(30723).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (self.language(30724).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (self.language(30725).encode('utf-8'), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        vote_5 = (py2_encode(self.language(30721)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
+        vote_4 = (py2_encode(self.language(30722)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
+        vote_3 = (py2_encode(self.language(30723)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
+        vote_2 = (py2_encode(self.language(30724)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
+        vote_1 = (py2_encode(self.language(30725)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
@@ -1207,35 +1208,35 @@ class HbogoHandler_eu(HbogoHandler):
         name = ""
         media_type = "movie"
         if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-            name = title['Name'].encode('utf-8', 'ignore')
+            name = py2_encode(title['Name'])
             if self.force_original_names:
-                name = title['OriginalName'].encode('utf-8', 'ignore')
-            filename = title['OriginalName'].encode('utf-8', 'ignore') + " (" + str(title['ProductionYear']) + ")"
+                name = py2_encode(title['OriginalName'])
+            filename = py2_encode(title['OriginalName']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = filename
-            plot = title['Abstract'].encode('utf-8', 'ignore')
+            plot = py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = title['Description'].encode('utf-8', 'ignore')
+                    plot = py2_encode(title['Description'])
             if 'AvailabilityTo' in title:
                 if title['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
+                    plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
         elif title['ContentType'] == 3:
             media_type = "episode"
-            name = title['SeriesName'].encode('utf-8', 'ignore') + " - " + str(
+            name = py2_encode(title['SeriesName']) + " - " + str(
                 title['SeasonIndex']) + " " + self.LB_SEASON + ", " + self.LB_EPISODE + " " + str(title['Index'])
             if self.force_original_names:
-                name = title['OriginalName'].encode('utf-8', 'ignore')
-            filename = title['Tracking']['ShowName'].encode('utf-8', 'ignore') + " - S" + str(
+                name = py2_encode(title['OriginalName'])
+            filename = py2_encode(title['Tracking']['ShowName']) + " - S" + str(
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = filename
-            plot = title['Abstract'].encode('utf-8', 'ignore')
+            plot = py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = title['Description'].encode('utf-8', 'ignore')
+                    plot = py2_encode(title['Description'])
             if 'AvailabilityTo' in title:
-                plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + title['AvailabilityTo'].encode('utf-8', 'ignore')
+                plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
         u = self.base_url + "?url=" + quote(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
 
@@ -1270,16 +1271,16 @@ class HbogoHandler_eu(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(item['OriginalName'].encode('utf-8', 'ignore') + " (" + str(item['ProductionYear']) + ")")
-        liz = xbmcgui.ListItem(item['Name'].encode('utf-8', 'ignore'), iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
+        liz = xbmcgui.ListItem(item['Name'], iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
-        plot = item['Abstract'].encode('utf-8', 'ignore')
+        plot = py2_encode(item['Abstract'])
         if 'Description' in item:
             if item['Description'] is not None:
-                plot = item['Description'].encode('utf-8', 'ignore')
+                plot = py2_encode(item['Description'])
         liz.setInfo(type="Video", infoLabels={"mediatype": media_type, "season": item['Tracking']['SeasonNumber'],
                                               "tvshowtitle": item['Tracking']['ShowName'],
-                                              "title": item['Name'].encode('utf-8', 'ignore'),
+                                              "title": item['Name'],
                                               "Plot": plot})
         liz.setProperty('isPlayable', "false")
         if media_type == "tvshow":

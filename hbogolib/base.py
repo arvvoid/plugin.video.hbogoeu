@@ -21,6 +21,7 @@ except ImportError:
 
 import sys
 from kodi_six import xbmc, xbmcaddon, xbmcgui
+
 import traceback
 
 
