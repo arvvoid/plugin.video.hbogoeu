@@ -6,17 +6,22 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-import urllib
 
 from hbogolib.constants import HbogoConstants
 
 try:
-    import urllib.parse as parse
+    from urllib import unquote_plus as unquote
 except ImportError:
+    from urllib.parse import unquote_plus as unquote
+
+try:
     import urlparse as parse
+except ImportError:
+    import urllib.parse as parse
 
 import sys
 from kodi_six import xbmc, xbmcaddon, xbmcgui
+
 import traceback
 
 
@@ -68,15 +73,14 @@ class hbogo(object):
         # STEP 0 - SETUP DRM
         from inputstreamhelper import Helper
         is_helper = Helper('mpd', drm='com.widevine.alpha')
-        if not is_helper.check_inputstream():
-            sys.exit()
+        is_helper.check_inputstream()
 
         # STEP 1, show country selection dialog
 
         li_items_list = []
 
         for country in HbogoConstants.countries:
-            li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
+            li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1]))
             li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png", 'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
         index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), li_items_list, useDetails=True)
         if index != -1:
@@ -96,13 +100,13 @@ class hbogo(object):
 
 
         try:
-            url = urllib.unquote_plus(params["url"])
+            url = unquote(params["url"])
         except KeyError:
             pass
         except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
         try:
-            name = urllib.unquote_plus(params["name"])
+            name = unquote(params["name"])
         except KeyError:
             pass
         except Exception:
