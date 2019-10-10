@@ -6,7 +6,7 @@
 # GENERIC HBOGO HANDLER CLASS
 #########################################################
 
-from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division
 
 from hbogolib.util import Util
 
@@ -287,14 +287,17 @@ class HbogoHandler(object):
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return Util.base64enc(iv + cipher.encrypt(raw))
+        return Util.base64enc_string(iv + cipher.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:
             enc = Util.base64dec_bytes(enc)
             iv = enc[:AES.block_size]
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-            return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
+            if sys.version_info < (3, 0):
+                return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
+            else:
+                return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None

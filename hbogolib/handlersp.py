@@ -7,7 +7,7 @@
 # HBO Spain and Nordic HANDLER CLASS
 #########################################################
 
-from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division
 
 from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
@@ -113,7 +113,7 @@ class HbogoHandler_sp(HbogoHandler):
             'Accept-Encoding': 'gzip, deflate, br',
             'Referer': self.API_HOST_GATEWAY_REFERER,
             'Content-Type': 'application/xml',
-            'Authorization': 'Basic ' + Util.base64enc(username + ":" + Util.base64enc(password)),
+            'Authorization': 'Basic ' + Util.base64enc_string(username + ":" + Util.base64enc_string(password)),
             'Origin': self.API_HOST_GATEWAY,
             'Connection': 'keep-alive',
         }
@@ -126,7 +126,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
         self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
-        login_hash = Util.hash225(str(self.API_DEVICE_ID) + str(username) + str(password))
+        login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -155,7 +155,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
 
-            login_hash = Util.hash225(str(self.API_DEVICE_ID) + str(username) + str(password))
+            login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
             self.log("LOGIN HASH: " + login_hash)
             saved_session = {
 

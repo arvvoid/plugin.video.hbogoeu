@@ -15,7 +15,7 @@
 # Relesed under GPL version 2
 #########################################################
 
-from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division
 
 import sys
 
@@ -34,6 +34,18 @@ if __name__ == '__main__':
             srt_file = ttml.write_srt_file("test_sub")
             print("SRT written to: "+srt_file)
             print("DONE!")
+        elif test_type == "utils":
+            from hbogolib.util import Util
+            text = str(sys.argv[2])
+            Result_b = Util.base64enc_bytes(text)
+            Result_s = Util.base64enc_string(text)
+            print("Base64 Encode Bytes: ", Result_b)
+            print("Base64 Encode String: ", Result_s)
+            print("Base64 Decode Bytes: ", Util.base64dec_bytes(Result_s))
+            print("Base64 Decode String: ", Util.base64dec_string(Result_s))
+            print("Hashing: ", Util.hash225_string(text))
+            print("Hashing bytes: ", Util.hash225_bytes(text))
+            print("DONE!")
         else:
             print("Ivalid test!")
     else:
@@ -41,3 +53,4 @@ if __name__ == '__main__':
         print("     python test.py [TEST_TYPE] [PARAM1] [PARAM2] ...")
         print("TTML2SRT Test:")
         print("     python test.py ttml2srt ttml_subs.xml")
+        print("     python test.py utils text")
