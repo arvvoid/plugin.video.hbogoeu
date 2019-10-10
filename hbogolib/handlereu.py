@@ -1230,11 +1230,14 @@ class HbogoHandler_eu(HbogoHandler):
                     plot = py2_encode(title['Description'])
             if 'AvailabilityTo' in title:
                 if title['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+                    plot = plot + py2_encode(' ') + self.LB_FILM_UNTILL + py2_encode(' ' + title['AvailabilityTo'])
         elif title['ContentType'] == 3:
             media_type = "episode"
-            name = py2_encode(title['SeriesName']) + " - " + str(
-                title['SeasonIndex']) + " " + self.LB_SEASON + ", " + self.LB_EPISODE + " " + str(title['Index'])
+            name = py2_encode(title['SeriesName'] + ' - ' + \
+                    str(title['SeasonIndex']) + ' ') + \
+                    self.LB_SEASON + py2_encode(', ') + \
+                    self.LB_EPISODE + py2_encode(' ') + \
+                    str(title['Index'])
             if self.force_original_names:
                 name = py2_encode(title['OriginalName'])
             filename = py2_encode(title['Tracking']['ShowName']) + " - S" + str(
@@ -1280,7 +1283,11 @@ class HbogoHandler_eu(HbogoHandler):
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(py2_encode(item['OriginalName']) + " (" + str(item['ProductionYear']) + ")")
+        u = self.base_url + \
+            py2_encode("?url=") + quote(item['ObjectUrl']) + \
+            py2_encode("&mode=") + str(mode) + \
+            py2_encode("&name=") + quote(py2_encode(item['OriginalName']) + \
+            py2_encode(" (") + str(item['ProductionYear']) + py2_encode(")"))
         liz = xbmcgui.ListItem(item['Name'], iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
