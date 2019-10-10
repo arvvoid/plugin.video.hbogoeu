@@ -19,7 +19,7 @@ import time
 import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
-from kodi_six.utils import py2_encode, py2_decode
+from kodi_six.utils import py2_encode
 import traceback
 
 import requests

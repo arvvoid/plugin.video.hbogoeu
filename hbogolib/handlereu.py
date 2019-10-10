@@ -34,7 +34,7 @@ except ImportError:
     import urllib.parse as parse
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
-from kodi_six.utils import py2_encode, py2_decode
+from kodi_six.utils import py2_encode
 
 class HbogoHandler_eu(HbogoHandler):
 
