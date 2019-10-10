@@ -63,7 +63,7 @@ class HbogoHandler(object):
 
         # LABELS
 
-        self.LB_SEARCH_DESC = py2_encode(self.language)
+        self.LB_SEARCH_DESC = py2_encode(self.language(30700))
         self.LB_SEARCH_NORES = py2_encode(self.language(30701))
         self.LB_ERROR = py2_encode(self.language(30702))
         self.LB_INFO = py2_encode(self.language(30713))
@@ -75,7 +75,7 @@ class HbogoHandler(object):
         self.LB_MYPLAYLIST = py2_encode(self.language(30707))
         self.LB_NOLOGIN = py2_encode(self.language(30708))
         self.LB_LOGIN_ERROR = py2_encode(self.language(30709))
-        self.LB_NO_OPERATOR = self.language(30710).encode('utf-8')
+        self.LB_NO_OPERATOR = py2_encode(self.language(30710))
         self.LB_SEARCH = py2_encode(self.language(30711))
 
         self.use_content_type = "episodes"
