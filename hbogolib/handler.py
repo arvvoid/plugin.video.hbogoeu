@@ -291,7 +291,7 @@ class HbogoHandler(object):
 
     def decrypt_credential_v1(self, enc):
         try:
-            enc = Util.base64dec(enc)
+            enc = Util.base64dec_bytes(enc)
             iv = enc[:AES.block_size]
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
             return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))

@@ -20,11 +20,12 @@ class Util(object):
             return base64.b64encode(bytes(data, 'utf8')).encode('ascii')
 
     @staticmethod
-    def base64dec(base64data):
-        if sys.version_info < (3, 0):
-            return base64.b64decode(base64data)
-        else:
-            return base64.b64decode(base64data).encode('utf8')
+    def base64dec_string(base64data, encoding='utf8'):
+        return base64.b64decode(base64data).encode(encoding)
+
+    @staticmethod
+    def base64dec_bytes(base64data):
+        return bytes(base64.b64decode(base64data))
 
     @staticmethod
     def hash225_bytes(data):
