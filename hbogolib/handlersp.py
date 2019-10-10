@@ -12,10 +12,10 @@ from __future__ import absolute_import, division, unicode_literals
 from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
 
+from hbogolib.util import Util
+
 import sys
-import base64
 import time
-import hashlib
 import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
@@ -105,11 +105,6 @@ class HbogoHandler_sp(HbogoHandler):
         username = self.getCredential('username')
         password = self.getCredential('password')
 
-        if sys.version_info < (3, 0):
-            auth_str = base64.b64encode(bytes(username) + bytes(":") + base64.b64encode(bytes(password)))
-        else:
-            auth_str = base64.b64encode(bytes(username, 'utf8') + bytes(":", 'utf8') + base64.b64encode(bytes(password, 'utf8')))
-
         headers = {
             'Host': self.API_HOST,
             'User-Agent': self.UA,
@@ -118,7 +113,7 @@ class HbogoHandler_sp(HbogoHandler):
             'Accept-Encoding': 'gzip, deflate, br',
             'Referer': self.API_HOST_GATEWAY_REFERER,
             'Content-Type': 'application/xml',
-            'Authorization': 'Basic ' + auth_str,
+            'Authorization': 'Basic ' + Util.base64enc(username + ":" + Util.base64enc(password)),
             'Origin': self.API_HOST_GATEWAY,
             'Connection': 'keep-alive',
         }
@@ -131,7 +126,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
         self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
-        login_hash = hashlib.sha224(str(self.API_DEVICE_ID) + str(username) + str(password)).hexdigest()
+        login_hash = Util.hash225(str(self.API_DEVICE_ID) + str(username) + str(password))
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -160,7 +155,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
 
-            login_hash = hashlib.sha224(str(self.API_DEVICE_ID) + str(username) + str(password)).hexdigest()
+            login_hash = Util.hash225(str(self.API_DEVICE_ID) + str(username) + str(password))
             self.log("LOGIN HASH: " + login_hash)
             saved_session = {
 

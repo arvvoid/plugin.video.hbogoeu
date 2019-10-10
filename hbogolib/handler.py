@@ -8,6 +8,8 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
+from hbogolib.util import Util
+
 import sys
 import json
 import os
@@ -18,9 +20,7 @@ import requests
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode, py2_decode
 
-import base64
 import codecs
-import hashlib
 import defusedxml.ElementTree as ET
 
 try:
@@ -272,17 +272,12 @@ class HbogoHandler(object):
                 return ''
 
     def setCredential(self, credential_id, value):
-        self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + str(self.encrypt_credential_v1(value)))
+        self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + self.encrypt_credential_v1(value))
 
     def get_device_id_v1(self):
         from .uuid_device import get_crypt_key
         dev_key = get_crypt_key()
-        dev_key_str = dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13')
-        if sys.version_info < (3, 0):
-            dev_key_str = bytes(dev_key_str)
-        else:
-            dev_key_str = bytes(dev_key_str, 'utf8')
-        return hashlib.sha256(dev_key_str).digest()
+        return Util.hash225_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
 
     def encrypt_credential_v1(self, raw):
         if sys.version_info < (3, 0):
@@ -292,11 +287,11 @@ class HbogoHandler(object):
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(raw))
+        return Util.base64enc(iv + cipher.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:
-            enc = base64.b64decode(enc)
+            enc = Util.base64dec(enc)
             iv = enc[:AES.block_size]
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
             return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))

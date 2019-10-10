@@ -15,11 +15,11 @@ from __future__ import absolute_import, division, unicode_literals
 from hbogolib.handler import HbogoHandler
 from hbogolib.constants import HbogoConstants
 
+from hbogolib.util import Util
+
 import sys
 import time
 import json
-import base64
-import hashlib
 import requests
 import traceback
 
@@ -411,11 +411,7 @@ class HbogoHandler_eu(HbogoHandler):
             jsonrspl = response.json()
 
             token = jsonrspl['Token']
-            if sys.version_info < (3, 0):
-                token = bytes(token)
-            else:
-                token = bytes(token, 'ascii')
-            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + base64.b64encode(token) + "&t=signin"
+            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + Util.base64enc(token) + "&t=signin"
 
             hbo_session.headers.pop('GO-CustomerId')
             hbo_session.headers.update({'GO-Token': token})
@@ -547,7 +543,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
                 # save the session with validity of n hours to not relogin every run of the add-on
 
-                login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
+                login_hash = Util.hash225(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
                 self.log("LOGIN HASH: " + login_hash)
 
                 saved_session = {
@@ -590,7 +586,7 @@ class HbogoHandler_eu(HbogoHandler):
             sys.exit()
             return False
 
-        login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
+        login_hash = Util.hash225(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_session")
@@ -771,7 +767,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
             # save the session with validity of n hours to not relogin every run of the add-on
 
-            login_hash = hashlib.sha224(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id).hexdigest()
+            login_hash = Util.hash225(self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
             self.log("LOGIN HASH: " + login_hash)
 
             saved_session = {
@@ -1110,12 +1106,7 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
 
-        dt_custom_data = "{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}"
-        if sys.version_info < (3, 0):
-            dt_custom_data = bytes(dt_custom_data)
-        else:
-            dt_custom_data = bytes(dt_custom_data, 'ascii')
-        dt_custom_data = base64.b64encode(dt_custom_data)
+        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
         li = xbmcgui.ListItem(path=MediaUrl)
         #TODO: add all media info to ListItem
