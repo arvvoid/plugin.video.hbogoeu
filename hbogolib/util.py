@@ -27,7 +27,7 @@ class Util(object):
             return base64.b64encode(bytes(data, 'utf8')).decode('utf8')
 
     @staticmethod
-    def base64dec_string(base64data, encoding='utf8'):
+    def base64dec_string(base64data):
         if sys.version_info < (3, 0):
             return base64.b64decode(base64data)
         else:
