@@ -1241,7 +1241,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         u = self.base_url + "?url=" + quote(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
 
-        liz = xbmcgui.ListItem(name, iconImage=title['BackgroundUrl'], thumbnailImage=title['BackgroundUrl'])
+        liz = xbmcgui.ListItem(name)
         liz.setArt({'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
                     'fanart': title['BackgroundUrl']})
         liz.setInfo(type="Video",
@@ -1272,7 +1272,7 @@ class HbogoHandler_eu(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(py2_encode(item['OriginalName']) + " (" + str(item['ProductionYear']) + ")")
-        liz = xbmcgui.ListItem(item['Name'], iconImage=item['BackgroundUrl'], thumbnailImage=item['BackgroundUrl'])
+        liz = xbmcgui.ListItem(item['Name'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
         plot = py2_encode(item['Abstract'])
@@ -1301,7 +1301,7 @@ class HbogoHandler_eu(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
-        liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
+        liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")

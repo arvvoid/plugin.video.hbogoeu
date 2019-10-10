@@ -425,7 +425,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         thunb = self.get_thumbnail_url(title)
 
-        liz = xbmcgui.ListItem(name, iconImage=thunb, thumbnailImage=thunb)
+        liz = xbmcgui.ListItem(name)
         liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
         liz.setInfo(type="Video",
                     infoLabels={"mediatype": media_type, "episode": episode,
@@ -461,7 +461,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         thumb = self.get_thumbnail_url(item)
 
-        liz = xbmcgui.ListItem(item.find('title').text, iconImage=thumb, thumbnailImage=thumb)
+        liz = xbmcgui.ListItem(item.find('title').text)
         liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
                     'fanart': thumb})
         liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
@@ -475,7 +475,7 @@ class HbogoHandler_sp(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
-        liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=icon)
+        liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")

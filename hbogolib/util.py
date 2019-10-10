@@ -17,14 +17,20 @@ class Util(object):
         if sys.version_info < (3, 0):
             return base64.b64encode(data)
         else:
-            return base64.b64encode(bytes(data, 'utf8'))
+            try:
+                return base64.b64encode(bytes(data)).decode('utf8')
+            except TypeError:
+                return base64.b64encode(bytes(data, 'utf8')).decode('utf8')
 
     @staticmethod
     def base64enc_string(data):
         if sys.version_info < (3, 0):
             return base64.b64encode(data)
         else:
-            return base64.b64encode(bytes(data, 'utf8')).decode('utf8')
+            try:
+                return base64.b64encode(bytes(data)).decode('utf8')
+            except TypeError:
+                return base64.b64encode(bytes(data, 'utf8')).decode('utf8')
 
     @staticmethod
     def base64dec_string(base64data):
@@ -42,11 +48,17 @@ class Util(object):
         if sys.version_info < (3, 0):
             return hashlib.sha256(bytes(data)).digest()
         else:
-            return hashlib.sha256(bytes(data, 'utf8')).digest()
+            try:
+                return hashlib.sha256(bytes(data, 'utf8')).digest()
+            except TypeError:
+                return hashlib.sha256(bytes(data)).digest()
 
     @staticmethod
     def hash225_string(data):
         if sys.version_info < (3, 0):
             return hashlib.sha256(bytes(data)).hexdigest()
         else:
-            return hashlib.sha256(bytes(data, 'utf8')).hexdigest()
+            try:
+                return hashlib.sha256(bytes(data, 'utf8')).hexdigest()
+            except TypeError:
+                return hashlib.sha256(bytes(data)).hexdigest()

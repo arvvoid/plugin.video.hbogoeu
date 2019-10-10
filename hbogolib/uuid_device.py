@@ -52,12 +52,16 @@ def _get_system_uuid():
     system = get_system_platform()
     if system in ['windows', 'xbox']:
         uuid_value = _get_windows_uuid()
+        debug('Windows UUID Found')
     elif system == 'android':
         uuid_value = _get_android_uuid()
+        debug('Android UUID Found')
     elif system == 'linux':
         uuid_value = _get_linux_uuid()
+        debug('Linux UUID Found')
     elif system in ['osx', 'ios']:
         uuid_value = _get_macos_uuid()
+        debug('OSX, IOS UUID Found')
     if not uuid_value:
         debug('It is not possible to get a system UUID creating a new UUID')
         uuid_value = _get_fake_uuid(system != 'android')
@@ -142,7 +146,7 @@ def _get_macos_uuid():
         proc = subprocess.Popen(
             ['/usr/sbin/system_profiler', 'SPHardwareDataType', '-detaillevel', 'full', '-xml'],
             stdout=subprocess.PIPE)
-        output_data = proc.stdout.read().decode('utf-8')
+        output_data = proc.stdout.read()
         proc.stdout.close()
         if output_data:
             sp_dict_values = _parse_osx_xml_plist_data(output_data)

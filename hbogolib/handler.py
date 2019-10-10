@@ -122,7 +122,10 @@ class HbogoHandler(object):
         return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file))
 
     def log(self, msg, level=xbmc.LOGDEBUG):
-        xbmc.log(self.DEBUG_ID_STRING + msg, level)
+        try:
+            xbmc.log(self.DEBUG_ID_STRING + msg, level)
+        except TypeError:
+            xbmc.log(self.DEBUG_ID_STRING + msg.decode('utf-8'), level)
 
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
@@ -202,7 +205,10 @@ class HbogoHandler(object):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
         self.log("Saving: " + folder + name + '.ecdata')
         with open(folder + name + '.ecdata', 'wb') as f:
-            f.write(self.encrypt_credential_v1(json.dumps(obj)))
+            try:
+                f.write(self.encrypt_credential_v1(json.dumps(obj)))
+            except TypeError:
+                f.write(bytes(self.encrypt_credential_v1(json.dumps(obj)), 'utf8'))
 
     def load_obj(self, name):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
