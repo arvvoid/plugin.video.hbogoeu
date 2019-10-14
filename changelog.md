@@ -1,3 +1,7 @@
+v.2.0.18-beta37
+- THIS IS A RELEASE CANDIDATE VERSION
+- Compatibility fixes Python 2/3
+
 v.2.0.17-beta34
 - THIS IS A RELEASE CANDIDATE VERSION
 - SECURITY: make use of defusedxml
