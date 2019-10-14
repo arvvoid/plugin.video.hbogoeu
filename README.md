@@ -64,8 +64,6 @@ REQUIRMENTS:
 *  script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18)
 *  Libwidevine 4.10.1440+
 
-Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
-
 ## Download/Install instructions
 
 * Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
@@ -98,3 +96,7 @@ Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=
 ## Video Demo and Install instructions
 
 [![Watch the video](https://img.youtube.com/vi/m326rV0vH8Q/hqdefault.jpg)](https://youtu.be/m326rV0vH8Q)
+
+## History
+
+Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
