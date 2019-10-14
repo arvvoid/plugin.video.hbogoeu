@@ -113,7 +113,7 @@ class HbogoHandler_sp(HbogoHandler):
             'Accept-Encoding': 'gzip, deflate, br',
             'Referer': self.API_HOST_GATEWAY_REFERER,
             'Content-Type': 'application/xml',
-            'Authorization': 'Basic ' + Util.base64enc_string(username + ":" + Util.base64enc_string(password)),
+            'Authorization': 'Basic ' + Util.base64enc(username + ":" + Util.base64enc(password)),
             'Origin': self.API_HOST_GATEWAY,
             'Connection': 'keep-alive',
         }

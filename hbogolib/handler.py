@@ -293,7 +293,7 @@ class HbogoHandler(object):
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return Util.base64enc_string(iv + cipher.encrypt(raw))
+        return Util.base64enc(iv + cipher.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:

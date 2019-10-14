@@ -13,17 +13,7 @@ import hashlib
 class Util(object):
 
     @staticmethod
-    def base64enc_bytes(data):
-        if sys.version_info < (3, 0):
-            return base64.b64encode(data)
-        else:
-            try:
-                return base64.b64encode(bytes(data)).decode('utf8')
-            except TypeError:
-                return base64.b64encode(bytes(data, 'utf8')).decode('utf8')
-
-    @staticmethod
-    def base64enc_string(data):
+    def base64enc(data):
         if sys.version_info < (3, 0):
             return base64.b64encode(data)
         else:

@@ -411,7 +411,7 @@ class HbogoHandler_eu(HbogoHandler):
             jsonrspl = response.json()
 
             token = jsonrspl['Token']
-            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + Util.base64enc_string(token) + "&t=signin"
+            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + Util.base64enc(token) + "&t=signin"
 
             hbo_session.headers.pop('GO-CustomerId')
             hbo_session.headers.update({'GO-Token': token})
@@ -1106,7 +1106,7 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
 
-        dt_custom_data = Util.base64enc_string("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
+        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
         li = xbmcgui.ListItem(path=MediaUrl)
         #TODO: add all media info to ListItem
