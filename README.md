@@ -73,7 +73,11 @@ Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repositor
 
 ## Install instructions
 
-* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manualy from shell:*
+* Install the add-on from repository "Kodi ArvVoid Repository"
+* Follow the setup wizard at first add-on run
+* *OPTIONAL: Configure additional preferences in the add-on config*
+* The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
+* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manualy from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
 sudo apt install python-pip
@@ -84,14 +88,10 @@ sudo pip install pycryptodomex
 sudo apt install libnss3 libnspr4
 sudo reboot
 ```
-* Install the add-on from repository "Kodi ArvVoid Repository"
-* Follow the setup wizard at first add-on run
-* *OPTIONAL: Configure additional preferences in the add-on config*
-* The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
 
 ## Latest relese
 
-[plugin.video.hbogoeu-2.0.17~beta34.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.17~beta34.zip)
+[plugin.video.hbogoeu-2.0.18~beta37.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.18~beta37.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
