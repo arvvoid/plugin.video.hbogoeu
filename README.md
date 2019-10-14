@@ -66,18 +66,14 @@ REQUIRMENTS:
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
 
-## Download
+## Download/Install instructions
 
-Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
- then follow the install instructions
-
-## Install instructions
-
+* Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
 * Install the add-on from repository "Kodi ArvVoid Repository"
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
-* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manualy from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
+* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
 sudo apt install python-pip
