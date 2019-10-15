@@ -71,16 +71,15 @@ REQUIRMENTS:
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
-* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
+* *OPTIONAL: On OSMC/Raspbian/Debian/Ubuntu/other Debian derivates you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
-sudo apt install python-pip
-sudo apt install python-setuptools
-sudo apt install build-essential
-sudo pip install wheel
-sudo pip install pycryptodomex
+sudo apt install build-essential python-setuptools python-pip
+sudo pip install wheel pycryptodomex
+```
+Some libwidevine dependencies on linux (most likely already installed):
+```
 sudo apt install libnss3 libnspr4
-sudo reboot
 ```
 
 ## Latest relese
