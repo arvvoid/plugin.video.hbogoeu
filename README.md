@@ -74,12 +74,8 @@ REQUIRMENTS:
 * *OPTIONAL: On OSMC/Raspbian/Debian/Ubuntu/other Debian derivates you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
-sudo apt install build-essential python-setuptools python-pip
+sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
-```
-Some libwidevine dependencies on linux (most likely already installed):
-```
-sudo apt install libnss3 libnspr4
 ```
 
 ## Latest relese
