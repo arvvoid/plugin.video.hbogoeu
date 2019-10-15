@@ -14,9 +14,9 @@ If an official app is available for your platform, use it instead of this.
 Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website for your region
 
-# HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
+# HBO GO Europe for Kodi (plugin.video.hbogoeu)
 
-Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
+Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
 | REGION / Feature           | HBO GO EU | HBO Spain + Nordic | HBO USA | HBO Latin America | HBO Asia |
 |----------------------------|-----------|--------------------|---------|-------------------|----------|
