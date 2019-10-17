@@ -13,6 +13,7 @@ from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
 
 from hbogolib.util import Util
+from hbogolib.kodiutil import KodiUtil
 
 import sys
 import time
@@ -241,11 +242,7 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             self.log("No Home Category found")
 
-
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.endOfDirectory(self.handle)
+        KodiUtil.endDir(self.handle, None, True)
 
     def get_thumbnail_url(self, item):
         if self.lograwdata:
@@ -301,14 +298,7 @@ class HbogoHandler_sp(HbogoHandler):
         self.list_pages(url, 200, 0)
     
         if simple == False:
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-            xbmcplugin.setContent(self.handle, self.use_content_type)
-            xbmcplugin.endOfDirectory(self.handle)
+            KodiUtil.endDir(self.handle, self.use_content_type)
     
     def play(self, url, content_id):
         self.log("Play: " + str(url))
