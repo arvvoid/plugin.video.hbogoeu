@@ -24,4 +24,6 @@ class KodiUtil(object):
     def endDir(handle, use_content_type, simple=False):
         if not simple:
             KodiUtil.addSorting(handle, use_content_type)
+        else:
+            xbmcplugin.addSortMethod(handle=handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
         xbmcplugin.endOfDirectory(handle)
