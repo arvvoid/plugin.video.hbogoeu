@@ -14,9 +14,9 @@ If an official app is available for your platform, use it instead of this.
 Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website for your region
 
-# HBO GO Europe for Kodi 18 (plugin.video.hbogoeu)
+# HBO GO Europe for Kodi (plugin.video.hbogoeu)
 
-Simple, great Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
+Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
 | REGION / Feature           | HBO GO EU | HBO Spain + Nordic | HBO USA | HBO Latin America | HBO Asia |
 |----------------------------|-----------|--------------------|---------|-------------------|----------|
@@ -71,16 +71,11 @@ REQUIRMENTS:
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
-* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
+* *OPTIONAL: On OSMC/Raspbian/Debian/Ubuntu/other Debian derivates you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
-sudo apt install python-pip
-sudo apt install python-setuptools
-sudo apt install build-essential
-sudo pip install wheel
-sudo pip install pycryptodomex
-sudo apt install libnss3 libnspr4
-sudo reboot
+sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
+sudo pip install wheel pycryptodomex
 ```
 
 ## Latest relese
