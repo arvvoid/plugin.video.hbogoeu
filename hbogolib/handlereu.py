@@ -1208,12 +1208,13 @@ class HbogoHandler_eu(HbogoHandler):
             })))
 
         votes_configs = [
-                { 'str_id': 30721, 'vote': 5 },
-                { 'str_id': 30722, 'vote': 4 },
-                { 'str_id': 30723, 'vote': 3 },
-                { 'str_id': 30724, 'vote': 2 },
-                { 'str_id': 30725, 'vote': 1 },
-            ]
+            { 'str_id': 30721, 'vote': 5 },
+            { 'str_id': 30722, 'vote': 4 },
+            { 'str_id': 30723, 'vote': 3 },
+            { 'str_id': 30724, 'vote': 2 },
+            { 'str_id': 30725, 'vote': 1 },
+        ]
+
         votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
             'url': 'VOTE',
             'mode': 8,
