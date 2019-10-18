@@ -24,9 +24,9 @@ import requests
 import traceback
 
 try:
-    from urllib import quote_plus as quote
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
-    from urllib.parse import quote_plus as quote
+    from urllib.parse import quote_plus as quote, urlencode
 
 try:
     import urlparse as parse
@@ -411,7 +411,16 @@ class HbogoHandler_eu(HbogoHandler):
             jsonrspl = response.json()
 
             token = jsonrspl['Token']
-            backuri = self.API_HOST_REFERER + "/ssocallbackhandler?ssoid={0}&method={1}&cou=POL&operatorId=" + self.op_id + "&p=" + self.API_PLATFORM + "&l=" + self.LANGUAGE_CODE + "&cb=" + Util.base64enc(token) + "&t=signin"
+            backuri = "%s/ssocallbackhandler?%s" % (self.API_HOST_REFERER, urlencode({
+                'ssoid': '{0}',
+                'method': '{1}',
+                'cou': 'POL',
+                'operatorId': self.op_id,
+                'p': self.API_PLATFORM,
+                'l': self.LANGUAGE_CODE,
+                'cb': Util.base64enc(token),
+                't':'signin',
+                }))
 
             hbo_session.headers.pop('GO-CustomerId')
             hbo_session.headers.update({'GO-Token': token})
@@ -1185,15 +1194,49 @@ class HbogoHandler_eu(HbogoHandler):
 
 
     def genContextMenu(self, content_id, media_id):
+        runplugin = 'RunPlugin(%s?%s)'
 
-        add_mylist = (py2_encode(self.language(30719)), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (py2_encode(self.language(30720)), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, urlencode({
+            'url': 'ADDMYLIST',
+            'cid': media_id
+            })))
 
-        vote_5 = (py2_encode(self.language(30721)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (py2_encode(self.language(30722)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (py2_encode(self.language(30723)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (py2_encode(self.language(30724)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (py2_encode(self.language(30725)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, urlencode({
+            'url': 'REMMYLIST',
+            'mode': 10,
+            'cid': media_id
+            })))
+
+        vote_5 = (py2_encode(self.language(30721)), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': 5,
+            'cid': content_id
+            })))
+        vote_4 = (py2_encode(self.language(30722)), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': 4,
+            'cid': content_id
+            })))
+        vote_3 = (py2_encode(self.language(30723)), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': 3,
+            'cid': content_id
+            })))
+        vote_2 = (py2_encode(self.language(30724)), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': 2,
+            'cid': content_id
+            })))
+        vote_1 = (py2_encode(self.language(30725)), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': 1,
+            'cid': content_id
+            })))
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
@@ -1239,7 +1282,12 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
-        u = self.base_url + "?url=" + quote(title['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(filename) + "&cid=" + cid + "&thumbnail=" + title['BackgroundUrl']
+        u = '%s?%s' % (self.base_url, urlencode({
+            'url': title['ObjectUrl'],
+            'mode': mode,
+            'name': filename,
+            'cid': cid,
+            'thumbnail': title['BackgroundUrl']}))
 
         liz = xbmcgui.ListItem(name)
         liz.setArt({'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
@@ -1271,7 +1319,11 @@ class HbogoHandler_eu(HbogoHandler):
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(item['ObjectUrl']) + "&mode=" + str(mode) + "&name=" + quote(py2_encode(item['OriginalName']) + " (" + str(item['ProductionYear']) + ")")
+        u = "%s?%s" % (self.base_url, urlencode({
+            'url': item['ObjectUrl'],
+            'mode': mode,
+            'name': '%s (%d)' % (py2_encode(item['OriginalName']), item['ProductionYear'])
+            }))
         liz = xbmcgui.ListItem(item['Name'])
         liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
                     'fanart': item['BackgroundUrl']})
@@ -1300,11 +1352,13 @@ class HbogoHandler_eu(HbogoHandler):
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
+        u = '%s?%s' % (self.base_url, urlencode({
+            'url': url,
+            'mode': mode,
+            'name': name,
+            }))
         liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
-
-
