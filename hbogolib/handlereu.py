@@ -1207,41 +1207,24 @@ class HbogoHandler_eu(HbogoHandler):
             'cid': media_id
             })))
 
-        vote_5 = (py2_encode(self.language(30721)), runplugin % (self.base_url, urlencode({
+        votes_configs = [
+                { 'str_id': 30721, 'vote': 5 },
+                { 'str_id': 30722, 'vote': 4 },
+                { 'str_id': 30723, 'vote': 3 },
+                { 'str_id': 30724, 'vote': 2 },
+                { 'str_id': 30725, 'vote': 1 },
+            ]
+        votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
             'url': 'VOTE',
             'mode': 8,
-            'vote': 5,
-            'cid': content_id
-            })))
-        vote_4 = (py2_encode(self.language(30722)), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': 8,
-            'vote': 4,
-            'cid': content_id
-            })))
-        vote_3 = (py2_encode(self.language(30723)), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': 8,
-            'vote': 3,
-            'cid': content_id
-            })))
-        vote_2 = (py2_encode(self.language(30724)), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': 8,
-            'vote': 2,
-            'cid': content_id
-            })))
-        vote_1 = (py2_encode(self.language(30725)), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': 8,
-            'vote': 1,
-            'cid': content_id
-            })))
+            'vote': item['vote'],
+            'cid': content_id,
+            }))), votes_configs)
 
         if self.cur_loc == self.LB_MYPLAYLIST:
-            return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
+            return votes + [remove_mylist]
         else:
-            return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
+            return [add_mylist] + votes
 
     def addLink(self, title, mode):
         if self.lograwdata:
