@@ -97,11 +97,11 @@ class HbogoHandler_sp(HbogoHandler):
         remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
 
         votes_configs = [
-            { 'str_id': 30721, 'vote': 5 },
-            { 'str_id': 30722, 'vote': 4 },
-            { 'str_id': 30723, 'vote': 3 },
-            { 'str_id': 30724, 'vote': 2 },
-            { 'str_id': 30725, 'vote': 1 },
+            {'str_id': 30721, 'vote': 5},
+            {'str_id': 30722, 'vote': 4},
+            {'str_id': 30723, 'vote': 3},
+            {'str_id': 30724, 'vote': 2},
+            {'str_id': 30725, 'vote': 1},
         ]
 
         votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
