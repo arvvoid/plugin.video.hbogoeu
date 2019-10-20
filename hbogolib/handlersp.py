@@ -27,9 +27,9 @@ import os
 import errno
 
 try:
-    from urllib import quote_plus as quote
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
-    from urllib.parse import quote_plus as quote
+    from urllib.parse import quote_plus as quote, urlencode
 
 class HbogoHandler_sp(HbogoHandler):
 
@@ -79,19 +79,42 @@ class HbogoHandler_sp(HbogoHandler):
             self.init_api()
 
     def genContextMenu(self, content_id, media_id):
-        add_mylist = (py2_encode(self.language(30719)), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (py2_encode(self.language(30720)), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        runplugin = 'RunPlugin(%s?%s)'
 
-        vote_5 = (py2_encode(self.language(30721)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (py2_encode(self.language(30722)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (py2_encode(self.language(30723)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (py2_encode(self.language(30724)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (py2_encode(self.language(30725)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        add_mylist_query = urlencode({
+            'url': 'ADDMYLIST',
+            'mode': 9,
+            'cid': media_id,
+        })
+
+        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, add_mylist_query))
+
+        remove_mylist_query = urlencode({
+            'url': 'REMMYLIST',
+            'mode': 10,
+            'cid': media_id,
+        })
+        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
+
+        votes_configs = [
+            { 'str_id': 30721, 'vote': 5 },
+            { 'str_id': 30722, 'vote': 4 },
+            { 'str_id': 30723, 'vote': 3 },
+            { 'str_id': 30724, 'vote': 2 },
+            { 'str_id': 30725, 'vote': 1 },
+        ]
+
+        votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': item['vote'],
+            'cid': content_id,
+            }))), votes_configs)
 
         if self.cur_loc == self.LB_MYPLAYLIST:
-            return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
+            return votes + [remove_mylist]
         else:
-            return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
+
 
     @staticmethod
     def generate_device_id():
@@ -421,7 +444,11 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
-        u = self.base_url + "?url=" + quote(title.find('link').text) + "&mode=" + str(mode) + "&name=" + quote(name)
+        u = '%s?%s' % (self.base_url, urlencode({
+            'url': title.find('link').text,
+            'mode': mode,
+            'name': name,
+            }))
 
         thunb = self.get_thumbnail_url(title)
 
@@ -450,8 +477,11 @@ class HbogoHandler_sp(HbogoHandler):
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
-        u = self.base_url + "?url=" + quote(item.find('link').text) + "&mode=" + str(
-            mode) + "&name=" + py2_encode(item.find('title').text)
+        u = '%s?%s' % (self.base_url, urlencode({
+            'url': item.find('link').text,
+            'mode': mode,
+            'name': py2_encode(item.find('title').text),
+            }))
 
         series_name = ""
         try:
@@ -474,7 +504,11 @@ class HbogoHandler_sp(HbogoHandler):
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
+        u = '%s?%s' % (self.base_url, {
+            'url:' url,
+            'mode': mode,
+            'name': name,
+            })
         liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})

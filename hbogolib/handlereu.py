@@ -1196,16 +1196,19 @@ class HbogoHandler_eu(HbogoHandler):
     def genContextMenu(self, content_id, media_id):
         runplugin = 'RunPlugin(%s?%s)'
 
-        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, urlencode({
+        add_mylist_query = urlencode({
             'url': 'ADDMYLIST',
-            'cid': media_id
-            })))
+            'mode': 9,
+            'cid': media_id,
+            })
+        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, add_mylist_query))
 
-        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, urlencode({
+        remove_mylist_query = urlencode({
             'url': 'REMMYLIST',
             'mode': 10,
-            'cid': media_id
-            })))
+            'cid': media_id,
+            })
+        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
 
         votes_configs = [
             { 'str_id': 30721, 'vote': 5 },
