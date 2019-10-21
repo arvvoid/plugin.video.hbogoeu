@@ -1201,14 +1201,16 @@ class HbogoHandler_eu(HbogoHandler):
             'mode': 9,
             'cid': media_id,
             })
-        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, add_mylist_query))
+        add_mylist = (py2_encode(self.language(30719)), runplugin %
+                      (self.base_url, add_mylist_query))
 
         remove_mylist_query = urlencode({
             'url': 'REMMYLIST',
             'mode': 10,
             'cid': media_id,
             })
-        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
+        remove_mylist = (py2_encode(self.language(30720)), runplugin %
+                         (self.base_url, remove_mylist_query))
 
         votes_configs = [
             {'str_id': 30721, 'vote': 5},
@@ -1218,17 +1220,18 @@ class HbogoHandler_eu(HbogoHandler):
             {'str_id': 30725, 'vote': 1},
         ]
 
-        votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': 8,
-            'vote': item['vote'],
-            'cid': content_id,
-            }))), votes_configs)
+        votes = map(lambda item: (py2_encode(self.language(item['str_id'])),
+                                  runplugin % (self.base_url, urlencode({
+                                      'url': 'VOTE',
+                                      'mode': 8,
+                                      'vote': item['vote'],
+                                      'cid': content_id,
+                                  }))), votes_configs)
 
         if self.cur_loc == self.LB_MYPLAYLIST:
-            return votes + [remove_mylist]
-        else:
-            return [add_mylist] + votes
+            return list(votes) + [remove_mylist]
+
+        return [add_mylist] + list(votes)
 
     def addLink(self, title, mode):
         if self.lograwdata:
