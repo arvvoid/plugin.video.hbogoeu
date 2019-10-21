@@ -414,7 +414,7 @@ class HbogoHandler_eu(HbogoHandler):
             backuri = "%s/ssocallbackhandler?%s" % (self.API_HOST_REFERER, urlencode({
                 'ssoid': '{0}',
                 'method': '{1}',
-                'cou': 'POL',
+                'cou': self.COUNTRY_CODE_SHORT,
                 'operatorId': self.op_id,
                 'p': self.API_PLATFORM,
                 'l': self.LANGUAGE_CODE,
