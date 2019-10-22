@@ -250,7 +250,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
-        
+
         if movies is not None:
             self.addCat(py2_encode(movies.find('title').text), movies.find('link').text, self.get_media_resource('movie.png'), 1)
         else:
@@ -324,7 +324,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
 
         self.list_pages(url, 200, 0)
-    
+
         if simple == False:
             xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
             xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
@@ -334,13 +334,13 @@ class HbogoHandler_sp(HbogoHandler):
             xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
             xbmcplugin.setContent(self.handle, self.use_content_type)
             xbmcplugin.endOfDirectory(self.handle)
-    
+
     def play(self, url, content_id):
         self.log("Play: " + str(url))
 
         if not self.chk_login():
             self.login()
-        
+
         if not self.chk_login():
             self.log("NOT LOGGED IN, ABORTING PLAY")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
@@ -365,7 +365,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         license_headers = 'X-Clearleap-AssetID=' + media_guid + '&X-Clearleap-DeviceId=' + self.API_DEVICE_ID + \
             '&X-Clearleap-DeviceToken=' + self.API_DEVICE_TOKEN + '&Content-Type='
-    
+
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
