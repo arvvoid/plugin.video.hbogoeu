@@ -445,7 +445,7 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
-        u = '%s?%s' % (self.base_url, urlencode({
+        item_url = '%s?%s' % (self.base_url, urlencode({
             'url': title.find('link').text,
             'mode': mode,
             'name': name,
@@ -464,7 +464,7 @@ class HbogoHandler_sp(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode=1, media_type=None):
         if self.lograwdata:
@@ -478,7 +478,7 @@ class HbogoHandler_sp(HbogoHandler):
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
-        u = '%s?%s' % (self.base_url, urlencode({
+        directory_url = '%s?%s' % (self.base_url, urlencode({
             'url': item.find('link').text,
             'mode': mode,
             'name': py2_encode(item.find('title').text),
@@ -500,12 +500,12 @@ class HbogoHandler_sp(HbogoHandler):
                                               "title": item.find('title').text,
                                               "Plot": plot})
         liz.setProperty('isPlayable', "false")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = '%s?%s' % (self.base_url, urlencode({
+        category_url = '%s?%s' % (self.base_url, urlencode({
             'url': url,
             'mode': mode,
             'name': name,
@@ -514,4 +514,4 @@ class HbogoHandler_sp(HbogoHandler):
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)

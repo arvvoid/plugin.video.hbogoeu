@@ -1272,7 +1272,7 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
-        u = '%s?%s' % (self.base_url, urlencode({
+        item_url = '%s?%s' % (self.base_url, urlencode({
             'url': title['ObjectUrl'],
             'mode': mode,
             'name': filename,
@@ -1304,12 +1304,12 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Unexpected error for get media id: " + traceback.format_exc())
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode, media_type):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-        u = "%s?%s" % (self.base_url, urlencode({
+        directory_url = "%s?%s" % (self.base_url, urlencode({
             'url': item['ObjectUrl'],
             'mode': mode,
             'name': '%s (%d)' % (py2_encode(item['OriginalName']), item['ProductionYear'])
@@ -1336,13 +1336,13 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Unexpected get media id error: " + traceback.format_exc())
             liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
 
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = '%s?%s' % (self.base_url, urlencode({
+        category_url = '%s?%s' % (self.base_url, urlencode({
             'url': url,
             'mode': mode,
             'name': name,
@@ -1351,4 +1351,4 @@ class HbogoHandler_eu(HbogoHandler):
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
