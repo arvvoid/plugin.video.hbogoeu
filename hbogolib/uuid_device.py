@@ -5,11 +5,6 @@ from __future__ import absolute_import, division, unicode_literals
 
 from kodi_six import xbmc, xbmcaddon
 
-try:  # Python 2
-    from __builtin__ import str as text
-except ImportError:  # Python 3
-    from builtins import str as text
-
 __CRYPT_KEY__ = None
 
 
@@ -65,7 +60,7 @@ def _get_system_uuid():
     if not uuid_value:
         debug('It is not possible to get a system UUID creating a new UUID')
         uuid_value = _get_fake_uuid(system != 'android')
-    return text(uuid_value)
+    return uuid_value.encode('ascii', 'replace')
 
 
 def _get_windows_uuid():
