@@ -27,9 +27,10 @@ import os
 import errno
 
 try:
-    from urllib import quote_plus as quote, urlencode
+    from urllib import urlencode
 except ImportError:
-    from urllib.parse import quote_plus as quote, urlencode
+    from urllib.parse import urlencode
+
 
 class HbogoHandler_sp(HbogoHandler):
 
