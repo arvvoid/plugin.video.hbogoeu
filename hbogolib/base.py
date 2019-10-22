@@ -4,7 +4,7 @@
 # Relesed under GPL version 2
 #########################################################
 
-from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division
 
 
 from hbogolib.constants import HbogoConstants

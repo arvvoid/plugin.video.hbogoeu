@@ -16,6 +16,7 @@ from hbogolib.handler import HbogoHandler
 from hbogolib.constants import HbogoConstants
 
 from hbogolib.util import Util
+from hbogolib.kodiutil import KodiUtil
 
 import sys
 import time
@@ -876,10 +877,7 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("No Home Category found")
 
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.endOfDirectory(self.handle)
+        KodiUtil.endDir(self.handle, None, True)
 
     def list(self, url, simple=False):
         if not self.chk_login():
@@ -910,14 +908,7 @@ class HbogoHandler_eu(HbogoHandler):
                 else:
                     self.addDir(title, 2, "tvshow")
         if simple == False:
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-            xbmcplugin.addSortMethod(handle=self.handle, sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-            xbmcplugin.setContent(self.handle, self.use_content_type)
-            xbmcplugin.endOfDirectory(self.handle)
+            KodiUtil.endDir(self.handle, self.use_content_type)
 
     def season(self, url):
         if not self.chk_login():
@@ -935,26 +926,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, 3, "season")
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, self.use_content_type)
-        xbmcplugin.endOfDirectory(self.handle)
+        KodiUtil.endDir(self.handle, self.use_content_type)
 
     def episode(self, url):
         if not self.chk_login():
@@ -973,26 +945,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         for episode in jsonrsp['ChildContents']['Items']:
             self.addLink(episode, 5)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, self.use_content_type)
-        xbmcplugin.endOfDirectory(self.handle)
+        KodiUtil.endDir(self.handle, self.use_content_type)
 
     def search(self):
         if not self.chk_login():
@@ -1029,26 +982,7 @@ class HbogoHandler_eu(HbogoHandler):
                 if br == 0:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
 
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_TITLE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_GENRE)
-        xbmcplugin.addSortMethod(
-            handle=self.handle,
-            sortMethod=xbmcplugin.SORT_METHOD_LASTPLAYED)
-        xbmcplugin.setContent(self.handle, self.use_content_type)
-        xbmcplugin.endOfDirectory(self.handle)
+        KodiUtil.endDir(self.handle, self.use_content_type)
 
     def play(self, url, content_id):
         self.log("Play: " + str(url))
