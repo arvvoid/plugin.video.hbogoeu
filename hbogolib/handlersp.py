@@ -112,8 +112,9 @@ class HbogoHandler_sp(HbogoHandler):
             }))), votes_configs)
 
         if self.cur_loc == self.LB_MYPLAYLIST:
-            return votes + [remove_mylist]
+            return list(votes) + [remove_mylist]
         else:
+            return [add_mylist] + list(votes)
 
 
     @staticmethod
@@ -504,11 +505,11 @@ class HbogoHandler_sp(HbogoHandler):
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = '%s?%s' % (self.base_url, {
-            'url:' url,
+        u = '%s?%s' % (self.base_url, urlencode({
+            'url': url,
             'mode': mode,
             'name': name,
-            })
+            }))
         liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
