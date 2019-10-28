@@ -4,12 +4,11 @@
 # Relesed under GPL version 2
 #########################################################
 
-from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division
 
-from hbogolib.base import hbogo
 import sys
-import xbmc
-import xbmcaddon
+from hbogolib.base import hbogo
+from kodi_six import xbmc, xbmcaddon
 
 
 # Setup plugin
