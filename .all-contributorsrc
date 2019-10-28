@@ -26,6 +26,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "PolliSoft",
+      "name": "Olof Sandberg",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/563252?v=4",
+      "profile": "https://github.com/PolliSoft",
+      "contributions": [
+        "bug",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
