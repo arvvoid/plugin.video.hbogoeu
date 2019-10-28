@@ -66,6 +66,18 @@
         "translation",
         "test"
       ]
+    },
+    {
+      "login": "jumakki",
+      "name": "jumakki",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32912134?v=4",
+      "profile": "https://github.com/jumakki",
+      "contributions": [
+        "translation",
+        "test",
+        "bug",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
