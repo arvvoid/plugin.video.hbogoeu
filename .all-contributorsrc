@@ -191,6 +191,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "CastagnaIT",
+      "name": "Stefano Gottardo",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3257156?v=4",
+      "profile": "http://www.autorinomina.it",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
