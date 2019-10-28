@@ -28,9 +28,10 @@ import os
 import errno
 
 try:
-    from urllib import quote_plus as quote
+    from urllib import urlencode
 except ImportError:
-    from urllib.parse import quote_plus as quote
+    from urllib.parse import urlencode
+
 
 class HbogoHandler_sp(HbogoHandler):
 
@@ -80,19 +81,43 @@ class HbogoHandler_sp(HbogoHandler):
             self.init_api()
 
     def genContextMenu(self, content_id, media_id):
-        add_mylist = (py2_encode(self.language(30719)), 'RunPlugin(' + self.base_url + "?url=ADDMYLIST&mode=9&cid=" + media_id + ')')
-        remove_mylist = (py2_encode(self.language(30720)), 'RunPlugin(' + self.base_url + "?url=REMMYLIST&mode=10&cid=" + media_id + ')')
+        runplugin = 'RunPlugin(%s?%s)'
 
-        vote_5 = (py2_encode(self.language(30721)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=5&cid=" + content_id + ')')
-        vote_4 = (py2_encode(self.language(30722)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=4&cid=" + content_id + ')')
-        vote_3 = (py2_encode(self.language(30723)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=3&cid=" + content_id + ')')
-        vote_2 = (py2_encode(self.language(30724)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=2&cid=" + content_id + ')')
-        vote_1 = (py2_encode(self.language(30725)), 'RunPlugin(' + self.base_url + "?url=VOTE&mode=8&vote=1&cid=" + content_id + ')')
+        add_mylist_query = urlencode({
+            'url': 'ADDMYLIST',
+            'mode': 9,
+            'cid': media_id,
+        })
+
+        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, add_mylist_query))
+
+        remove_mylist_query = urlencode({
+            'url': 'REMMYLIST',
+            'mode': 10,
+            'cid': media_id,
+        })
+        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
+
+        votes_configs = [
+            {'str_id': 30721, 'vote': 5},
+            {'str_id': 30722, 'vote': 4},
+            {'str_id': 30723, 'vote': 3},
+            {'str_id': 30724, 'vote': 2},
+            {'str_id': 30725, 'vote': 1},
+        ]
+
+        votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
+            'url': 'VOTE',
+            'mode': 8,
+            'vote': item['vote'],
+            'cid': content_id,
+            }))), votes_configs)
 
         if self.cur_loc == self.LB_MYPLAYLIST:
-            return [vote_5, vote_4, vote_3, vote_2, vote_1, remove_mylist]
+            return list(votes) + [remove_mylist]
         else:
-            return [add_mylist, vote_5, vote_4, vote_3, vote_2, vote_1]
+            return [add_mylist] + list(votes)
+
 
     @staticmethod
     def generate_device_id():
@@ -226,7 +251,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), 1)
         else:
             self.log("No Series Category found")
-        
+
         if movies is not None:
             self.addCat(py2_encode(movies.find('title').text), movies.find('link').text, self.get_media_resource('movie.png'), 1)
         else:
@@ -296,16 +321,15 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
 
         self.list_pages(url, 200, 0)
-    
+
         if simple == False:
             KodiUtil.endDir(self.handle, self.use_content_type)
-    
     def play(self, url, content_id):
         self.log("Play: " + str(url))
 
         if not self.chk_login():
             self.login()
-        
+
         if not self.chk_login():
             self.log("NOT LOGGED IN, ABORTING PLAY")
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
@@ -330,7 +354,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         license_headers = 'X-Clearleap-AssetID=' + media_guid + '&X-Clearleap-DeviceId=' + self.API_DEVICE_ID + \
             '&X-Clearleap-DeviceToken=' + self.API_DEVICE_TOKEN + '&Content-Type='
-    
+
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
@@ -411,7 +435,11 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
-        u = self.base_url + "?url=" + quote(title.find('link').text) + "&mode=" + str(mode) + "&name=" + quote(name)
+        item_url = '%s?%s' % (self.base_url, urlencode({
+            'url': title.find('link').text,
+            'mode': mode,
+            'name': name,
+            }))
 
         thunb = self.get_thumbnail_url(title)
 
@@ -426,7 +454,7 @@ class HbogoHandler_sp(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=False)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode=1, media_type=None):
         if self.lograwdata:
@@ -440,8 +468,11 @@ class HbogoHandler_sp(HbogoHandler):
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
-        u = self.base_url + "?url=" + quote(item.find('link').text) + "&mode=" + str(
-            mode) + "&name=" + py2_encode(item.find('title').text)
+        directory_url = '%s?%s' % (self.base_url, urlencode({
+            'url': item.find('link').text,
+            'mode': mode,
+            'name': py2_encode(item.find('title').text),
+            }))
 
         series_name = ""
         try:
@@ -459,14 +490,18 @@ class HbogoHandler_sp(HbogoHandler):
                                               "title": item.find('title').text,
                                               "Plot": plot})
         liz.setProperty('isPlayable', "false")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
-        u = self.base_url + "?url=" + quote(url) + "&mode=" + str(mode) + "&name=" + quote(name)
+        category_url = '%s?%s' % (self.base_url, urlencode({
+            'url': url,
+            'mode': mode,
+            'name': name,
+            }))
         liz = xbmcgui.ListItem(name)
         liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb':icon, 'icon': icon})
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
-        xbmcplugin.addDirectoryItem(handle=self.handle, url=u, listitem=liz, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
