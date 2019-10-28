@@ -22,15 +22,6 @@
       ]
     },
     {
-      "login": "billsuxx",
-      "name": "David Fodor",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/4318995?v=4",
-      "profile": "https://github.com/billsuxx",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "Sakerdot",
       "name": "Adrian Samatan",
       "avatar_url": "https://avatars3.githubusercontent.com/u/9504138?v=4",
@@ -40,6 +31,55 @@
         "ideas"
       ]
     },
+    {
+      "login": "Ajnasz",
+      "name": "Lajos Koszti",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/38329?v=4",
+      "profile": "http://ajnasz.hu",
+      "contributions": [
+        "translation",
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "yuppity",
+      "name": "yuppity",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/18071690?v=4",
+      "profile": "https://github.com/yuppity",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },    
+    {
+      "login": "awdAvenger",
+      "name": "Knut Tidemann",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13065046?v=4",
+      "profile": "https://github.com/awdAvenger",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "paco8",
+      "name": "paco8",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5084042?v=4",
+      "profile": "https://github.com/Paco8",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "billsuxx",
+      "name": "David Fodor",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4318995?v=4",
+      "profile": "https://github.com/billsuxx",
+      "contributions": [
+        "code"
+      ]
+    },    
     {
       "login": "PolliSoft",
       "name": "Olof Sandberg",
@@ -124,52 +164,12 @@
       ]
     },
     {
-      "login": "awdAvenger",
-      "name": "Knut Tidemann",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/13065046?v=4",
-      "profile": "https://github.com/awdAvenger",
-      "contributions": [
-        "bug",
-        "code"
-      ]
-    },
-    {
       "login": "mrthosi",
       "name": "mrthosi",
       "avatar_url": "https://avatars2.githubusercontent.com/u/55213305?v=4",
       "profile": "https://github.com/mrthosi",
       "contributions": [
         "translation"
-      ]
-    },
-    {
-      "login": "paco8",
-      "name": "paco8",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/5084042?v=4",
-      "profile": "https://github.com/Paco8",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
-      "login": "yuppity",
-      "name": "yuppity",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/18071690?v=4",
-      "profile": "https://github.com/yuppity",
-      "contributions": [
-        "code",
-        "bug"
-      ]
-    },
-    {
-      "login": "Ajnasz",
-      "name": "Lajos Koszti",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/38329?v=4",
-      "profile": "http://ajnasz.hu",
-      "contributions": [
-        "translation",
-        "code",
-        "bug"
       ]
     },
     {
