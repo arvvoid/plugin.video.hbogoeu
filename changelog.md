@@ -1,3 +1,9 @@
+v.2.0.19-beta38
+- THIS IS A RELEASE CANDIDATE VERSION
+- Fix failed del session bug
+- Use urlencode to create urls (contribution Ajnasz)
+- Fix uuid encoding on some systems
+
 v.2.0.18-beta37
 - THIS IS A RELEASE CANDIDATE VERSION
 - Compatibility fixes Python 2/3
