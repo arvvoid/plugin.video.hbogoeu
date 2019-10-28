@@ -181,8 +181,8 @@ class HbogoHandler(object):
     def del_login(self):
         try:
             folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-            self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
-            os.remove(folder + self.addon_id + "_session"+".pkl")
+            self.log("Removing stored session: " + folder + self.addon_id + "_session" + ".ecdata")
+            os.remove(folder + self.addon_id + "_session" + ".ecdata")
         except Exception:
             self.log("Delete login error: " + traceback.format_exc())
 
