@@ -78,6 +78,15 @@
         "bug",
         "ideas"
       ]
+    },
+    {
+      "login": "sanangel",
+      "name": "sanangel",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/20192587?v=4",
+      "profile": "https://github.com/sanangel",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
