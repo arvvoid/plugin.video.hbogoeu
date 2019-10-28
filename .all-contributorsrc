@@ -17,7 +17,8 @@
         "maintenance",
         "review",
         "translation",
-        "bug"
+        "bug",
+        "question"
       ]
     },
     {
