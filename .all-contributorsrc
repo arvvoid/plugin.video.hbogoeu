@@ -46,6 +46,16 @@
         "bug",
         "test"
       ]
+    },
+    {
+      "login": "macardi",
+      "name": "macardi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/71271?v=4",
+      "profile": "https://github.com/macardi",
+      "contributions": [
+        "translation",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
