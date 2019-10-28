@@ -15,6 +15,7 @@
         "doc",
         "ideas",
         "maintenance",
+        "review",
         "translation",
         "bug"
       ]
@@ -209,6 +210,15 @@
       "profile": "http://noispot.com",
       "contributions": [
         "ideas"
+      ]
+    },
+    {
+      "login": "allcontributors",
+      "name": "allcontributors[bot]",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/46843839?v=4",
+      "profile": "https://github.com/all-contributors/all-contributors-bot",
+      "contributions": [
+        "doc"
       ]
     }
   ],
