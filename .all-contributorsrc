@@ -87,6 +87,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "alfem",
+      "name": "Alfonso E.M.",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/697599?v=4",
+      "profile": "http://www.el-magnifico.org",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
