@@ -1,4 +1,5 @@
 [![GitHub issues](https://img.shields.io/github/issues/arvvoid/plugin.video.hbogoeu?style=flat)](https://github.com/arvvoid/plugin.video.hbogoeu/issues) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9168cc04d56d480ea3987db569d89f44)](https://www.codacy.com/manual/arvvoid/plugin.video.hbogoeu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arvvoid/plugin.video.hbogoeu&amp;utm_campaign=Badge_Grade) [![GitHub last commit](https://img.shields.io/github/last-commit/arvvoid/plugin.video.hbogoeu?style=flat)](https://github.com/arvvoid/plugin.video.hbogoeu/commits/master) [![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/arvvoid/plugin.video.hbogoeu?label=last%20pre-release&style=flat)](#pre-rel) [![GitHub Release Date](https://img.shields.io/github/release-date/arvvoid/plugin.video.hbogoeu?style=flat)](#release) [![GitHub](https://img.shields.io/github/license/arvvoid/plugin.video.hbogoeu?style=flat)](https://opensource.org/licenses/gpl-2.0.php) [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors) [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 # Disclaimer
 
@@ -95,3 +96,19 @@ Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=
 ## History
 
 Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/arvvoid"><img src="https://avatars2.githubusercontent.com/u/46710439?v=4" width="100px;" alt="Arv.Void"/><br /><sub><b>Arv.Void</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=arvvoid" title="Code">💻</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=arvvoid" title="Documentation">📖</a> <a href="#ideas-arvvoid" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-arvvoid" title="Maintenance">🚧</a> <a href="#translation-arvvoid" title="Translation">🌍</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
