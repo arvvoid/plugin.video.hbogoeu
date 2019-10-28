@@ -159,7 +159,9 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/38329?v=4",
       "profile": "http://ajnasz.hu",
       "contributions": [
-        "translation"
+        "translation",
+        "code",
+        "bug"
       ]
     }
   ],

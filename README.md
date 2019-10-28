@@ -124,7 +124,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/yuppity"><img src="https://avatars3.githubusercontent.com/u/18071690?v=4" width="100px;" alt="yuppity"/><br /><sub><b>yuppity</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=yuppity" title="Code">💻</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Ayuppity" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="http://ajnasz.hu"><img src="https://avatars1.githubusercontent.com/u/38329?v=4" width="100px;" alt="Lajos Koszti"/><br /><sub><b>Lajos Koszti</b></sub></a><br /><a href="#translation-Ajnasz" title="Translation">🌍</a></td>
+    <td align="center"><a href="http://ajnasz.hu"><img src="https://avatars1.githubusercontent.com/u/38329?v=4" width="100px;" alt="Lajos Koszti"/><br /><sub><b>Lajos Koszti</b></sub></a><br /><a href="#translation-Ajnasz" title="Translation">🌍</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=Ajnasz" title="Code">💻</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3AAjnasz" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
