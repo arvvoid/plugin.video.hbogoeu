@@ -6,6 +6,24 @@
   "commit": false,
   "contributors": [
     {
+      "login": "billsuxx",
+      "name": "David Fodor",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4318995?v=4",
+      "profile": "https://github.com/billsuxx",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "karkusviktor",
+      "name": "Karkus Viktor",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14263851?v=4",
+      "profile": "https://github.com/karkusviktor",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "arvvoid",
       "name": "Arv.Void",
       "avatar_url": "https://avatars2.githubusercontent.com/u/46710439?v=4",
@@ -67,15 +85,6 @@
       "name": "paco8",
       "avatar_url": "https://avatars1.githubusercontent.com/u/5084042?v=4",
       "profile": "https://github.com/Paco8",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
-      "login": "billsuxx",
-      "name": "David Fodor",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/4318995?v=4",
-      "profile": "https://github.com/billsuxx",
       "contributions": [
         "code"
       ]
@@ -227,15 +236,6 @@
       "profile": "https://github.com/all-contributors/all-contributors-bot",
       "contributions": [
         "doc"
-      ]
-    },
-    {
-      "login": "karkusviktor",
-      "name": "Karkus Viktor",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/14263851?v=4",
-      "profile": "https://github.com/karkusviktor",
-      "contributions": [
-        "code"
       ]
     }
   ],
