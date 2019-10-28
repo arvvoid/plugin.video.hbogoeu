@@ -96,6 +96,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "tmihai20",
+      "name": "Mihai",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14995307?v=4",
+      "profile": "http://mihai.discuta-liber.com/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
