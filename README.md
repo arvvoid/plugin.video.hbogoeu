@@ -79,7 +79,7 @@ sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
 
-## Latest relese
+## Latest pre-relese
 
 [plugin.video.hbogoeu-2.0.19~beta38.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.19~beta38.zip)
 
