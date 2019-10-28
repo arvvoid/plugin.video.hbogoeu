@@ -201,6 +201,15 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "atleta",
+      "name": "Laszlo Marai",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6267837?v=4",
+      "profile": "http://noispot.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
