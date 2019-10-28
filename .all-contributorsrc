@@ -163,6 +163,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "haakobja",
+      "name": "Håkon Botnmark Jahre",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1866620?v=4",
+      "profile": "http://håkonjahre.no",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
