@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "arvvoid",
+      "name": "Arv.Void",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/46710439?v=4",
+      "profile": "https://github.com/arvvoid",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "translation"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "plugin.video.hbogoeu",
+  "projectOwner": "arvvoid",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
