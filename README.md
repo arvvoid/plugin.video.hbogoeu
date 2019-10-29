@@ -134,6 +134,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://noispot.com"><img src="https://avatars3.githubusercontent.com/u/6267837?v=4" width="100px;" alt="Laszlo Marai"/><br /><sub><b>Laszlo Marai</b></sub></a><br /><a href="#ideas-atleta" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/all-contributors/all-contributors-bot"><img src="https://avatars3.githubusercontent.com/u/46843839?v=4" width="100px;" alt="allcontributors[bot]"/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=allcontributors" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/mata007"><img src="https://avatars1.githubusercontent.com/u/22648433?v=4" width="100px;" alt="mata007"/><br /><sub><b>mata007</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Amata007" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
