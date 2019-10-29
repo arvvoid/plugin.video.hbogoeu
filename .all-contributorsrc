@@ -237,6 +237,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "mata007",
+      "name": "mata007",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/22648433?v=4",
+      "profile": "https://github.com/mata007",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
