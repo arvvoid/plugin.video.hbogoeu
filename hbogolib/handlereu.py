@@ -994,11 +994,14 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
             self.logout()
             return
-            purchase_payload = '<Purchase xmlns="go:v8:interop" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
+
+        purchase_payload = '<Purchase xmlns="go:v8:interop" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
+
         if self.sensitive_debug:
             self.log("Purchase payload: " + str(purchase_payload))
         else:
             self.log("Purchase payload: [OMITTED FOR PRIVACY]")
+
         purchase_headers = {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': '',
