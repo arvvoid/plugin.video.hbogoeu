@@ -1,3 +1,7 @@
+v.2.0.20-beta39
+- THIS IS A RELEASE CANDIDATE VERSION
+- Eu Handler: use api v8
+
 v.2.0.19-beta38
 - THIS IS A RELEASE CANDIDATE VERSION
 - Fix failed del session bug
