@@ -140,19 +140,19 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
-        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v7/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
-        self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v7/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v7/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
+        self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
         self.API_URL_GROUPS_OLD = 'https://' + self.API_HOST + '/v5/Groups/json/' + self.LANGUAGE_CODE + '/'+ self.API_PLATFORM
-        self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v5/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v5/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
-        self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v5/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v8/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v8/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
 
-        self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v7/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v7/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v7/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v8/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v8/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v8/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
 
         self.individualization = ""
         self.goToken = ""
@@ -994,7 +994,7 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
             self.logout()
             return
-        purchase_payload = '<Purchase xmlns="go:v5:interop"><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ClientInfo></ClientInfo><IsFree>false</IsFree><UseInteractivity>false</UseInteractivity></Purchase>'
+            purchase_payload = '<Purchase xmlns="go:v8:interop" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
         if self.sensitive_debug:
             self.log("Purchase payload: " + str(purchase_payload))
         else:
