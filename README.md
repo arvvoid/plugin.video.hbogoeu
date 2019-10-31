@@ -1,4 +1,4 @@
-[![GitHub issues](https://img.shields.io/github/issues/arvvoid/plugin.video.hbogoeu?style=flat)](https://github.com/arvvoid/plugin.video.hbogoeu/issues) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9168cc04d56d480ea3987db569d89f44)](https://www.codacy.com/manual/arvvoid/plugin.video.hbogoeu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arvvoid/plugin.video.hbogoeu&amp;utm_campaign=Badge_Grade) [![GitHub last commit](https://img.shields.io/github/last-commit/arvvoid/plugin.video.hbogoeu?style=flat)](https://github.com/arvvoid/plugin.video.hbogoeu/commits/master) [![GitHub Release Date](https://img.shields.io/github/release-date/arvvoid/plugin.video.hbogoeu?style=flat)](#latest-stable-relese) [![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/arvvoid/plugin.video.hbogoeu?label=last%20pre-release&style=flat)](#latest-pre-relese) [![GitHub](https://img.shields.io/github/license/arvvoid/plugin.video.hbogoeu?style=flat)](https://opensource.org/licenses/gpl-2.0.php) [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors) [![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-) [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/arvvoid/plugin.video.hbogoeu?style=plastic) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9168cc04d56d480ea3987db569d89f44)](https://www.codacy.com/manual/arvvoid/plugin.video.hbogoeu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arvvoid/plugin.video.hbogoeu&amp;utm_campaign=Badge_Grade) [![GitHub](https://img.shields.io/github/license/arvvoid/plugin.video.hbogoeu?style=flat)](https://opensource.org/licenses/gpl-2.0.php) [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors) [![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-) [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
 
 
 # Disclaimer
@@ -78,17 +78,7 @@ sudo apt update
 sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
-## Latest STABLE RELESE
-
-[plugin.video.hbogoeu-2.0.20.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.20.zip)
-
-[CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
-
-## Latest pre-relese
-
-This releases are for test only
-
-[plugin.video.hbogoeu-2.0.19~beta38.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0.19-beta38/plugin.video.hbogoeu-2.0.19.beta38.zip)
+## Change Log
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
