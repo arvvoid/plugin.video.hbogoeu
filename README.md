@@ -86,6 +86,8 @@ sudo pip install wheel pycryptodomex
 
 ## Latest pre-relese
 
+This releases are for test only
+
 [plugin.video.hbogoeu-2.0.19~beta38.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0.19-beta38/plugin.video.hbogoeu-2.0.19.beta38.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
