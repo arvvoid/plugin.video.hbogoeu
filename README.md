@@ -78,10 +78,15 @@ sudo apt update
 sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
+## Latest STABLE RELESE
+
+[plugin.video.hbogoeu-2.0.20.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.20.zip)
+
+[CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
 ## Latest pre-relese
 
-[plugin.video.hbogoeu-2.0.19~beta38.zip](https://github.com/arvvoid/repository.arvvoid/raw/master/plugin.video.hbogoeu/plugin.video.hbogoeu-2.0.19~beta38.zip)
+[plugin.video.hbogoeu-2.0.19~beta38.zip](https://github.com/arvvoid/plugin.video.hbogoeu/releases/download/2.0.19-beta38/plugin.video.hbogoeu-2.0.19.beta38.zip)
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
