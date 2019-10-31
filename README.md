@@ -78,6 +78,7 @@ sudo apt update
 sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
+* The add-on will auto-update from repository as soon as a stable release is available
 
 ## Manual Download/Install
 
