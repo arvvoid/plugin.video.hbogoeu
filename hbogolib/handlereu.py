@@ -257,15 +257,15 @@ class HbogoHandler_eu(HbogoHandler):
             self.init_api(country)
             if self.inputCredentials():
                 return True
-            else:
-                self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
-                sys.exit()
-                return False
-        else:
+
             self.del_setup()
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
             sys.exit()
             return False
+
+        self.del_setup()
+        sys.exit()
+        return False
 
     def storeIndiv(self, indiv, custid):
         self.addon.setSetting('individualization', str(indiv))

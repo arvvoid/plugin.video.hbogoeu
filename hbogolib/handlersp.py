@@ -115,8 +115,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return list(votes) + [remove_mylist]
-        else:
-            return [add_mylist] + list(votes)
+
+        return [add_mylist] + list(votes)
 
 
     @staticmethod
@@ -195,18 +195,18 @@ class HbogoHandler_sp(HbogoHandler):
             self.save_obj(saved_session, self.addon_id + "_es_session")
 
             return True
-        else:
-            return False
+
+        return False
 
     def setup(self, country=None):
         self.init_api()
         if self.inputCredentials():
             return True
-        else:
-            self.del_setup()
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
-            sys.exit()
-            return False
+
+        self.del_setup()
+        xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
+        sys.exit()
+        return False
 
     def init_api(self):
         self.loggedin_headers = {
