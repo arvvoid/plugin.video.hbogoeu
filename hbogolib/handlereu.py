@@ -1039,11 +1039,11 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
-        MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
+        media_url = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
-        PlayerSessionId = jsonrspp['Purchase']['PlayerSessionId']
+        player_session_id = jsonrspp['Purchase']['PlayerSessionId']
         if self.sensitive_debug:
-            self.log("PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
+            self.log("PlayerSessionId: " + str(player_session_id))
         else:
             self.log("PlayerSessionId: [OMITTED FOR PRIVACY]")
         x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
@@ -1052,9 +1052,9 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
 
-        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
+        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + player_session_id + "\",\"merchant\":\"hboeurope\"}")
 
-        list_item = xbmcgui.ListItem(path=MediaUrl)
+        list_item = xbmcgui.ListItem(path=media_url)
         #TODO: add all media info to ListItem
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
