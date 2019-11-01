@@ -972,14 +972,13 @@ class HbogoHandler_eu(HbogoHandler):
                 except Exception:
                     self.log("Unexpected error: " + traceback.format_exc())
 
-                br = 0
-                for item in jsonrsp['Container'][0]['Contents']['Items']:
-                    if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                        self.addLink(item, 5)
-                    else:
-                        self.addDir(item, 2, "tvshow")
-                    br = br + 1
-                if br == 0:
+                if jsonrsp['Container'][0]['Contents']['Items']:
+                    for item in jsonrsp['Container'][0]['Contents']['Items']:
+                        if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                            self.addLink(item, 5)
+                        else:
+                            self.addDir(item, 2, "tvshow")
+                else:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
 
         KodiUtil.endDir(self.handle, self.use_content_type)
