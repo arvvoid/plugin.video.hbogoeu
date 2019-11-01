@@ -1054,7 +1054,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
 
-        li = xbmcgui.ListItem(path=MediaUrl)
+        list_item = xbmcgui.ListItem(path=MediaUrl)
         #TODO: add all media info to ListItem
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
@@ -1067,16 +1067,16 @@ class HbogoHandler_eu(HbogoHandler):
         from inputstreamhelper import Helper
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
-            li.setProperty('inputstreamaddon', 'inputstream.adaptive')
-            li.setProperty('inputstream.adaptive.manifest_type', protocol)
-            li.setProperty('inputstream.adaptive.license_type', drm)
-            li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
-            li.setProperty('inputstream.adaptive.license_key', license_key)
-            self.log("Play url: " + str(li))
-            xbmcplugin.setResolvedUrl(self.handle, True, li)
+            list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            list_item.setProperty('inputstream.adaptive.manifest_type', protocol)
+            list_item.setProperty('inputstream.adaptive.license_type', drm)
+            list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
+            list_item.setProperty('inputstream.adaptive.license_key', license_key)
+            self.log("Play url: " + str(list_item))
+            xbmcplugin.setResolvedUrl(self.handle, True, list_item)
         else:
             self.log("DRM problem playback not possible")
-            xbmcplugin.setResolvedUrl(self.handle, False, li)
+            xbmcplugin.setResolvedUrl(self.handle, False, list_item)
 
     def procContext(self, action_type, content_id, optional=""):
         if not self.chk_login():
