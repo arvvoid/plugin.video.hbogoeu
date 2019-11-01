@@ -909,7 +909,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.addLink(title, 5)
                 else:
                     self.addDir(title, 2, "tvshow")
-        if simple == False:
+        if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
 
     def season(self, url):

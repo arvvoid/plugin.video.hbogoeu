@@ -322,7 +322,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.list_pages(url, 200, 0)
 
-        if simple == False:
+        if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
     def play(self, url, content_id):
         self.log("Play: " + str(url))
