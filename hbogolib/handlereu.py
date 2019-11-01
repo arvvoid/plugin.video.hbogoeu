@@ -12,17 +12,17 @@
 
 from __future__ import absolute_import, division
 
+import sys
+import time
+import json
+import traceback
+import requests
+
 from hbogolib.handler import HbogoHandler
 from hbogolib.constants import HbogoConstants
 
 from hbogolib.util import Util
 from hbogolib.kodiutil import KodiUtil
-
-import sys
-import time
-import json
-import requests
-import traceback
 
 try:
     from urllib import quote_plus as quote, urlencode
