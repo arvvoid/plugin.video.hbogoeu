@@ -9,24 +9,24 @@
 
 from __future__ import absolute_import, division
 
+import sys
+import time
+import traceback
+import os
+import errno
+import requests
+
+
 from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
 
 from hbogolib.util import Util
 from hbogolib.kodiutil import KodiUtil
 
-import sys
-import time
 import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode
-import traceback
-
-import requests
-import os
-import errno
-
 try:
     from urllib import urlencode
 except ImportError:
