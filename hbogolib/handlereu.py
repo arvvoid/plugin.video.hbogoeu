@@ -303,7 +303,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.storeFavgroup(self.favgroupId)
 
     def chk_login(self):
-        return (self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token']) != 0 and len(self.loggedin_headers['GO-CustomerId']) != 0)
+        return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token']) != 0 and len(self.loggedin_headers['GO-CustomerId']) != 0
 
     def logout(self):
         self.log("Loging out")
@@ -587,7 +587,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
             self.silentRegister()
 
-        if (self.FavoritesGroupId == ""):
+        if self.FavoritesGroupId == "":
             self.getFavoriteGroup()
 
         if (username == "" or password == ""):
@@ -802,10 +802,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.setDispCat(self.operator_name)
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), 4)
 
-        if (self.FavoritesGroupId == ""):
+        if self.FavoritesGroupId == "":
             self.getFavoriteGroup()
 
-        if (self.FavoritesGroupId != ""):
+        if self.FavoritesGroupId != "":
             self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.get_media_resource('FavoritesFolder.png'), 1)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
@@ -952,7 +952,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
         keyb.doModal()
-        if (keyb.isConfirmed()):
+        if keyb.isConfirmed():
             searchText = quote(keyb.getText())
             if searchText == "":
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
