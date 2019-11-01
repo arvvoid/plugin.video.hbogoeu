@@ -25,14 +25,12 @@ from hbogolib.util import Util
 from hbogolib.kodiutil import KodiUtil
 
 try:
+    import urlparse as parse
     from urllib import quote_plus as quote, urlencode
 except ImportError:
+    import urllib.parse as parse
     from urllib.parse import quote_plus as quote, urlencode
 
-try:
-    import urlparse as parse
-except ImportError:
-    import urllib.parse as parse
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode
