@@ -242,9 +242,9 @@ class HbogoHandler_eu(HbogoHandler):
         # 3 - is hbogo web or 3th party operator
         # 4 - login redirection url
 
-        for o in op_list:
-            li_items_list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
-            li_items_list[-1].setArt({'thumb': o[2], 'icon': o[2]})
+        for op_list_item in op_list:
+            li_items_list.append(xbmcgui.ListItem(label=op_list_item[0], iconImage=op_list_item[2]))
+            li_items_list[-1].setArt({'thumb': op_list_item[2], 'icon': op_list_item[2]})
 
         index = xbmcgui.Dialog().select(self.language(30445), li_items_list, useDetails=True)
         if index != -1:
@@ -897,10 +897,12 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
-            for Container in range(0, len(jsonrsp['Container'])):
-                self.addCat(py2_encode(jsonrsp['Container'][Container]['Name']), jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
+            for container_index in range(0, len(jsonrsp['Container'])):
+                container_item = jsonrsp['Container'][container_index]
+                self.addCat(py2_encode(container_item['Name']), container_item['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
