@@ -75,10 +75,10 @@ class HbogoHandler_sp(HbogoHandler):
         self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
 
-        if len(self.getCredential('username')) == 0:
-            self.setup()
-        else:
+        if self.getCredential('username'):
             self.init_api()
+        else:
+            self.setup()
 
     def genContextMenu(self, content_id, media_id):
         runplugin = 'RunPlugin(%s?%s)'
@@ -298,7 +298,7 @@ class HbogoHandler_sp(HbogoHandler):
             count += 1
             item_link = item.find('link').text
 
-            if len(item_link) > 0:
+            if item_link:
                 self.log(ET.tostring(item, encoding='utf8'))
                 item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
                 if item_type != 'media':
