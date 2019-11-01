@@ -953,13 +953,13 @@ class HbogoHandler_eu(HbogoHandler):
         keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
         keyb.doModal()
         if keyb.isConfirmed():
-            searchText = quote(keyb.getText())
-            if searchText == "":
+            search_text = quote(keyb.getText())
+            if search_text == "":
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
             else:
-                self.addon.setSetting('lastsearch', searchText)
-                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(searchText) + '/0'))
-                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(searchText) + '/0')
+                self.addon.setSetting('lastsearch', search_text)
+                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text) + '/0'))
+                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(search_text) + '/0')
                 if self.lograwdata:
                     self.log(str(jsonrsp))
 
