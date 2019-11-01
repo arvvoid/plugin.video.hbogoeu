@@ -88,10 +88,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers = {}
 
         #check operator_id
-        if len(self.addon.getSetting('operator_id')) == 0:
-            self.setup(country)
-        else:
+        if self.addon.getSetting('operator_id'):
             self.init_api(country)
+        else:
+            self.setup(country)
 
     def init_api(self, country):
         self.operator_name = self.addon.getSetting('operator_name')
@@ -130,7 +130,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.API_HOST = self.COUNTRY_CODE_SHORT + 'api.hbogo.eu'
 
-        if len(self.SPECIALHOST_URL) > 0:
+        if self.SPECIALHOST_URL:
             self.API_HOST_REFERER = self.SPECIALHOST_URL
             self.API_HOST_ORIGIN = self.SPECIALHOST_URL
         else:
@@ -195,7 +195,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_basic_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl']) > 0:
+                if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
@@ -219,7 +219,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl']) > 0:
+                if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
@@ -633,7 +633,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.save_obj(loaded_session, self.addon_id + "_session")
                     return True
 
-        if len(self.REDIRECT_URL) > 0:
+        if self.REDIRECT_URL:
             self.log("OPERATOR WITH LOGIN REDIRECTION DETECTED")
             self.log("LOGIN WITH SPECIAL OAuth LOGIN PROCEDURE")
             return self.OAuthLogin(username, password)
