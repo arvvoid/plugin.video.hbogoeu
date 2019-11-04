@@ -9,24 +9,24 @@
 
 from __future__ import absolute_import, division
 
+import sys
+import time
+import traceback
+import os
+import errno
+import requests
+
+
 from hbogolib.handler import HbogoHandler
 from hbogolib.ttml2srt import Ttml2srt
 
 from hbogolib.util import Util
 from hbogolib.kodiutil import KodiUtil
 
-import sys
-import time
 import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode
-import traceback
-
-import requests
-import os
-import errno
-
 try:
     from urllib import urlencode
 except ImportError:
@@ -75,10 +75,10 @@ class HbogoHandler_sp(HbogoHandler):
         self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
 
-        if len(self.getCredential('username')) == 0:
-            self.setup()
-        else:
+        if self.getCredential('username'):
             self.init_api()
+        else:
+            self.setup()
 
     def genContextMenu(self, content_id, media_id):
         runplugin = 'RunPlugin(%s?%s)'
@@ -115,8 +115,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return list(votes) + [remove_mylist]
-        else:
-            return [add_mylist] + list(votes)
+
+        return [add_mylist] + list(votes)
 
 
     @staticmethod
@@ -195,18 +195,18 @@ class HbogoHandler_sp(HbogoHandler):
             self.save_obj(saved_session, self.addon_id + "_es_session")
 
             return True
-        else:
-            return False
+
+        return False
 
     def setup(self, country=None):
         self.init_api()
         if self.inputCredentials():
             return True
-        else:
-            self.del_setup()
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
-            sys.exit()
-            return False
+
+        self.del_setup()
+        xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
+        sys.exit()
+        return False
 
     def init_api(self):
         self.loggedin_headers = {
@@ -298,7 +298,7 @@ class HbogoHandler_sp(HbogoHandler):
             count += 1
             item_link = item.find('link').text
 
-            if len(item_link) > 0:
+            if item_link:
                 self.log(ET.tostring(item, encoding='utf8'))
                 item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
                 if item_type != 'media':
@@ -322,7 +322,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.list_pages(url, 200, 0)
 
-        if simple == False:
+        if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
     def play(self, url, content_id):
         self.log("Play: " + str(url))

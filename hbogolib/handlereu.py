@@ -12,27 +12,25 @@
 
 from __future__ import absolute_import, division
 
+import sys
+import time
+import json
+import traceback
+import requests
+
 from hbogolib.handler import HbogoHandler
 from hbogolib.constants import HbogoConstants
 
 from hbogolib.util import Util
 from hbogolib.kodiutil import KodiUtil
 
-import sys
-import time
-import json
-import requests
-import traceback
-
-try:
-    from urllib import quote_plus as quote, urlencode
-except ImportError:
-    from urllib.parse import quote_plus as quote, urlencode
-
 try:
     import urlparse as parse
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
     import urllib.parse as parse
+    from urllib.parse import quote_plus as quote, urlencode
+
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode
@@ -88,10 +86,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers = {}
 
         #check operator_id
-        if len(self.addon.getSetting('operator_id')) == 0:
-            self.setup(country)
-        else:
+        if self.addon.getSetting('operator_id'):
             self.init_api(country)
+        else:
+            self.setup(country)
 
     def init_api(self, country):
         self.operator_name = self.addon.getSetting('operator_name')
@@ -130,7 +128,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.API_HOST = self.COUNTRY_CODE_SHORT + 'api.hbogo.eu'
 
-        if len(self.SPECIALHOST_URL) > 0:
+        if self.SPECIALHOST_URL:
             self.API_HOST_REFERER = self.SPECIALHOST_URL
             self.API_HOST_ORIGIN = self.SPECIALHOST_URL
         else:
@@ -195,7 +193,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_basic_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl']) > 0:
+                if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
@@ -219,7 +217,7 @@ class HbogoHandler_eu(HbogoHandler):
         for operator in json_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
-                if len(operator['LogoUrl']) > 0:
+                if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
@@ -242,9 +240,9 @@ class HbogoHandler_eu(HbogoHandler):
         # 3 - is hbogo web or 3th party operator
         # 4 - login redirection url
 
-        for o in op_list:
-            li_items_list.append(xbmcgui.ListItem(label=o[0], iconImage=o[2]))
-            li_items_list[-1].setArt({'thumb': o[2], 'icon': o[2]})
+        for op_list_item in op_list:
+            li_items_list.append(xbmcgui.ListItem(label=op_list_item[0], iconImage=op_list_item[2]))
+            li_items_list[-1].setArt({'thumb': op_list_item[2], 'icon': op_list_item[2]})
 
         index = xbmcgui.Dialog().select(self.language(30445), li_items_list, useDetails=True)
         if index != -1:
@@ -257,15 +255,15 @@ class HbogoHandler_eu(HbogoHandler):
             self.init_api(country)
             if self.inputCredentials():
                 return True
-            else:
-                self.del_setup()
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
-                sys.exit()
-                return False
-        else:
+
             self.del_setup()
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30444))
             sys.exit()
             return False
+
+        self.del_setup()
+        sys.exit()
+        return False
 
     def storeIndiv(self, indiv, custid):
         self.addon.setSetting('individualization', str(indiv))
@@ -303,7 +301,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.storeFavgroup(self.favgroupId)
 
     def chk_login(self):
-        return (self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token']) != 0 and len(self.loggedin_headers['GO-CustomerId']) != 0)
+        return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(self.loggedin_headers['GO-Token']) != 0 and len(self.loggedin_headers['GO-CustomerId']) != 0
 
     def logout(self):
         self.log("Loging out")
@@ -587,7 +585,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
             self.silentRegister()
 
-        if (self.FavoritesGroupId == ""):
+        if self.FavoritesGroupId == "":
             self.getFavoriteGroup()
 
         if (username == "" or password == ""):
@@ -633,7 +631,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.save_obj(loaded_session, self.addon_id + "_session")
                     return True
 
-        if len(self.REDIRECT_URL) > 0:
+        if self.REDIRECT_URL:
             self.log("OPERATOR WITH LOGIN REDIRECTION DETECTED")
             self.log("LOGIN WITH SPECIAL OAuth LOGIN PROCEDURE")
             return self.OAuthLogin(username, password)
@@ -802,10 +800,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.setDispCat(self.operator_name)
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), 4)
 
-        if (self.FavoritesGroupId == ""):
+        if self.FavoritesGroupId == "":
             self.getFavoriteGroup()
 
-        if (self.FavoritesGroupId != ""):
+        if self.FavoritesGroupId != "":
             self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.get_media_resource('FavoritesFolder.png'), 1)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
@@ -897,17 +895,19 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
-            for Container in range(0, len(jsonrsp['Container'])):
-                self.addCat(py2_encode(jsonrsp['Container'][Container]['Name']), jsonrsp['Container'][Container]['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
+            for container_index in range(0, len(jsonrsp['Container'])):
+                container_item = jsonrsp['Container'][container_index]
+                self.addCat(py2_encode(container_item['Name']), container_item['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
                     self.addLink(title, 5)
                 else:
                     self.addDir(title, 2, "tvshow")
-        if simple == False:
+        if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
 
     def season(self, url):
@@ -952,14 +952,14 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
         keyb.doModal()
-        if (keyb.isConfirmed()):
-            searchText = quote(keyb.getText())
-            if searchText == "":
+        if keyb.isConfirmed():
+            search_text = quote(keyb.getText())
+            if search_text == "":
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
             else:
-                self.addon.setSetting('lastsearch', searchText)
-                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(searchText) + '/0'))
-                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(searchText) + '/0')
+                self.addon.setSetting('lastsearch', search_text)
+                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text) + '/0'))
+                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(search_text) + '/0')
                 if self.lograwdata:
                     self.log(str(jsonrsp))
 
@@ -972,14 +972,13 @@ class HbogoHandler_eu(HbogoHandler):
                 except Exception:
                     self.log("Unexpected error: " + traceback.format_exc())
 
-                br = 0
-                for item in jsonrsp['Container'][0]['Contents']['Items']:
-                    if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                        self.addLink(item, 5)
-                    else:
-                        self.addDir(item, 2, "tvshow")
-                    br = br + 1
-                if br == 0:
+                if jsonrsp['Container'][0]['Contents']['Items']:
+                    for item in jsonrsp['Container'][0]['Contents']['Items']:
+                        if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                            self.addLink(item, 5)
+                        else:
+                            self.addDir(item, 2, "tvshow")
+                else:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
 
         KodiUtil.endDir(self.handle, self.use_content_type)
@@ -1039,11 +1038,11 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
-        MediaUrl = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
+        media_url = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
-        PlayerSessionId = jsonrspp['Purchase']['PlayerSessionId']
+        player_session_id = jsonrspp['Purchase']['PlayerSessionId']
         if self.sensitive_debug:
-            self.log("PlayerSessionId: " + str(jsonrspp['Purchase']['PlayerSessionId']))
+            self.log("PlayerSessionId: " + str(player_session_id))
         else:
             self.log("PlayerSessionId: [OMITTED FOR PRIVACY]")
         x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
@@ -1052,9 +1051,9 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("Auth token: [OMITTED FOR PRIVACY]")
 
-        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + PlayerSessionId + "\",\"merchant\":\"hboeurope\"}")
+        dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + player_session_id + "\",\"merchant\":\"hboeurope\"}")
 
-        li = xbmcgui.ListItem(path=MediaUrl)
+        list_item = xbmcgui.ListItem(path=media_url)
         #TODO: add all media info to ListItem
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
@@ -1067,16 +1066,16 @@ class HbogoHandler_eu(HbogoHandler):
         from inputstreamhelper import Helper
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
-            li.setProperty('inputstreamaddon', 'inputstream.adaptive')
-            li.setProperty('inputstream.adaptive.manifest_type', protocol)
-            li.setProperty('inputstream.adaptive.license_type', drm)
-            li.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
-            li.setProperty('inputstream.adaptive.license_key', license_key)
-            self.log("Play url: " + str(li))
-            xbmcplugin.setResolvedUrl(self.handle, True, li)
+            list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            list_item.setProperty('inputstream.adaptive.manifest_type', protocol)
+            list_item.setProperty('inputstream.adaptive.license_type', drm)
+            list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
+            list_item.setProperty('inputstream.adaptive.license_key', license_key)
+            self.log("Play url: " + str(list_item))
+            xbmcplugin.setResolvedUrl(self.handle, True, list_item)
         else:
             self.log("DRM problem playback not possible")
-            xbmcplugin.setResolvedUrl(self.handle, False, li)
+            xbmcplugin.setResolvedUrl(self.handle, False, list_item)
 
     def procContext(self, action_type, content_id, optional=""):
         if not self.chk_login():
