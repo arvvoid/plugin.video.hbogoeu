@@ -8,20 +8,20 @@
 
 from __future__ import absolute_import, division
 
-from hbogolib.util import Util
-
 import sys
 import json
 import os
 import traceback
+import codecs
 
 import requests
 
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode, py2_decode
+from hbogolib.util import Util
 
-import codecs
 import defusedxml.ElementTree as ET
+
 
 try:
     from urllib import unquote_plus as unquote
@@ -247,12 +247,10 @@ class HbogoHandler(object):
         self.del_login()
         if self.login():
             return True
-        else:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
-            if not ret:
-                return False
-            else:
-                return self.inputCredentials()
+        ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
+        if not ret:
+            return False
+        return self.inputCredentials()
 
     def getCredential(self, credential_id):
         value = self.addon.getSetting(credential_id)
@@ -262,20 +260,15 @@ class HbogoHandler(object):
             decrypted = self.decrypt_credential_v1(encoded)
             if decrypted is not None:
                 return decrypted
-            else:
-                # decrypt failed ask for credentials again
-
-                if self.inputCredentials():
-                    return self.getCredential(credential_id)
-                else:
-                    return ''
-        else:
-            # this are old plaintext credentials convert
-            if len(value) > 0:
-                self.setCredential(credential_id, value)
+            # decrypt failed ask for credentials again
+            if self.inputCredentials():
                 return self.getCredential(credential_id)
-            else:
-                return ''
+            return ''
+        # this are old plaintext credentials convert
+        if value:
+            self.setCredential(credential_id, value)
+            return self.getCredential(credential_id)
+        return ''
 
     def setCredential(self, credential_id, value):
         self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + self.encrypt_credential_v1(value))
@@ -302,8 +295,7 @@ class HbogoHandler(object):
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
             if sys.version_info < (3, 0):
                 return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
-            else:
-                return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
+            return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None

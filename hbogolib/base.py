@@ -6,23 +6,20 @@
 
 from __future__ import absolute_import, division
 
+import sys
+import traceback
 
 from hbogolib.constants import HbogoConstants
 
 try:
+    import urlparse as parse
     from urllib import unquote_plus as unquote
 except ImportError:
+    import urllib.parse as parse
     from urllib.parse import unquote_plus as unquote
 
-try:
-    import urlparse as parse
-except ImportError:
-    import urllib.parse as parse
-
-import sys
 from kodi_six import xbmc, xbmcaddon, xbmcgui
 
-import traceback
 
 
 class hbogo(object):

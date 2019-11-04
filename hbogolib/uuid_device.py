@@ -3,9 +3,9 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-from kodi_six import xbmc, xbmcaddon
-
 import sys
+
+from kodi_six import xbmc, xbmcaddon
 
 __CRYPT_KEY__ = None
 
@@ -64,8 +64,7 @@ def _get_system_uuid():
         uuid_value = _get_fake_uuid(system != 'android')
     if (sys.version_info > (3, 0)):
         return str(uuid_value)
-    else:
-        return uuid_value.encode('ascii', 'replace')
+    return uuid_value.encode('ascii', 'replace')
 
 
 def _get_windows_uuid():

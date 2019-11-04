@@ -4,8 +4,10 @@
 #  based on https://github.com/yuppity/ttml2srt
 #  --------------------------------------------
 
-from defusedxml import minidom
+from __future__ import absolute_import, division
+
 import sys
+from defusedxml import minidom
 
 class Ttml2srt(object):
 

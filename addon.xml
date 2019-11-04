@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.20.GIT">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.21.GIT">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -71,7 +71,10 @@ Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jo
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.0.20-beta39
+v.2.0.21
+- Code style fixes
+
+v.2.0.20
 - THIS IS A RELEASE CANDIDATE VERSION
 - Eu Handler: use api v8
 
