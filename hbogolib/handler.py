@@ -229,8 +229,7 @@ class HbogoHandler(object):
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
                 return False
-            else:
-                return self.inputCredentials()
+            return self.inputCredentials()
         password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
@@ -238,8 +237,7 @@ class HbogoHandler(object):
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
                 return False
-            else:
-                return self.inputCredentials()
+            return self.inputCredentials()
 
         self.setCredential('username', username)
         self.setCredential('password', password)
