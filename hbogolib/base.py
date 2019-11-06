@@ -131,32 +131,32 @@ class hbogo(object):
             self.start()
             self.handler.categories()
 
-        elif mode == 1:
+        elif mode == HbogoConstants.ACTION_LIST:
             self.start()
             self.handler.setDispCat(name)
             self.handler.list(url)
 
-        elif mode == 2:
+        elif mode == HbogoConstants.ACTION_SEASON:
             self.start()
             self.handler.setDispCat(name)
             self.handler.season(url)
 
-        elif mode == 3:
+        elif mode == HbogoConstants.ACTION_EPISODE:
             self.start()
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
-        elif mode == 4:
+        elif mode == HbogoConstants.ACTION_SEARCH:
             self.start()
             self.handler.setDispCat(self.language(30711).encode('utf-8'))
             self.handler.search()
 
-        elif mode == 5:
+        elif mode == HbogoConstants.ACTION_PLAY:
             self.start()
             self.handler.setDispCat(name)
             self.handler.play(url, content_id)
 
-        elif mode == 6: #logout, destry setup
+        elif mode == HbogoConstants.ACTION_RESET_SETUP: #logout, destry setup
             #ask confirm
             if xbmcgui.Dialog().yesno(self.addon.getAddonInfo('name'), self.language(30692).encode('utf-8')):
                 from hbogolib.handler import HbogoHandler
@@ -164,23 +164,23 @@ class hbogo(object):
                 handler.del_setup()
                 xbmc.executebuiltin('Container.Refresh')
 
-        elif mode == 7: #reset session
+        elif mode == HbogoConstants.ACTION_RESET_SESSION: #reset session
             from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.handle, self.base_url)
             handler.del_login()
             xbmc.executebuiltin('Container.Refresh')
 
-        elif mode == 8: # vote
+        elif mode == HbogoConstants.ACTION_VOTE: # vote
             self.start()
-            self.handler.procContext(8, content_id, vote)
+            self.handler.procContext(HbogoConstants.ACTION_VOTE, content_id, vote)
 
-        elif mode == 9: # add to my list
+        elif mode == HbogoConstants.ACTION_ADD_MY_LIST: # add to my list
             self.start()
-            self.handler.procContext(9, content_id)
+            self.handler.procContext(HbogoConstants.ACTION_ADD_MY_LIST, content_id)
 
-        elif mode == 10: # remove from my list
+        elif mode == HbogoConstants.ACTION_REMOVE_MY_LIST: # remove from my list
             self.start()
-            self.handler.procContext(10, content_id)
+            self.handler.procContext(HbogoConstants.ACTION_REMOVE_MY_LIST, content_id)
 
 
 

@@ -360,7 +360,7 @@ class HbogoHandler_eu(HbogoHandler):
                     "OSName": "Linux",
                     "OSVersion": "undefined",
                     "Platform": self.API_PLATFORM,
-                    "SWVersion": "3.3.9.6418.2100",
+                    "SWVersion": "4.7.3.6484.2142",
                     "SubtitleSize": ""
                 },
                 "CustomerCode": "",
@@ -679,7 +679,7 @@ class HbogoHandler_eu(HbogoHandler):
                 "OSName": "Linux",
                 "OSVersion": "undefined",
                 "Platform": self.API_PLATFORM,
-                "SWVersion": "3.3.9.6418.2100",
+                "SWVersion": "4.7.3.6484.2142",
                 "SubtitleSize": ""
             },
             "CustomerCode": "",
@@ -798,13 +798,13 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.setDispCat(self.operator_name)
-        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), 4)
+        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
         if self.FavoritesGroupId == "":
             self.getFavoriteGroup()
 
         if self.FavoritesGroupId != "":
-            self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.get_media_resource('FavoritesFolder.png'), 1)
+            self.addCat(self.LB_MYPLAYLIST, self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false', self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
@@ -851,22 +851,22 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error in find key categories: " + traceback.format_exc())
 
         if position_series != -1:
-            self.addCat(py2_encode(self.language(30716)), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('tv.png'), 1)
+            self.addCat(py2_encode(self.language(30716)), jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Series Category found")
 
         if position_movies != -1:
-            self.addCat(py2_encode(self.language(30717)), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('movie.png'), 1)
+            self.addCat(py2_encode(self.language(30717)), jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Movies Category found")
 
         if position_kids != -1:
-            self.addCat(py2_encode(self.language(30729)), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('kids.png'), 1)
+            self.addCat(py2_encode(self.language(30729)), jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Kids Category found")
 
         if position_week_top != -1:
-            self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('DefaultFolder.png'), 1)
+            self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Week Top Category found")
 
@@ -900,13 +900,13 @@ class HbogoHandler_eu(HbogoHandler):
         if len(jsonrsp['Container']) > 1:
             for container_index in range(0, len(jsonrsp['Container'])):
                 container_item = jsonrsp['Container'][container_index]
-                self.addCat(py2_encode(container_item['Name']), container_item['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), 1)
+                self.addCat(py2_encode(container_item['Name']), container_item['ObjectUrl'], self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
                 if title['ContentType'] == 1 or title['ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                    self.addLink(title, 5)
+                    self.addLink(title, HbogoConstants.ACTION_PLAY)
                 else:
-                    self.addDir(title, 2, "tvshow")
+                    self.addDir(title, HbogoConstants.ACTION_SEASON, "tvshow")
         if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
 
@@ -925,7 +925,7 @@ class HbogoHandler_eu(HbogoHandler):
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
         for season in jsonrsp['Parent']['ChildContents']['Items']:
-            self.addDir(season, 3, "season")
+            self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
         KodiUtil.endDir(self.handle, self.use_content_type)
 
     def episode(self, url):
@@ -944,7 +944,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
 
         for episode in jsonrsp['ChildContents']['Items']:
-            self.addLink(episode, 5)
+            self.addLink(episode, HbogoConstants.ACTION_PLAY)
         KodiUtil.endDir(self.handle, self.use_content_type)
 
     def search(self):
@@ -975,9 +975,9 @@ class HbogoHandler_eu(HbogoHandler):
                 if jsonrsp['Container'][0]['Contents']['Items']:
                     for item in jsonrsp['Container'][0]['Contents']['Items']:
                         if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                            self.addLink(item, 5)
+                            self.addLink(item, HbogoConstants.ACTION_PLAY)
                         else:
-                            self.addDir(item, 2, "tvshow")
+                            self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
                 else:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
 
@@ -1083,7 +1083,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         icon = self.get_resource("icon.png")
 
-        if action_type == 9:
+        if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
             resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
             try:
                 if resp["Success"]:
@@ -1097,7 +1097,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.log("ERROR ADD TO MY LIST: " + content_id)
                 xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
 
-        if action_type == 10:
+        if action_type == HbogoConstants.ACTION_REMOVE_MY_LIST:
             resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
             try:
                 if resp["Success"]:
@@ -1113,7 +1113,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.log("ERROR REMOVE FROM MY LIST: " + content_id)
                 xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
 
-        if action_type == 8:
+        if action_type == HbogoConstants.ACTION_VOTE:
             resp = self.get_from_hbogo(self.API_URL_ADD_RATING + content_id + '/' + optional)
             try:
                 if resp["Success"]:
@@ -1134,7 +1134,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         add_mylist_query = urlencode({
             'url': 'ADDMYLIST',
-            'mode': 9,
+            'mode': HbogoConstants.ACTION_ADD_MY_LIST,
             'cid': media_id,
             })
         add_mylist = (py2_encode(self.language(30719)), runplugin %
@@ -1142,7 +1142,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         remove_mylist_query = urlencode({
             'url': 'REMMYLIST',
-            'mode': 10,
+            'mode': HbogoConstants.ACTION_REMOVE_MY_LIST,
             'cid': media_id,
             })
         remove_mylist = (py2_encode(self.language(30720)), runplugin %
@@ -1159,7 +1159,7 @@ class HbogoHandler_eu(HbogoHandler):
         votes = map(lambda item: (py2_encode(self.language(item['str_id'])),
                                   runplugin % (self.base_url, urlencode({
                                       'url': 'VOTE',
-                                      'mode': 8,
+                                      'mode': HbogoConstants.ACTION_VOTE,
                                       'vote': item['vote'],
                                       'cid': content_id,
                                   }))), votes_configs)

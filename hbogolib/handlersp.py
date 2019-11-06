@@ -18,6 +18,7 @@ import requests
 
 
 from hbogolib.handler import HbogoHandler
+from hbogolib.constants import HbogoConstants
 from hbogolib.ttml2srt import Ttml2srt
 
 from hbogolib.util import Util
@@ -85,7 +86,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         add_mylist_query = urlencode({
             'url': 'ADDMYLIST',
-            'mode': 9,
+            'mode': HbogoConstants.ACTION_ADD_MY_LIST,
             'cid': media_id,
         })
 
@@ -93,7 +94,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         remove_mylist_query = urlencode({
             'url': 'REMMYLIST',
-            'mode': 10,
+            'mode': HbogoConstants.ACTION_REMOVE_MY_LIST,
             'cid': media_id,
         })
         remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
@@ -108,7 +109,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
             'url': 'VOTE',
-            'mode': 8,
+            'mode': HbogoConstants.ACTION_VOTE,
             'vote': item['vote'],
             'cid': content_id,
             }))), votes_configs)
@@ -248,17 +249,17 @@ class HbogoHandler_sp(HbogoHandler):
                 pass
 
         if series is not None:
-            self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), 1)
+            self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Series Category found")
 
         if movies is not None:
-            self.addCat(py2_encode(movies.find('title').text), movies.find('link').text, self.get_media_resource('movie.png'), 1)
+            self.addCat(py2_encode(movies.find('title').text), movies.find('link').text, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Movies Category found")
 
         if kids is not None:
-            self.addCat(py2_encode(kids.find('title').text), kids.find('link').text, self.get_media_resource('kids.png'), 1)
+            self.addCat(py2_encode(kids.find('title').text), kids.find('link').text, self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
         else:
             self.log("No Kids Category found")
 
@@ -304,7 +305,7 @@ class HbogoHandler_sp(HbogoHandler):
                 if item_type != 'media':
                     self.addDir(item)
                 elif item_type == 'media':
-                    self.addLink(item, 5)
+                    self.addLink(item, HbogoConstants.ACTION_PLAY)
                 else:
                     self.log('Unknown item type: ' + item_type)
         self.log('List pages total items: ' + str(count))
@@ -324,6 +325,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
+
     def play(self, url, content_id):
         self.log("Play: " + str(url))
 
@@ -456,7 +458,7 @@ class HbogoHandler_sp(HbogoHandler):
         liz.setProperty("IsPlayable", "true")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
-    def addDir(self, item, mode=1, media_type=None):
+    def addDir(self, item, mode=HbogoConstants.ACTION_LIST, media_type=None):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 

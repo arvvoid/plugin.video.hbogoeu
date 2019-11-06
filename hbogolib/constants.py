@@ -24,6 +24,18 @@ class HbogoConstants(object):
     HANDLER_LATIN_AMERICA = 3
     HANDLER_ASIA = 4
 
+    ACTION_LIST = 1
+    ACTION_SEASON = 2
+    ACTION_EPISODE = 3
+    ACTION_SEARCH = 4
+    ACTION_PLAY = 5
+    ACTION_RESET_SETUP = 6
+    ACTION_RESET_SESSION = 7
+    ACTION_VOTE = 8
+    ACTION_ADD_MY_LIST = 9
+    ACTION_REMOVE_MY_LIST = 10
+
+
     countries = [
         ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
         ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
