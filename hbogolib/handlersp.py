@@ -431,7 +431,7 @@ class HbogoHandler_sp(HbogoHandler):
         icon = self.get_resource("icon.png")
 
         if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
-            resp = self.get_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id)
+            resp = self.get_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id, 'xml')
             try:
                 if resp.find('link').text == "success":
                     self.log("ADDED TO MY LIST: " + content_id)
@@ -445,7 +445,7 @@ class HbogoHandler_sp(HbogoHandler):
                 xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
 
         if action_type == HbogoConstants.ACTION_REMOVE_MY_LIST:
-            resp = self.delete_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id)
+            resp = self.delete_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id, 'xml')
             try:
                 if resp.find('link').text == "success":
                     self.log("REMOVED FROM MY LIST: " + content_id)
