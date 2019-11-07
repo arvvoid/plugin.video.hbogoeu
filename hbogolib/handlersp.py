@@ -433,7 +433,7 @@ class HbogoHandler_sp(HbogoHandler):
         if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
             resp = self.get_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id, 'xml')
             try:
-                if resp.find('link').text == "success":
+                if resp.find('status').text == "success":
                     self.log("ADDED TO MY LIST: " + content_id)
                     xbmcgui.Dialog().notification(self.language(30719), self.LB_SUCESS, icon)
                 else:
@@ -447,7 +447,7 @@ class HbogoHandler_sp(HbogoHandler):
         if action_type == HbogoConstants.ACTION_REMOVE_MY_LIST:
             resp = self.delete_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id, 'xml')
             try:
-                if resp.find('link').text == "success":
+                if resp.find('status').text == "success":
                     self.log("REMOVED FROM MY LIST: " + content_id)
                     xbmcgui.Dialog().notification(self.language(30720), self.LB_SUCESS, icon)
                     return xbmc.executebuiltin('Container.Refresh')
