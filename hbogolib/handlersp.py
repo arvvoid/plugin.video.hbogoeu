@@ -462,12 +462,74 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("DRM problem playback not possible")
             xbmcplugin.setResolvedUrl(self.handle, False, listitem=li)
 
+    def procContext(self, action_type, content_id, optional=""):
+        if not self.chk_login():
+            self.login()
+
+        icon = self.get_resource("icon.png")
+
+        if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
+            resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
+            try:
+                if resp.find('link').text == "success":
+                    self.log("ADDED TO MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification(self.language(30719), self.LB_SUCESS, icon)
+                else:
+                    self.log("FAILED ADD TO MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
+            except Exception:
+                self.log("Add to mylist unexpected error: " + traceback.format_exc())
+                self.log("ERROR ADD TO MY LIST: " + content_id)
+                xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
+
+        if action_type == HbogoConstants.ACTION_REMOVE_MY_LIST:
+            resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
+            try:
+                if resp.find('link').text == "success":
+                    self.log("REMOVED FROM MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification(self.language(30720), self.LB_SUCESS, icon)
+                    return xbmc.executebuiltin('Container.Refresh')
+                else:
+                    self.log("FAILED TO REMOVE MY LIST: " + content_id)
+                    xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
+            except Exception:
+                self.log("Remove from mylist unexpected error: " + traceback.format_exc())
+                self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
+                self.log("ERROR REMOVE FROM MY LIST: " + content_id)
+                xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
+
+    def genContextMenu(self, guid):
+        runplugin = 'RunPlugin(%s?%s)'
+
+        add_mylist_query = urlencode({
+            'url': 'ADDMYLIST',
+            'mode': HbogoConstants.ACTION_ADD_MY_LIST,
+            'cid': guid,
+            })
+        add_mylist = (py2_encode(self.language(30719)), runplugin %
+                      (self.base_url, add_mylist_query))
+
+        remove_mylist_query = urlencode({
+            'url': 'REMMYLIST',
+            'mode': HbogoConstants.ACTION_REMOVE_MY_LIST,
+            'cid': guid,
+            })
+        remove_mylist = (py2_encode(self.language(30720)), runplugin %
+                         (self.base_url, remove_mylist_query))
+
+        if self.cur_loc == self.LB_MYPLAYLIST:
+            return [remove_mylist]
+
+        return [add_mylist]
+
     def addLink(self, title, mode):
         if self.lograwdata:
             self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
 
         media_type = "episode"
+
         name = py2_encode(title.find('title').text)
+        guid = py2_encode(title.find('guid').text)
 
         original_name = py2_encode(title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text)
         if self.force_original_names:
@@ -508,6 +570,7 @@ class HbogoHandler_sp(HbogoHandler):
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
+        liz.addContextMenuItems(items=self.genContextMenu(guid))
         liz.setProperty("IsPlayable", "true")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
@@ -516,6 +579,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
         media_type = "tvshow"
+        guid = py2_encode(title.find('guid').text)
 
         plot = ""
         try:
@@ -544,6 +608,7 @@ class HbogoHandler_sp(HbogoHandler):
                                               "tvshowtitle": series_name,
                                               "title": item.find('title').text,
                                               "Plot": plot})
+        liz.addContextMenuItems(items=self.genContextMenu(guid))
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
