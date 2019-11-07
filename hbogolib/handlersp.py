@@ -28,10 +28,11 @@ import defusedxml.ElementTree as ET
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode
+
 try:
-    from urllib import urlencode
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
-    from urllib.parse import urlencode
+    from urllib.parse import quote_plus as quote, urlencode
 
 
 class HbogoHandler_sp(HbogoHandler):
@@ -62,11 +63,14 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.DEFAULT_LANGUAGE = country[4]
         self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+        self.operator_name = ''
         if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
             if country[1] == 'es':
                 self.LANGUAGE_CODE = 'en_hboespana'
+                self.operator_name = 'HBO SPAIN'
             else:
                 self.LANGUAGE_CODE = 'en_hbon'
+                self.operator_name = 'HBO NORDIC'
 
         # check if default language is forced
         if self.addon.getSetting('deflang') == 'true':
@@ -74,6 +78,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
         self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
+        self.API_URL_SEARCH = 'https://' + self.API_HOST + '/cloffice/client/web/search/' + self.LANGUAGE_CODE + '&query='
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
 
         if self.getCredential('username'):
@@ -229,12 +234,17 @@ class HbogoHandler_sp(HbogoHandler):
         if not self.chk_login():
             self.login()
 
+        self.setDispCat(self.operator_name)
+
+        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE+self.LANGUAGE_CODE, response_format='xml')
 
         home = None
         series = None
         movies = None
         kids = None
+        watchlist = None
 
         for item in browse_xml.findall('.//item'):
             if item.find('category').text == 'Home':
@@ -243,10 +253,17 @@ class HbogoHandler_sp(HbogoHandler):
                 series = item
             elif item.find('category').text == 'Movies':
                 movies = item
+            elif item.find('category').text == 'Watchlist':
+                watchlist = item
             elif item.find('category').text == 'Kids' or item.find('category').text == 'Toonix':
                 kids = item
             else:
                 pass
+
+        if watchlist is not None:
+            self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+        else:
+            self.log("No Watchlist Category found")
 
         if series is not None:
             self.addCat(py2_encode(series.find('title').text), series.find('link').text, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
@@ -325,6 +342,42 @@ class HbogoHandler_sp(HbogoHandler):
 
         if simple is False:
             KodiUtil.endDir(self.handle, self.use_content_type)
+
+    def search(self):
+        if not self.chk_login():
+            self.login()
+        keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+        keyb.doModal()
+        if keyb.isConfirmed():
+            search_text = quote(keyb.getText())
+            if search_text == "":
+                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
+            else:
+                self.addon.setSetting('lastsearch', search_text)
+                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
+                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
+
+                count = 0
+
+                for item in response.findall('.//item'):
+                    count += 1
+                    item_link = item.find('link').text
+
+                    if item_link:
+                        self.log(ET.tostring(item, encoding='utf8'))
+                        item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
+                        if item_type != 'media':
+                            self.addDir(item)
+                        elif item_type == 'media':
+                            self.addLink(item, HbogoConstants.ACTION_PLAY)
+                        else:
+                            self.log('Unknown item type: ' + item_type)
+
+                if count == 0:
+                    # No result
+                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES, self.get_media_resource('DefaultFolderBack.png'), '')
+
+        KodiUtil.endDir(self.handle, self.use_content_type)
 
     def play(self, url, content_id):
         self.log("Play: " + str(url))
