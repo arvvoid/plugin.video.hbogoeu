@@ -579,7 +579,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
         media_type = "tvshow"
-        guid = py2_encode(title.find('guid').text)
+        guid = py2_encode(item.find('guid').text)
 
         plot = ""
         try:
