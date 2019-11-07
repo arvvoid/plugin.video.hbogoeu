@@ -87,45 +87,6 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             self.setup()
 
-    def genContextMenu(self, content_id, media_id):
-        runplugin = 'RunPlugin(%s?%s)'
-
-        add_mylist_query = urlencode({
-            'url': 'ADDMYLIST',
-            'mode': HbogoConstants.ACTION_ADD_MY_LIST,
-            'cid': media_id,
-        })
-
-        add_mylist = (py2_encode(self.language(30719)), runplugin % (self.base_url, add_mylist_query))
-
-        remove_mylist_query = urlencode({
-            'url': 'REMMYLIST',
-            'mode': HbogoConstants.ACTION_REMOVE_MY_LIST,
-            'cid': media_id,
-        })
-        remove_mylist = (py2_encode(self.language(30720)), runplugin % (self.base_url, remove_mylist_query))
-
-        votes_configs = [
-            {'str_id': 30721, 'vote': 5},
-            {'str_id': 30722, 'vote': 4},
-            {'str_id': 30723, 'vote': 3},
-            {'str_id': 30724, 'vote': 2},
-            {'str_id': 30725, 'vote': 1},
-        ]
-
-        votes = map(lambda item: (py2_encode(self.language(item['str_id'])), runplugin % (self.base_url, urlencode({
-            'url': 'VOTE',
-            'mode': HbogoConstants.ACTION_VOTE,
-            'vote': item['vote'],
-            'cid': content_id,
-            }))), votes_configs)
-
-        if self.cur_loc == self.LB_MYPLAYLIST:
-            return list(votes) + [remove_mylist]
-
-        return [add_mylist] + list(votes)
-
-
     @staticmethod
     def generate_device_id():
         import uuid

@@ -164,17 +164,17 @@ class HbogoHandler(object):
             return resp
 
     def delete_from_hbogo(self, url, response_format='json'):
-        self.log("DELETE FROM HBO URL: " + url)
-        self.log("DELETE FROM HBO RESPONSE FORMAT: " + response_format)
+        self.log("DEL FROM HBO URL: " + url)
+        self.log("DEL FROM HBO RESPONSE FORMAT: " + response_format)
         try:
             r = requests.delete(url, headers=self.loggedin_headers)
-            self.log("DELETE FROM HBO STATUS: " + str(r.status_code))
+            self.log("DEL FROM HBO STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
                 return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
-            self.log("DELETE FROM HBO ERROR: " + repr(e))
+            self.log("DEL FROM HBO ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "DELETE FROM HBO ERROR"}, "ErrorMessage": "DELETE FROM HBO ERROR"}
             return resp
 
