@@ -23,12 +23,12 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 |----------------------------|-----------|--------------------|---------|-------------------|----------|
 | Listing Content            | STABLE    | STABLE             | N/A     | N/A               | N/A      |
 | Content Info               | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Search                     | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| Search                     | STABLE    | BETA               | N/A     | N/A               | N/A      |
 | Login                      | STABLE    | STABLE             | N/A     | N/A               | N/A      |
 | Playback                   | STABLE    | STABLE             | N/A     | N/A               | N/A      |
 | Subtitles                  | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| My List                    | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| Add/Remove from My List    | STABLE    | N/A                | N/A     | N/A               | N/A      |
+| My List                    | STABLE    | BETA               | N/A     | N/A               | N/A      |
+| Add/Remove from My List    | STABLE    | BETA               | N/A     | N/A               | N/A      |
 | Voting                     | STABLE    | N/A                | N/A     | N/A               | N/A      |
 | Report play  status to HBO | N/A       | N/A                | N/A     | N/A               | N/A      |
 
