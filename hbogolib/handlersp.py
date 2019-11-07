@@ -456,7 +456,6 @@ class HbogoHandler_sp(HbogoHandler):
                     xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
             except Exception:
                 self.log("Remove from mylist unexpected error: " + traceback.format_exc())
-                self.log("LOGIN: INDIVIDUALIZATION ERROR: " + traceback.format_exc())
                 self.log("ERROR REMOVE FROM MY LIST: " + content_id)
                 xbmcgui.Dialog().notification(self.language(30720), self.LB_ERROR, icon)
 
