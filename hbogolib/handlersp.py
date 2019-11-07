@@ -42,7 +42,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.LICENSE_SERVER = ""
 
-        self.API_CLIENT_VERSION = '3.8.3'
+        self.API_CLIENT_VERSION = '3.10.15'
         self.API_DEVICE_ID = ''
         self.API_DEVICE_TOKEN = ''
         self.API_IDENTITY_GUID = ''
@@ -80,6 +80,7 @@ class HbogoHandler_sp(HbogoHandler):
         self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/cloffice/client/web/search/' + self.LANGUAGE_CODE + '&query='
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
+        self.API_URL_MYLIST_OPERATION = 'https://' + self.API_HOST + '/cloffice/client/web/savedAsset/' + self.LANGUAGE_CODE + '&guid='
 
         if self.getCredential('username'):
             self.init_api()
@@ -469,7 +470,7 @@ class HbogoHandler_sp(HbogoHandler):
         icon = self.get_resource("icon.png")
 
         if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
-            resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
+            resp = self.get_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id)
             try:
                 if resp.find('link').text == "success":
                     self.log("ADDED TO MY LIST: " + content_id)
@@ -483,7 +484,7 @@ class HbogoHandler_sp(HbogoHandler):
                 xbmcgui.Dialog().notification(self.language(30719), self.LB_ERROR, icon)
 
         if action_type == HbogoConstants.ACTION_REMOVE_MY_LIST:
-            resp = self.get_from_hbogo(self.API_URL_REMOVE_MYLIST + content_id)
+            resp = self.delete_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id)
             try:
                 if resp.find('link').text == "success":
                     self.log("REMOVED FROM MY LIST: " + content_id)
