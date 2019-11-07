@@ -76,11 +76,11 @@ class HbogoHandler_sp(HbogoHandler):
         if self.addon.getSetting('deflang') == 'true':
             self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
 
-        self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
+        self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse'
         self.LANGUAGE_CODE = '?language='+self.LANGUAGE_CODE
-        self.API_URL_SEARCH = 'https://' + self.API_HOST + '/cloffice/client/web/search/' + self.LANGUAGE_CODE + '&query='
+        self.API_URL_SEARCH = 'https://' + self.API_HOST + '/cloffice/client/web/search' + self.LANGUAGE_CODE + '&query='
         self.API_URL_AUTH_WEBBASIC = 'https://' + self.API_HOST + '/cloffice/client/device/login'
-        self.API_URL_MYLIST_OPERATION = 'https://' + self.API_HOST + '/cloffice/client/web/savedAsset/' + self.LANGUAGE_CODE + '&guid='
+        self.API_URL_MYLIST_OPERATION = 'https://' + self.API_HOST + '/cloffice/client/web/savedAsset' + self.LANGUAGE_CODE + '&guid='
 
         if self.getCredential('username'):
             self.init_api()
