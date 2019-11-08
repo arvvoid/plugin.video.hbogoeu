@@ -19,18 +19,18 @@ Register on the official HBO® Go website for your region
 
 Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
-| REGION / Feature           | HBO GO EU | HBO Spain + Nordic | HBO USA | HBO Latin America | HBO Asia |
-|----------------------------|-----------|--------------------|---------|-------------------|----------|
-| Listing Content            | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Content Info               | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Search                     | STABLE    | BETA               | N/A     | N/A               | N/A      |
-| Login                      | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Playback                   | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| Subtitles                  | STABLE    | STABLE             | N/A     | N/A               | N/A      |
-| My List                    | STABLE    | BETA               | N/A     | N/A               | N/A      |
-| Add/Remove from My List    | STABLE    | BETA               | N/A     | N/A               | N/A      |
-| Voting                     | STABLE    | N/A                | N/A     | N/A               | N/A      |
-| Report play  status to HBO | N/A       | N/A                | N/A     | N/A               | N/A      |
+| HBO REGIONS (API-s) / Feature | Europe | Nordic+Spain | USA | Latin America | Asia |
+|-------------------------------|--------|--------------|-----|---------------|------|
+| Listing Content               | YES    | YES          | NO  | NO            | NO   |
+| Content Info                  | YES    | YES          | NO  | NO            | NO   |
+| Search                        | YES    | YES          | NO  | NO            | NO   |
+| Login                         | YES    | YES          | NO  | NO            | NO   |
+| Playback                      | YES    | YES          | NO  | NO            | NO   |
+| Subtitles                     | YES    | YES          | NO  | NO            | NO   |
+| My List                       | YES    | YES          | NO  | NO            | NO   |
+| Add/Remove from My List       | YES    | YES          | NO  | NO            | NO   |
+| Voting                        | YES    | NO           | NO  | NO            | NO   |
+| Report play  status to HBO    | NO     | NO           | NO  | NO            | NO   |
 
 
 This add-on support 18 countries atm: 
