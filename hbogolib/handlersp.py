@@ -279,7 +279,8 @@ class HbogoHandler_sp(HbogoHandler):
             item_link = item.find('link').text
 
             if item_link:
-                self.log(ET.tostring(item, encoding='utf8'))
+                if self.lograwdata:
+                    self.log(ET.tostring(item, encoding='utf8'))
                 item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
                 if item_type != 'media':
                     self.addDir(item)
@@ -326,7 +327,8 @@ class HbogoHandler_sp(HbogoHandler):
                     item_link = item.find('link').text
 
                     if item_link:
-                        self.log(ET.tostring(item, encoding='utf8'))
+                        if self.lograwdata:
+                            self.log(ET.tostring(item, encoding='utf8'))
                         item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
                         if item_type != 'media':
                             self.addDir(item)
