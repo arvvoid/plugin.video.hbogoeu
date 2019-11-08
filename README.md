@@ -34,24 +34,24 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 
 
 This add-on support 18 countries atm: 
-*  __Bosnia and Herzegovina__ *[HBO Go EU]* 
-*  __Bulgaria__ *[HBO Go EU]* 
-*  __Croatia__ *[HBO Go EU]* 
-*  __Czech Republic__ *[HBO Go EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-*  __Hungary__ *[HBO Go EU]* 
-*  __Macedonia__ *[HBO Go EU]* 
-*  __Montenegro__ *[HBO Go EU]* 
-*  __Polonia__ *[HBO Go EU]* 
-*  __Portugal__ *[HBO Go EU]* 
-*  __Romania__ *[HBO Go EU]*  (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-*  __Serbia__ *[HBO Go EU]* 
-*  __Slovakia__ *[HBO Go EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
-*  __Slovenija__ *[HBO Go EU]* 
-*  __Spain__ *[HBO Spain]* 
-*  __Norway__ *[HBO Nordic]* 
-*  __Denmark__ *[HBO Nordic]* 
-*  __Sweden__ *[HBO Nordic]* 
-*  __Finland__ *[HBO Nordic]*
+*  __Bosnia and Herzegovina__ *[EU]*
+*  __Bulgaria__ *[EU]*
+*  __Croatia__ *[EU]*
+*  __Czech Republic__ *[EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Denmark__ *[Nordic+Spain]*
+*  __Finland__ *[Nordic+Spain]*
+*  __Hungary__ *[EU]*
+*  __Macedonia__ *[EU]*
+*  __Montenegro__ *[EU]*
+*  __Norway__ *[Nordic+Spain]*
+*  __Polonia__ *[EU]*
+*  __Portugal__ *[EU]*
+*  __Romania__ *[EU]*  (Telekom Romania, UPC Romania, Vodafone Romania 4GTV+ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Serbia__ *[EU]*
+*  __Slovakia__ *[EU]*  (Skylink, UPC CZ are currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Slovenija__ *[EU]*
+*  __Spain__ *[Nordic+Spain]*
+*  __Sweden__ *[Nordic+Spain]*
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
