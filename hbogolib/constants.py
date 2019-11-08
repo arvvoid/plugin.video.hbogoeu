@@ -41,9 +41,12 @@ class HbogoConstants(object):
         ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
         ['Croatia', 'hr', 'hr', 'HRV', 'HRV', '', HANDLER_EU],
         ['Czech Republic', 'cz', 'cz', 'CZE', 'CES', '', HANDLER_EU],
+        ['Denmark', 'dk', 'dk', 'DNK', 'da_hbon', 'https://dk.hbonordic.com/', HANDLER_NORDIC],
+        ['Finland', 'fi', 'fi', 'FIN', 'fi_hbon', 'https://fi.hbonordic.com/', HANDLER_NORDIC],
         ['Hungary', 'hu', 'hu', 'HUN', 'HUN', '', HANDLER_EU],
         ['Macedonia', 'mk', 'mk', 'MKD', 'MKD', '', HANDLER_EU],
         ['Montenegro', 'me', 'me', 'MNE', 'SRP', '', HANDLER_EU],
+        ['Norway', 'no', 'no', 'NOR', 'no_hbon', 'https://no.hbonordic.com/', HANDLER_NORDIC],
         ['Polonia', 'pl', 'pl', 'POL', 'POL', '', HANDLER_EU],
         ['Portugal', 'pt', 'pt', 'PRT', 'POR', 'https://hboportugal.com', HANDLER_EU],
         ['Romania', 'ro', 'ro', 'ROU', 'RON', '', HANDLER_EU],
@@ -51,10 +54,7 @@ class HbogoConstants(object):
         ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
         ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
         ['Spain', 'es', 'es', 'ESP', 'es_hboespana', 'https://es.hboespana.com', HANDLER_SPAIN],
-        ['Norway', 'no', 'no', 'NOR', 'no_hbon', 'https://no.hbonordic.com/', HANDLER_NORDIC],
-        ['Denmark', 'dk', 'dk', 'DNK', 'da_hbon', 'https://dk.hbonordic.com/', HANDLER_NORDIC],
-        ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC],
-        ['Finland', 'fi', 'fi', 'FIN', 'fi_hbon', 'https://fi.hbonordic.com/', HANDLER_NORDIC],
+        ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC]
     ]
 
     platforms = {
