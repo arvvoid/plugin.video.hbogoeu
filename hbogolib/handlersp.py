@@ -138,7 +138,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
-        response = self.purchase_payload(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
 
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
