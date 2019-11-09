@@ -127,6 +127,12 @@ class HbogoHandler(object):
         except TypeError:
             xbmc.log(self.DEBUG_ID_STRING + msg.decode('utf-8'), level)
 
+    def mask_sensitive_data(self, data):
+        if self.sensitive_debug:
+            return data
+
+        return '[OMITTED FOR PRIVACY]'
+
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc

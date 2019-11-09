@@ -457,7 +457,7 @@ class HbogoHandler_eu(HbogoHandler):
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
 
             if self.sensitive_debug:
-                self.log("LOGIN FORM PAYLOAD: " + str(payload))
+                self.log('LOGIN FORM PAYLOAD: ' + str(payload))
 
             response = cp_session.post(
                 HbogoConstants.eu_redirect_login[self.op_id][0],
@@ -538,14 +538,9 @@ class HbogoHandler_eu(HbogoHandler):
             else:
                 self.goToken = jsonrspl['Token']
                 self.GOcustomerId = jsonrspl['Customer']['Id']
-                if self.sensitive_debug:
-                    self.log("Login sucess - Token" + str(self.goToken))
-                    self.log("Login sucess - Customer Id" + str(self.GOcustomerId))
-                    self.log("Login sucess - Session Id" + str(self.sessionId))
-                else:
-                    self.log("Login sucess - Token  [OMITTED FOR PRIVACY]")
-                    self.log("Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
-                    self.log("Login sucess - Session Id [OMITTED FOR PRIVACY]")
+                self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
+                self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
+                self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
                 self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
                 self.loggedin_headers['GO-Token'] = str(self.goToken)
                 self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
@@ -561,10 +556,7 @@ class HbogoHandler_eu(HbogoHandler):
                     "time": time.time()
 
                 }
-                if self.sensitive_debug:
-                    self.log("SAVING SESSION: " + str(saved_session))
-                else:
-                    self.log("SAVING SESSION: [OMITTED FOR PRIVACY]")
+                self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
                 self.save_obj(saved_session, self.addon_id + "_session")
                 return True
         else:
@@ -572,7 +564,7 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "Sorry your operator require a special login procedure thats not supported at the moment.")
 
     def login(self):
-        self.log("Login using operator: " + str(self.op_id))
+        self.log('Login using operator: ' + str(self.op_id))
 
         username = self.getCredential('username')
         password = self.getCredential('password')
@@ -607,29 +599,20 @@ class HbogoHandler_eu(HbogoHandler):
                 if time.time() < (loaded_session["time"] + (self.SESSION_VALIDITY * 60 * 60)):
                     self.log("NOT EXPIRED RESTORING...")
                     # valid loaded sesion restor and exit login
-                    if self.sensitive_debug:
-                        self.log("Restoring login from saved: " + str(loaded_session))
-                    else:
-                        self.log("Restoring login from saved: [OMITTED FOR PRIVACY]")
+                    self.log('Restoring login from saved: ' + self.mask_sensitive_data(str(loaded_session)))
                     self.loggedin_headers = loaded_session["headers"]
                     self.sessionId = self.loggedin_headers['GO-SessionId']
                     self.goToken = self.loggedin_headers['GO-Token']
                     self.GOcustomerId = self.loggedin_headers['GO-CustomerId']
-                    if self.sensitive_debug:
-                        self.log("Login restored - Token" + str(self.goToken))
-                        self.log("Login restored - Customer Id" + str(self.GOcustomerId))
-                        self.log("Login restored - Session Id" + str(self.sessionId))
-                    else:
-                        self.log("Login restored - Token  [OMITTED FOR PRIVACY]")
-                        self.log("Login restored - Customer Id  [OMITTED FOR PRIVACY]")
-                        self.log("Login restored - Session Id [OMITTED FOR PRIVACY]")
+
+                    self.log('Login restored - Token ' + self.mask_sensitive_data(str(self.goToken)))
+                    self.log('Login restored - Customer Id ' + self.mask_sensitive_data(str(self.GOcustomerId)))
+                    self.log('Login restored - Session Id ' + self.mask_sensitive_data(str(self.sessionId)))
                     loaded_session['time'] = time.time()
-                    if self.sensitive_debug:
-                        self.log("REFRESHING SAVED SESSION: " + str(loaded_session))
-                    else:
-                        self.log("REFRESHING SAVED SESSION: [OMITTED FOR PRIVACY]")
-                    self.save_obj(loaded_session, self.addon_id + "_session")
+                    self.log('REFRESHING SAVED SESSION: ' + self.mask_sensitive_data(str(loaded_session)))
+                    self.save_obj(loaded_session, self.addon_id + '_session')
                     return True
+
 
         if self.REDIRECT_URL:
             self.log("OPERATOR WITH LOGIN REDIRECTION DETECTED")
@@ -718,10 +701,7 @@ class HbogoHandler_eu(HbogoHandler):
         }
 
         data = json.dumps(data_obj)
-        if self.sensitive_debug:
-            self.log("PERFORMING LOGIN: " + str(data))
-        else:
-            self.log("PERFORMING LOGIN")
+        self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
         jsonrspl = self.send_login_hbogo(url, headers, data)
 
         try:
@@ -762,14 +742,9 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.goToken = jsonrspl['Token']
             self.GOcustomerId = jsonrspl['Customer']['Id']
-            if self.sensitive_debug:
-                self.log("Login sucess - Token" + str(self.goToken))
-                self.log("Login sucess - Customer Id" + str(self.GOcustomerId))
-                self.log("Login sucess - Session Id" + str(self.sessionId))
-            else:
-                self.log("Login sucess - Token  [OMITTED FOR PRIVACY]")
-                self.log("Login sucess - Customer Id  [OMITTED FOR PRIVACY]")
-                self.log("Login sucess - Session Id [OMITTED FOR PRIVACY]")
+            self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
+            self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
+            self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
             self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
             self.loggedin_headers['GO-Token'] = str(self.goToken)
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
@@ -785,10 +760,7 @@ class HbogoHandler_eu(HbogoHandler):
                 "time": time.time()
 
             }
-            if self.sensitive_debug:
-                self.log("SAVING SESSION: " + str(saved_session))
-            else:
-                self.log("SAVING SESSION: [OMITTED FOR PRIVACY]")
+            self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
             self.save_obj(saved_session, self.addon_id + "_session")
             return True
 
@@ -996,10 +968,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         purchase_payload = '<Purchase xmlns="go:v8:interop" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
 
-        if self.sensitive_debug:
-            self.log("Purchase payload: " + str(purchase_payload))
-        else:
-            self.log("Purchase payload: [OMITTED FOR PRIVACY]")
+        self.log('Purchase payload: ' + self.mask_sensitive_data(str(purchase_payload)))
 
         purchase_headers = {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -1019,10 +988,7 @@ class HbogoHandler_eu(HbogoHandler):
         }
         self.log("Requesting purchase: " + str(self.API_URL_PURCHASE))
         jsonrspp = self.send_purchase_hbogo(self.API_URL_PURCHASE, purchase_payload, purchase_headers)
-        if self.sensitive_debug:
-            self.log("Purchase response: " + str(jsonrspp))
-        else:
-            self.log("Purchase response: [OMITTED FOR PRIVACY]")
+        self.log('Purchase response: ' + self.mask_sensitive_data(str(jsonrspp)))
 
         try:
             if jsonrspp['ErrorMessage']:
@@ -1041,15 +1007,9 @@ class HbogoHandler_eu(HbogoHandler):
         media_url = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
         player_session_id = jsonrspp['Purchase']['PlayerSessionId']
-        if self.sensitive_debug:
-            self.log("PlayerSessionId: " + str(player_session_id))
-        else:
-            self.log("PlayerSessionId: [OMITTED FOR PRIVACY]")
+        self.log('PlayerSessionId: ' + self.mask_sensitive_data(str(player_session_id)))
         x_dt_auth_token = jsonrspp['Purchase']['AuthToken']
-        if self.sensitive_debug:
-            self.log("Auth token: " + str(jsonrspp['Purchase']['AuthToken']))
-        else:
-            self.log("Auth token: [OMITTED FOR PRIVACY]")
+        self.log('Auth token: ' + self.mask_sensitive_data(str(jsonrspp['Purchase']['AuthToken'])))
 
         dt_custom_data = Util.base64enc("{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + player_session_id + "\",\"merchant\":\"hboeurope\"}")
 
@@ -1057,10 +1017,7 @@ class HbogoHandler_eu(HbogoHandler):
         #TODO: add all media info to ListItem
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
-        if self.sensitive_debug:
-            self.log("Licence key: " + str(license_key))
-        else:
-            self.log("Licence key: [OMITTED FOR PRIVACY]")
+        self.log('Licence key: ' + self.mask_sensitive_data(str(license_key)))
         protocol = 'ism'
         drm = 'com.widevine.alpha'
         from inputstreamhelper import Helper
