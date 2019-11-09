@@ -136,21 +136,19 @@ class HbogoHandler(object):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc
 
-    def send_login_hbogo(self, url, headers, data, response_format='json'):
-        self.log("SEND LOGIN URL: " + url)
-        self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
+    def post_to_hbogo(self, url, headers, data, response_format='json'):
+        self.log("POST TO HBO URL: " + url)
+        self.log("POST TO HBO FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=headers, data=data)
-            self.log("SEND LOGIN RETURNED STATUS: " + str(r.status_code))
-            if self.sensitive_debug:
-                self.log("SEND LOGIN RETURNED RAW: " + py2_encode(r.text))
+            self.log("POST TO HBO RETURNED STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
                 return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + repr(e))
-            resp = {"Data": {"ErrorMessage": "SEND LOGIN ERROR"}, "ErrorMessage": "SEND LOGIN ERROR"}
+            self.log("POST TO HBO ERROR: " + repr(e))
+            resp = {"Data": {"ErrorMessage": "POST TO HBO ERROR"}, "ErrorMessage": "POST TO HBO ERROR"}
             return resp
 
     def get_from_hbogo(self, url, response_format='json'):
@@ -181,21 +179,6 @@ class HbogoHandler(object):
         except requests.RequestException as e:
             self.log("DEL FROM HBO ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "DELETE FROM HBO ERROR"}, "ErrorMessage": "DELETE FROM HBO ERROR"}
-            return resp
-
-    def send_purchase_hbogo(self, url, purchase_payload, purchase_headers, response_format='json'):
-        self.log("SEND PURCHASE URL: " + url)
-        self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
-        try:
-            r = requests.post(url, headers=purchase_headers, data=purchase_payload)
-            self.log("SEND PURCHASE STATUS: " + str(r.status_code))
-            if response_format == 'json':
-                return r.json()
-            elif response_format == 'xml':
-                return ET.fromstring(py2_encode(r.text))
-        except requests.RequestException as e:
-            self.log("SEND PURCHASE ERROR: " + repr(e))
-            resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}
             return resp
 
     def del_login(self):

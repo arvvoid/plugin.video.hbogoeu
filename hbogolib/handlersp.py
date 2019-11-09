@@ -138,7 +138,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
-        response = self.send_login_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        response = self.purchase_payload(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
 
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
@@ -440,7 +440,7 @@ class HbogoHandler_sp(HbogoHandler):
         icon = self.get_resource("icon.png")
 
         if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
-            resp = self.get_from_hbogo(self.API_URL_MYLIST_OPERATION + content_id, 'xml')
+            resp = self.post_to_hbogo(self.API_URL_MYLIST_OPERATION + content_id, self.loggedin_headers, '', 'xml')
             try:
                 if resp.find('status').text == "success":
                     self.log("ADDED TO MY LIST: " + content_id)

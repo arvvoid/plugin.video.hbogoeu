@@ -706,7 +706,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         data = json.dumps(data_obj)
         self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
-        jsonrspl = self.send_login_hbogo(url, headers, data)
+        jsonrspl = self.post_to_hbogo(url, headers, data)
 
         try:
             if jsonrspl['ErrorMessage']:
@@ -1011,7 +1011,7 @@ class HbogoHandler_eu(HbogoHandler):
             'User-Agent': self.UA
         }
         self.log("Requesting purchase: " + str(self.API_URL_PURCHASE))
-        jsonrspp = self.send_purchase_hbogo(self.API_URL_PURCHASE, purchase_payload, purchase_headers)
+        jsonrspp = self.post_to_hbogo(self.API_URL_PURCHASE, purchase_headers, purchase_payload)
         self.log('Purchase response: ' + self.mask_sensitive_data(str(jsonrspp)))
 
         try:
