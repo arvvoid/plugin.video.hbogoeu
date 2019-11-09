@@ -538,31 +538,30 @@ class HbogoHandler_eu(HbogoHandler):
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
                 self.logout()
                 return False
-            else:
-                self.goToken = jsonrspl['Token']
-                self.GOcustomerId = jsonrspl['Customer']['Id']
-                self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
-                self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
-                self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
-                self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
-                self.loggedin_headers['GO-Token'] = str(self.goToken)
-                self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
-                # save the session with validity of n hours to not relogin every run of the add-on
+            self.goToken = jsonrspl['Token']
+            self.GOcustomerId = jsonrspl['Customer']['Id']
+            self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
+            self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
+            self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
+            self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
+            self.loggedin_headers['GO-Token'] = str(self.goToken)
+            self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
+            # save the session with validity of n hours to not relogin every run of the add-on
 
-                login_hash = Util.hash225_string(
-                    self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
-                self.log("LOGIN HASH: " + login_hash)
+            login_hash = Util.hash225_string(
+                self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+            self.log("LOGIN HASH: " + login_hash)
 
-                saved_session = {
+            saved_session = {
 
-                    "hash": login_hash,
-                    "headers": self.loggedin_headers,
-                    "time": time.time()
+                "hash": login_hash,
+                "headers": self.loggedin_headers,
+                "time": time.time()
 
-                }
-                self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
-                self.save_obj(saved_session, self.addon_id + "_session")
-                return True
+            }
+            self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
+            self.save_obj(saved_session, self.addon_id + "_session")
+            return True
         else:
             self.log("OAuth operator not supported: " + str(self.op_id))
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR,
