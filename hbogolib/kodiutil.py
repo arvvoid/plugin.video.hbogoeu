@@ -8,6 +8,7 @@ from __future__ import absolute_import, division
 
 from kodi_six import xbmcplugin
 
+
 class KodiUtil(object):
 
     @staticmethod

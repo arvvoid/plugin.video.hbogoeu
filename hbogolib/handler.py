@@ -8,20 +8,18 @@
 
 from __future__ import absolute_import, division
 
-import sys
+import codecs
 import json
 import os
+import sys
 import traceback
-import codecs
-
-import requests
-
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
-from kodi_six.utils import py2_encode, py2_decode
-from hbogolib.util import Util
 
 import defusedxml.ElementTree as ET
+import requests
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from kodi_six.utils import py2_encode, py2_decode
 
+from hbogolib.util import Util
 
 try:
     from urllib import unquote_plus as unquote
@@ -35,12 +33,14 @@ try:
 except ImportError:
     # no Cryptodome gracefully fail with an informative message
     msg = xbmcaddon.Addon().getLocalizedString(30694)
-    xbmc.log("[" + str(xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(), xbmc.LOGDEBUG)
+    xbmc.log("[" + str(
+        xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(),
+             xbmc.LOGDEBUG)
     xbmcgui.Dialog().ok(xbmcaddon.Addon().getAddonInfo('name') + " ERROR", msg)
     sys.exit()
 
-class HbogoHandler(object):
 
+class HbogoHandler(object):
     UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
     GO_SW_VERSION = '4.7.4'
     GO_REQUIRED_PLATFORM = 'CHBR'  # emulate chrome
@@ -104,22 +104,21 @@ class HbogoHandler(object):
         else:
             self.lograwdata = False
 
-
         if self.sensitive_debug:
             ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
             if not ret:
                 sys.exit()
 
-        self.loggedin_headers = None  #DEFINE IN SPECIFIC HANDLER
+        self.loggedin_headers = None  # DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
 
     @staticmethod
     def get_resource(file):
-        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/'+file))
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/' + file))
 
     @staticmethod
     def get_media_resource(file):
-        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/resources/media/'+file))
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/' + file))
 
     def log(self, msg, level=xbmc.LOGDEBUG):
         try:
@@ -236,7 +235,8 @@ class HbogoHandler(object):
                 self.addon.setSetting('password', '')
                 return False
             return self.inputCredentials()
-        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM,
+                                          option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
@@ -356,5 +356,3 @@ class HbogoHandler(object):
 
     def addCat(self, name, url, icon, mode):
         pass
-
-
