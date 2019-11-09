@@ -13,6 +13,7 @@ __CRYPT_KEY__ = None
 def debug(msg):
     xbmc.log("[" + str(xbmcaddon.Addon().getAddonInfo('id')) + "]" + msg, xbmc.LOGDEBUG)
 
+
 def get_system_platform():
     platform = "unknown"
     if xbmc.getCondVisibility('system.platform.linux') and not xbmc.getCondVisibility('system.platform.android'):
@@ -29,6 +30,7 @@ def get_system_platform():
         platform = "ios"
     return platform
 
+
 def get_crypt_key():
     """
     Lazily generate the crypt key and return it
@@ -38,6 +40,7 @@ def get_crypt_key():
     if not __CRYPT_KEY__:
         __CRYPT_KEY__ = _get_system_uuid()
     return __CRYPT_KEY__
+
 
 def _get_system_uuid():
     """
@@ -121,7 +124,8 @@ def _get_android_uuid():
     try:
         # Due to the new android security we cannot get any type of serials
         sys_prop = ['ro.product.board', 'ro.product.brand', 'ro.product.device', 'ro.product.locale'
-                    'ro.product.manufacturer', 'ro.product.model', 'ro.product.platform',
+                                                                                 'ro.product.manufacturer',
+                    'ro.product.model', 'ro.product.platform',
                     'persist.sys.timezone', 'persist.sys.locale', 'net.hostname']
         # Warning net.hostname property starting from android 10 is deprecated return empty
         proc = subprocess.Popen(['/system/bin/getprop'], stdout=subprocess.PIPE)
