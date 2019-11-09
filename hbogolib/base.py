@@ -129,7 +129,7 @@ class hbogo(object):
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(),
                      xbmc.LOGDEBUG)
 
-        if mode == None or url == None or len(url) < 1:
+        if mode is None or url is None or len(url) < 1:
             self.start()
             self.handler.categories()
 
