@@ -747,31 +747,30 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, "GENERIC LOGIN ERROR")
             self.logout()
             return False
-        else:
-            self.goToken = jsonrspl['Token']
-            self.GOcustomerId = jsonrspl['Customer']['Id']
-            self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
-            self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
-            self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
-            self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
-            self.loggedin_headers['GO-Token'] = str(self.goToken)
-            self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
-            # save the session with validity of n hours to not relogin every run of the add-on
+        self.goToken = jsonrspl['Token']
+        self.GOcustomerId = jsonrspl['Customer']['Id']
+        self.log('Login sucess - Token' + self.mask_sensitive_data(str(self.goToken)))
+        self.log('Login sucess - Customer Id' + self.mask_sensitive_data(str(self.GOcustomerId)))
+        self.log('Login sucess - Session Id' + self.mask_sensitive_data(str(self.sessionId)))
+        self.loggedin_headers['GO-SessionId'] = str(self.sessionId)
+        self.loggedin_headers['GO-Token'] = str(self.goToken)
+        self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
+        # save the session with validity of n hours to not relogin every run of the add-on
 
-            login_hash = Util.hash225_string(
-                self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
-            self.log("LOGIN HASH: " + login_hash)
+        login_hash = Util.hash225_string(
+            self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+        self.log("LOGIN HASH: " + login_hash)
 
-            saved_session = {
+        saved_session = {
 
-                "hash": login_hash,
-                "headers": self.loggedin_headers,
-                "time": time.time()
+            "hash": login_hash,
+            "headers": self.loggedin_headers,
+            "time": time.time()
 
-            }
-            self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
-            self.save_obj(saved_session, self.addon_id + "_session")
-            return True
+        }
+        self.log('SAVING SESSION: ' + self.mask_sensitive_data(str(saved_session)))
+        self.save_obj(saved_session, self.addon_id + "_session")
+        return True
 
     def categories(self):
         if not self.chk_login():
@@ -897,8 +896,8 @@ class HbogoHandler_eu(HbogoHandler):
                             self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
         else:
             for title in jsonrsp['Container'][0]['Contents']['Items']:
-                if title['ContentType'] == 1 or title[
-                    'ContentType'] == 3:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                if title['ContentType'] == 1 or title['ContentType'] == 3:
                     self.addLink(title, HbogoConstants.ACTION_PLAY)
                 else:
                     self.addDir(title, HbogoConstants.ACTION_SEASON, "tvshow")
@@ -970,8 +969,8 @@ class HbogoHandler_eu(HbogoHandler):
 
                 if jsonrsp['Container'][0]['Contents']['Items']:
                     for item in jsonrsp['Container'][0]['Contents']['Items']:
-                        if item['ContentType'] == 1 or item['ContentType'] == 7 or item[
-                            'ContentType'] == 3:  # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                        # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                        if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:
                             self.addLink(item, HbogoConstants.ACTION_PLAY)
                         else:
                             self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
