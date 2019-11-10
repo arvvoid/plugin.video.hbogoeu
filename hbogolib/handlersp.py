@@ -257,13 +257,16 @@ class HbogoHandler_sp(HbogoHandler):
             thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
             for thumb in thumbnails:
                 if thumb.get('height') == '1080':
-                    self.log("Huge Poster found, using as thumbnail")
+                    if self.lograwdata:
+                        self.log("Huge Poster found, using as thumbnail")
                     return str(thumb.get('url'))
             for thumb in thumbnails:
                 if thumb.get('height') == '720':
-                    self.log("Large Poster found, using as thumbnail")
+                    if self.lograwdata:
+                        self.log("Large Poster found, using as thumbnail")
                     return str(thumb.get('url'))
-            self.log("Poster not found using first one")
+            if self.lograwdata:
+                self.log("Poster not found using first one")
             return str(thumbnails[0].get('url'))
         except Exception:
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
@@ -508,6 +511,8 @@ class HbogoHandler_sp(HbogoHandler):
         plot = ""
         try:
             plot = py2_encode(title.find('description').text)
+        except AttributeError:
+            pass
         except Exception:
             self.log("Error in find plot: " + traceback.format_exc())
         season = 0
@@ -515,8 +520,20 @@ class HbogoHandler_sp(HbogoHandler):
         series_name = ""
         try:
             season = int(title.find('clearleap:season', namespaces=self.NAMESPACES).text)
+        except AttributeError:
+            pass
+        except Exception:
+            self.log("Error in season find processing: " + traceback.format_exc())
+        try:
             episode = int(title.find('clearleap:episodeInSeason', namespaces=self.NAMESPACES).text)
+        except AttributeError:
+            pass
+        except Exception:
+            self.log("Error in season find processing: " + traceback.format_exc())
+        try:
             series_name = py2_encode(title.find('clearleap:series', namespaces=self.NAMESPACES).text)
+        except AttributeError:
+            pass
         except Exception:
             self.log("Error in season find processing: " + traceback.format_exc())
         if episode == 0:
@@ -554,6 +571,8 @@ class HbogoHandler_sp(HbogoHandler):
         plot = ""
         try:
             plot = py2_encode(item.find('description').text)
+        except AttributeError:
+            pass
         except Exception:
             self.log("Error in description processing: " + traceback.format_exc())
 
@@ -566,6 +585,8 @@ class HbogoHandler_sp(HbogoHandler):
         series_name = ""
         try:
             series_name = py2_encode(item.find('clearleap:series', namespaces=self.NAMESPACES).text)
+        except AttributeError:
+            pass
         except Exception:
             self.log("Error in searies name processing: " + traceback.format_exc())
 
