@@ -599,7 +599,7 @@ class HbogoHandler_sp(HbogoHandler):
                                               "tvshowtitle": series_name,
                                               "title": item.find('title').text,
                                               "Plot": plot})
-        liz.addContextMenuItems(items=self.genContextMenu(guid))
+
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
