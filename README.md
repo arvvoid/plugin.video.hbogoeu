@@ -25,11 +25,13 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 | Content Info                  | YES    | YES          | NO  | NO            | NO   |
 | Search                        | YES    | YES          | NO  | NO            | NO   |
 | Login                         | YES    | YES          | NO  | NO            | NO   |
-| Playback                      | YES    | YES          | NO  | NO            | NO   |
+| Playback up to 1080p          | YES    | YES          | NO  | NO            | NO   |
+| Stereo Audio                  | YES    | YES          | NO  | NO            | NO   |
+| 5.1 Audio                     | N/A    | YES          | NO  | NO            | NO   |
 | Subtitles                     | YES    | YES          | NO  | NO            | NO   |
 | My List                       | YES    | YES          | NO  | NO            | NO   |
 | Add/Remove from My List       | YES    | YES          | NO  | NO            | NO   |
-| Voting                        | YES    | NO           | NO  | NO            | NO   |
+| Voting                        | YES    | N/A          | NO  | NO            | NO   |
 | Report play  status to HBO    | NO     | NO           | NO  | NO            | NO   |
 
 Legend: YES - feature availible for the region and working in the add-on, NO- feature availible but not implemented or broken in the add-on, N/A feature not availible for the region
