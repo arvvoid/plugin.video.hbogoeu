@@ -32,6 +32,8 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 | Voting                        | YES    | NO           | NO  | NO            | NO   |
 | Report play  status to HBO    | NO     | NO           | NO  | NO            | NO   |
 
+Legend: YES - feature availible for the region and working in the add-on, NO- feature availible but not implemented or broken in the add-on, N/A feature not availible for the region
+
 
 This add-on support 18 countries atm: 
 *  __Bosnia and Herzegovina__ *[EU]*
