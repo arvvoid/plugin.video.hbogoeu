@@ -1,3 +1,9 @@
+v.2.0.21~beta39
+- Nordic/Spain: Add Watchlist (My List)
+- Nordic/Spain: Add search function
+- Nordic/Spain: Add/Remove to/from My List
+- Code Optimizations
+
 v.2.0.20
 - THIS IS A STABLE RELEASE
 - Eu Handler: use api v8
