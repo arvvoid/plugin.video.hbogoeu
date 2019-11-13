@@ -61,12 +61,12 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 
 REQUIRMENTS:
 *  Kodi 18+
-*  script.module.kodi-six (should get installed automatically in Kodi 18)
-*  script.module.requests 2.12.4+ (should get installed automatically in Kodi 18)
-*  script.module.pycryptodome 3.4.3+ (should get installed automatically in Kodi 18)
-*  script.module.defusedxml 0.6.0+ (should get installed automatically in Kodi 18)
-*  inputstream.adaptive 2.3.18+ (recommended most recent version, should get installed automatically in Kodi 18)
-*  script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18)
+*  script.module.kodi-six (should get installed automatically in Kodi 18+)
+*  script.module.requests 2.12.4+ (should get installed automatically in Kodi 18+)
+*  script.module.pycryptodome 3.4.3+ (*might require manual instalation on most Linux/MacOS systems, see install instructions)
+*  script.module.defusedxml 0.6.0+ (should get installed automatically in Kodi 18+)
+*  inputstream.adaptive 2.3.18+ (recommended most recent version, should get installed automatically in Kodi 18+)
+*  script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18+)
 *  Libwidevine 4.10.1440+
 
 ## Download/Install instructions
