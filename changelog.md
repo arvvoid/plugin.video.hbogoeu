@@ -1,4 +1,4 @@
-v.2.0.21~beta39
+v.2.0.22
 - Nordic/Spain: Add Watchlist (My List)
 - Nordic/Spain: Add search function
 - Nordic/Spain: Add/Remove to/from My List
