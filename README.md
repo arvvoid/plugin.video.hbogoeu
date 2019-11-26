@@ -24,20 +24,20 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 
 | HBO REGIONS (API-s) / Feature | Europe | Nordic+Spain | USA | Latin America | Asia |
 |-------------------------------|--------|--------------|-----|---------------|------|
-| Listing Content               | YES    | YES          | NO  | NO            | NO   |
-| Content Info                  | YES    | YES          | NO  | NO            | NO   |
-| Search                        | YES    | YES          | NO  | NO            | NO   |
-| Login                         | YES    | YES          | NO  | NO            | NO   |
-| Playback up to 1080p          | YES    | YES          | NO  | NO            | NO   |
-| Stereo Audio                  | YES    | YES          | NO  | NO            | NO   |
-| 5.1 Audio                     | N/A    | YES          | NO  | NO            | NO   |
-| Subtitles                     | YES    | YES          | NO  | NO            | NO   |
-| My List                       | YES    | YES          | NO  | NO            | NO   |
-| Add/Remove from My List       | YES    | YES          | NO  | NO            | NO   |
-| Voting                        | YES    | N/A          | NO  | NO            | NO   |
-| Report play  status to HBO    | NO     | NO           | NO  | NO            | NO   |
+| Listing Content | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Content Info | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Search | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Login | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Playback up to 1080p (HW) | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Stereo Audio | ✔ | ✔ | ✖ | ✖ | ✖ |
+| 5.1 Audio | ⛔ | ✔ | ✖ | ✖ | ✖ |
+| Subtitles | ✔ | ✔ | ✖ | ✖ | ✖ |
+| My List | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Add/Remove from My List | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Voting | ✔ | ⛔ | ✖ | ✖ | ✖ |
+| Report play  status to HBO | ✖ | ✖ | ✖ | ✖ | ✖ |
 
-Legend: YES - feature availible for the region and working in the add-on, NO- feature availible for the region but not implemented or broken in the add-on, N/A feature not availible for the region
+Legend: ✔ - feature availible for the region and working in the add-on, ✖ - feature availible for the region but not implemented or broken in the add-on, ⛔ feature not availible for the region
 
 
 This add-on support 18 countries atm: 
