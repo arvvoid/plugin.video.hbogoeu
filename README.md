@@ -147,6 +147,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/all-contributors/all-contributors-bot"><img src="https://avatars3.githubusercontent.com/u/46843839?v=4" width="100px;" alt="allcontributors[bot]"/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=allcontributors" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/mata007"><img src="https://avatars1.githubusercontent.com/u/22648433?v=4" width="100px;" alt="mata007"/><br /><sub><b>mata007</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Amata007" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/ferdabasek"><img src="https://avatars2.githubusercontent.com/u/58233539?v=4" width="100px;" alt="ferdabasek"/><br /><sub><b>ferdabasek</b></sub></a><br /><a href="#ideas-ferdabasek" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=ferdabasek" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/durip"><img src="https://avatars3.githubusercontent.com/u/13102223?v=4" width="100px;" alt="durip"/><br /><sub><b>durip</b></sub></a><br /><a href="#userTesting-durip" title="User Testing">📓</a></td>
   </tr>
 </table>
 
