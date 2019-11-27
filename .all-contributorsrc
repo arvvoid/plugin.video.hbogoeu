@@ -246,6 +246,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ferdabasek",
+      "name": "ferdabasek",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/58233539?v=4",
+      "profile": "https://github.com/ferdabasek",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
