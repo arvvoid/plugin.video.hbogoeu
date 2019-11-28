@@ -4,10 +4,11 @@
 # Relesed under GPL version 2
 #########################################################
 
-from hbogolib.base import hbogo
+from __future__ import absolute_import, division
+
 import sys
-import xbmc
-import xbmcaddon
+from hbogolib.base import hbogo
+from kodi_six import xbmc, xbmcaddon
 
 
 # Setup plugin

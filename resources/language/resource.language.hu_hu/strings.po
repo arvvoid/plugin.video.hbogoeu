@@ -20,7 +20,7 @@ msgstr "Webes regisztráció"
 #: 
 msgctxt "#30101"
 msgid "PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
-msgstr "KÉRJÜK, HOGY KAPCSOLAT A SZERZŐDŐ TÁMOGATÁSÁRÓL EZT KIEGÉSZÍTÉSRŐL, HOGY NEM KIFEJEZETT KIEGÉSZÍTŐ ÉS NEM TÁMOGATOTT TÁMOGATÁS! A KÖZÖSSÉGI SEGÍTSÉG ALKALMAZHATÓ A KIEGÉSZÍTŐGÉP-OLDAL VAGY KODI FÓRUMBAN"
+msgstr "KÉRJÜK, NE KÉRJEN SEGÍTSÉGET A SZOLGÁLTATÓJÁTÓL A KIEGÉSZÍTŐVEL KAPCSOLATBAN! KÖZÖSSÉGI SEGÍTSÉGET KAPHAT A KIEGÉSZÍTŐ GITHUB OLDALÁN VAGY A KODI FÓRUMON."
 
 #: 
 msgctxt "#30102"
@@ -30,12 +30,12 @@ msgstr "Szolgáltatók"
 #: 
 msgctxt "#30103"
 msgid "Sorry, you are not correctly logged in, aborting play. Try to login on the official site then try again, if the problem persist ask support with a full debug log"
-msgstr "Sajnáljuk, nincs helyesen bejelentkezve, megszakítva a lejátszást. Próbáljon meg bejelentkezni a hivatalos webhelyre, majd próbálja újra, ha a probléma továbbra is fennáll, kérje a teljes hibakeresési napló támogatását"
+msgstr "Sajnáljuk, nincs helyesen bejelentkezve, a lejátszás megszakad. Próbáljon meg bejelentkezni a hivatalos webhelyre, majd próbálja újra, ha a probléma továbbra is fennáll, kérje a teljes hibakereső napló támogatását"
 
 #: 
 msgctxt "#30104"
 msgid "Operaotr not selected. Please select your country/operaotr in the settings."
-msgstr "Az Operaotr nincs kiválasztva. Kérjük, válassza ki az országot / operaotr-t a beállításokban."
+msgstr "Az szolgáltató nincs kiválasztva. Kérjük, válassza ki az országot és szolgáltatót a beállításokban."
 
 #: 
 msgctxt "#30105"
@@ -45,7 +45,7 @@ msgstr "Kijelentkezés (Beállítás visszaállítása)"
 #: 
 msgctxt "#30106"
 msgid "Destroy current session"
-msgstr "Eltávolítani az aktuális munkamenetet"
+msgstr "Az aktuális munkamenetet törlése"
 
 #: 
 msgctxt "#30440"
@@ -85,23 +85,23 @@ msgstr "DRM"
 #: 
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
-msgstr "Inputstream Adaptive beállítások (max bitrate,resolution,ecc..)"
+msgstr "Inputstream Adaptive beállítások (maximum bitráta, felbontás, stb.)"
 
 msgctxt "#30666"
 msgid "InputStream Helper information"
-msgstr "InputStream Helper information"
+msgstr "InputStream Helper információ"
 
 msgctxt "#30667"
 msgid "(Re)install Widevine CDM..."
-msgstr "(Re)install Widevine CDM..."
+msgstr "Widevine CDM (újra) installálása"
 
 msgctxt "#30668"
 msgid "Remove Widevine CDM..."
-msgstr "Remove Widevine CDM..."
+msgstr "Widevine CDM törlése"
 
 msgctxt "#30669"
 msgid "InputStream Helper settings..."
-msgstr "InputStream Helper settings..."
+msgstr "InputStream Helper beállítások"
 
 #: 
 msgctxt "#30700"
@@ -131,12 +131,12 @@ msgstr "A film megtekinthető eddig:"
 #: 
 msgctxt "#30705"
 msgid "EPISODE"
-msgstr "EPIZÓD"
+msgstr "Epizód"
 
 #: 
 msgctxt "#30706"
 msgid "SEASON"
-msgstr "ÉVAD"
+msgstr "Évad"
 
 #: 
 msgctxt "#30707"
@@ -156,7 +156,7 @@ msgstr "Bejelentkezési hiba, ellenőrizze a bejelentkezési adatait!"
 #: 
 msgctxt "#30710"
 msgid "No operator defined! Check your settings!"
-msgstr "Nincs megadva üzemeltető! Ellenőrizze a beállításokat!"
+msgstr "Nincs megadva szolgáltató! Ellenőrizze a beállításokat!"
 
 #: 
 msgctxt "#30711"
@@ -166,12 +166,12 @@ msgstr "Keresés..."
 #: 
 msgctxt "#30712"
 msgid "WARNING. You enabled the [Include sensitive login data in debug log] option in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is enabled in Kodi, your sensitive and private login information and session data will be written to the debug log. Please don't share publicly such a log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you really have to send a log with that option enabled to debug a login/session related issue be very CAREFUL who you send that log too and do it privately and change your password as soon as possible. If you posted such a log publicly by accident, change your password as soon as possible. DO YOU WANT TO CONTINUE?"
-msgstr "FIGYELEM. A kiegészítő szakértői beállításokban engedélyezte a [Érzékeny bejelentkezési adatok debug-naplóban] opciót. HA NEM TUDJA TUDNIVALÓK, HOGY MÁSODIK MEGKÖZELÍTETE, HOGY KIZÁRÓLAG, NEM SZÜKSÉGES! Ez azt jelenti, hogy ha a hibakereső napló engedélyezve van a Kodi-ban, az érzékeny és privát bejelentkezési adatok és a munkamenetadatok a hibakereső naplóba kerülnek. Kérjük, ne ossza meg nyilvánosan egy ilyen naplót. HA SZÜKSÉGES KIEGÉSZÍTŐ KÖTELEZETTSÉGVÁLLALÁSOK KÖVETÉSE. Ha tényleg meg kell küldeni egy naplót azzal a lehetőséggel, amely lehetővé teszi a bejelentkezési / munkamenethez kapcsolódó probléma hibakeresését, nagyon gondoskodni kell arról, hogy ki is küldte ezt a naplót, és tegye meg magántulajdonban és változtassa meg a jelszavát a lehető leghamarabb. Ha ilyen naplót véletlenül közzétett, akkor a lehető leghamarabb változtassa meg a jelszavát. AKAROD FOLYTATNI?"
+msgstr "FIGYELEM! A kiegészítő szakértői beállításokban engedélyezte a [Érzékeny belépési adatok beszúrása a hibakereső naplóba] opciót. HA NEM TUDJA PONTOSAN, HOGY MIÉRT ENGEDÉYLEZTE, AKKOR EZ NEM SZÜKSÉGES! Ez azt jelenti, hogy ha a hibakereső napló engedélyezve van a Kodiban, az érzékeny és privát bejelentkezési adatok és a munkamenet adatok a hibakereső naplóba kerülnek. Kérjük, ne ossza meg nyilvánosan egy ilyen naplót. HA KÖZZÉ KELL TENNIE A HIBAKERES NAPLÓT, KAPCSOLJA KI EZT A BEÁLLÍTÁST! Ha tényleg meg kell küldenie egy naplót úgy, hogy ez a beállítás engedélyezve van, legyen nagyon óvatos, hogy kinek küldi azt el, és bizonyosodjon meg róla, hogy senki más nem férhet a naplóhoz! Változtassa meg a jelszavát a lehető leghamarabb. Ha ilyen naplót véletlenül közzétett, akkor a lehető leghamarabb változtassa meg a jelszavát. AKARJA FOLYTATNI?"
 
 #: 
 msgctxt "#30713"
 msgid "INFORMATION"
-msgstr "INFORMÁCIÓ"
+msgstr "Információ"
 
 #: 
 msgctxt "#30714"
@@ -206,7 +206,7 @@ msgstr "Nyelv"
 #: 
 msgctxt "#30651"
 msgid "Always use default operator language"
-msgstr "Mindig használjon alapértelmezett kezelői nyelvet"
+msgstr "Mindig használja az alapértelmezett szolgáltató nyelvet"
 
 #: 
 msgctxt "#30655"
@@ -221,7 +221,11 @@ msgstr "Az alapértelmezett feliratok automatikus bekapcsolása"
 #: 
 msgctxt "#30652"
 msgid "Always use original titles"
-msgstr "Mindig eredeti címeket használjon"
+msgstr "Mindig az eredeti címeket használja"
+
+msgctxt "#30653"
+msgid "Inject subtitles"
+msgstr "Feliratok beillesztése"
 
 #: 
 msgctxt "#30670"
@@ -231,7 +235,7 @@ msgstr "Szakértő"
 #: 
 msgctxt "#30671"
 msgid "Force scraper friendly titles"
-msgstr "Keresóbarát címek kényszerítése"
+msgstr "Keresőbarát címek kényszerítése"
 
 #: 
 msgctxt "#30680"
@@ -246,17 +250,17 @@ msgstr "A munkamenet órákra érvényes"
 #: 
 msgctxt "#30682"
 msgid "Reset session, force re-login"
-msgstr "A munkamenet visszaállítása, az újra-bejelentkezés kényszerítése"
+msgstr "A munkamenet visszaállítása, az újra bejelentkezés kényszerítése"
 
 #: 
 msgctxt "#30690"
 msgid "Debug"
-msgstr "Debug"
+msgstr "Hibakeresés"
 
 #: 
 msgctxt "#30691"
 msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
-msgstr "Érzékeny belépési adatok beszúrása a hibakeresési naplóba"
+msgstr "Érzékeny belépési adatok beszúrása a hibakereső naplóba"
 
 #: 
 msgctxt "#30719"
@@ -266,7 +270,7 @@ msgstr "Hozzáadás a Saját listához"
 #: 
 msgctxt "#30720"
 msgid "Remove from My List"
-msgstr "Eltávolítás a listáról"
+msgstr "Eltávolítás a Saját listáról"
 
 #: 
 msgctxt "#30721"
@@ -309,7 +313,7 @@ msgstr "A bejelentkezés sikertelen, meg szeretné adni a hitelesítő adatait?"
 
 msgctxt "#30729"
 msgid "KIDS"
-msgstr "GYEREKEK"
+msgstr "Gyerekeknek"
 
 msgctxt "#30730"
 msgid "Weekly Top"
@@ -317,4 +321,12 @@ msgstr "Heti top"
 
 msgctxt "#30692"
 msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
-msgstr "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
+msgstr "Biztosan szeretné teljesen törölni a beállításait? Az eszköz regisztráció el fog veszni"
+
+msgctxt "#30693"
+msgid "Include full details/RAW retrived data in Debug log"
+msgstr "Részletes és nyers adatok a beszúrása a hibakereső naplóba"
+
+msgctxt "#30694"
+msgid "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
+msgstr "A Cryptodome függőség nincs installálva a rendszeren. Segítségért nézze át a telepítési útmutatót vagy a hivatalos támogatói fórumot"

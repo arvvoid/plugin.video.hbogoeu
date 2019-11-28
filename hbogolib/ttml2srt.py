@@ -4,33 +4,12 @@
 #  based on https://github.com/yuppity/ttml2srt
 #  --------------------------------------------
 
-#  THIS FILE IS RELESED UNDER the http://unlicense.org license
-#  This is free and unencumbered software released into the public domain.
+from __future__ import absolute_import, division
 
-#  Anyone is free to copy, modify, publish, use, compile, sell, or
-#  distribute this software, either in source code form or as a compiled
-#  binary, for any purpose, commercial or non-commercial, and by any
-#  means.
+import sys
 
-#  In jurisdictions that recognize copyright laws, the author or authors
-#  of this software dedicate any and all copyright interest in the
-#  software to the public domain. We make this dedication for the benefit
-#  of the public at large and to the detriment of our heirs and
-#  successors. We intend this dedication to be an overt act of
-#  relinquishment in perpetuity of all present and future rights to this
-#  software under copyright law.
+from defusedxml import minidom
 
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-#  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-#  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-#  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-#  OTHER DEALINGS IN THE SOFTWARE.
-
-#  For more information, please refer to <http://unlicense.org>
-
-from xml.dom import minidom
 
 class Ttml2srt(object):
 
@@ -43,7 +22,11 @@ class Ttml2srt(object):
         filename = str_file + '.srt'
         if self.subtitle['lang'] is not None:
             filename = str_file + '.' + self.subtitle['lang'] + '.srt'
-        f = open(filename, 'wb')
+        f = None
+        if (sys.version_info > (3, 0)):
+            f = open(filename, 'w', encoding='utf-8')
+        else:
+            f = open(filename, 'wb', )
         self.subrip_writer(f, self.subtitle['lines'], f, shift, self.subtitle['fps'], self.subtitle['tick_rate'])
         return filename
 
@@ -65,7 +48,8 @@ class Ttml2srt(object):
                 dialogue = dialogue + self.extract_dialogue(node.childNodes)
         return dialogue
 
-    def extract_subtitle_data(self, ttml_file):
+    @staticmethod
+    def extract_subtitle_data(ttml_file):
         data = minidom.parse(ttml_file)
 
         s_encoding = data.encoding
@@ -95,30 +79,35 @@ class Ttml2srt(object):
             tick_rate = None
 
         lines = [i for i in data.getElementsByTagName('p') if 'begin' \
-                 in i.attributes.keys()]
+                 in list(i.attributes.keys())]
 
         return {'fps': fps, 'tick_rate': tick_rate, 'lines': lines, 'lang': lang}
 
-    def get_start_end(self, parag):
+    @staticmethod
+    def get_start_end(parag):
         return [parag.attributes['begin'].value, parag.attributes['end'].value]
 
     #######################################################################
     #                           TIME/TIMESTAMPS                           #
     #######################################################################
 
-    def calc_scale(self, sdur, tdur):
+    @staticmethod
+    def calc_scale(sdur, tdur):
         return (tdur * 1.0) / sdur
 
-    def scaler(self, time, scale):
+    @staticmethod
+    def scaler(time, scale):
         return scale * time
 
-    def frames_to_ms(self, frames, fps=23.976):
+    @staticmethod
+    def frames_to_ms(frames, fps=23.976):
         return int(int(frames) * (1000 / fps))
 
     def ticks_to_ms(self, tickrate, ticks, scale=1):
         return self.scaler(((1.0 / tickrate) * int(ticks.rstrip('t'))) * 1000, scale)
 
-    def ms_to_subrip(self, ms):
+    @staticmethod
+    def ms_to_subrip(ms):
         hh = int(ms / 3.6e6)
         mm = int((ms % 3.6e6) / 60000)
         ss = int((ms % 60000) / 1000)
@@ -167,16 +156,22 @@ class Ttml2srt(object):
     #                            SubRip output                            #
     #######################################################################
 
-    def subrip_dialogue(self, count, start, end, dialogue):
-        return '{}\n{} --> {}\n{}\n\n'.format(count, start, end, dialogue)
+    @staticmethod
+    def subrip_dialogue(count, start, end, dialogue):
+        return "{}\n{} --> {}\n{}\n\n".format(count, start, end, dialogue)
 
     def subrip_writer(self, f, lines, dst, shift, fps, tick_rate, scale=1):
         subs = []
         for line in lines:
             start, end = self.get_start_end(line)
-            subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
-                         self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
-                         self.extract_dialogue(line.childNodes).encode('utf8')])
+            if (sys.version_info > (3, 0)):
+                subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
+                             self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
+                             self.extract_dialogue(line.childNodes)])
+            else:
+                subs.append([self.get_sb_timestamp_be(start, shift, fps, tick_rate, scale),
+                             self.get_sb_timestamp_be(end, shift, fps, tick_rate, scale),
+                             self.extract_dialogue(line.childNodes).encode('utf8')])
 
         # Sort by the start time
         subs.sort(key=lambda x: x[0])
@@ -202,4 +197,3 @@ class Ttml2srt(object):
             dialg = self.subrip_dialogue(lcount, line[0], line[1], line[2])
             f.write(dialg)
         f.close()
-

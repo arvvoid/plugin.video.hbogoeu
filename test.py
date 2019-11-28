@@ -15,15 +15,17 @@
 # Relesed under GPL version 2
 #########################################################
 
+from __future__ import absolute_import, division
+
 import sys
 
 if __name__ == '__main__':
     print("HBO GO EU Test Script")
     print("---------------------")
 
-    if len(sys.argv)>2:
-        type = str(sys.argv[1])
-        if type == "ttml2srt":
+    if len(sys.argv) > 2:
+        test_type = str(sys.argv[1])
+        if test_type == "ttml2srt":
             from hbogolib.ttml2srt import Ttml2srt
             input_subs_path = str(sys.argv[2])
             print("Loading TTML file "+input_subs_path+" ...")

@@ -6,34 +6,41 @@
 # GENERIC HBOGO HANDLER CLASS
 #########################################################
 
-import sys
-import pickle
-import urllib
+from __future__ import absolute_import, division
+
+import codecs
+import json
 import os
+import sys
 import traceback
 
+import defusedxml.ElementTree as ET
 import requests
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from kodi_six.utils import py2_encode, py2_decode
 
-import xbmc
-import xbmcaddon
-import xbmcgui
-import xbmcplugin
+from hbogolib.util import Util
 
-import uuid
-import base64
-import codecs
-import hashlib
-import xml.etree.ElementTree as ET
-from Cryptodome import Random
-from Cryptodome.Cipher import AES
-from Cryptodome.Util import Padding
-import re
+try:
+    from urllib import unquote_plus as unquote
+except ImportError:
+    from urllib.parse import unquote_plus as unquote
 
-
+try:
+    from Cryptodome import Random
+    from Cryptodome.Cipher import AES
+    from Cryptodome.Util import Padding
+except ImportError:
+    # no Cryptodome gracefully fail with an informative message
+    msg = xbmcaddon.Addon().getLocalizedString(30694)
+    xbmc.log("[" + str(
+        xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(),
+             xbmc.LOGDEBUG)
+    xbmcgui.Dialog().ok(xbmcaddon.Addon().getAddonInfo('name') + " ERROR", msg)
+    sys.exit()
 
 
 class HbogoHandler(object):
-
     UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
     GO_SW_VERSION = '4.7.4'
     GO_REQUIRED_PLATFORM = 'CHBR'  # emulate chrome
@@ -48,30 +55,28 @@ class HbogoHandler(object):
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
 
-        self.base_addon_cat=""
+        self.base_addon_cat = ""
         self.cur_loc = ""
 
-        self.md = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/media/")
-        self.resources = xbmc.translatePath(self.addon.getAddonInfo('path') + "/resources/")
-        self.search_string = urllib.unquote_plus(self.addon.getSetting('lastsearch'))
-        xbmcplugin.setPluginFanart(self.handle, image=self.resources + "fanart.jpg")
+        self.search_string = unquote(self.addon.getSetting('lastsearch'))
+        xbmcplugin.setPluginFanart(self.handle, image=self.get_resource("fanart.jpg"))
 
         # LABELS
 
-        self.LB_SEARCH_DESC = self.language(30700).encode('utf-8')
-        self.LB_SEARCH_NORES = self.language(30701).encode('utf-8')
-        self.LB_ERROR = self.language(30702).encode('utf-8')
-        self.LB_INFO = self.language(30713).encode('utf-8')
-        self.LB_SUCESS = self.language(30727).encode('utf-8')
-        self.LB_EPISODE_UNTILL = self.language(30703).encode('utf-8')
-        self.LB_FILM_UNTILL = self.language(30704).encode('utf-8')
-        self.LB_EPISODE = self.language(30705).encode('utf-8')
-        self.LB_SEASON = self.language(30706).encode('utf-8')
-        self.LB_MYPLAYLIST = self.language(30707).encode('utf-8')
-        self.LB_NOLOGIN = self.language(30708).encode('utf-8')
-        self.LB_LOGIN_ERROR = self.language(30709).encode('utf-8')
-        self.LB_NO_OPERATOR = self.language(30710).encode('utf-8')
-        self.LB_SEARCH = self.language(30711).encode('utf-8')
+        self.LB_SEARCH_DESC = py2_encode(self.language(30700))
+        self.LB_SEARCH_NORES = py2_encode(self.language(30701))
+        self.LB_ERROR = py2_encode(self.language(30702))
+        self.LB_INFO = py2_encode(self.language(30713))
+        self.LB_SUCESS = py2_encode(self.language(30727))
+        self.LB_EPISODE_UNTILL = py2_encode(self.language(30703))
+        self.LB_FILM_UNTILL = py2_encode(self.language(30704))
+        self.LB_EPISODE = py2_encode(self.language(30705))
+        self.LB_SEASON = py2_encode(self.language(30706))
+        self.LB_MYPLAYLIST = py2_encode(self.language(30707))
+        self.LB_NOLOGIN = py2_encode(self.language(30708))
+        self.LB_LOGIN_ERROR = py2_encode(self.language(30709))
+        self.LB_NO_OPERATOR = py2_encode(self.language(30710))
+        self.LB_SEARCH = py2_encode(self.language(30711))
 
         self.use_content_type = "episodes"
 
@@ -93,36 +98,57 @@ class HbogoHandler(object):
         else:
             self.sensitive_debug = False
 
+        self.lograwdata = self.addon.getSetting('lograwdata')
+        if self.lograwdata == "true":
+            self.lograwdata = True
+        else:
+            self.lograwdata = False
+
         if self.sensitive_debug:
-            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712).encode('utf-8'), self.language(30714).encode('utf-8'), self.language(30715).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
             if not ret:
                 sys.exit()
 
-        self.loggedin_headers = None  #DEFINE IN SPECIFIC HANDLER
+        self.loggedin_headers = None  # DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
 
+    @staticmethod
+    def get_resource(file):
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/' + file))
+
+    @staticmethod
+    def get_media_resource(file):
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/' + file))
+
     def log(self, msg, level=xbmc.LOGDEBUG):
-        xbmc.log(self.DEBUG_ID_STRING + msg, level)
+        try:
+            xbmc.log(self.DEBUG_ID_STRING + msg, level)
+        except TypeError:
+            xbmc.log(self.DEBUG_ID_STRING + msg.decode('utf-8'), level)
+
+    def mask_sensitive_data(self, data):
+        if self.sensitive_debug:
+            return data
+
+        return '[OMITTED FOR PRIVACY]'
 
     def setDispCat(self, cur_loc):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc
 
-    def send_login_hbogo(self, url, headers, data, response_format='json'):
-        self.log("SEND LOGIN URL: " + url)
-        self.log("SEND LOGIN RESPONSE FORMAT: " + response_format)
+    def post_to_hbogo(self, url, headers, data, response_format='json'):
+        self.log("POST TO HBO URL: " + url)
+        self.log("POST TO HBO FORMAT: " + response_format)
         try:
             r = requests.post(url, headers=headers, data=data)
-            self.log("SEND LOGIN RETURNED STATUS: " + str(r.status_code))
-            if self.sensitive_debug:
-                self.log("SEND LOGIN RETURNED RAW: " + r.text.encode('utf-8'))
+            self.log("POST TO HBO RETURNED STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
-            self.log("SEND LOGIN ERROR: " + repr(e))
-            resp = {"Data": {"ErrorMessage": "SEND LOGIN ERROR"}, "ErrorMessage": "SEND LOGIN ERROR"}
+            self.log("POST TO HBO ERROR: " + repr(e))
+            resp = {"Data": {"ErrorMessage": "POST TO HBO ERROR"}, "ErrorMessage": "POST TO HBO ERROR"}
             return resp
 
     def get_from_hbogo(self, url, response_format='json'):
@@ -134,35 +160,34 @@ class HbogoHandler(object):
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
             self.log("GET FROM HBO ERROR: " + repr(e))
             resp = {"Data": {"ErrorMessage": "GET FROM HBO ERROR"}, "ErrorMessage": "GET FROM HBO ERROR"}
             return resp
 
-    def send_purchase_hbogo(self, url, purchase_payload, purchase_headers, response_format='json'):
-        self.log("SEND PURCHASE URL: " + url)
-        self.log("SEND PURCHASE RESPONSE FORMAT: " + response_format)
+    def delete_from_hbogo(self, url, response_format='json'):
+        self.log("DEL FROM HBO URL: " + url)
+        self.log("DEL FROM HBO RESPONSE FORMAT: " + response_format)
         try:
-            r = requests.post(url, headers=purchase_headers, data=purchase_payload)
-            self.log("SEND PURCHASE STATUS: " + str(r.status_code))
+            r = requests.delete(url, headers=self.loggedin_headers)
+            self.log("DEL FROM HBO STATUS: " + str(r.status_code))
             if response_format == 'json':
                 return r.json()
             elif response_format == 'xml':
-                return ET.fromstring(r.text.encode('utf-8'))
+                return ET.fromstring(py2_encode(r.text))
         except requests.RequestException as e:
-            self.log("SEND PURCHASE ERROR: " + repr(e))
-            resp = {"Data": {"ErrorMessage": "SEND HBO PURCHASE ERROR"}, "ErrorMessage": "SEND HBO PURCHASE ERROR"}
+            self.log("DEL FROM HBO ERROR: " + repr(e))
+            resp = {"Data": {"ErrorMessage": "DELETE FROM HBO ERROR"}, "ErrorMessage": "DELETE FROM HBO ERROR"}
             return resp
 
     def del_login(self):
         try:
             folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-            self.log("Removing stored session: " + folder + self.addon_id + "_session"+".pkl")
-            os.remove(folder + self.addon_id + "_session"+".pkl")
-        except:
+            self.log("Removing stored session: " + folder + self.addon_id + "_session" + ".ecdata")
+            os.remove(folder + self.addon_id + "_session" + ".ecdata")
+        except Exception:
             self.log("Delete login error: " + traceback.format_exc())
-            pass
 
     def del_setup(self):
         self.del_login()
@@ -181,40 +206,42 @@ class HbogoHandler(object):
 
     def save_obj(self, obj, name):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        self.log("Saving: " + folder + name + '.pkl')
-        with open(folder + name + '.pkl', 'wb') as f:
-            pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+        self.log("Saving: " + folder + name + '.ecdata')
+        with open(folder + name + '.ecdata', 'wb') as f:
+            try:
+                f.write(self.encrypt_credential_v1(json.dumps(obj)))
+            except TypeError:
+                f.write(bytes(self.encrypt_credential_v1(json.dumps(obj)), 'utf8'))
 
     def load_obj(self, name):
         folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-        self.log("Trying to load: " + folder + name + '.pkl')
+        self.log("Trying to load: " + folder + name + '.ecdata')
         try:
-            with open(folder + name + '.pkl', 'rb') as f:
-                return pickle.load(f)
-        except:
+            with open(folder + name + '.ecdata', 'rb') as f:
+                return json.loads(self.decrypt_credential_v1(f.read()))
+        except Exception:
             self.log("OBJECT RELOAD ERROR")
             self.log("Stack trace: " + traceback.format_exc())
             return None
 
     def inputCredentials(self):
-        username = xbmcgui.Dialog().input(self.language(30442).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM)
+        username = xbmcgui.Dialog().input(self.language(30442), type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
                 return False
-            else:
-                return self.inputCredentials()
-        password = xbmcgui.Dialog().input(self.language(30443).encode('utf-8'), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            return self.inputCredentials()
+        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM,
+                                          option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
+            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
                 self.addon.setSetting('username', '')
                 self.addon.setSetting('password', '')
                 return False
-            else:
-                return self.inputCredentials()
+            return self.inputCredentials()
 
         self.setCredential('username', username)
         self.setCredential('password', password)
@@ -222,12 +249,10 @@ class HbogoHandler(object):
         self.del_login()
         if self.login():
             return True
-        else:
-            ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728).encode('utf-8'))
-            if not ret:
-                return False
-            else:
-                return self.inputCredentials()
+        ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
+        if not ret:
+            return False
+        return self.inputCredentials()
 
     def getCredential(self, credential_id):
         value = self.addon.getSetting(credential_id)
@@ -237,47 +262,43 @@ class HbogoHandler(object):
             decrypted = self.decrypt_credential_v1(encoded)
             if decrypted is not None:
                 return decrypted
-            else:
-                # decrypt failed ask for credentials again
-
-                if self.inputCredentials():
-                    return self.getCredential(credential_id)
-                else:
-                    return ''
-        else:
-            # this are old plaintext credentials convert
-            if len(value) > 0:
-                self.setCredential(credential_id, value)
+            # decrypt failed ask for credentials again
+            if self.inputCredentials():
                 return self.getCredential(credential_id)
-            else:
-                return ''
+            return ''
+        # this are old plaintext credentials convert
+        if value:
+            self.setCredential(credential_id, value)
+            return self.getCredential(credential_id)
+        return ''
 
     def setCredential(self, credential_id, value):
-        self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + str(self.encrypt_credential_v1(value)))
+        self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + self.encrypt_credential_v1(value))
 
     def get_device_id_v1(self):
-        space = xbmc.getInfoLabel('System.TotalSpace')
-        space = re.sub('[^A-Za-z0-9 ]+', '', space)
-        mac = uuid.getnode()
-        if (mac >> 40) % 2:
-            from platform import node
-            mac = node()
-        return hashlib.sha256(codecs.encode(str(mac), 'rot_13') + self.addon_id + '.credentials.v1.' + codecs.encode(str(space), 'rot_13')).digest()
+        from .uuid_device import get_crypt_key
+        dev_key = get_crypt_key()
+        return Util.hash225_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
 
     def encrypt_credential_v1(self, raw):
+        if sys.version_info < (3, 0):
+            raw = bytes(raw)
+        else:
+            raw = bytes(raw, 'utf-8')
         raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(raw))
+        return Util.base64enc(iv + cipher.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:
-            enc = base64.b64decode(enc)
+            enc = Util.base64dec_bytes(enc)
             iv = enc[:AES.block_size]
             cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-            decoded = Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf-8')
-            return decoded
-        except:
+            if sys.version_info < (3, 0):
+                return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
+            return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
+        except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None
 
@@ -295,7 +316,7 @@ class HbogoHandler(object):
     def getFavoriteGroup(self):
         pass
 
-    def setup(self):
+    def setup(self, country):
         pass
 
     def logout(self):
@@ -307,7 +328,7 @@ class HbogoHandler(object):
     def categories(self):
         pass
 
-    def list(self, url):
+    def list(self, url, simple=False):
         pass
 
     def season(self, url):
@@ -319,10 +340,10 @@ class HbogoHandler(object):
     def search(self):
         pass
 
-    def play(self, url, cid):
+    def play(self, url, content_id):
         pass
 
-    def procContext(self, type, content_id, optional=""):
+    def procContext(self, action_type, content_id, optional=""):
         pass
 
     def addLink(self, title, mode):
@@ -333,5 +354,3 @@ class HbogoHandler(object):
 
     def addCat(self, name, url, icon, mode):
         pass
-
-

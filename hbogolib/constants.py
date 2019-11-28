@@ -4,6 +4,8 @@
 # Relesed under GPL version 2
 #########################################################
 
+from __future__ import absolute_import, division
+
 class HbogoConstants(object):
 
     #supported countrys:
@@ -22,14 +24,29 @@ class HbogoConstants(object):
     HANDLER_LATIN_AMERICA = 3
     HANDLER_ASIA = 4
 
+    ACTION_LIST = 1
+    ACTION_SEASON = 2
+    ACTION_EPISODE = 3
+    ACTION_SEARCH = 4
+    ACTION_PLAY = 5
+    ACTION_RESET_SETUP = 6
+    ACTION_RESET_SESSION = 7
+    ACTION_VOTE = 8
+    ACTION_ADD_MY_LIST = 9
+    ACTION_REMOVE_MY_LIST = 10
+
+
     countries = [
         ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
         ['Bulgaria', 'bg', 'bg', 'BGR', 'BUL', '', HANDLER_EU],
         ['Croatia', 'hr', 'hr', 'HRV', 'HRV', '', HANDLER_EU],
         ['Czech Republic', 'cz', 'cz', 'CZE', 'CES', '', HANDLER_EU],
+        ['Denmark', 'dk', 'dk', 'DNK', 'da_hbon', 'https://dk.hbonordic.com/', HANDLER_NORDIC],
+        ['Finland', 'fi', 'fi', 'FIN', 'fi_hbon', 'https://fi.hbonordic.com/', HANDLER_NORDIC],
         ['Hungary', 'hu', 'hu', 'HUN', 'HUN', '', HANDLER_EU],
         ['Macedonia', 'mk', 'mk', 'MKD', 'MKD', '', HANDLER_EU],
         ['Montenegro', 'me', 'me', 'MNE', 'SRP', '', HANDLER_EU],
+        ['Norway', 'no', 'no', 'NOR', 'no_hbon', 'https://no.hbonordic.com/', HANDLER_NORDIC],
         ['Polonia', 'pl', 'pl', 'POL', 'POL', '', HANDLER_EU],
         ['Portugal', 'pt', 'pt', 'PRT', 'POR', 'https://hboportugal.com', HANDLER_EU],
         ['Romania', 'ro', 'ro', 'ROU', 'RON', '', HANDLER_EU],
@@ -37,10 +54,7 @@ class HbogoConstants(object):
         ['Slovakia', 'sk', 'sk', 'SVK', 'SLO', '', HANDLER_EU],
         ['Slovenija', 'si', 'si', 'SVN', 'SLV', '', HANDLER_EU],
         ['Spain', 'es', 'es', 'ESP', 'es_hboespana', 'https://es.hboespana.com', HANDLER_SPAIN],
-        ['Norway', 'no', 'no', 'NOR', 'no_hbon', 'https://no.hbonordic.com/', HANDLER_NORDIC],
-        ['Denmark', 'dk', 'dk', 'DNK', 'da_hbon', 'https://dk.hbonordic.com/', HANDLER_NORDIC],
-        ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC],
-        ['Finland', 'fi', 'fi', 'FIN', 'fi_hbon', 'https://fi.hbonordic.com/', HANDLER_NORDIC],
+        ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC]
     ]
 
     platforms = {
@@ -89,7 +103,7 @@ class HbogoConstants(object):
         '414847a0-635c-4587-8076-079e3aa96035': ['https://icok.cyfrowypolsat.pl/logowanie.cp', 'j_username', 'j_password', {"j_username": None, "j_password": None, "loginFormM_SUBMIT": "1", "sInBtn": "", "javax.faces.ViewState": ""}],  # Polonia: Cyfrowy Polsat
         '972706fe-094c-4ea5-ae98-e8c5d907f6a2': ['https://my.telekom.ro/oam/server/auth_cred_submit', 'username', 'password', {"username": None, "password": None}],  # Romania: Telekom Romania
         '41a660dc-ee15-4125-8e92-cdb8c2602c5d': ['https://www.upc.ro/rest/v40/session/start?protocol=oidc&rememberMe=true', 'username', 'password', {"username": None, "credential": None}],  # Romania: UPC Romania
-        '6826b525-04dc-4bb9-ada5-0a8e80a9f55a': ['https://rovodafoneauth.hbogo.eu/authservice/OAuth/AuthorizeResponse', 'UserName', 'Password', {"UserName": None, "Password": None, "__RequestVerificationToken": "O6VnKC1ZOUdyewkDuRsvj9FkYL5z3-pNtL_cFTBZxixuA2z_3TUqj5550M0AoyfA9Mw96XAvoFqvwoj3h6gS0DQqOE_kEkg1CKL-nc5KwbU1", "client_id": "ott-web", "redirect_uri": "https://roapi.hbogo.eu/oauthvodafone/request2.aspx", "state": "03ggvM1EXyqFFxWA7W1y4A", "response_type": "code", "IsAccepted": "true", "IsAccepted": "false", "login": "Login"}],  # Romania: Vodafone Romania 4GTV+
+        '6826b525-04dc-4bb9-ada5-0a8e80a9f55a': ['https://rovodafoneauth.hbogo.eu/authservice/OAuth/AuthorizeResponse', 'UserName', 'Password', {"UserName": None, "Password": None, "__RequestVerificationToken": "O6VnKC1ZOUdyewkDuRsvj9FkYL5z3-pNtL_cFTBZxixuA2z_3TUqj5550M0AoyfA9Mw96XAvoFqvwoj3h6gS0DQqOE_kEkg1CKL-nc5KwbU1", "client_id": "ott-web", "redirect_uri": "https://roapi.hbogo.eu/oauthvodafone/request2.aspx", "state": "03ggvM1EXyqFFxWA7W1y4A", "response_type": "code", "IsAccepted": "true", "login": "Login"}],  # Romania: Vodafone Romania 4GTV+
     }
 
 

@@ -13,7 +13,7 @@
         <setting type="text" id="username" visible="false" default=""/>
         <setting type="text" id="password" option="hidden" visible="false" default=""/>
         <setting type="text" id="lastsearch" visible="false" default=""/>
-        <setting id="delsetup" type="action" label="30105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&mode=6)" option="close"/>
+        <setting id="delsetup" type="action" label="30105" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delsetup&amp;mode=6)" option="close"/>
         <!-- Language -->
         <setting label="30650" type="lsep"/>
         <setting label="30651" type="bool" id="deflang" default="false"/>
@@ -34,8 +34,9 @@
 	<category label="30670">
     <setting label="30671" type="bool" id="forcescrap" default="false"/>
     <setting label="30680" type="lsep"/>
-    <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&mode=7)" option="close"/>
+    <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&amp;mode=7)" option="close"/>
     <setting label="30690" type="lsep"/>
+    <setting label="30693" type="bool" id="lograwdata" default="false"/>
     <setting label="30691" type="bool" id="sensitivedebug" default="false"/>
     </category>
 </settings>

@@ -4,20 +4,21 @@
 # Relesed under GPL version 2
 #########################################################
 
-import urllib
+from __future__ import absolute_import, division
+
+import sys
+import traceback
 
 from hbogolib.constants import HbogoConstants
 
 try:
-    import urllib.parse as parse
-except ImportError:
     import urlparse as parse
+    from urllib import unquote_plus as unquote
+except ImportError:
+    import urllib.parse as parse
+    from urllib.parse import unquote_plus as unquote
 
-import sys
-import xbmc
-import xbmcaddon
-import xbmcgui
-import traceback
+from kodi_six import xbmc, xbmcaddon, xbmcgui
 
 
 class hbogo(object):
@@ -30,7 +31,8 @@ class hbogo(object):
         self.language = self.addon.getLocalizedString
         self.handler = None
 
-    def country_index(self, country_id):
+    @staticmethod
+    def country_index(country_id):
         index = -1
 
         for i in range(len(HbogoConstants.countries)):
@@ -62,18 +64,23 @@ class hbogo(object):
             xbmcgui.Dialog().ok("ERROR", "Unsupported region")
             sys.exit()
 
-
     def setup(self):
+        # STEP 0 - SETUP DRM
+        from inputstreamhelper import Helper
+        is_helper = Helper('mpd', drm='com.widevine.alpha')
+        is_helper.check_inputstream()
+
         # STEP 1, show country selection dialog
 
-        list = []
+        li_items_list = []
 
         for country in HbogoConstants.countries:
-            list.append(xbmcgui.ListItem(label=country[0], label2=country[1], iconImage="https://www.countryflags.io/" + country[1] + "/flat/64.png"))
-
-        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), list, useDetails=True)
+            li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1]))
+            li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png",
+                                      'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
+        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), li_items_list, useDetails=True)
         if index != -1:
-            country_id = list[index].getLabel2()
+            country_id = li_items_list[index].getLabel2()
             self.addon.setSetting('country_code', country_id)
         else:
             sys.exit()
@@ -83,110 +90,96 @@ class hbogo(object):
 
         url = None
         name = None
-        thumbnail = None
         content_id = None
         mode = None
         vote = None
 
-
         try:
-            url = urllib.unquote_plus(params["url"])
+            url = unquote(params["url"])
         except KeyError:
             pass
-        except:
+        except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - url warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
         try:
-            name = urllib.unquote_plus(params["name"])
+            name = unquote(params["name"])
         except KeyError:
             pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
-        try:
-            thumbnail = str(params["thumbnail"])
-        except KeyError:
-            pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - thumbnail warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
+        except Exception:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - name warning: " + traceback.format_exc(),
+                     xbmc.LOGDEBUG)
         try:
             mode = int(params["mode"])
         except KeyError:
             pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - mode warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
+        except Exception:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - mode warning: " + traceback.format_exc(),
+                     xbmc.LOGDEBUG)
         try:
             content_id = str(params["cid"])
         except KeyError:
             pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " +"ROUTER - content_id warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
+        except Exception:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - content_id warning: " + traceback.format_exc(),
+                     xbmc.LOGDEBUG)
         try:
             vote = str(params["vote"])
         except KeyError:
             pass
-        except:
-            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(), xbmc.LOGDEBUG)
-            pass
+        except Exception:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(),
+                     xbmc.LOGDEBUG)
 
-        if mode == None or url == None or len(url) < 1:
+        if mode is None or url is None or len(url) < 1:
             self.start()
             self.handler.categories()
 
-        elif mode == 1:
+        elif mode == HbogoConstants.ACTION_LIST:
             self.start()
             self.handler.setDispCat(name)
             self.handler.list(url)
 
-        elif mode == 2:
+        elif mode == HbogoConstants.ACTION_SEASON:
             self.start()
             self.handler.setDispCat(name)
             self.handler.season(url)
 
-        elif mode == 3:
+        elif mode == HbogoConstants.ACTION_EPISODE:
             self.start()
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
-        elif mode == 4:
+        elif mode == HbogoConstants.ACTION_SEARCH:
             self.start()
             self.handler.setDispCat(self.language(30711).encode('utf-8'))
             self.handler.search()
 
-        elif mode == 5:
+        elif mode == HbogoConstants.ACTION_PLAY:
             self.start()
             self.handler.setDispCat(name)
             self.handler.play(url, content_id)
 
-        elif mode == 6: #logout, destry setup
-            #ask confirm
+        elif mode == HbogoConstants.ACTION_RESET_SETUP:  # logout, destry setup
+            # ask confirm
             if xbmcgui.Dialog().yesno(self.addon.getAddonInfo('name'), self.language(30692).encode('utf-8')):
                 from hbogolib.handler import HbogoHandler
                 handler = HbogoHandler(self.handle, self.base_url)
                 handler.del_setup()
                 xbmc.executebuiltin('Container.Refresh')
 
-        elif mode == 7: #reset session
+        elif mode == HbogoConstants.ACTION_RESET_SESSION:  # reset session
             from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.handle, self.base_url)
             handler.del_login()
             xbmc.executebuiltin('Container.Refresh')
 
-        elif mode == 8: # vote
+        elif mode == HbogoConstants.ACTION_VOTE:  # vote
             self.start()
-            self.handler.procContext(8, content_id, vote)
+            self.handler.procContext(HbogoConstants.ACTION_VOTE, content_id, vote)
 
-        elif mode == 9: # add to my list
+        elif mode == HbogoConstants.ACTION_ADD_MY_LIST:  # add to my list
             self.start()
-            self.handler.procContext(9, content_id)
+            self.handler.procContext(HbogoConstants.ACTION_ADD_MY_LIST, content_id)
 
-        elif mode == 10: # remove from my list
+        elif mode == HbogoConstants.ACTION_REMOVE_MY_LIST:  # remove from my list
             self.start()
-            self.handler.procContext(10, content_id)
-
-
-
-
+            self.handler.procContext(HbogoConstants.ACTION_REMOVE_MY_LIST, content_id)
