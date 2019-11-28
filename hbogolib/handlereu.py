@@ -443,10 +443,7 @@ class HbogoHandler_eu(HbogoHandler):
 
             self.log("GET CP SESSION: " + self.REDIRECT_URL.split('?')[0])
 
-            r = cp_session.get(
-                   self.REDIRECT_URL.split('?')[0],
-                   params=payload
-                )
+            r = cp_session.get(self.REDIRECT_URL.split('?')[0], params=payload)
 
             payload = HbogoConstants.eu_redirect_login[self.op_id][3]
 
@@ -454,12 +451,9 @@ class HbogoHandler_eu(HbogoHandler):
 
             if self.op_id == HbogoConstants.SkylinkID:  # Perform special steps for Skylink
                 import re
-                viewstateTmp = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)
-                viewstategenTmp = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)
-                eventvalidationTmp = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)
-                payload['__VIEWSTATE'] = viewstateTmp[0]
-                payload['__VIEWSTATEGENERATOR'] = viewstategenTmp[0]
-                payload['__EVENTVALIDATION'] = eventvalidationTmp[0]
+                payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
+                payload['__VIEWSTATEGENERATOR'] = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
+                payload['__EVENTVALIDATION'] = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
             
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
