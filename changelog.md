@@ -1,6 +1,6 @@
 v.2.0.23-beta39
 - THIS IS A WORK IN PROGRESS
-- Fix Skylink CZ and PL (contribution ferdabasek)
+- Fix Skylink CZ and SK (contribution ferdabasek)
 
 v.2.0.22
 - Nordic/Spain: Add Watchlist (My List)
