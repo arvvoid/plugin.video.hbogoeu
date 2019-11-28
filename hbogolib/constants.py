@@ -96,18 +96,16 @@ class HbogoConstants(object):
 
     }
 
+    SkylinkID = "c55e69f0-2471-46a9-a8b7-24dac54e6eb9"  # Skylink Operator ID, Skylink require special steps in login
+
     # 0 - operator website login form url, 1 - username field name, 2 - password field name, 3 form payload
     eu_redirect_login = {
-        'c55e69f0-2471-46a9-a8b7-24dac54e6eb9': ['https://hbogo.skylink.cz/goauthenticate.aspx?client_id=HBO&redirect_uri=https%3a%2f%2fczapi.hbogo.eu%2foauthskylink%2frequest2.aspx&state=5zveHRYBaocYXvjTxHozRg&scope=HBO&response_type=code', 'txtLogin', 'txtPassword', {"__LASTFOCUS": None, "__EVENTTARGET": None, "__EVENTARGUMENT": None, "__VIEWSTATE": None, "__VIEWSTATEGENERATOR": None, "txtLogin": None, "txtPassword": None}],  # Czech Republic: Skylink + Slovakia: Skylink
+        'c55e69f0-2471-46a9-a8b7-24dac54e6eb9': ['https://hbogo.skylink.cz/goauthenticate.aspx?client_id=HBO&redirect_uri=https%3a%2f%2fczapi.hbogo.eu%2foauthskylink%2frequest2.aspx&state=5zveHRYBaocYXvjTxHozRg&scope=HBO&response_type=code', 'txtLogin', 'txtPassword', {"__LASTFOCUS": None, "__EVENTTARGET": "btnSubmit", "__EVENTARGUMENT": None, "__VIEWSTATE": None, "__VIEWSTATEGENERATOR": None, "txtLogin": None, "txtPassword": None}],  # Czech Republic: Skylink + Slovakia: Skylink
         'f0e09ddb-1286-4ade-bb30-99bf1ade7cff': ['https://service.upc.cz/login/pkmslogin.form', 'username', 'password', {"username": None, "password": None}],  # Czech Republic: UPC CZ + Slovakia: UPC CZ
         '414847a0-635c-4587-8076-079e3aa96035': ['https://icok.cyfrowypolsat.pl/logowanie.cp', 'j_username', 'j_password', {"j_username": None, "j_password": None, "loginFormM_SUBMIT": "1", "sInBtn": "", "javax.faces.ViewState": ""}],  # Polonia: Cyfrowy Polsat
         '972706fe-094c-4ea5-ae98-e8c5d907f6a2': ['https://my.telekom.ro/oam/server/auth_cred_submit', 'username', 'password', {"username": None, "password": None}],  # Romania: Telekom Romania
         '41a660dc-ee15-4125-8e92-cdb8c2602c5d': ['https://www.upc.ro/rest/v40/session/start?protocol=oidc&rememberMe=true', 'username', 'password', {"username": None, "credential": None}],  # Romania: UPC Romania
         '6826b525-04dc-4bb9-ada5-0a8e80a9f55a': ['https://rovodafoneauth.hbogo.eu/authservice/OAuth/AuthorizeResponse', 'UserName', 'Password', {"UserName": None, "Password": None, "__RequestVerificationToken": "O6VnKC1ZOUdyewkDuRsvj9FkYL5z3-pNtL_cFTBZxixuA2z_3TUqj5550M0AoyfA9Mw96XAvoFqvwoj3h6gS0DQqOE_kEkg1CKL-nc5KwbU1", "client_id": "ott-web", "redirect_uri": "https://roapi.hbogo.eu/oauthvodafone/request2.aspx", "state": "03ggvM1EXyqFFxWA7W1y4A", "response_type": "code", "IsAccepted": "true", "login": "Login"}],  # Romania: Vodafone Romania 4GTV+
     }
-
-    SkylinkID = "c55e69f0-2471-46a9-a8b7-24dac54e6eb9"
-
-
 
 

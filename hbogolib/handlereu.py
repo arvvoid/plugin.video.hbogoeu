@@ -19,8 +19,6 @@ import traceback
 
 import requests
 
-import re
-
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
 from hbogolib.kodiutil import KodiUtil
@@ -454,14 +452,14 @@ class HbogoHandler_eu(HbogoHandler):
 
             self.log("LOGIN FORM PAYLOAD: " + str(payload))
 
-            if self.op_id == HbogoConstants.SkylinkID:
-               thumb = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)
-               thumb2 = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)
-               thumb3 = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)
-               payload['__EVENTTARGET'] = 'btnSubmit'
-               payload['__VIEWSTATE'] = thumb[0]
-               payload['__VIEWSTATEGENERATOR'] = thumb2[0]
-               payload['__EVENTVALIDATION'] = thumb3[0]
+            if self.op_id == HbogoConstants.SkylinkID:  # Perform special steps for Skylink
+                import re
+                viewstateTmp = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)
+                viewstategenTmp = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)
+                eventvalidationTmp = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)
+                payload['__VIEWSTATE'] = viewstateTmp[0]
+                payload['__VIEWSTATEGENERATOR'] = viewstategenTmp[0]
+                payload['__EVENTVALIDATION'] = eventvalidationTmp[0]
             
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
