@@ -1,5 +1,4 @@
 v.2.0.23-beta39
-- THIS IS A WORK IN PROGRESS
 - Fix Skylink CZ and SK (contribution ferdabasek)
 
 v.2.0.22
