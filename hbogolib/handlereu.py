@@ -74,6 +74,9 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_SEARCH = ""
         self.API_URL_ADD_RATING = ""
         self.API_URL_ADD_MYLIST = ""
+        self.API_GET_BOOKMARK = ""
+        self.API_GET_HISTORY = ""
+        self.API_GET_BY_ID = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -150,6 +153,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v8/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v8/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v8/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+
+        self.API_GET_BOOKMARK = 'https://bookmarking.hbogo.eu/v1/ContinueWatching/'
+        self.API_GET_HISTORY = 'https://bookmarking.hbogo.eu/v1/History/'
+        self.API_GET_BY_ID = 'https://roapi.hbogo.eu/v8/ContentByExternalId/json/'
 
         self.individualization = ""
         self.goToken = ""
@@ -444,8 +451,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("GET CP SESSION: " + self.REDIRECT_URL.split('?')[0])
 
             r = cp_session.get(self.REDIRECT_URL.split('?')[0], params=payload)
-
-            payload = HbogoConstants.eu_redirect_login[self.op_id][3]
+							  
+			             payload = HbogoConstants.eu_redirect_login[self.op_id][3]
 
             self.log("LOGIN FORM PAYLOAD: " + str(payload))
 
@@ -454,7 +461,7 @@ class HbogoHandler_eu(HbogoHandler):
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
                 payload['__VIEWSTATEGENERATOR'] = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
                 payload['__EVENTVALIDATION'] = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
-            
+
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
 
@@ -869,8 +876,88 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("No Home Category found")
 
+        self.addCat('Last 10 Watched', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Last 10 Watched'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_LAST_10_HISTORY)        
+        self.addCat('Watching History', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Watching History'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_HISTORY)
+        self.addCat('Continue Watching', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Continue Watching'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_BOOKMARK)
+
         KodiUtil.endDir(self.handle, None, True)
 
+    def get_Continue_Watching(self, url):
+        if not self.chk_login():
+            self.login()
+        self.log("List: " + str(url))
+
+        if not self.chk_login():
+            self.login()
+
+        jsonrsp = self.get_from_hbogo(self.API_GET_BOOKMARK+self.GOcustomerId+'/ROM/1')
+
+        try:
+            if jsonrsp[0]['ErrorMessage']:
+                self.log("List Error: " + str(jsonrsp[0]['ErrorMessage']))
+                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp[0]['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
+        except Exception:
+            self.log("Unexpected error: " + traceback.format_exc())
+     
+        for container_index in range(0, str(jsonrsp).count("contentType")):
+            container_item = jsonrsp[container_index]
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
+            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+        KodiUtil.endDir(self.handle, self.use_content_type)
+
+    def get_Last_10_History(self, url):
+        if not self.chk_login():
+            self.login()
+        self.log("List: " + str(url))
+
+        if not self.chk_login():
+            self.login()
+
+        jsonrsp = self.get_from_hbogo(self.API_GET_HISTORY+self.GOcustomerId+'/ROM/1')
+
+        try:
+            if jsonrsp[0]['ErrorMessage']:
+                self.log("List Error: " + str(jsonrsp[0]['ErrorMessage']))
+                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp[0]['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
+        except Exception:
+            self.log("Unexpected error: " + traceback.format_exc())
+     
+        for container_index in range(0, min(10, str(jsonrsp).count("contentType"))):
+            container_item = jsonrsp[container_index]
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
+            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+        KodiUtil.endDir(self.handle, self.use_content_type)
+
+
+    def get_Watching_History(self, url):
+        if not self.chk_login():
+            self.login()
+        self.log("List: " + str(url))
+
+        if not self.chk_login():
+            self.login()
+
+        jsonrsp = self.get_from_hbogo(self.API_GET_HISTORY+self.GOcustomerId+'/ROM/3')
+
+        try:
+            if jsonrsp[0]['ErrorMessage']:
+                self.log("List Error: " + str(jsonrsp[0]['ErrorMessage']))
+                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp[0]['ErrorMessage'])
+        except KeyError:
+            pass  # all is ok no error message just pass
+        except Exception:
+            self.log("Unexpected error: " + traceback.format_exc())
+
+        for container_index in range(0, str(jsonrsp).count("contentType")):
+            container_item = jsonrsp[container_index]
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
+            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+        KodiUtil.endDir(self.handle, self.use_content_type)
+      
     def list(self, url, simple=False):
         if not self.chk_login():
             self.login()
