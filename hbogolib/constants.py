@@ -34,7 +34,9 @@ class HbogoConstants(object):
     ACTION_VOTE = 8
     ACTION_ADD_MY_LIST = 9
     ACTION_REMOVE_MY_LIST = 10
-
+    ACTION_LIST_BOOKMARK = 11
+    ACTION_LIST_HISTORY = 12
+    ACTION_LIST_LAST_10_HISTORY = 13
 
     countries = [
         ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
@@ -107,5 +109,3 @@ class HbogoConstants(object):
         '41a660dc-ee15-4125-8e92-cdb8c2602c5d': ['https://www.upc.ro/rest/v40/session/start?protocol=oidc&rememberMe=true', 'username', 'password', {"username": None, "credential": None}],  # Romania: UPC Romania
         '6826b525-04dc-4bb9-ada5-0a8e80a9f55a': ['https://rovodafoneauth.hbogo.eu/authservice/OAuth/AuthorizeResponse', 'UserName', 'Password', {"UserName": None, "Password": None, "__RequestVerificationToken": "O6VnKC1ZOUdyewkDuRsvj9FkYL5z3-pNtL_cFTBZxixuA2z_3TUqj5550M0AoyfA9Mw96XAvoFqvwoj3h6gS0DQqOE_kEkg1CKL-nc5KwbU1", "client_id": "ott-web", "redirect_uri": "https://roapi.hbogo.eu/oauthvodafone/request2.aspx", "state": "03ggvM1EXyqFFxWA7W1y4A", "response_type": "code", "IsAccepted": "true", "login": "Login"}],  # Romania: Vodafone Romania 4GTV+
     }
-
-
