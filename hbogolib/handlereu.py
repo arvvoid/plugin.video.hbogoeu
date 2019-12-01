@@ -451,7 +451,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("GET CP SESSION: " + self.REDIRECT_URL.split('?')[0])
 
             r = cp_session.get(self.REDIRECT_URL.split('?')[0], params=payload)
-
+							  
             payload = HbogoConstants.eu_redirect_login[self.op_id][3]
 
             self.log("LOGIN FORM PAYLOAD: " + str(payload))
@@ -461,6 +461,7 @@ class HbogoHandler_eu(HbogoHandler):
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
                 payload['__VIEWSTATEGENERATOR'] = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
                 payload['__EVENTVALIDATION'] = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
+
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
 
@@ -875,9 +876,12 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("No Home Category found")
 
-        self.addCat('Last 10 Watched', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Last 10 Watched'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_LAST_10_HISTORY)        
-        self.addCat('Watching History', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Watching History'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_HISTORY)
-        self.addCat('Continue Watching', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Continue Watching'), self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_BOOKMARK)
+        self.addCat('Last 10 Watched', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Last 10 Watched'),
+                                      self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_LAST_10_HISTORY)        
+        self.addCat('Watching History', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Watching History'), 
+                                      self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_HISTORY)
+        self.addCat('Continue Watching', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Continue Watching'), 
+		                              self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_BOOKMARK)
 
         KodiUtil.endDir(self.handle, None, True)
 
@@ -901,9 +905,9 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
      
         for container_index in range(0, str(jsonrsp).count("contentType")):
-            container_item = jsonrsp[container_index]
-            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
-            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) 
+                                                              + '/' + str(jsonrsp[container_index]['contentType']))
+            self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
         KodiUtil.endDir(self.handle, self.use_content_type)
 
     def get_Last_10_History(self, url):
@@ -926,9 +930,9 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
      
         for container_index in range(0, min(10, str(jsonrsp).count("contentType"))):
-            container_item = jsonrsp[container_index]
-            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
-            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) 
+                                                              + '/' + str(jsonrsp[container_index]['contentType']))
+            self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
         KodiUtil.endDir(self.handle, self.use_content_type)
 
 
@@ -953,8 +957,9 @@ class HbogoHandler_eu(HbogoHandler):
 
         for container_index in range(0, str(jsonrsp).count("contentType")):
             container_item = jsonrsp[container_index]
-            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) + '/' + str(jsonrsp[container_index]['contentType']))
-            url = self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
+            jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) 
+			                                                  + '/' + str(jsonrsp[container_index]['contentType']))
+            self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
         KodiUtil.endDir(self.handle, self.use_content_type)
       
     def list(self, url, simple=False):
