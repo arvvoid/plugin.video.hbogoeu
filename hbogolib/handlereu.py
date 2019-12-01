@@ -452,7 +452,7 @@ class HbogoHandler_eu(HbogoHandler):
 
             r = cp_session.get(self.REDIRECT_URL.split('?')[0], params=payload)
 							  
-			             payload = HbogoConstants.eu_redirect_login[self.op_id][3]
+            payload = HbogoConstants.eu_redirect_login[self.op_id][3]
 
             self.log("LOGIN FORM PAYLOAD: " + str(payload))
 
