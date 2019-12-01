@@ -93,7 +93,8 @@ class hbogo(object):
         content_id = None
         mode = None
         vote = None
-
+        category = None
+ 
         try:
             url = unquote(params["url"])
         except KeyError:
@@ -127,6 +128,13 @@ class hbogo(object):
             pass
         except Exception:
             xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - vote warning: " + traceback.format_exc(),
+                     xbmc.LOGDEBUG)
+        try:
+            category = str(params["category"])
+        except KeyError:
+            pass
+        except Exception:
+            xbmc.log("[" + str(self.addon_id) + "] " + "ROUTER - category warning: " + traceback.format_exc(),
                      xbmc.LOGDEBUG)
 
         if mode is None or url is None or len(url) < 1:
@@ -183,3 +191,18 @@ class hbogo(object):
         elif mode == HbogoConstants.ACTION_REMOVE_MY_LIST:  # remove from my list
             self.start()
             self.handler.procContext(HbogoConstants.ACTION_REMOVE_MY_LIST, content_id)
+
+        elif mode == HbogoConstants.ACTION_LIST_BOOKMARK:
+            self.start()
+            self.handler.setDispCat(category)
+            self.handler.get_Continue_Watching(url)
+
+        elif mode == HbogoConstants.ACTION_LIST_HISTORY:
+            self.start()
+            self.handler.setDispCat(category)
+            self.handler.get_Watching_History(url)
+
+        elif mode == HbogoConstants.ACTION_LIST_LAST_10_HISTORY:
+            self.start()
+            self.handler.setDispCat(category)
+            self.handler.get_Last_10_History(url)
