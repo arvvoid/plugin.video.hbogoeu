@@ -880,8 +880,8 @@ class HbogoHandler_eu(HbogoHandler):
                     self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_LAST_10_HISTORY)        
         self.addCat('Watching History', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Watching History'), 
                     self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_HISTORY)
-        self.addCat('Continue Watching', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Continue Watching'), 
-		self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_BOOKMARK)
+        self.addCat('Continue Watching', '{0}?mode=1&action=listing&category={1}'.format(self.base_url, 'Continue Watching'),
+		    self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST_BOOKMARK)
 
         KodiUtil.endDir(self.handle, None, True)
 
@@ -957,7 +957,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         for container_index in range(0, str(jsonrsp).count("contentType")):
             jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) 
-			                     + '/' + str(jsonrsp[container_index]['contentType']))
+			           + '/' + str(jsonrsp[container_index]['contentType']))
             self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
         KodiUtil.endDir(self.handle, self.use_content_type)
       
