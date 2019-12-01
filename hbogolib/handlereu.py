@@ -956,7 +956,6 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
 
         for container_index in range(0, str(jsonrsp).count("contentType")):
-            container_item = jsonrsp[container_index]
             jsonrsp2 = self.get_from_hbogo(self.API_GET_BY_ID + '/ENG/' + self.API_PLATFORM + '/' + str(jsonrsp[container_index]['externalId']) 
 			                                                  + '/' + str(jsonrsp[container_index]['contentType']))
             self.addLink(jsonrsp2, HbogoConstants.ACTION_PLAY)
