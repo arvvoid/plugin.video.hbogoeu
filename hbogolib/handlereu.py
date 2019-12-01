@@ -461,7 +461,6 @@ class HbogoHandler_eu(HbogoHandler):
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
                 payload['__VIEWSTATEGENERATOR'] = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
                 payload['__EVENTVALIDATION'] = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
-
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
 
