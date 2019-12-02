@@ -303,9 +303,6 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
         self.log("List: " + str(url))
 
-        if not self.chk_login():
-            self.login()
-
         self.list_pages(url, 200, 0)
 
         if simple is False:

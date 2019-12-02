@@ -271,10 +271,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.customerId = str(custid)
 
     def storeFavgroup(self, favgroupid):
-        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
-        if self.FavoritesGroupId == "":
-            self.addon.setSetting('FavoritesGroupId', favgroupid)
-            self.FavoritesGroupId = favgroupid
+        self.addon.setSetting('FavoritesGroupId', favgroupid)
 
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
@@ -294,10 +291,11 @@ class HbogoHandler_eu(HbogoHandler):
         return True
 
     def getFavoriteGroup(self):
-        jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
-
-        self.favgroupId = jsonrsp['FavoritesGroupId']
-        self.storeFavgroup(self.favgroupId)
+        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
+        if self.FavoritesGroupId == "":
+            jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
+            self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
+            self.storeFavgroup(self.FavoritesGroupId)
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -583,9 +581,6 @@ class HbogoHandler_eu(HbogoHandler):
         if (self.individualization == "" or self.customerId == ""):
             self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
             self.silentRegister()
-
-        if self.FavoritesGroupId == "":
-            self.getFavoriteGroup()
 
         if (username == "" or password == ""):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.LB_NOLOGIN)
@@ -875,9 +870,6 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("List: " + str(url))
-
-        if not self.chk_login():
-            self.login()
 
         jsonrsp = self.get_from_hbogo(url)
 
