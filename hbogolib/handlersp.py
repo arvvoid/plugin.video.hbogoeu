@@ -553,10 +553,12 @@ class HbogoHandler_sp(HbogoHandler):
         liz = xbmcgui.ListItem(name)
         liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
         liz.setInfo(type="Video",
-                    infoLabels={"mediatype": media_type, "episode": episode,
-                                "season": season,
-                                "tvshowtitle": series_name, "plot": plot,
-                                "title": name, "originaltitle": original_name})
+                    infoLabels={
+                        "mediatype": media_type, "episode": episode,
+                        "season": season,
+                        "tvshowtitle": series_name, "plot": plot,
+                        "title": name, "originaltitle": original_name
+                    })
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
@@ -595,12 +597,16 @@ class HbogoHandler_sp(HbogoHandler):
         thumb = self.get_thumbnail_url(item)
 
         liz = xbmcgui.ListItem(item.find('title').text)
-        liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
-                    'fanart': thumb})
-        liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
-                                              "tvshowtitle": series_name,
-                                              "title": item.find('title').text,
-                                              "Plot": plot})
+        liz.setArt({
+                       'thumb': thumb, 'poster': thumb, 'banner': thumb,
+                       'fanart': thumb
+                   })
+        liz.setInfo(type="Video", infoLabels={
+            "mediatype": media_type,
+            "tvshowtitle": series_name,
+            "title": item.find('title').text,
+            "Plot": plot
+        })
 
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
