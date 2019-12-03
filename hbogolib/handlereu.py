@@ -863,8 +863,8 @@ class HbogoHandler_eu(HbogoHandler):
         if self.addon.getSetting('show_week_top') == 'true':
             if position_week_top != -1:
                 self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
-                            '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+                        '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
             else:
                 self.log("No Week Top Category found")
 
