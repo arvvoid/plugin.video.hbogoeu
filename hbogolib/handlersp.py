@@ -598,9 +598,9 @@ class HbogoHandler_sp(HbogoHandler):
 
         liz = xbmcgui.ListItem(item.find('title').text)
         liz.setArt({
-                       'thumb': thumb, 'poster': thumb, 'banner': thumb,
-                       'fanart': thumb
-                   })
+            'thumb': thumb, 'poster': thumb, 'banner': thumb,
+            'fanart': thumb
+        })
         liz.setInfo(type="Video", infoLabels={
             "mediatype": media_type,
             "tvshowtitle": series_name,

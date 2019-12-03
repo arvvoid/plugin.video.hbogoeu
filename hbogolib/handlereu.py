@@ -453,9 +453,9 @@ class HbogoHandler_eu(HbogoHandler):
                 import re
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
                 payload['__VIEWSTATEGENERATOR'] = \
-                re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
+                    re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
                 payload['__EVENTVALIDATION'] = \
-                re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
+                    re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
 
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
@@ -1216,9 +1216,9 @@ class HbogoHandler_eu(HbogoHandler):
 
         liz = xbmcgui.ListItem(name)
         liz.setArt({
-                       'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
-                       'fanart': title['BackgroundUrl']
-                   })
+            'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
+            'fanart': title['BackgroundUrl']
+        })
         liz.setInfo(type="Video",
                     infoLabels={
                         "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
@@ -1255,9 +1255,9 @@ class HbogoHandler_eu(HbogoHandler):
         }))
         liz = xbmcgui.ListItem(item['Name'])
         liz.setArt({
-                       'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
-                       'fanart': item['BackgroundUrl']
-                   })
+            'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
+            'fanart': item['BackgroundUrl']
+        })
         plot = py2_encode(item['Abstract'])
         if 'Description' in item:
             if item['Description'] is not None:
