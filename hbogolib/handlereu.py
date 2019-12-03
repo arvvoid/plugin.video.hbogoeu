@@ -83,7 +83,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = ""
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
-        self.KidsGroupId = ""
 
         self.loggedin_headers = {}
 
@@ -162,7 +161,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = ""
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
-        self.KidsGroupId = ""
 
         self.loggedin_headers = {
             'User-Agent': self.UA,
@@ -298,7 +296,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
-        self.KidsGroupId = jsonrsp['KidsGroupId']
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -790,9 +787,6 @@ class HbogoHandler_eu(HbogoHandler):
                     self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
                     self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
-        self.addCat("Kids",
-                    self.API_URL_CUSTOMER_GROUP + self.KidsGroupId + '/-/-/-/1000/-/-/false',
-                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
