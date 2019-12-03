@@ -81,6 +81,9 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
+        self.HistoryGroupId = ""
+        self.ContinueWatchingGroupId = ""
+        self.KidsGroupId = ""
 
         self.loggedin_headers = {}
 
@@ -157,6 +160,9 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
+        self.HistoryGroupId = ""
+        self.ContinueWatchingGroupId = ""
+        self.KidsGroupId = ""
 
         self.loggedin_headers = {
             'User-Agent': self.UA,
@@ -270,9 +276,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.addon.setSetting('customerId', str(custid))
         self.customerId = str(custid)
 
-    def storeFavgroup(self, favgroupid):
-        self.addon.setSetting('FavoritesGroupId', favgroupid)
-
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
         import uuid
@@ -290,12 +293,12 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("DEVICE REGISTRATION: COMPLETED")
         return True
 
-    def getFavoriteGroup(self):
-        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
-        if self.FavoritesGroupId == "":
-            jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
-            self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
-            self.storeFavgroup(self.FavoritesGroupId)
+    def getCustomerGroups(self):
+        jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
+        self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
+        self.HistoryGroupId = jsonrsp['HistoryGroupId']
+        self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
+        self.KidsGroupId = jsonrsp['KidsGroupId']
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -550,7 +553,7 @@ class HbogoHandler_eu(HbogoHandler):
             # save the session with validity of n hours to not relogin every run of the add-on
 
             login_hash = Util.hash225_string(
-                self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+                self.individualization + self.customerId + username + password + self.op_id)
             self.log("LOGIN HASH: " + login_hash)
 
             saved_session = {
@@ -575,8 +578,6 @@ class HbogoHandler_eu(HbogoHandler):
         password = self.getCredential('password')
         self.customerId = self.addon.getSetting('customerId')
         self.individualization = self.addon.getSetting('individualization')
-        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
-        self.KidsGroupId = self.addon.getSetting('KidsGroupId')
 
         if (self.individualization == "" or self.customerId == ""):
             self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
@@ -589,7 +590,7 @@ class HbogoHandler_eu(HbogoHandler):
             return False
 
         login_hash = Util.hash225_string(
-            self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+            self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_session")
@@ -755,7 +756,7 @@ class HbogoHandler_eu(HbogoHandler):
         # save the session with validity of n hours to not relogin every run of the add-on
 
         login_hash = Util.hash225_string(
-            self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+            self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
         saved_session = {
@@ -775,13 +776,23 @@ class HbogoHandler_eu(HbogoHandler):
         self.setDispCat(self.operator_name)
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
-        if self.FavoritesGroupId == "":
-            self.getFavoriteGroup()
+        self.getCustomerGroups()
 
-        if self.FavoritesGroupId != "":
-            self.addCat(self.LB_MYPLAYLIST,
-                        self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
-                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+        self.addCat(self.LB_MYPLAYLIST,
+                    self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
+                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+
+        self.addCat("History",
+                    self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
+                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+
+        self.addCat("Continue Watching",
+                    self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
+                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+
+        self.addCat("Kids",
+                    self.API_URL_CUSTOMER_GROUP + self.KidsGroupId + '/-/-/-/1000/-/-/false',
+                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)

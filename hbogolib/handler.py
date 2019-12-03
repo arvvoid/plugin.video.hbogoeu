@@ -304,18 +304,6 @@ class HbogoHandler(object):
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
-    def storeIndiv(self, indiv, custid):
-        pass
-
-    def storeFavgroup(self, favgroupid):
-        pass
-
-    def silentRegister(self):
-        pass
-
-    def getFavoriteGroup(self):
-        pass
-
     def setup(self, country):
         pass
 
