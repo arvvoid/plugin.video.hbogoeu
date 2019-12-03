@@ -9,7 +9,6 @@
         <setting type="text" id="operator_redirect_url" visible="false" default=""/>
 	    <setting type="text" id="individualization" visible="false" default=""/>
         <setting type="text" id="customerId" visible="false" default=""/>
-        <setting type="text" id="FavoritesGroupId" visible="false" default=""/>
         <setting type="text" id="username" visible="false" default=""/>
         <setting type="text" id="password" option="hidden" visible="false" default=""/>
         <setting type="text" id="lastsearch" visible="false" default=""/>
@@ -19,6 +18,14 @@
         <setting label="30651" type="bool" id="deflang" default="false"/>
         <setting label="30652" type="bool" id="origtitles" default="false"/>
         <setting label="30653" type="bool" id="forcesubs" default="true"/>
+    </category>
+    <!-- Home Catgory -->
+    <category label="30696">
+        <setting label="30707" type="bool" id="show_mylist" default="true"/>
+        <setting label="30731" type="bool" id="show_history" default="false"/>
+        <setting label="30732" type="bool" id="show_continue" default="false"/>
+        <setting label="30729" type="bool" id="show_kids" default="true"/>
+        <setting label="30696" type="bool" id="group_home" default="false"/>
     </category>
     <!-- Streaming -->
     <category label="30660">

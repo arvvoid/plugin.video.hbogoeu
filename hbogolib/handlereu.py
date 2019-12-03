@@ -775,17 +775,20 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.getCustomerGroups()
 
-        self.addCat(self.LB_MYPLAYLIST,
-                    self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
-                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+        if self.addon.getSetting('show_mylist') == 'true':
+            self.addCat(self.LB_MYPLAYLIST,
+                        self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
-        self.addCat("History",
-                    self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
-                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+        if self.addon.getSetting('show_history') == 'true':
+            self.addCat(py2_encode(self.language(30731)),
+                        self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
-        self.addCat("Continue Watching",
-                    self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
-                    self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+        if self.addon.getSetting('show_continue') == 'true':
+            self.addCat(py2_encode(self.language(30732)),
+                        self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
@@ -848,13 +851,14 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("No Movies Category found")
 
-        if position_kids != -1:
-            self.addCat(py2_encode(self.language(30729)),
-                        jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                              '/0/0/1/1024/0/0'),
-                        self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Kids Category found")
+        if self.addon.getSetting('show_kids') == 'true':
+            if position_kids != -1:
+                self.addCat(py2_encode(self.language(30729)),
+                            jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
+                                                                                  '/0/0/1/1024/0/0'),
+                            self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Kids Category found")
 
         if position_week_top != -1:
             self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
@@ -864,8 +868,11 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("No Week Top Category found")
 
         if position_home != -1:
-            self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                           '/0/0/1/1024/0/0'), True)
+            if self.addon.getSetting('group_home') == 'true':
+                self.addCat(py2_encode("Home Lists"), jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
         else:
             self.log("No Home Category found")
 
