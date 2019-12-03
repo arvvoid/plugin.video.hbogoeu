@@ -229,6 +229,10 @@ msgctxt "#30732"
 msgid "Continue Watching"
 msgstr ""
 
+msgctxt "#30733"
+msgid "Home Lists"
+msgstr ""
+
 msgctxt "#30650"
 msgid "Language"
 msgstr ""

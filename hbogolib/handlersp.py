@@ -247,7 +247,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         if home is not None:
             if self.addon.getSetting('group_home') == 'true':
-                self.addCat(py2_encode("Home Lists"), home.find('link').text,
+                self.addCat(py2_encode(self.language(30733)), home.find('link').text,
                             self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
             else:
                 self.list(home.find('link').text, True)

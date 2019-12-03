@@ -873,7 +873,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         if position_home != -1:
             if self.addon.getSetting('group_home') == 'true':
-                self.addCat(py2_encode("Home Lists"),
+                self.addCat(py2_encode(self.language(30733)),
                             jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
                             self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
             else:
