@@ -219,11 +219,12 @@ class HbogoHandler_sp(HbogoHandler):
             else:
                 pass
 
-        if watchlist is not None:
-            self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
-                        HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Watchlist Category found")
+        if self.addon.getSetting('show_mylist') == 'true':
+            if watchlist is not None:
+                self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
+                            HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Watchlist Category found")
 
         if series is not None:
             self.addCat(py2_encode(series.find('title').text), series.find('link').text,
@@ -237,14 +238,19 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             self.log("No Movies Category found")
 
-        if kids is not None:
-            self.addCat(py2_encode(kids.find('title').text), kids.find('link').text,
-                        self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Kids Category found")
+        if self.addon.getSetting('show_kids') == 'true':
+            if kids is not None:
+                self.addCat(py2_encode(kids.find('title').text), kids.find('link').text,
+                            self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Kids Category found")
 
         if home is not None:
-            self.list(home.find('link').text, True)
+            if self.addon.getSetting('group_home') == 'true':
+                self.addCat(py2_encode(self.language(30733)), home.find('link').text,
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.list(home.find('link').text, True)
         else:
             self.log("No Home Category found")
 
@@ -302,9 +308,6 @@ class HbogoHandler_sp(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("List: " + str(url))
-
-        if not self.chk_login():
-            self.login()
 
         self.list_pages(url, 200, 0)
 
@@ -550,10 +553,12 @@ class HbogoHandler_sp(HbogoHandler):
         liz = xbmcgui.ListItem(name)
         liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
         liz.setInfo(type="Video",
-                    infoLabels={"mediatype": media_type, "episode": episode,
-                                "season": season,
-                                "tvshowtitle": series_name, "plot": plot,
-                                "title": name, "originaltitle": original_name})
+                    infoLabels={
+                        "mediatype": media_type, "episode": episode,
+                        "season": season,
+                        "tvshowtitle": series_name, "plot": plot,
+                        "title": name, "originaltitle": original_name
+                    })
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
@@ -592,12 +597,16 @@ class HbogoHandler_sp(HbogoHandler):
         thumb = self.get_thumbnail_url(item)
 
         liz = xbmcgui.ListItem(item.find('title').text)
-        liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
-                    'fanart': thumb})
-        liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
-                                              "tvshowtitle": series_name,
-                                              "title": item.find('title').text,
-                                              "Plot": plot})
+        liz.setArt({
+            'thumb': thumb, 'poster': thumb, 'banner': thumb,
+            'fanart': thumb
+        })
+        liz.setInfo(type="Video", infoLabels={
+            "mediatype": media_type,
+            "tvshowtitle": series_name,
+            "title": item.find('title').text,
+            "Plot": plot
+        })
 
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)

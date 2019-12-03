@@ -319,6 +319,18 @@ msgctxt "#30730"
 msgid "Weekly Top"
 msgstr "Heti top"
 
+msgctxt "#30731"
+msgid "History"
+msgstr ""
+
+msgctxt "#30732"
+msgid "Continue Watching"
+msgstr ""
+
+msgctxt "#30733"
+msgid "Home Lists"
+msgstr ""
+
 msgctxt "#30692"
 msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
 msgstr "Biztosan szeretné teljesen törölni a beállításait? Az eszköz regisztráció el fog veszni"
@@ -330,3 +342,12 @@ msgstr "Részletes és nyers adatok a beszúrása a hibakereső naplóba"
 msgctxt "#30694"
 msgid "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
 msgstr "A Cryptodome függőség nincs installálva a rendszeren. Segítségért nézze át a telepítési útmutatót vagy a hivatalos támogatói fórumot"
+
+msgctxt "#30696"
+msgid "Home Category"
+msgstr ""
+
+msgctxt "#30697"
+msgid "Group Home lists in special category"
+msgstr ""
+
