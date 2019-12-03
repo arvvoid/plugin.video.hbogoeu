@@ -783,12 +783,12 @@ class HbogoHandler_eu(HbogoHandler):
         if self.addon.getSetting('show_history') == 'true':
             self.addCat(py2_encode(self.language(30731)),
                         self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
-                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
         if self.addon.getSetting('show_continue') == 'true':
             self.addCat(py2_encode(self.language(30732)),
                         self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
-                        self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
@@ -860,12 +860,13 @@ class HbogoHandler_eu(HbogoHandler):
             else:
                 self.log("No Kids Category found")
 
-        if position_week_top != -1:
-            self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
-                '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Week Top Category found")
+        if self.addon.getSetting('show_week_top') == 'true':
+            if position_week_top != -1:
+                self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
+                            '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Week Top Category found")
 
         if position_home != -1:
             if self.addon.getSetting('group_home') == 'true':

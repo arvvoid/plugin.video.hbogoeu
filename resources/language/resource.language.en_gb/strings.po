@@ -298,6 +298,6 @@ msgctxt "#30696"
 msgid "Home Category"
 msgstr ""
 
-msgctxt "#30696"
+msgctxt "#30697"
 msgid "Group Home lists in special category"
 msgstr ""
