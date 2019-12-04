@@ -221,6 +221,18 @@ msgctxt "#30730"
 msgid "Weekly Top"
 msgstr "Týdenní žebříček"
 
+msgctxt "#30731"
+msgid "History"
+msgstr ""
+
+msgctxt "#30732"
+msgid "Continue Watching"
+msgstr ""
+
+msgctxt "#30733"
+msgid "Home Lists"
+msgstr ""
+
 msgctxt "#30650"
 msgid "Language"
 msgstr "Jazyk"
@@ -284,3 +296,11 @@ msgstr "Include full details/RAW retrived data in Debug log"
 msgctxt "#30694"
 msgid "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
 msgstr "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
+
+msgctxt "#30696"
+msgid "Home Category"
+msgstr ""
+
+msgctxt "#30697"
+msgid "Group Home lists in special category"
+msgstr ""

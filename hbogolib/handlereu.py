@@ -81,6 +81,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
+        self.HistoryGroupId = ""
+        self.ContinueWatchingGroupId = ""
 
         self.loggedin_headers = {}
 
@@ -138,8 +140,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
         self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
-        self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
-        self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + \
+                                     self.API_PLATFORM
+        self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + \
+                                     self.API_PLATFORM
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
         self.API_URL_GROUPS_OLD = 'https://' + self.API_HOST + '/v5/Groups/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
@@ -157,6 +161,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.GOcustomerId = ""
         self.sessionId = '00000000-0000-0000-0000-000000000000'
         self.FavoritesGroupId = ""
+        self.HistoryGroupId = ""
+        self.ContinueWatchingGroupId = ""
 
         self.loggedin_headers = {
             'User-Agent': self.UA,
@@ -270,12 +276,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.addon.setSetting('customerId', str(custid))
         self.customerId = str(custid)
 
-    def storeFavgroup(self, favgroupid):
-        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
-        if self.FavoritesGroupId == "":
-            self.addon.setSetting('FavoritesGroupId', favgroupid)
-            self.FavoritesGroupId = favgroupid
-
     def silentRegister(self):
         self.log("DEVICE REGISTRATION")
         import uuid
@@ -293,11 +293,11 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("DEVICE REGISTRATION: COMPLETED")
         return True
 
-    def getFavoriteGroup(self):
+    def getCustomerGroups(self):
         jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
-
-        self.favgroupId = jsonrsp['FavoritesGroupId']
-        self.storeFavgroup(self.favgroupId)
+        self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
+        self.HistoryGroupId = jsonrsp['HistoryGroupId']
+        self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -452,9 +452,11 @@ class HbogoHandler_eu(HbogoHandler):
             if self.op_id == HbogoConstants.SkylinkID:  # Perform special steps for Skylink
                 import re
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
-                payload['__VIEWSTATEGENERATOR'] = re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
-                payload['__EVENTVALIDATION'] = re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
-            
+                payload['__VIEWSTATEGENERATOR'] = \
+                    re.compile('<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" />').findall(r.text)[0]
+                payload['__EVENTVALIDATION'] = \
+                    re.compile('<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" />').findall(r.text)[0]
+
             payload[HbogoConstants.eu_redirect_login[self.op_id][1]] = username
             payload[HbogoConstants.eu_redirect_login[self.op_id][2]] = password
 
@@ -478,7 +480,8 @@ class HbogoHandler_eu(HbogoHandler):
                 self.log("OAuth login attempt failed, operator not supported, stack trace: " + traceback.format_exc())
                 self.log("OAuth login attempt failed, operator not supported: " + str(self.op_id))
                 xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR,
-                                    "Sorry the OAuth login attempt have failed. Your operator require a special login procedure thats not supported at the moment. Please report with a full debug log")
+                                    "Sorry the OAuth login attempt have failed. Your operator require a special login procedure thats not supported at the "
+                                    "moment. Please report with a full debug log")
                 self.del_setup()
                 self.log(str(response))
                 sys.exit()
@@ -552,7 +555,7 @@ class HbogoHandler_eu(HbogoHandler):
             # save the session with validity of n hours to not relogin every run of the add-on
 
             login_hash = Util.hash225_string(
-                self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+                self.individualization + self.customerId + username + password + self.op_id)
             self.log("LOGIN HASH: " + login_hash)
 
             saved_session = {
@@ -577,15 +580,10 @@ class HbogoHandler_eu(HbogoHandler):
         password = self.getCredential('password')
         self.customerId = self.addon.getSetting('customerId')
         self.individualization = self.addon.getSetting('individualization')
-        self.FavoritesGroupId = self.addon.getSetting('FavoritesGroupId')
-        self.KidsGroupId = self.addon.getSetting('KidsGroupId')
 
         if (self.individualization == "" or self.customerId == ""):
             self.log("NO REGISTRED DEVICE - generating indivudualization and customer_id.")
             self.silentRegister()
-
-        if self.FavoritesGroupId == "":
-            self.getFavoriteGroup()
 
         if (username == "" or password == ""):
             xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.LB_NOLOGIN)
@@ -594,7 +592,7 @@ class HbogoHandler_eu(HbogoHandler):
             return False
 
         login_hash = Util.hash225_string(
-            self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+            self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_session")
@@ -620,7 +618,6 @@ class HbogoHandler_eu(HbogoHandler):
                     self.log('REFRESHING SAVED SESSION: ' + self.mask_sensitive_data(str(loaded_session)))
                     self.save_obj(loaded_session, self.addon_id + '_session')
                     return True
-
 
         if self.REDIRECT_URL:
             self.log("OPERATOR WITH LOGIN REDIRECTION DETECTED")
@@ -760,7 +757,7 @@ class HbogoHandler_eu(HbogoHandler):
         # save the session with validity of n hours to not relogin every run of the add-on
 
         login_hash = Util.hash225_string(
-            self.individualization + self.customerId + self.FavoritesGroupId + username + password + self.op_id)
+            self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
         saved_session = {
@@ -780,13 +777,22 @@ class HbogoHandler_eu(HbogoHandler):
         self.setDispCat(self.operator_name)
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
-        if self.FavoritesGroupId == "":
-            self.getFavoriteGroup()
+        self.getCustomerGroups()
 
-        if self.FavoritesGroupId != "":
+        if self.addon.getSetting('show_mylist') == 'true':
             self.addCat(self.LB_MYPLAYLIST,
                         self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
                         self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
+
+        if self.addon.getSetting('show_history') == 'true':
+            self.addCat(py2_encode(self.language(30731)),
+                        self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+
+        if self.addon.getSetting('show_continue') == 'true':
+            self.addCat(py2_encode(self.language(30732)),
+                        self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
@@ -848,24 +854,30 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.log("No Movies Category found")
 
-        if position_kids != -1:
-            self.addCat(py2_encode(self.language(30729)),
-                        jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                              '/0/0/1/1024/0/0'),
-                        self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Kids Category found")
+        if self.addon.getSetting('show_kids') == 'true':
+            if position_kids != -1:
+                self.addCat(py2_encode(self.language(30729)),
+                            jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
+                                                                                  '/0/0/1/1024/0/0'),
+                            self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Kids Category found")
 
-        if position_week_top != -1:
-            self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
-                '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Week Top Category found")
+        if self.addon.getSetting('show_week_top') == 'true':
+            if position_week_top != -1:
+                self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
+                    '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Week Top Category found")
 
         if position_home != -1:
-            self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                           '/0/0/1/1024/0/0'), True)
+            if self.addon.getSetting('group_home') == 'true':
+                self.addCat(py2_encode(self.language(30733)),
+                            jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
         else:
             self.log("No Home Category found")
 
@@ -875,9 +887,6 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("List: " + str(url))
-
-        if not self.chk_login():
-            self.login()
 
         jsonrsp = self.get_from_hbogo(url)
 
@@ -993,7 +1002,14 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
-        purchase_payload = '<Purchase xmlns="go:v8:interop" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
+        purchase_payload = '<Purchase xmlns="go:v8:interop" ' \
+                           'xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true' \
+                           '</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + \
+                           '</CustomerId><Individualization>' + self.individualization + '</Individualization><OperatorId>' + self.op_id + \
+                           '</OperatorId><ApplicationLanguage>' + self.LANGUAGE_CODE + '</ApplicationLanguage><IsFree>false</IsFree><PreferedAudio>' + \
+                           self.LANGUAGE_CODE + '</PreferedAudio><PreferedSubtitle>' + self.LANGUAGE_CODE + \
+                           '</PreferedSubtitle><PreferredAudioType>Stereo</PreferredAudioType><RequiredPlatform>' + self.API_PLATFORM + \
+                           '</RequiredPlatform><UseInteractivity>false</UseInteractivity></Purchase>'
 
         self.log('Purchase payload: ' + self.mask_sensitive_data(str(purchase_payload)))
 
@@ -1195,20 +1211,25 @@ class HbogoHandler_eu(HbogoHandler):
             'mode': mode,
             'name': filename,
             'cid': cid,
-            'thumbnail': title['BackgroundUrl']}))
+            'thumbnail': title['BackgroundUrl']
+        }))
 
         liz = xbmcgui.ListItem(name)
-        liz.setArt({'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
-                    'fanart': title['BackgroundUrl']})
+        liz.setArt({
+            'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
+            'fanart': title['BackgroundUrl']
+        })
         liz.setInfo(type="Video",
-                    infoLabels={"mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
-                                "season": title['Tracking']['SeasonNumber'],
-                                "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
-                                "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
-                                "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
-                                "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
-                                "title": name, "originaltitle": title['OriginalName'],
-                                "year": title['ProductionYear']})
+                    infoLabels={
+                        "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
+                        "season": title['Tracking']['SeasonNumber'],
+                        "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
+                        "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
+                        "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
+                        "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
+                        "title": name, "originaltitle": title['OriginalName'],
+                        "year": title['ProductionYear']
+                    })
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
@@ -1233,16 +1254,20 @@ class HbogoHandler_eu(HbogoHandler):
             'name': '%s (%d)' % (py2_encode(item['OriginalName']), item['ProductionYear'])
         }))
         liz = xbmcgui.ListItem(item['Name'])
-        liz.setArt({'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
-                    'fanart': item['BackgroundUrl']})
+        liz.setArt({
+            'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
+            'fanart': item['BackgroundUrl']
+        })
         plot = py2_encode(item['Abstract'])
         if 'Description' in item:
             if item['Description'] is not None:
                 plot = py2_encode(item['Description'])
-        liz.setInfo(type="Video", infoLabels={"mediatype": media_type, "season": item['Tracking']['SeasonNumber'],
-                                              "tvshowtitle": item['Tracking']['ShowName'],
-                                              "title": item['Name'],
-                                              "Plot": plot})
+        liz.setInfo(type="Video", infoLabels={
+            "mediatype": media_type, "season": item['Tracking']['SeasonNumber'],
+            "tvshowtitle": item['Tracking']['ShowName'],
+            "title": item['Name'],
+            "Plot": plot
+        })
         liz.setProperty('isPlayable', "false")
         if media_type == "tvshow":
             cid = item['ObjectUrl'].rsplit('/', 2)[1]
