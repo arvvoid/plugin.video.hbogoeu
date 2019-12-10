@@ -1155,12 +1155,12 @@ class HbogoHandler_eu(HbogoHandler):
         ]
 
         votes = [(py2_encode(self.language(item['str_id'])),
-                                runplugin % (self.base_url, urlencode({
-                                      'url': 'VOTE',
-                                      'mode': HbogoConstants.ACTION_VOTE,
-                                      'vote': item['vote'],
-                                      'cid': content_id,
-                                  }))) for item in votes_configs]
+                  runplugin % (self.base_url, urlencode({
+                               'url': 'VOTE',
+                               'mode': HbogoConstants.ACTION_VOTE,
+                               'vote': item['vote'],
+                               'cid': content_id,
+                               }))) for item in votes_configs]
 
         if self.cur_loc == self.LB_MYPLAYLIST:
             return list(votes) + [remove_mylist]
