@@ -78,7 +78,7 @@ class HbogoHandler(object):
         self.LB_NO_OPERATOR = py2_encode(self.language(30710))
         self.LB_SEARCH = py2_encode(self.language(30711))
 
-        self.use_content_type = "episodes"
+        self.use_content_type = "videos"
 
         self.force_original_names = self.addon.getSetting('origtitles')
         if self.force_original_names == "true":
