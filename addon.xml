@@ -14,10 +14,10 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">HBO GO EU</summary>
     <description lang="en_GB">
-Simple, great Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
+Simple, Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
 
 Important, HBO® Go must be paid for!!!  You need a valid account!
-Register on the official HBO® Go website http://hbogo.eu
+Register on the official HBO® Go website for your region.
 
 Curently support: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Norway, Denmark, Sweden, Finland
 
