@@ -265,11 +265,22 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "splichy",
+      "name": "splichy",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16658908?v=4",
+      "profile": "https://github.com/splichy",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "plugin.video.hbogoeu",
   "projectOwner": "arvvoid",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
