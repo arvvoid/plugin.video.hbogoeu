@@ -11,7 +11,7 @@ For more information visit the official HBO® Go website for your region.
 
 I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. All this add-on does is make simple HTTP requests to Hbo go servers to retrieve content just like any browser like Chrome, Firefox etc. would do!
 
-Playback is handled throu inputstream.adaptive that use widevine to handle the DRM content like any web browser.
+Playback is handled through inputstream.adaptive that use widevine to handle the DRM content like any web browser.
 
 THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
