@@ -8,6 +8,7 @@
 
 This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
 For more information visit the official HBO® Go website for your region.
+
 I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. All this add-on does is make simple HTTP requests to Hbo go servers to retrieve content just like any browser like Chrome, Firefox etc. would do!
 
 Playback is handled throu inputstream.adaptive that use widevine to handle the DRM content like any web browser.
