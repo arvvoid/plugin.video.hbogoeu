@@ -38,9 +38,13 @@ Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for th
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.0.24-beta40
+v.2.0.25-beta41
 - Fix UPC CZ and SK
-- Fix UPC Romania      
+- Fix UPC Romania
+- Use Video as media type
+- Start screen customization
+- History (EU only option)
+- Continue watching (only display the category, EU only option)      
       
 v.2.0.23-beta39
 - Fix Skylink CZ and SK (contribution ferdabasek)
