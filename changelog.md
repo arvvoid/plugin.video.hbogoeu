@@ -1,4 +1,4 @@
-v.2.0.24-beta40
+v.2.0.25-beta41
 - Work in progress
 - Fix UPC CZ and SK
 - Fix UPC Romania
