@@ -2,6 +2,10 @@ v.2.0.24-beta40
 - Work in progress
 - Fix UPC CZ and SK
 - Fix UPC Romania
+- Use Video as media type
+- Start screen customization
+- History (EU only option)
+- Continue watching (only display the category, EU only option)
 
 v.2.0.23-beta39
 - Fix Skylink CZ and SK (contribution ferdabasek)
