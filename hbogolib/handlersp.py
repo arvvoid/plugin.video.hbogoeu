@@ -280,8 +280,7 @@ class HbogoHandler_sp(HbogoHandler):
 
     def list_pages(self, url, max_items=200, offset=0):
 
-        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset),
-                                       'xml')
+        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
 
         count = 0
 
@@ -327,8 +326,7 @@ class HbogoHandler_sp(HbogoHandler):
             else:
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
-                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0",
-                                               'xml')
+                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
 
                 count = 0
 
@@ -371,8 +369,7 @@ class HbogoHandler_sp(HbogoHandler):
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
 
-        mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get(
-            'url') + '&responseType=xml'
+        mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
         if self.lograwdata:
