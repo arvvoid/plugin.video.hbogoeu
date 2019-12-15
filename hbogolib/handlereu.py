@@ -1315,7 +1315,6 @@ class HbogoHandler_eu(HbogoHandler):
         for listIds in self.JsonHis:
             if listIds['externalId'] == ExternalId:
                 Position = listIds['position']
-        xbmc.log('ExternalId/position '+str(ExternalId)+'/'+str(Position), xbmc.LOGNOTICE)
         return Position
 
     def update_history(self, ExternalId, MediaType, Current_Time, Percent_Elapsed):
