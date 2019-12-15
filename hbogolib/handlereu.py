@@ -1323,7 +1323,9 @@ class HbogoHandler_eu(HbogoHandler):
             MediaType = '1'
         elif (MediaType == 'episode'):
             MediaType = '3'
-        resume_payload = '{"CustomerId":"'+self.GOcustomerId+'","CountryCode":"'+self.LANGUAGE_CODE + '","ExternalId":"'+ExternalId+'","ContentType":'+MediaType +',"Position":'+Current_Time+',"ElapsedPercentage":'+Percent_Elapsed +',"LoginSessionId":"'+str(self.sessionId)+'"}'
+        resume_payload = '{"CustomerId":"'+self.GOcustomerId+'","CountryCode":"'+self.LANGUAGE_CODE + '","ExternalId":"'+ExternalId  + \
+                         '","ContentType":'+MediaType +',"Position":'+Current_Time+',"ElapsedPercentage":'+Percent_Elapsed  + \
+                         ',"LoginSessionId":"'+str(self.sessionId)+'"}'
         history_headers = self.loggedin_headers
         history_headers['Content-Type'] = 'application/json'
         self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
