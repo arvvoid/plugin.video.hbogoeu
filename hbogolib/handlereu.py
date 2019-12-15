@@ -84,7 +84,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = ""
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
-
         self.loggedin_headers = {}
         self.JsonHis = ""
 
@@ -1313,23 +1312,23 @@ class HbogoHandler_eu(HbogoHandler):
 
     def get_elapsed(self, ExternalId):
         Position = 0
-        for list in self.JsonHis:
-            if list['externalId'] == ExternalId:
-                Position = list['position']
+        for listIds in self.JsonHis:
+            if listIds['externalId'] == ExternalId:
+                Position = listIds['position']
         xbmc.log('ExternalId/position '+str(ExternalId)+'/'+str(Position), xbmc.LOGNOTICE)
         return Position
 
     def update_history(self, ExternalId, MediaType, Current_Time, Percent_Elapsed):
-        if (MediaType == 'movie' ):
+        if (MediaType == 'movie'):
             MediaType = '1'
-        elif (MediaType == 'episode' ):
+        elif (MediaType == 'episode'):
             MediaType = '3'
         resume_payload = '{"CustomerId":"'+self.GOcustomerId+'","CountryCode":"'+self.LANGUAGE_CODE + '","ExternalId":"'+ExternalId+'","ContentType":'+MediaType +',"Position":'+Current_Time+',"ElapsedPercentage":'+Percent_Elapsed +',"LoginSessionId":"'+str(self.sessionId)+'"}'
-        history_headers=self.loggedin_headers
+        history_headers = self.loggedin_headers
         history_headers['Content-Type'] = 'application/json'
-        self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload,'')
+        self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 		
-    def track_elapsed(self,TagLine):
+    def track_elapsed(self, TagLine):
         Current_Time = 1
         Total_Time = 1
         Percent_Elapsed = 0
@@ -1345,7 +1344,7 @@ class HbogoHandler_eu(HbogoHandler):
         while (IsPlaying and ExternalId == xbmc.Player().getVideoInfoTag().getTagLine()) :
             InfoTag = xbmc.Player().getVideoInfoTag()
             ExternalId = InfoTag.getTagLine()
-            MediaType=InfoTag.getMediaType()
+            MediaType = InfoTag.getMediaType()
             Current_Time = int(xbmc.Player().getTime())
             Total_Time = int(xbmc.Player().getTotalTime())
             xbmc.sleep(300)
