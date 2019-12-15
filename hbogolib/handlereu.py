@@ -74,6 +74,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_SEARCH = ""
         self.API_URL_ADD_RATING = ""
         self.API_URL_ADD_MYLIST = ""
+        self.API_URL_HIS = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -85,6 +86,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.ContinueWatchingGroupId = ""
 
         self.loggedin_headers = {}
+        self.JsonHis = ""
 
         # check operator_id
         if self.addon.getSetting('operator_id'):
@@ -154,6 +156,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v8/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v8/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v8/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_HIS = 'https://bookmarking.hbogo.eu/v1/History/'
 
         self.individualization = ""
         self.goToken = ""
@@ -889,6 +892,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("List: " + str(url))
 
         jsonrsp = self.get_from_hbogo(url)
+        self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -937,7 +941,9 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("Episode: " + str(url))
+
         jsonrsp = self.get_from_hbogo(url)
+        self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -966,6 +972,8 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text) + '/0'))
                 jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(search_text) + '/0')
+                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+
                 if self.lograwdata:
                     self.log(str(jsonrsp))
 
@@ -1074,6 +1082,7 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
+            self.track_elapsed(xbmc.getInfoLabel('ListItem.Tagline'))
         else:
             self.log("DRM problem playback not possible")
             xbmcplugin.setResolvedUrl(self.handle, False, list_item)
@@ -1171,6 +1180,9 @@ class HbogoHandler_eu(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
+        ExternalId = title['Tracking']['ExternalId']
+        Position = self.get_elapsed(ExternalId)
+        title['Tracking']['position'] = Position
 
         plot = ""
         name = ""
@@ -1228,12 +1240,16 @@ class HbogoHandler_eu(HbogoHandler):
                         "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
                         "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
                         "title": name, "originaltitle": title['OriginalName'],
-                        "year": title['ProductionYear']
+                        "year": title['ProductionYear'],
+                        "TagLine": ExternalId
                     })
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
+        if (title['Tracking']['position'] > 1):
+            liz.setProperty("resumetime", str(title['Tracking']['position']))
+            liz.setProperty("totaltime", str(title['Duration']))
         if title['ContentType'] == 1:
             media_id = cid
             try:
@@ -1294,3 +1310,47 @@ class HbogoHandler_eu(HbogoHandler):
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
+
+    def get_elapsed(self, ExternalId):
+        Position = 0
+        for list in self.JsonHis:
+            if list['externalId'] == ExternalId:
+                Position = list['position']
+        xbmc.log('ExternalId/position '+str(ExternalId)+'/'+str(Position), xbmc.LOGNOTICE)
+        return Position
+
+    def update_history(self, ExternalId, MediaType, Current_Time, Percent_Elapsed):
+        if (MediaType == 'movie' ):
+            MediaType = '1'
+        elif (MediaType == 'episode' ):
+            MediaType = '3'
+        resume_payload = '{"CustomerId":"'+self.GOcustomerId+'","CountryCode":"'+self.LANGUAGE_CODE + '","ExternalId":"'+ExternalId+'","ContentType":'+MediaType +',"Position":'+Current_Time+',"ElapsedPercentage":'+Percent_Elapsed +',"LoginSessionId":"'+str(self.sessionId)+'"}'
+        history_headers=self.loggedin_headers
+        history_headers['Content-Type'] = 'application/json'
+        self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload,'')
+		
+    def track_elapsed(self,TagLine):
+        Current_Time = 1
+        Total_Time = 1
+        Percent_Elapsed = 0
+        ExternalId = TagLine
+        if xbmc.Player().isPlayingVideo():
+            ExternalId = xbmc.Player().getVideoInfoTag().getTagLine()
+        IsPlaying = xbmc.Player().isPlayingVideo()
+
+        while not IsPlaying:
+            IsPlaying = xbmc.Player().isPlayingVideo()
+            xbmc.sleep(300)
+
+        while (IsPlaying and ExternalId == xbmc.Player().getVideoInfoTag().getTagLine()) :
+            InfoTag = xbmc.Player().getVideoInfoTag()
+            ExternalId = InfoTag.getTagLine()
+            MediaType=InfoTag.getMediaType()
+            Current_Time = int(xbmc.Player().getTime())
+            Total_Time = int(xbmc.Player().getTotalTime())
+            xbmc.sleep(300)
+            IsPlaying = xbmc.Player().isPlayingVideo()
+        else:
+            Percent_Elapsed = int(Current_Time / Total_Time*100)
+            if Current_Time > 1:
+                self.update_history(ExternalId, MediaType, str(Current_Time), str(Percent_Elapsed))
