@@ -1309,6 +1309,9 @@ class HbogoHandler_eu(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
+        if self.addon.getSetting('get_elapsed') == 'true':
+            liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
+            liz.setProperty("resumetime", str(0))
         if hbogo_position > -1:
             self.log("Found elapsed time on Hbo go for " +
                      cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(title['Duration']))
