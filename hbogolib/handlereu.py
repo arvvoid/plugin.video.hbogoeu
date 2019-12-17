@@ -1091,17 +1091,18 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
         list_item.setInfo(type="Video",
-                    infoLabels={
-                        "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
-                        "season": title['Tracking']['SeasonNumber'],
-                        "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
-                        "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
-                        "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
-                        "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
-                        "title": name, "originaltitle": title['OriginalName'],
-                        "year": title['ProductionYear'],
-                        "TagLine": externalid
-                    })
+                          infoLabels={
+                                        "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
+                                        "season": title['Tracking']['SeasonNumber'],
+                                        "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
+                                        "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
+                                        "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
+                                        "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
+                                        "title": name, "originaltitle": title['OriginalName'],
+                                        "year": title['ProductionYear'],
+                                        "TagLine": externalid
+                                     }
+                          )
 
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
@@ -1285,7 +1286,7 @@ class HbogoHandler_eu(HbogoHandler):
             liz.setProperty("totaltime", str(title['Duration']))
             liz.setProperty("resumetime", str(hbogo_position))
             if int(int(hbogo_position) / int(title['Duration'])*100) > 89: #set as watched if 90% is watched
-                liz.setInfo(type="Video",infoLabels={"overlay": "6"})
+                liz.setInfo(type="Video", infoLabels={"overlay": "6"})
         if title['ContentType'] == 1:
             media_id = cid
             try:
