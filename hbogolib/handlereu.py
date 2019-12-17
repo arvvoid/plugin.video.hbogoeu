@@ -1054,6 +1054,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
+        externalid = jsonrspp['Purchase']['VariantId']
         media_url = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
         player_session_id = jsonrspp['Purchase']['PlayerSessionId']
@@ -1065,6 +1066,42 @@ class HbogoHandler_eu(HbogoHandler):
             "{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + player_session_id + "\",\"merchant\":\"hboeurope\"}")
 
         list_item = xbmcgui.ListItem(path=media_url)
+        title = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
+        plot = ""
+        name = ""
+        media_type = "movie"
+        if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+            name = py2_encode(title['Name'])
+            if self.force_original_names:
+                name = py2_encode(title['OriginalName'])
+            plot = py2_encode(title['Abstract'])
+            if 'Description' in title:
+                if title['Description'] is not None:
+                    plot = py2_encode(title['Description'])
+        elif title['ContentType'] == 3:
+            media_type = "episode"
+            name = py2_encode(title['SeriesName']) + " - " + str(
+                title['SeasonIndex']) + " " + self.LB_SEASON + ", " + self.LB_EPISODE + " " + str(title['Index'])
+            if self.force_original_names:
+                name = py2_encode(title['OriginalName'])
+            plot = py2_encode(title['Abstract'])
+            if 'Description' in title:
+                if title['Description'] is not None:
+                    plot = py2_encode(title['Description'])
+            if 'AvailabilityTo' in title:
+                plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+        list_item.setInfo(type="Video",
+                    infoLabels={
+                        "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
+                        "season": title['Tracking']['SeasonNumber'],
+                        "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
+                        "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
+                        "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
+                        "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
+                        "title": name, "originaltitle": title['OriginalName'],
+                        "year": title['ProductionYear'],
+                        "TagLine": externalid
+                    })
 
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
@@ -1072,8 +1109,6 @@ class HbogoHandler_eu(HbogoHandler):
         protocol = 'ism'
         drm = 'com.widevine.alpha'
         from inputstreamhelper import Helper
-        is_helper = Helper('mpd', drm='com.widevine.alpha')
-        is_helper.check_inputstream() # check widevine and install/update before starting playback (to not block track_elapsed)
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
             list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
@@ -1083,7 +1118,7 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
-            self.track_elapsed(xbmc.getInfoLabel('ListItem.Tagline'))
+            self.track_elapsed(externalid)
         else:
             self.log("DRM problem playback not possible")
             xbmcplugin.setResolvedUrl(self.handle, False, list_item)
@@ -1182,7 +1217,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
         externalid = title['Tracking']['ExternalId']
-        hbogo_position = self.get_elapsed(externalid)
+        hbogo_position = int(self.get_elapsed(externalid))
 
         plot = ""
         name = ""
@@ -1241,20 +1276,16 @@ class HbogoHandler_eu(HbogoHandler):
                         "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
                         "title": name, "originaltitle": title['OriginalName'],
                         "year": title['ProductionYear'],
-                        "TagLine": externalid
                     })
         liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
-        liz.setProperty("totaltime", str(title['Duration']))
-        if hbogo_position > 1:
+        if hbogo_position > -1:
+            liz.setProperty("totaltime", str(title['Duration']))
             liz.setProperty("resumetime", str(hbogo_position))
             if int(int(hbogo_position) / int(title['Duration'])*100) > 89: #set as watched if 90% is watched
-                liz.setInfo(type="Video",
-                            infoLabels={
-                                "overlay": "6"
-                            })
+                liz.setInfo(type="Video",infoLabels={"overlay": "6"})
         if title['ContentType'] == 1:
             media_id = cid
             try:
@@ -1316,11 +1347,11 @@ class HbogoHandler_eu(HbogoHandler):
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
 
-    def get_elapsed(self, ExternalId):
+    def get_elapsed(self, externalid):
         for listIds in self.JsonHis:
-            if listIds['externalId'] == ExternalId:
+            if listIds['externalId'] == externalid:
                 return listIds['position']
-        return 0
+        return -1
 
     def update_history(self, ExternalId, MediaType, Current_Time, Percent_Elapsed):
         if (MediaType == 'movie'):
@@ -1334,24 +1365,24 @@ class HbogoHandler_eu(HbogoHandler):
         history_headers['Content-Type'] = 'application/json'
         self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 
-    def track_elapsed(self, ExternalId):
+    def track_elapsed(self, externalid):
         current_time = 0
         percent_elapsed = 0
         previous_percent = 0
         mediatype = ""
         loop_count = 0
 
-        self.log("TRACKING ELAPSED for " + str(ExternalId) + ": Waiting for playback to start...max 1min...")
+        self.log("TRACKING ELAPSED for " + str(externalid) + ": Waiting for playback to start...max 1min...")
         while not xbmc.Player().isPlayingVideo():  # wait for playback to start max 1min else abort
             loop_count += 1
             if loop_count > 60:
-                self.log("TRACKING ELAPSED for " + str(ExternalId) + ": Playback never started aborting...")
+                self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback never started aborting...")
                 return False
             xbmc.sleep(1000)
 
-        self.log("TRACKING ELAPSED for " + str(ExternalId) + ": Playback started...")
+        self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback started...")
         # loop if media that started this tracking is still playing if not abort
-        while xbmc.Player().isPlayingVideo() and ExternalId == xbmc.Player().getVideoInfoTag().getTagLine():
+        while xbmc.Player().isPlayingVideo() and externalid == xbmc.Player().getVideoInfoTag().getTagLine():
             infotag = xbmc.Player().getVideoInfoTag()
             mediatype = infotag.getMediaType()
             current_time = int(xbmc.Player().getTime())
@@ -1360,14 +1391,14 @@ class HbogoHandler_eu(HbogoHandler):
                 percent_elapsed = int(current_time / total_time * 100)
             except ZeroDivisionError:
                 percent_elapsed = previous_percent
-            self.log("TRACKING ELAPSED for " + str(ExternalId) +
+            self.log("TRACKING ELAPSED for " + str(externalid) +
                      ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
             if percent_elapsed > previous_percent:
                 previous_percent = percent_elapsed
-                self.log("TRACKING ELAPSED for " + str(ExternalId) + ": Sending current time to Hbo GO...")
-                self.update_history(ExternalId, mediatype, str(current_time), str(percent_elapsed))
+                self.log("TRACKING ELAPSED for " + str(externalid) + ": Sending current time to Hbo GO...")
+                self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
             xbmc.sleep(1000)
 
-        self.log("TRACKING ELAPSED for " + str(ExternalId) + ": Playback stoped...send final play position before stop...")
-        self.update_history(ExternalId, mediatype, str(current_time), str(percent_elapsed))
+        self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback stoped...send final play position before stop...")
+        self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
         return True
