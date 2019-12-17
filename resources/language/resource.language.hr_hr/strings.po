@@ -1,90 +1,105 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: hbogo kodi addon\n"
+"Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: hr_HR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: hbogo kodi addon\n"
-"Language: hr_hr\n"
+"X-Generator: Poedit 2.2.4\n"
 
-#: 
 msgctxt "#30000"
 msgid "ENG"
 msgstr "HRV"
 
-#: 
 msgctxt "#30100"
 msgid "Web registration on "
 msgstr "Registracija web-mjesta "
 
-#: 
 msgctxt "#30101"
-msgid "PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
-msgstr "MOLIMO VAS DA NE KONTAKTIRATE PODRŠKU SVOG OPERATERA O OVOM ADD-ON, TO JE NESLUŽBENI ADD-ON I NEMA SLUŽBENU PODRŠKU! POMOĆ ZAJEDNICE MOŽETE PRONAĆ NA ADD-ON GITHUB STRANICI ILI NA KODI FORUMU"
+msgid ""
+"PLEASE DON'T CONTACT YOUR OPERATOR SUPPORT ABOUT THIS ADD-ON, THIS IS AN "
+"UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND "
+"ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
+msgstr ""
+"MOLIMO VAS DA NE KONTAKTIRATE PODRŠKU SVOG OPERATERA O OVOM ADD-ON, TO JE "
+"NESLUŽBENI ADD-ON I NEMA SLUŽBENU PODRŠKU! POMOĆ ZAJEDNICE MOŽETE PRONAĆ NA "
+"ADD-ON GITHUB STRANICI ILI NA KODI FORUMU"
 
-#: 
 msgctxt "#30102"
 msgid "Operators"
 msgstr "Operatori"
 
-#: 
 msgctxt "#30103"
-msgid "Sorry, you are not correctly logged in, aborting play. Try to login on the official site then try again, if the problem persist ask support with a full debug log"
-msgstr "Nažalost, niste ispravno prijavljeni, prekinuli igru. Pokušajte se prijaviti na službenu stranicu i pokušajte ponovno, ako se problem i dalje javlja, zatražite podršku s potpunim debug zapisnikom"
+msgid ""
+"Sorry, you are not correctly logged in, aborting play. Try to login on the "
+"official site then try again, if the problem persist ask support with a full "
+"debug log"
+msgstr ""
+"Nažalost, niste ispravno prijavljeni, prekinuli igru. Pokušajte se prijaviti "
+"na službenu stranicu i pokušajte ponovno, ako se problem i dalje javlja, "
+"zatražite podršku s potpunim debug zapisnikom"
 
-#: 
+#, fuzzy
+#| msgctxt "#30104"
+#| msgid ""
+#| "Operaotr not selected. Please select your country/operaotr in the "
+#| "settings."
 msgctxt "#30104"
-msgid "Operaotr not selected. Please select your country/operaotr in the settings."
-msgstr "Operater nije odabran. Molimo odaberite svoju zemlju / operatora u postavkama."
+msgid ""
+"Operator not selected. Please select your country/operator in the settings."
+msgstr ""
+"Operater nije odabran. Molimo odaberite svoju zemlju / operatora u "
+"postavkama."
 
-#: 
 msgctxt "#30105"
 msgid "Logout (Reset setup)"
 msgstr "Odjava (Vraćanje izvornih postavki)"
 
-#: 
 msgctxt "#30106"
 msgid "Destroy current session"
 msgstr "Uništi trenutnu sesiju"
 
-#: 
 msgctxt "#30440"
 msgid "Settings"
 msgstr "Postavke"
 
-#: 
 msgctxt "#30441"
 msgid "Chose your Country"
 msgstr "Odabrali svoju zemlju"
 
-#: 
 msgctxt "#30442"
 msgid "Enter e-mail/username"
 msgstr "Unesite e-poštu/korisničko ime"
 
-#: 
 msgctxt "#30443"
 msgid "Enter password"
 msgstr "Upišite lozinku"
 
-#: 
 msgctxt "#30444"
 msgid "Setup failed, please try again"
 msgstr "Postavljanje nije uspjelo, pokušajte ponovno"
 
-#: 
+#, fuzzy
+#| msgctxt "#30445"
+#| msgid "Chose your operator"
 msgctxt "#30445"
-msgid "Chose your operator"
+msgid "Choose your operator"
 msgstr "Odaberite svog operatera"
 
-#: 
 msgctxt "#30660"
 msgid "DRM"
 msgstr "DRM"
 
-#: 
+#, fuzzy
+#| msgctxt "#30665"
+#| msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgctxt "#30665"
-msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
+msgid "Inputstream Adaptive Settings (max bitrate,resolution,etc..)"
 msgstr "Inputstream Adaptive Postavke (max bitrate,rezolucija,itd...)"
 
 msgctxt "#30666"
@@ -103,202 +118,140 @@ msgctxt "#30669"
 msgid "InputStream Helper settings..."
 msgstr "InputStream Helper settings..."
 
-#: 
 msgctxt "#30700"
 msgid "Find movies and TV Shows..."
 msgstr "Traži filmove, serije..."
 
-#: 
 msgctxt "#30701"
 msgid "No result"
 msgstr "Nema rezultata"
 
-#: 
 msgctxt "#30702"
 msgid "Error"
 msgstr "Greška"
 
-#: 
 msgctxt "#30703"
 msgid "Episode can be watched until:"
 msgstr "Epizoda se može pogledati do:"
 
-#: 
 msgctxt "#30704"
 msgid "The movie can be watched until:"
 msgstr "Film se može pogledati do:"
 
-#: 
 msgctxt "#30705"
 msgid "EPISODE"
 msgstr "EPIZODA"
 
-#: 
 msgctxt "#30706"
 msgid "SEASON"
 msgstr "SEZONA"
 
-#: 
 msgctxt "#30707"
 msgid "My List"
 msgstr "Moj izbor"
 
-#: 
 msgctxt "#30708"
 msgid "Please enter your login details in the settings!"
 msgstr "Unesite podatke za prijavu u postavke!"
 
-#: 
 msgctxt "#30709"
 msgid "Login error, check your login details!"
 msgstr "Pogreška pri prijavi, provjerite podatke za prijavu!"
 
-#: 
 msgctxt "#30710"
 msgid "No operator defined! Check your settings!"
 msgstr "Operater nije definirat! Provjerite vaše postavke!"
 
-#: 
 msgctxt "#30711"
 msgid "Search..."
 msgstr "Traži..."
 
-#: 
 msgctxt "#30712"
-msgid "WARNING. You enabled the [Include sensitive login data in debug log] option in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is enabled in Kodi, your sensitive and private login information and session data will be written to the debug log. Please don't share publicly such a log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you really have to send a log with that option enabled to debug a login/session related issue be very CAREFUL who you send that log too and do it privately and change your password as soon as possible. If you posted such a log publicly by accident, change your password as soon as possible. DO YOU WANT TO CONTINUE?"
-msgstr "UPOZORENJE. Omogućili ste opciju [Uključi osjetljive podatke za prijavu u dnevnik otklanjanja pogrešaka] u ovim stručnim postavkama dodatka. AKO NE ZNATE ZNAŠ ZAŠTO STE POMOĆI DA NJEGOVO ISKLJUČITE, NIJE POTREBNO !! To znači da ako je debug dnevnik omogućen u Kodi, vaše osjetljive i privatne informacije za prijavu i podaci sesije bit će zapisani u dnevnik otklanjanja pogrešaka. Nemojte javno dijeliti takav dnevnik. AKO TREBATE POSTAVLJATI LOGOVNIK ZA ODBIJANJE JAVNO ISKLJUČUJEMO TU OPCIJU. Ako stvarno trebate poslati zapisnik s tom opcijom koja je omogućena za ispravljanje problema vezanih uz prijavu / sesiju, budite vrlo oprezni tko i vi šaljete taj dnevnik te to radite privatno i promijenite lozinku što je prije moguće. Ako ste takav zapisnik javno objavili slučajno, promijenite zaporku što je prije moguće. ŽELITE LI NASTAVITI?"
+msgid ""
+"WARNING. You enabled the [Include sensitive login data in debug log] option "
+"in this add-on expert settings. IF YOU DON'T EXACTLY KNOW WHY YOU ENABLED "
+"THAT DISABLE IT, THAT'S NOT NEEDED!! This means that if the debug log is "
+"enabled in Kodi, your sensitive and private login information and session "
+"data will be written to the debug log. Please don't share publicly such a "
+"log. IF YOU NEED TO POST A DEBUG LOG PUBLICLY DISABLE THAT OPTION. If you "
+"really have to send a log with that option enabled to debug a login/session "
+"related issue be very CAREFUL who you send that log too and do it privately "
+"and change your password as soon as possible. If you posted such a log "
+"publicly by accident, change your password as soon as possible. DO YOU WANT "
+"TO CONTINUE?"
+msgstr ""
+"UPOZORENJE. Omogućili ste opciju [Uključi osjetljive podatke za prijavu u "
+"dnevnik otklanjanja pogrešaka] u ovim stručnim postavkama dodatka. AKO NE "
+"ZNATE ZNAŠ ZAŠTO STE POMOĆI DA NJEGOVO ISKLJUČITE, NIJE POTREBNO !! To znači "
+"da ako je debug dnevnik omogućen u Kodi, vaše osjetljive i privatne "
+"informacije za prijavu i podaci sesije bit će zapisani u dnevnik otklanjanja "
+"pogrešaka. Nemojte javno dijeliti takav dnevnik. AKO TREBATE POSTAVLJATI "
+"LOGOVNIK ZA ODBIJANJE JAVNO ISKLJUČUJEMO TU OPCIJU. Ako stvarno trebate "
+"poslati zapisnik s tom opcijom koja je omogućena za ispravljanje problema "
+"vezanih uz prijavu / sesiju, budite vrlo oprezni tko i vi šaljete taj "
+"dnevnik te to radite privatno i promijenite lozinku što je prije moguće. Ako "
+"ste takav zapisnik javno objavili slučajno, promijenite zaporku što je prije "
+"moguće. ŽELITE LI NASTAVITI?"
 
-#: 
 msgctxt "#30713"
 msgid "INFORMATION"
 msgstr "INFORMACIJA"
 
-#: 
+#, fuzzy
+#| msgctxt "#30714"
+#| msgid "I understand the risk continue"
 msgctxt "#30714"
-msgid "I understand the risk continue"
+msgid "I understand the risks and continue"
 msgstr "Razumijem da se rizik nastavlja"
 
-#: 
 msgctxt "#30715"
 msgid "Stop, let me change the settings"
 msgstr "Stani, dopusti mi da promijenim postavke"
 
-#: 
 msgctxt "#30716"
 msgid "TV Shows"
 msgstr "TV emisije"
 
-#: 
 msgctxt "#30717"
 msgid "Movies"
 msgstr "Filmovi"
 
-#: 
 msgctxt "#30718"
 msgid "Trending Now"
 msgstr "Sada u trendu"
 
-#: 
-msgctxt "#30650"
-msgid "Language"
-msgstr "Jezik"
-
-#: 
-msgctxt "#30651"
-msgid "Always use default operator language"
-msgstr "Uvijek koristi zadani jezik operatera"
-
-#: 
-msgctxt "#30655"
-msgid "Subtitles"
-msgstr "Titlovi"
-
-#: 
-msgctxt "#30656"
-msgid "Automatically turn on default subtitles"
-msgstr "Uključi zadane titlove automatski"
-
-#: 
-msgctxt "#30652"
-msgid "Always use original titles"
-msgstr "Uvijek koristite izvorne naslove"
-
-#: 
-msgctxt "#30670"
-msgid "Expert"
-msgstr "Stručnjak"
-
-#: 
-msgctxt "#30671"
-msgid "Force scraper friendly titles"
-msgstr "Prisiliti naslove prikladne za brisanje"
-
-#: 
-msgctxt "#30680"
-msgid "Session"
-msgstr "sjednica"
-
-#: 
-msgctxt "#30681"
-msgid "Session valid for hours"
-msgstr "Sjednica vrijedi satima"
-
-#: 
-msgctxt "#30682"
-msgid "Reset session, force re-login"
-msgstr "Resetiraj sesiju, prisili ponovno prijavljivanje"
-
-#: 
-msgctxt "#30690"
-msgid "Debug"
-msgstr "otkloniti neispravnost"
-
-#: 
-msgctxt "#30691"
-msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
-msgstr "Uključite osjetljive podatke za prijavu u dnevnik za ispravljanje pogrešaka [NE POŠTEJTE JAVNO]"
-
-#: 
 msgctxt "#30719"
 msgid "Add to My List"
 msgstr "Dodaj u Moj popis"
 
-#: 
 msgctxt "#30720"
 msgid "Remove from My List"
 msgstr "Ukloni s Mog popisa"
 
-#: 
 msgctxt "#30721"
 msgid "Rate 5"
 msgstr "Ocijenite 5"
 
-#: 
 msgctxt "#30722"
 msgid "Rate 4"
 msgstr "Ocijenite 4"
 
-#: 
 msgctxt "#30723"
 msgid "Rate 3"
 msgstr "Ocijenite 3"
 
-#: 
 msgctxt "#30724"
 msgid "Rate 2"
 msgstr "Ocijenite 2"
 
-#: 
 msgctxt "#30725"
 msgid "Rate 1"
 msgstr "Ocijenite 1"
 
-#: 
 msgctxt "#30726"
 msgid "Rate"
 msgstr "Ocijenite"
 
-#: 
 msgctxt "#30727"
 msgid "Success"
 msgstr "Uspjeh"
@@ -327,17 +280,85 @@ msgctxt "#30733"
 msgid "Home Lists"
 msgstr ""
 
-msgctxt "#30692"
-msgid "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
-msgstr "Are you sure you want to completely reset your setup (device registration will be lost ) ?"
+msgctxt "#30650"
+msgid "Language"
+msgstr "Jezik"
 
+msgctxt "#30651"
+msgid "Always use default operator language"
+msgstr "Uvijek koristi zadani jezik operatera"
+
+msgctxt "#30655"
+msgid "Subtitles"
+msgstr "Titlovi"
+
+msgctxt "#30656"
+msgid "Automatically turn on default subtitles"
+msgstr "Uključi zadane titlove automatski"
+
+msgctxt "#30652"
+msgid "Always use original titles"
+msgstr "Uvijek koristite izvorne naslove"
+
+#, fuzzy
+#| msgctxt "#30655"
+#| msgid "Subtitles"
+msgctxt "#30653"
+msgid "Inject subtitles"
+msgstr "Titlovi"
+
+msgctxt "#30670"
+msgid "Expert"
+msgstr "Stručnjak"
+
+msgctxt "#30671"
+msgid "Force scraper friendly titles"
+msgstr "Prisiliti naslove prikladne za brisanje"
+
+msgctxt "#30680"
+msgid "Session"
+msgstr "sjednica"
+
+msgctxt "#30681"
+msgid "Session valid for hours"
+msgstr "Sjednica vrijedi satima"
+
+msgctxt "#30682"
+msgid "Reset session, force re-login"
+msgstr "Resetiraj sesiju, prisili ponovno prijavljivanje"
+
+msgctxt "#30690"
+msgid "Debug"
+msgstr "otkloniti neispravnost"
+
+msgctxt "#30691"
+msgid "Include sensitive login data in debug log [DON'T POST PUBLICLY]"
+msgstr ""
+"Uključite osjetljive podatke za prijavu u dnevnik za ispravljanje pogrešaka "
+"[NE POŠTEJTE JAVNO]"
+
+msgctxt "#30692"
+msgid ""
+"Are you sure you want to completely reset your setup (device registration "
+"will be lost ) ?"
+msgstr ""
+"Are you sure you want to completely reset your setup (device registration "
+"will be lost ) ?"
+
+#, fuzzy
+#| msgctxt "#30693"
+#| msgid "Include full details/RAW retrived data in Debug log"
 msgctxt "#30693"
-msgid "Include full details/RAW retrived data in Debug log"
+msgid "Include full details/RAW retrieved data in Debug log"
 msgstr "Include full details/RAW retrived data in Debug log"
 
 msgctxt "#30694"
-msgid "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
-msgstr "Cryptodome dependency not present on your system, HBO go add-on can't run. For help consult install instructions/official support thread"
+msgid ""
+"Cryptodome dependency not present on your system, HBO go add-on can't run. "
+"For help consult install instructions/official support thread"
+msgstr ""
+"Cryptodome dependency not present on your system, HBO go add-on can't run. "
+"For help consult install instructions/official support thread"
 
 msgctxt "#30696"
 msgid "Home Category"
@@ -345,4 +366,24 @@ msgstr ""
 
 msgctxt "#30697"
 msgid "Group Home lists in special category"
+msgstr ""
+
+msgctxt "#30800"
+msgid "Sync play time with Hbo Go"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Send elapsed time to Hbo go"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Get elapsed time from Hbo go"
+msgstr ""
+
+msgctxt "#30803"
+msgid "Set watched on Hbo Go"
+msgstr ""
+
+msgctxt "#30804"
+msgid "Set un-watched on Hbo Go"
 msgstr ""
