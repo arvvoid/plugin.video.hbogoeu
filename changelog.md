@@ -1,5 +1,7 @@
+v.2.0.26-beta42
+- Report playstatus back to Hbo Go (EU only)
+
 v.2.0.25-beta41
-- Work in progress
 - Fix UPC CZ and SK
 - Fix UPC Romania
 - Use Video as media type
