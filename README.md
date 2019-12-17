@@ -37,7 +37,7 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 | My List | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Add/Remove from My List | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Voting | ✔ | ⛔ | ✖ | ✖ | ✖ |
-| Report play  status to HBO | ✖ | ✖ | ✖ | ✖ | ✖ |
+| Report play  status to HBO | ✔ | ✖ | ✖ | ✖ | ✖ |
 
 Legend: ✔ - feature availible for the region and working in the add-on, ✖ - feature availible for the region but not implemented or broken in the add-on, ⛔ feature not availible for the region
 

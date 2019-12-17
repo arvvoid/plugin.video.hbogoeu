@@ -1226,23 +1226,19 @@ class HbogoHandler_eu(HbogoHandler):
             if self.addon.getSetting('send_elapsed') == 'true':
                 if self.cur_loc == self.LB_MYPLAYLIST:
                     return [mark_watched, mark_unwatched] + list(votes) + [remove_mylist]
-                else:
-                    return [mark_watched, mark_unwatched, add_mylist] + list(votes)
+                return [mark_watched, mark_unwatched, add_mylist] + list(votes)
             else:
                 if self.cur_loc == self.LB_MYPLAYLIST:
                     return list(votes) + [remove_mylist]
-                else:
-                    return [add_mylist] + list(votes)
+                return [add_mylist] + list(votes)
         elif mode == HbogoConstants.CONTEXT_MODE_EPISODE:
             if self.addon.getSetting('send_elapsed') == 'true':
                 return [mark_watched, mark_unwatched]
-            else:
-                return []
+            return []
         else:
             if self.cur_loc == self.LB_MYPLAYLIST:
                 return list(votes) + [remove_mylist]
-            else:
-                return [add_mylist] + list(votes)
+            return [add_mylist] + list(votes)
 
     def addLink(self, title, mode):
         if self.lograwdata:
