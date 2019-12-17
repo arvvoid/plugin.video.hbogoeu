@@ -1366,5 +1366,9 @@ class HbogoHandler_eu(HbogoHandler):
             xbmc.sleep(1000)
 
         self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback stoped...send final play position before stop...")
-        self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
+        if percent_elapsed > 89:
+            self.log("TRACKING ELAPSED for " + str(externalid) + ": 90% reached setting as watched")
+            self.update_history(externalid, mediatype, str(total_time), str(100))
+        else:
+            self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
         return True
