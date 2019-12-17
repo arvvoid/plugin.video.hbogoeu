@@ -796,7 +796,6 @@ class HbogoHandler_eu(HbogoHandler):
                         self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
-
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
             jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
@@ -1089,7 +1088,7 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
-            if self.addon.getSetting('set_elapsed') == 'true':
+            if self.addon.getSetting('send_elapsed') == 'true':
                 self.track_elapsed(externalid, media_url)
         else:
             self.log("DRM problem playback not possible")
@@ -1197,7 +1196,7 @@ class HbogoHandler_eu(HbogoHandler):
             'cid': content_id,
         })
         mark_watched = (py2_encode(self.language(30803)), runplugin %
-                         (self.base_url, watched_query))
+                        (self.base_url, watched_query))
 
         unwatched_query = urlencode({
             'url': 'UNWATCHED',
@@ -1205,7 +1204,7 @@ class HbogoHandler_eu(HbogoHandler):
             'cid': content_id,
         })
         mark_unwatched = (py2_encode(self.language(30804)), runplugin %
-                         (self.base_url, unwatched_query))
+                          (self.base_url, unwatched_query))
 
         votes_configs = [
             {'str_id': 30721, 'vote': 5},
@@ -1224,12 +1223,21 @@ class HbogoHandler_eu(HbogoHandler):
                   }))) for item in votes_configs]
 
         if mode == HbogoConstants.CONTEXT_MODE_MOVIE:
-            if self.cur_loc == self.LB_MYPLAYLIST:
-                return [mark_watched, mark_unwatched] + list(votes) + [remove_mylist]
+            if self.addon.getSetting('send_elapsed') == 'true':
+                if self.cur_loc == self.LB_MYPLAYLIST:
+                    return [mark_watched, mark_unwatched] + list(votes) + [remove_mylist]
+                else:
+                    return [mark_watched, mark_unwatched, add_mylist] + list(votes)
             else:
-                return [mark_watched, mark_unwatched, add_mylist] + list(votes)
+                if self.cur_loc == self.LB_MYPLAYLIST:
+                    return list(votes) + [remove_mylist]
+                else:
+                    return [add_mylist] + list(votes)
         elif mode == HbogoConstants.CONTEXT_MODE_EPISODE:
-            return [mark_watched, mark_unwatched]
+            if self.addon.getSetting('send_elapsed') == 'true':
+                return [mark_watched, mark_unwatched]
+            else:
+                return []
         else:
             if self.cur_loc == self.LB_MYPLAYLIST:
                 return list(votes) + [remove_mylist]
@@ -1306,13 +1314,15 @@ class HbogoHandler_eu(HbogoHandler):
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
         if hbogo_position > -1:
-            self.log("Found elapsed time on Hbo go for " + cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(title[
-                                                                                                                                                   'Duration']))
+            self.log("Found elapsed time on Hbo go for " +
+                     cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(title['Duration']))
             liz.setProperty("totaltime", str(title['Duration']))
             liz.setProperty("resumetime", str(hbogo_position))
+            if int(hbogo_position) == 0:
+                liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
             if int(int(hbogo_position) / int(title['Duration']) * 100) > 89:  # set as watched if 90% is watched
-                liz.setInfo(type="Video", infoLabels={"overlay": "6"})
                 liz.setProperty("resumetime", str(0))
+                liz.setInfo(type="Video", infoLabels={"PlayCount": "1"})
                 self.log(cid + " External ID: " + externalid + " IS WATCHED")
         if title['ContentType'] == 1:
             media_id = cid
