@@ -46,7 +46,7 @@ This add-on support 18 countries atm:
 *  __Bosnia and Herzegovina__ *[EU]*
 *  __Bulgaria__ *[EU]*
 *  __Croatia__ *[EU]*
-*  __Czech Republic__ *[EU]*  (UPC CZ is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Czech Republic__ *[EU]*
 *  __Denmark__ *[Nordic+Spain]*
 *  __Finland__ *[Nordic+Spain]*
 *  __Hungary__ *[EU]*
@@ -55,9 +55,9 @@ This add-on support 18 countries atm:
 *  __Norway__ *[Nordic+Spain]*
 *  __Polonia__ *[EU]*
 *  __Portugal__ *[EU]*
-*  __Romania__ *[EU]*  (UPC Romania is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Romania__ *[EU]*
 *  __Serbia__ *[EU]*
-*  __Slovakia__ *[EU]*  (UPC CZ is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Slovakia__ *[EU]*
 *  __Slovenija__ *[EU]*
 *  __Spain__ *[Nordic+Spain]*
 *  __Sweden__ *[Nordic+Spain]*
