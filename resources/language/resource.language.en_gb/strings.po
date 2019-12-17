@@ -305,3 +305,23 @@ msgstr ""
 msgctxt "#30697"
 msgid "Group Home lists in special category"
 msgstr ""
+
+msgctxt "#30800"
+msgid "Sync play time with Hbo Go"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Send elapsed time to Hbo go"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Get elapsed time from Hbo go"
+msgstr ""
+
+msgctxt "#30803"
+msgid "Set watched on Hbo Go"
+msgstr ""
+
+msgctxt "#30804"
+msgid "Set un-watched on Hbo Go"
+msgstr ""
