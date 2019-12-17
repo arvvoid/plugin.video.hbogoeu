@@ -37,7 +37,7 @@ msgid "Sorry, you are not correctly logged in, aborting play. Try to login on th
 msgstr ""
 
 msgctxt "#30104"
-msgid "Operaotr not selected. Please select your country/operaotr in the settings."
+msgid "Operator not selected. Please select your country/operator in the settings."
 msgstr ""
 
 msgctxt "#30105"
@@ -69,7 +69,7 @@ msgid "Setup failed, please try again"
 msgstr ""
 
 msgctxt "#30445"
-msgid "Chose your operator"
+msgid "Choose your operator"
 msgstr ""
 
 msgctxt "#30660"
@@ -77,7 +77,7 @@ msgid "DRM"
 msgstr ""
 
 msgctxt "#30665"
-msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
+msgid "Inputstream Adaptive Settings (max bitrate,resolution,etc..)"
 msgstr ""
 
 msgctxt "#30666"
@@ -154,7 +154,7 @@ msgid "INFORMATION"
 msgstr ""
 
 msgctxt "#30714"
-msgid "I understand the risk continue"
+msgid "I understand the risks and continue"
 msgstr ""
 
 msgctxt "#30715"
@@ -291,7 +291,7 @@ msgid "Are you sure you want to completely reset your setup (device registration
 msgstr ""
 
 msgctxt "#30693"
-msgid "Include full details/RAW retrived data in Debug log"
+msgid "Include full details/RAW retrieved data in Debug log"
 msgstr ""
 
 msgctxt "#30694"
