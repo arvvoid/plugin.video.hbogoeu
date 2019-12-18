@@ -1309,7 +1309,7 @@ class HbogoHandler_eu(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
-        if self.addon.getSetting('get_elapsed') == 'true':
+        if self.addon.getSetting('get_elapsed') == 'true' and self.addon.getSetting('ignore_kodi_watched') == 'true':
             liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
             liz.setProperty("resumetime", str(0))
         if hbogo_position > -1:
@@ -1406,7 +1406,7 @@ class HbogoHandler_eu(HbogoHandler):
         return self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 
     def track_elapsed(self, externalid, file):
-        xbmc.sleep(1000)  # Give some time for the previouse loop to end
+        xbmc.sleep(1000)  # Give some time for the previous loop to end
         current_time = 0
         percent_elapsed = 0
         mediatype = ""

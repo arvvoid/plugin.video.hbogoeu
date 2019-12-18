@@ -44,11 +44,6 @@ msgstr ""
 "na službenu stranicu i pokušajte ponovno, ako se problem i dalje javlja, "
 "zatražite podršku s potpunim debug zapisnikom"
 
-#, fuzzy
-#| msgctxt "#30104"
-#| msgid ""
-#| "Operaotr not selected. Please select your country/operaotr in the "
-#| "settings."
 msgctxt "#30104"
 msgid ""
 "Operator not selected. Please select your country/operator in the settings."
@@ -84,9 +79,6 @@ msgctxt "#30444"
 msgid "Setup failed, please try again"
 msgstr "Postavljanje nije uspjelo, pokušajte ponovno"
 
-#, fuzzy
-#| msgctxt "#30445"
-#| msgid "Chose your operator"
 msgctxt "#30445"
 msgid "Choose your operator"
 msgstr "Odaberite svog operatera"
@@ -95,9 +87,6 @@ msgctxt "#30660"
 msgid "DRM"
 msgstr "DRM"
 
-#, fuzzy
-#| msgctxt "#30665"
-#| msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,etc..)"
 msgstr "Inputstream Adaptive Postavke (max bitrate,rezolucija,itd...)"
@@ -197,9 +186,6 @@ msgctxt "#30713"
 msgid "INFORMATION"
 msgstr "INFORMACIJA"
 
-#, fuzzy
-#| msgctxt "#30714"
-#| msgid "I understand the risk continue"
 msgctxt "#30714"
 msgid "I understand the risks and continue"
 msgstr "Razumijem da se rizik nastavlja"
@@ -300,9 +286,6 @@ msgctxt "#30652"
 msgid "Always use original titles"
 msgstr "Uvijek koristite izvorne naslove"
 
-#, fuzzy
-#| msgctxt "#30655"
-#| msgid "Subtitles"
 msgctxt "#30653"
 msgid "Inject subtitles"
 msgstr "Titlovi"
@@ -386,4 +369,8 @@ msgstr ""
 
 msgctxt "#30804"
 msgid "Set un-watched on Hbo Go"
+msgstr ""
+
+msgctxt "#30805"
+msgid "Ignore Kodi Watched status (Only display Hbo Go watch status)"
 msgstr ""

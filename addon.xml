@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.27~beta43">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.28~beta44">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -38,6 +38,10 @@ Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for th
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
+v.2.0.28-beta44
+- Language files updates
+- Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
+
 v.2.0.27-beta43
 - Fixes to Report playstatus back to Hbo Go (EU only)
 

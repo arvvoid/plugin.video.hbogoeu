@@ -1,3 +1,7 @@
+v.2.0.28-beta44
+- Language files updates
+- Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
+
 v.2.0.27-beta43
 - Fixes to Report playstatus back to Hbo Go (EU only)
 

@@ -346,3 +346,7 @@ msgstr ""
 msgctxt "#30804"
 msgid "Set un-watched on Hbo Go"
 msgstr ""
+
+msgctxt "#30805"
+msgid "Ignore Kodi Watched status (Only display Hbo Go watch status)"
+msgstr ""

@@ -45,11 +45,6 @@ msgstr ""
 "meg bejelentkezni a hivatalos webhelyre, majd próbálja újra, ha a probléma "
 "továbbra is fennáll, kérje a teljes hibakereső napló támogatását"
 
-#, fuzzy
-#| msgctxt "#30104"
-#| msgid ""
-#| "Operaotr not selected. Please select your country/operaotr in the "
-#| "settings."
 msgctxt "#30104"
 msgid ""
 "Operator not selected. Please select your country/operator in the settings."
@@ -85,9 +80,6 @@ msgctxt "#30444"
 msgid "Setup failed, please try again"
 msgstr "A telepítés nem sikerült, próbálkozzon újra"
 
-#, fuzzy
-#| msgctxt "#30445"
-#| msgid "Chose your operator"
 msgctxt "#30445"
 msgid "Choose your operator"
 msgstr "Válassza ki a szolgáltatót"
@@ -96,9 +88,6 @@ msgctxt "#30660"
 msgid "DRM"
 msgstr "DRM"
 
-#, fuzzy
-#| msgctxt "#30665"
-#| msgid "Inputstream Adaptive Settings (max bitrate,resolution,ecc..)"
 msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate,resolution,etc..)"
 msgstr "Inputstream Adaptive beállítások (maximum bitráta, felbontás, stb.)"
@@ -198,9 +187,6 @@ msgctxt "#30713"
 msgid "INFORMATION"
 msgstr "Információ"
 
-#, fuzzy
-#| msgctxt "#30714"
-#| msgid "I understand the risk continue"
 msgctxt "#30714"
 msgid "I understand the risks and continue"
 msgstr "Megértem, hogy a kockázat továbbra is fennáll"
@@ -341,9 +327,6 @@ msgstr ""
 "Az eszköz regisztráció el fog veszni. Biztosan szeretné teljesen törölni a "
 "beállításait?"
 
-#, fuzzy
-#| msgctxt "#30693"
-#| msgid "Include full details/RAW retrived data in Debug log"
 msgctxt "#30693"
 msgid "Include full details/RAW retrieved data in Debug log"
 msgstr "Részletes és nyers adatok a beszúrása a hibakereső naplóba"
@@ -382,4 +365,8 @@ msgstr ""
 
 msgctxt "#30804"
 msgid "Set un-watched on Hbo Go"
+msgstr ""
+
+msgctxt "#30805"
+msgid "Ignore Kodi Watched status (Only display Hbo Go watch status)"
 msgstr ""

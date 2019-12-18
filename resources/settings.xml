@@ -18,6 +18,11 @@
         <setting label="30651" type="bool" id="deflang" default="false"/>
         <setting label="30652" type="bool" id="origtitles" default="false"/>
         <setting label="30653" type="bool" id="forcesubs" default="true"/>
+        <!-- Watch status sync -->
+        <setting label="30800" type="lsep"/>
+        <setting label="30801" type="bool" id="send_elapsed" default="true"/>
+        <setting label="30802" type="bool" id="get_elapsed" default="true"/>
+        <setting label="30805" type="bool" id="ignore_kodi_watched" default="false"/>
     </category>
     <!-- Home Catgory -->
     <category label="30696">
@@ -41,9 +46,6 @@
     <!-- Advanced -->
 	<category label="30670">
     <setting label="30671" type="bool" id="forcescrap" default="false"/>
-    <setting label="30800" type="lsep"/>
-    <setting label="30801" type="bool" id="send_elapsed" default="true"/>
-    <setting label="30802" type="bool" id="get_elapsed" default="true"/>
     <setting label="30680" type="lsep"/>
     <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&amp;mode=7)" option="close"/>
     <setting label="30690" type="lsep"/>
