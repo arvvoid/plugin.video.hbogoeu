@@ -1,3 +1,6 @@
+v.2.0.27-beta43
+- Fixes to Report playstatus back to Hbo Go (EU only)
+
 v.2.0.26-beta42
 - Report playstatus back to Hbo Go (EU only)
 

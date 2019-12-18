@@ -1406,9 +1406,9 @@ class HbogoHandler_eu(HbogoHandler):
         return self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 
     def track_elapsed(self, externalid, file):
+        xbmc.sleep(1000)  # Give some time for the previouse loop to end
         current_time = 0
         percent_elapsed = 0
-        previous_percent = 0
         mediatype = ""
         loop_count = 0
 
@@ -1430,19 +1430,16 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 percent_elapsed = int(current_time / total_time * 100)
             except ZeroDivisionError:
-                percent_elapsed = previous_percent
-            self.log("TRACKING ELAPSED for " + str(externalid) +
-                     ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
-            if percent_elapsed > previous_percent:
-                previous_percent = percent_elapsed
-                self.log("TRACKING ELAPSED for " + str(externalid) + ": Sending current time to Hbo GO...")
-                self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
-            xbmc.sleep(1000)
+                percent_elapsed = 0
+            xbmc.sleep(300)  # Looping more often will end this instance before next one begin
 
-        self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback stoped...send final play position before stop...")
+        self.log("TRACKING ELAPSED for " + str(externalid) +
+                 ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
         if percent_elapsed > 89:
             self.log("TRACKING ELAPSED for " + str(externalid) + ": 90% reached setting as watched")
             self.update_history(externalid, mediatype, str(total_time), str(100))
         else:
-            self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
+            if current_time > 10:  # if more then 10 sec played update
+                self.log("TRACKING ELAPSED for " + str(externalid) + ": Sending current time to Hbo GO...")
+                self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
         return True
