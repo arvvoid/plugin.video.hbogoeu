@@ -328,7 +328,7 @@ class HbogoHandler(object):
     def search(self):
         pass
 
-    def play(self, url, content_id):
+    def play(self, content_id):
         pass
 
     def procContext(self, action_type, content_id, optional=""):
