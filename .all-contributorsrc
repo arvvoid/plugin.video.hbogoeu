@@ -198,7 +198,8 @@
       "contributions": [
         "bug",
         "ideas",
-        "userTesting"
+        "userTesting",
+        "code"
       ]
     },
     {
@@ -274,6 +275,15 @@
       "contributions": [
         "ideas",
         "code"
+      ]
+    },
+    {
+      "login": "boblo1",
+      "name": "boblo1",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/58788554?v=4",
+      "profile": "https://github.com/boblo1",
+      "contributions": [
+        "translation"
       ]
     }
   ],

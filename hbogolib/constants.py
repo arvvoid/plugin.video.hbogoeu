@@ -34,6 +34,12 @@ class HbogoConstants(object):
     ACTION_VOTE = 8
     ACTION_ADD_MY_LIST = 9
     ACTION_REMOVE_MY_LIST = 10
+    ACTION_MARK_WATCHED = 11
+    ACTION_MARK_UNWATCHED = 12
+
+    CONTEXT_MODE_DEFAULT = 0
+    CONTEXT_MODE_MOVIE = 1
+    CONTEXT_MODE_EPISODE = 2
 
 
     countries = [

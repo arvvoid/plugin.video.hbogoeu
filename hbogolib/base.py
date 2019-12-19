@@ -183,3 +183,11 @@ class hbogo(object):
         elif mode == HbogoConstants.ACTION_REMOVE_MY_LIST:  # remove from my list
             self.start()
             self.handler.procContext(HbogoConstants.ACTION_REMOVE_MY_LIST, content_id)
+
+        elif mode == HbogoConstants.ACTION_MARK_WATCHED:  # remove from my list
+            self.start()
+            self.handler.procContext(HbogoConstants.ACTION_MARK_WATCHED, content_id)
+
+        elif mode == HbogoConstants.ACTION_MARK_UNWATCHED:  # remove from my list
+            self.start()
+            self.handler.procContext(HbogoConstants.ACTION_MARK_UNWATCHED, content_id)

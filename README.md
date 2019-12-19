@@ -37,7 +37,7 @@ Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://ko
 | My List | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Add/Remove from My List | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Voting | ✔ | ⛔ | ✖ | ✖ | ✖ |
-| Report play  status to HBO | ✖ | ✖ | ✖ | ✖ | ✖ |
+| Report play  status to HBO | ✔ | ✖ | ✖ | ✖ | ✖ |
 
 Legend: ✔ - feature availible for the region and working in the add-on, ✖ - feature availible for the region but not implemented or broken in the add-on, ⛔ feature not availible for the region
 
@@ -46,7 +46,7 @@ This add-on support 18 countries atm:
 *  __Bosnia and Herzegovina__ *[EU]*
 *  __Bulgaria__ *[EU]*
 *  __Croatia__ *[EU]*
-*  __Czech Republic__ *[EU]*  (UPC CZ is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Czech Republic__ *[EU]*
 *  __Denmark__ *[Nordic+Spain]*
 *  __Finland__ *[Nordic+Spain]*
 *  __Hungary__ *[EU]*
@@ -55,9 +55,9 @@ This add-on support 18 countries atm:
 *  __Norway__ *[Nordic+Spain]*
 *  __Polonia__ *[EU]*
 *  __Portugal__ *[EU]*
-*  __Romania__ *[EU]*  (UPC Romania is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Romania__ *[EU]*
 *  __Serbia__ *[EU]*
-*  __Slovakia__ *[EU]*  (UPC CZ is currently not working with the add-on [#5](https://github.com/arvvoid/plugin.video.hbogoeu/issues/5))
+*  __Slovakia__ *[EU]*
 *  __Slovenija__ *[EU]*
 *  __Spain__ *[Nordic+Spain]*
 *  __Sweden__ *[Nordic+Spain]*
@@ -141,7 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Ike201"><img src="https://avatars2.githubusercontent.com/u/51044106?v=4" width="100px;" alt=""/><br /><sub><b>Ike201</b></sub></a><br /><a href="#translation-Ike201" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/mrthosi"><img src="https://avatars2.githubusercontent.com/u/55213305?v=4" width="100px;" alt=""/><br /><sub><b>mrthosi</b></sub></a><br /><a href="#translation-mrthosi" title="Translation">🌍</a></td>
     <td align="center"><a href="http://håkonjahre.no"><img src="https://avatars3.githubusercontent.com/u/1866620?v=4" width="100px;" alt=""/><br /><sub><b>Håkon Botnmark Jahre</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Ahaakobja" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/sile70000"><img src="https://avatars2.githubusercontent.com/u/46074370?v=4" width="100px;" alt=""/><br /><sub><b>sile70000</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Asile70000" title="Bug reports">🐛</a> <a href="#ideas-sile70000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-sile70000" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://github.com/sile70000"><img src="https://avatars2.githubusercontent.com/u/46074370?v=4" width="100px;" alt=""/><br /><sub><b>sile70000</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Asile70000" title="Bug reports">🐛</a> <a href="#ideas-sile70000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-sile70000" title="User Testing">📓</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=sile70000" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ntilagoa"><img src="https://avatars1.githubusercontent.com/u/13465787?v=4" width="100px;" alt=""/><br /><sub><b>ntilagoa</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Antilagoa" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://www.autorinomina.it"><img src="https://avatars2.githubusercontent.com/u/3257156?v=4" width="100px;" alt=""/><br /><sub><b>Stefano Gottardo</b></sub></a><br /><a href="#ideas-CastagnaIT" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=CastagnaIT" title="Code">💻</a></td>
   </tr>
@@ -152,6 +152,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/ferdabasek"><img src="https://avatars2.githubusercontent.com/u/58233539?v=4" width="100px;" alt=""/><br /><sub><b>ferdabasek</b></sub></a><br /><a href="#ideas-ferdabasek" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=ferdabasek" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/durip"><img src="https://avatars3.githubusercontent.com/u/13102223?v=4" width="100px;" alt=""/><br /><sub><b>durip</b></sub></a><br /><a href="#userTesting-durip" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/splichy"><img src="https://avatars3.githubusercontent.com/u/16658908?v=4" width="100px;" alt=""/><br /><sub><b>splichy</b></sub></a><br /><a href="#ideas-splichy" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=splichy" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/boblo1"><img src="https://avatars1.githubusercontent.com/u/58788554?v=4" width="100px;" alt=""/><br /><sub><b>boblo1</b></sub></a><br /><a href="#translation-boblo1" title="Translation">🌍</a></td>
   </tr>
 </table>
 

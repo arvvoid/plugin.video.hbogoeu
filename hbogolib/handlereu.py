@@ -74,6 +74,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_SEARCH = ""
         self.API_URL_ADD_RATING = ""
         self.API_URL_ADD_MYLIST = ""
+        self.API_URL_HIS = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -83,8 +84,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = ""
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
-
         self.loggedin_headers = {}
+        self.JsonHis = ""
 
         # check operator_id
         if self.addon.getSetting('operator_id'):
@@ -154,6 +155,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_ADD_RATING = 'https://' + self.API_HOST + '/v8/AddRating/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_ADD_MYLIST = 'https://' + self.API_HOST + '/v8/AddWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_REMOVE_MYLIST = 'https://' + self.API_HOST + '/v8/RemoveWatchlist/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_HIS = 'https://bookmarking.hbogo.eu/v1/History/'
 
         self.individualization = ""
         self.goToken = ""
@@ -784,18 +786,19 @@ class HbogoHandler_eu(HbogoHandler):
                         self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
                         self.get_media_resource('FavoritesFolder.png'), HbogoConstants.ACTION_LIST)
 
+        if self.addon.getSetting('show_continue') == 'true' or self.addon.getSetting('get_elapsed') == 'true':
+            self.addCat(py2_encode(self.language(30732)),
+                        self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+
         if self.addon.getSetting('show_history') == 'true':
             self.addCat(py2_encode(self.language(30731)),
                         self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
-        if self.addon.getSetting('show_continue') == 'true':
-            self.addCat(py2_encode(self.language(30732)),
-                        self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false',
-                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
-
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
-        jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
+        if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
+            jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -827,14 +830,15 @@ class HbogoHandler_eu(HbogoHandler):
                     break
                 position += 1
             position = 0
-            for cat in jsonrsp2['Items']:
-                if py2_encode(cat["Tracking"]['Name']) == "Weekly Top":
-                    position_week_top = position
-                if py2_encode(cat["Tracking"]['Name']) == "Kids":
-                    position_kids = position
-                if position_week_top > -1 and position_kids > -1:
-                    break
-                position += 1
+            if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
+                for cat in jsonrsp2['Items']:
+                    if py2_encode(cat["Tracking"]['Name']) == "Weekly Top":
+                        position_week_top = position
+                    if py2_encode(cat["Tracking"]['Name']) == "Kids":
+                        position_kids = position
+                    if position_week_top > -1 and position_kids > -1:
+                        break
+                    position += 1
         except Exception:
             self.log("Unexpected error in find key categories: " + traceback.format_exc())
 
@@ -889,6 +893,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("List: " + str(url))
 
         jsonrsp = self.get_from_hbogo(url)
+        if self.addon.getSetting('get_elapsed') == 'true':
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -937,7 +943,10 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("Episode: " + str(url))
+
         jsonrsp = self.get_from_hbogo(url)
+        if self.addon.getSetting('get_elapsed') == 'true':
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -966,6 +975,9 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text) + '/0'))
                 jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(search_text) + '/0')
+                if self.addon.getSetting('get_elapsed') == 'true':
+                    self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+
                 if self.lograwdata:
                     self.log(str(jsonrsp))
 
@@ -1047,6 +1059,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
+        externalid = jsonrspp['Purchase']['VariantId']
+        self.log('Media External ID: ' + str(externalid))
         media_url = jsonrspp['Purchase']['MediaUrl'] + "/Manifest"
         self.log("Media Url: " + str(jsonrspp['Purchase']['MediaUrl'] + "/Manifest"))
         player_session_id = jsonrspp['Purchase']['PlayerSessionId']
@@ -1074,6 +1088,8 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
+            if self.addon.getSetting('send_elapsed') == 'true':
+                self.track_elapsed(externalid, media_url)
         else:
             self.log("DRM problem playback not possible")
             xbmcplugin.setResolvedUrl(self.handle, False, list_item)
@@ -1083,6 +1099,34 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
 
         icon = self.get_resource("icon.png")
+
+        if action_type == HbogoConstants.ACTION_MARK_WATCHED:
+            try:
+                content = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
+                media_type = "movie"
+                if content['ContentType'] == 3:
+                    media_type = "episode"
+                self.update_history(content['Tracking']['ExternalId'], media_type, str(content['Duration']), str(100))
+                self.log("ACTION_MARK_WATCHED executed")
+                xbmcgui.Dialog().notification(self.language(30803), self.LB_SUCESS, icon)
+                return xbmc.executebuiltin('Container.Refresh')
+            except Exception:
+                xbmcgui.Dialog().notification(self.language(30803), self.LB_ERROR, icon)
+                self.log("ACTION_MARK_WATCHED unexpected error: " + traceback.format_exc())
+
+        if action_type == HbogoConstants.ACTION_MARK_UNWATCHED:
+            try:
+                content = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
+                media_type = "movie"
+                if content['ContentType'] == 3:
+                    media_type = "episode"
+                self.update_history(content['Tracking']['ExternalId'], media_type, "0", "0")
+                self.log("ACTION_MARK_UNWATCHED executed")
+                xbmcgui.Dialog().notification(self.language(30804), self.LB_SUCESS, icon)
+                return xbmc.executebuiltin('Container.Refresh')
+            except Exception:
+                xbmcgui.Dialog().notification(self.language(30804), self.LB_ERROR, icon)
+                self.log("ACTION_MARK_UNWATCHED unexpected error: " + traceback.format_exc())
 
         if action_type == HbogoConstants.ACTION_ADD_MY_LIST:
             resp = self.get_from_hbogo(self.API_URL_ADD_MYLIST + content_id)
@@ -1127,7 +1171,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.log("ERROR RATING: " + content_id + " " + optional)
                 xbmcgui.Dialog().notification(self.language(30726), self.LB_ERROR, icon)
 
-    def genContextMenu(self, content_id, media_id):
+    def genContextMenu(self, content_id, media_id, mode=HbogoConstants.CONTEXT_MODE_DEFAULT):
         runplugin = 'RunPlugin(%s?%s)'
 
         add_mylist_query = urlencode({
@@ -1146,6 +1190,22 @@ class HbogoHandler_eu(HbogoHandler):
         remove_mylist = (py2_encode(self.language(30720)), runplugin %
                          (self.base_url, remove_mylist_query))
 
+        watched_query = urlencode({
+            'url': 'WATCHED',
+            'mode': HbogoConstants.ACTION_MARK_WATCHED,
+            'cid': content_id,
+        })
+        mark_watched = (py2_encode(self.language(30803)), runplugin %
+                        (self.base_url, watched_query))
+
+        unwatched_query = urlencode({
+            'url': 'UNWATCHED',
+            'mode': HbogoConstants.ACTION_MARK_UNWATCHED,
+            'cid': content_id,
+        })
+        mark_unwatched = (py2_encode(self.language(30804)), runplugin %
+                          (self.base_url, unwatched_query))
+
         votes_configs = [
             {'str_id': 30721, 'vote': 5},
             {'str_id': 30722, 'vote': 4},
@@ -1156,21 +1216,36 @@ class HbogoHandler_eu(HbogoHandler):
 
         votes = [(py2_encode(self.language(item['str_id'])),
                   runplugin % (self.base_url, urlencode({
-                               'url': 'VOTE',
-                               'mode': HbogoConstants.ACTION_VOTE,
-                               'vote': item['vote'],
-                               'cid': content_id,
-                               }))) for item in votes_configs]
+                      'url': 'VOTE',
+                      'mode': HbogoConstants.ACTION_VOTE,
+                      'vote': item['vote'],
+                      'cid': content_id,
+                  }))) for item in votes_configs]
 
-        if self.cur_loc == self.LB_MYPLAYLIST:
-            return list(votes) + [remove_mylist]
-
-        return [add_mylist] + list(votes)
+        if mode == HbogoConstants.CONTEXT_MODE_MOVIE:
+            if self.addon.getSetting('send_elapsed') == 'true':
+                if self.cur_loc == self.LB_MYPLAYLIST:
+                    return [mark_watched, mark_unwatched] + list(votes) + [remove_mylist]
+                return [mark_watched, mark_unwatched, add_mylist] + list(votes)
+            else:
+                if self.cur_loc == self.LB_MYPLAYLIST:
+                    return list(votes) + [remove_mylist]
+                return [add_mylist] + list(votes)
+        elif mode == HbogoConstants.CONTEXT_MODE_EPISODE:
+            if self.addon.getSetting('send_elapsed') == 'true':
+                return [mark_watched, mark_unwatched]
+            return []
+        else:
+            if self.cur_loc == self.LB_MYPLAYLIST:
+                return list(votes) + [remove_mylist]
+            return [add_mylist] + list(votes)
 
     def addLink(self, title, mode):
         if self.lograwdata:
             self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
+        externalid = title['Tracking']['ExternalId']
+        hbogo_position = self.get_elapsed(externalid)
 
         plot = ""
         name = ""
@@ -1234,6 +1309,20 @@ class HbogoHandler_eu(HbogoHandler):
         liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
+        if self.addon.getSetting('get_elapsed') == 'true' and self.addon.getSetting('ignore_kodi_watched') == 'true':
+            liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
+            liz.setProperty("resumetime", str(0))
+        if hbogo_position > -1:
+            self.log("Found elapsed time on Hbo go for " +
+                     cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(title['Duration']))
+            liz.setProperty("totaltime", str(title['Duration']))
+            liz.setProperty("resumetime", str(hbogo_position))
+            if int(hbogo_position) == 0:
+                liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
+            if int(int(hbogo_position) / int(title['Duration']) * 100) > 89:  # set as watched if 90% is watched
+                liz.setProperty("resumetime", str(0))
+                liz.setInfo(type="Video", infoLabels={"PlayCount": "1"})
+                self.log(cid + " External ID: " + externalid + " IS WATCHED")
         if title['ContentType'] == 1:
             media_id = cid
             try:
@@ -1242,7 +1331,9 @@ class HbogoHandler_eu(HbogoHandler):
                 pass  # all is ok got from first method just ignore
             except Exception:
                 self.log("Unexpected error for get media id: " + traceback.format_exc())
-            liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
+            liz.addContextMenuItems(items=self.genContextMenu(cid, media_id, HbogoConstants.CONTEXT_MODE_MOVIE))
+        if title['ContentType'] == 3:
+            liz.addContextMenuItems(items=self.genContextMenu(cid, cid, HbogoConstants.CONTEXT_MODE_EPISODE))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode, media_type):
@@ -1278,7 +1369,7 @@ class HbogoHandler_eu(HbogoHandler):
                 pass  # all is ok media id got from first method ignore
             except Exception:
                 self.log("Unexpected get media id error: " + traceback.format_exc())
-            liz.addContextMenuItems(items=self.genContextMenu(cid, media_id))
+            liz.addContextMenuItems(items=self.genContextMenu(cid, media_id, HbogoConstants.CONTEXT_MODE_DEFAULT))
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
@@ -1294,3 +1385,61 @@ class HbogoHandler_eu(HbogoHandler):
         liz.setInfo(type="Video", infoLabels={"Title": name})
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
+
+    def get_elapsed(self, externalid):
+        if self.addon.getSetting('get_elapsed') == 'true':
+            for listIds in self.JsonHis:
+                if listIds['externalId'] == externalid:
+                    return int(listIds['position'])
+        return -1
+
+    def update_history(self, ExternalId, MediaType, Current_Time, Percent_Elapsed):
+        if (MediaType == 'movie'):
+            MediaType = '1'
+        elif (MediaType == 'episode'):
+            MediaType = '3'
+        resume_payload = '{"CustomerId":"' + self.GOcustomerId + '","CountryCode":"' + self.LANGUAGE_CODE + '","ExternalId":"' + ExternalId + \
+                         '","ContentType":' + MediaType + ',"Position":' + Current_Time + ',"ElapsedPercentage":' + Percent_Elapsed + \
+                         ',"LoginSessionId":"' + str(self.sessionId) + '"}'
+        history_headers = self.loggedin_headers
+        history_headers['Content-Type'] = 'application/json'
+        return self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
+
+    def track_elapsed(self, externalid, file):
+        xbmc.sleep(1000)  # Give some time for the previous loop to end
+        current_time = 0
+        percent_elapsed = 0
+        mediatype = ""
+        loop_count = 0
+
+        self.log("TRACKING ELAPSED for " + str(externalid) + ": Waiting for playback to start...max 1min...")
+        while not xbmc.Player().isPlayingVideo():  # wait for playback to start max 1min else abort
+            loop_count += 1
+            if loop_count > 60:
+                self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback never started aborting...")
+                return False
+            xbmc.sleep(1000)
+
+        self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback started " + xbmc.Player().getPlayingFile() + "...")
+        # loop if media that started this tracking is still playing if not abort
+        while xbmc.Player().isPlayingVideo() and file == xbmc.Player().getPlayingFile():
+            infotag = xbmc.Player().getVideoInfoTag()
+            mediatype = infotag.getMediaType()
+            current_time = int(xbmc.Player().getTime())
+            total_time = int(xbmc.Player().getTotalTime())
+            try:
+                percent_elapsed = int(current_time / total_time * 100)
+            except ZeroDivisionError:
+                percent_elapsed = 0
+            xbmc.sleep(300)  # Looping more often will end this instance before next one begin
+
+        self.log("TRACKING ELAPSED for " + str(externalid) +
+                 ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
+        if percent_elapsed > 89:
+            self.log("TRACKING ELAPSED for " + str(externalid) + ": 90% reached setting as watched")
+            self.update_history(externalid, mediatype, str(total_time), str(100))
+        else:
+            if current_time > 10:  # if more then 10 sec played update
+                self.log("TRACKING ELAPSED for " + str(externalid) + ": Sending current time to Hbo GO...")
+                self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
+        return True
