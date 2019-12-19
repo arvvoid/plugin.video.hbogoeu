@@ -352,8 +352,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.use_content_type)
 
-    def play(self, url, content_id):
-        self.log("Play: " + str(url))
+    def play(self, content_id):
+        self.log("Play: " + str(content_id))
 
         if not self.chk_login():
             self.login()
@@ -364,7 +364,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.logout()
             return
 
-        media_item = self.get_from_hbogo(url + self.LANGUAGE_CODE, 'xml')
+        media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
 
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
@@ -540,9 +540,9 @@ class HbogoHandler_sp(HbogoHandler):
             media_type = "movie"
 
         item_url = '%s?%s' % (self.base_url, urlencode({
-            'url': title.find('link').text,
+            'url': 'PLAY',
             'mode': mode,
-            'name': name,
+            'cid': guid,
         }))
 
         thunb = self.get_thumbnail_url(title)

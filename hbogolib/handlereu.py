@@ -1003,8 +1003,8 @@ class HbogoHandler_eu(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.use_content_type)
 
-    def play(self, url, content_id):
-        self.log("Play: " + str(url))
+    def play(self, content_id):
+        self.log("Play: " + str(content_id))
 
         if not self.chk_login():
             self.login()
@@ -1282,11 +1282,9 @@ class HbogoHandler_eu(HbogoHandler):
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
         item_url = '%s?%s' % (self.base_url, urlencode({
-            'url': title['ObjectUrl'],
+            'url': 'PLAY',
             'mode': mode,
-            'name': filename,
-            'cid': cid,
-            'thumbnail': title['BackgroundUrl']
+            'cid': cid
         }))
 
         liz = xbmcgui.ListItem(name)
