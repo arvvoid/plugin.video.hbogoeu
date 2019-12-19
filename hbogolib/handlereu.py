@@ -1004,7 +1004,7 @@ class HbogoHandler_eu(HbogoHandler):
         KodiUtil.endDir(self.handle, self.use_content_type)
 
     def play(self, content_id):
-        self.log("Play: " + str(content_id))
+        self.log("Initializing playback... " + str(content_id))
 
         if not self.chk_login():
             self.login()
