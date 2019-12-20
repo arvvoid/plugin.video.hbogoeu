@@ -1406,32 +1406,36 @@ class HbogoHandler_eu(HbogoHandler):
         return self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 
     def track_elapsed(self, externalid, file):
-        xbmc.sleep(1000)  # Give some time for the previous loop to end
+        monitor = xbmc.Monitor()
+        monitor.waitForAbort(1)  # Give some time for the previous loop to end
         current_time = 0
         percent_elapsed = 0
-        mediatype = ""
+        mediatype = "None"
         loop_count = 0
 
         self.log("TRACKING ELAPSED for " + str(externalid) + ": Waiting for playback to start...max 1min...")
-        while not xbmc.Player().isPlayingVideo():  # wait for playback to start max 1min else abort
+        while not xbmc.Player().isPlayingVideo() and not monitor.abortRequested():  # wait for playback to start max 1min else abort
             loop_count += 1
             if loop_count > 60:
                 self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback never started aborting...")
                 return False
-            xbmc.sleep(1000)
+            if monitor.waitForAbort(1):
+                return False
 
         self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback started " + xbmc.Player().getPlayingFile() + "...")
         # loop if media that started this tracking is still playing if not abort
-        while xbmc.Player().isPlayingVideo() and file == xbmc.Player().getPlayingFile():
-            infotag = xbmc.Player().getVideoInfoTag()
-            mediatype = infotag.getMediaType()
+        while xbmc.Player().isPlayingVideo() and file == xbmc.Player().getPlayingFile() and not monitor.abortRequested():
+            if mediatype == "None":
+                infotag = xbmc.Player().getVideoInfoTag()
+                mediatype = infotag.getMediaType()
             current_time = int(xbmc.Player().getTime())
             total_time = int(xbmc.Player().getTotalTime())
             try:
                 percent_elapsed = int(current_time / total_time * 100)
             except ZeroDivisionError:
                 percent_elapsed = 0
-            xbmc.sleep(300)  # Looping more often will end this instance before next one begin
+            if monitor.waitForAbort(0.3):
+                break
 
         self.log("TRACKING ELAPSED for " + str(externalid) +
                  ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
