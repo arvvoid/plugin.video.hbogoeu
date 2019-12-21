@@ -155,8 +155,7 @@ class hbogo(object):
 
         elif mode == HbogoConstants.ACTION_PLAY:
             self.start()
-            self.handler.setDispCat(name)
-            self.handler.play(url, content_id)
+            self.handler.play(content_id)
 
         elif mode == HbogoConstants.ACTION_RESET_SETUP:  # logout, destry setup
             # ask confirm
