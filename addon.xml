@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.28~beta44">
+<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.1.0">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -38,25 +38,16 @@ Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for th
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.0.28-beta44
+v.2.1.0
 - Language files updates
 - Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
-
-v.2.0.27-beta43
-- Fixes to Report playstatus back to Hbo Go (EU only)
-
-v.2.0.26-beta42
 - Report playstatus back to Hbo Go (EU only)
-
-v.2.0.25-beta41
 - Fix UPC CZ and SK
 - Fix UPC Romania
 - Use Video as media type
 - Start screen customization
 - History (EU only option)
-- Continue watching (only display the category, EU only option)      
-      
-v.2.0.23-beta39
+- Continue watching (only display the category, EU only option)
 - Fix Skylink CZ and SK (contribution ferdabasek)
 
 v.2.0.22
@@ -68,25 +59,6 @@ v.2.0.22
 v.2.0.20
 - THIS IS STABLE RELESE
 - Eu Handler: use api v8
-
-v.2.0.19-beta38
-- THIS IS A RELEASE CANDIDATE VERSION
-- Fix failed del session bug
-- Use urlencode to create urls (contribution Ajnasz)
-- Fix uuid encoding on some systems
-
-v.2.0.18-beta37
-- THIS IS A RELEASE CANDIDATE VERSION
-- Compatibility fixes Python 2/3
-
-v.2.0.17-beta34
-- THIS IS A RELEASE CANDIDATE VERSION
-- SECURITY: make use of defusedxml
-- SECURITY: removed pickle, implemented alternative more secure method for storing the session
-- Code style fixes
-- add-on passing all kodi-addon-checker tests
-- moved widevine check/setup to initial step of add-on setup
-- update to Hungarian translation (contribution Ajnasz)
     </news>
     <assets>
      <icon>resources/icon.png</icon>

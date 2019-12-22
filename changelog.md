@@ -1,22 +1,13 @@
-v.2.0.28-beta44
+v.2.1.0
 - Language files updates
 - Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
-
-v.2.0.27-beta43
-- Fixes to Report playstatus back to Hbo Go (EU only)
-
-v.2.0.26-beta42
 - Report playstatus back to Hbo Go (EU only)
-
-v.2.0.25-beta41
 - Fix UPC CZ and SK
 - Fix UPC Romania
 - Use Video as media type
 - Start screen customization
 - History (EU only option)
 - Continue watching (only display the category, EU only option)
-
-v.2.0.23-beta39
 - Fix Skylink CZ and SK (contribution ferdabasek)
 
 v.2.0.22
