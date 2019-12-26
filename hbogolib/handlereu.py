@@ -248,7 +248,7 @@ class HbogoHandler_eu(HbogoHandler):
         # 4 - login redirection url
 
         for op_list_item in op_list:
-            li_items_list.append(xbmcgui.ListItem(label=op_list_item[0], iconImage=op_list_item[2]))
+            li_items_list.append(xbmcgui.ListItem(label=op_list_item[0]))
             li_items_list[-1].setArt({'thumb': op_list_item[2], 'icon': op_list_item[2]})
 
         index = xbmcgui.Dialog().select(self.language(30445), li_items_list, useDetails=True)
@@ -1254,9 +1254,9 @@ class HbogoHandler_eu(HbogoHandler):
             name = py2_encode(title['Name'])
             if self.force_original_names:
                 name = py2_encode(title['OriginalName'])
-            filename = py2_encode(title['OriginalName']) + " (" + str(title['ProductionYear']) + ")"
+            scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
-                name = filename
+                name = scrapname
             plot = py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
@@ -1270,10 +1270,10 @@ class HbogoHandler_eu(HbogoHandler):
                 title['SeasonIndex']) + " " + self.LB_SEASON + ", " + self.LB_EPISODE + " " + str(title['Index'])
             if self.force_original_names:
                 name = py2_encode(title['OriginalName'])
-            filename = py2_encode(title['Tracking']['ShowName']) + " - S" + str(
+            scrapname = py2_encode(title['Tracking']['ShowName']) + " - S" + str(
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
-                name = filename
+                name = scrapname
             plot = py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
@@ -1317,7 +1317,15 @@ class HbogoHandler_eu(HbogoHandler):
             liz.setProperty("resumetime", str(hbogo_position))
             if int(hbogo_position) == 0:
                 liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
-            if int(int(hbogo_position) / int(title['Duration']) * 100) > 89:  # set as watched if 90% is watched
+            percent_elapsed = 0
+            try:
+                percent_elapsed = int(int(hbogo_position) / int(title['Duration']) * 100)
+            except ZeroDivisionError:
+                percent_elapsed = 0
+            except Exception:
+                self.log("Unexpected error percent elapsed: " + traceback.format_exc())
+                percent_elapsed = 0
+            if percent_elapsed > 89:  # set as watched if 90% is watched
                 liz.setProperty("resumetime", str(0))
                 liz.setInfo(type="Video", infoLabels={"PlayCount": "1"})
                 self.log(cid + " External ID: " + externalid + " IS WATCHED")
@@ -1403,7 +1411,7 @@ class HbogoHandler_eu(HbogoHandler):
         history_headers['Content-Type'] = 'application/json'
         return self.post_to_hbogo(self.API_URL_HIS, history_headers, resume_payload, '')
 
-    def track_elapsed(self, externalid, file):
+    def track_elapsed(self, externalid, playfile):
         monitor = xbmc.Monitor()
         monitor.waitForAbort(1)  # Give some time for the previous loop to end
         current_time = 0
@@ -1422,7 +1430,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback started " + xbmc.Player().getPlayingFile() + "...")
         # loop if media that started this tracking is still playing if not abort
-        while xbmc.Player().isPlayingVideo() and file == xbmc.Player().getPlayingFile() and not monitor.abortRequested():
+        while xbmc.Player().isPlayingVideo() and playfile == xbmc.Player().getPlayingFile() and not monitor.abortRequested():
             if mediatype == "None":
                 infotag = xbmc.Player().getVideoInfoTag()
                 mediatype = infotag.getMediaType()

@@ -1,3 +1,6 @@
+v.2.1.1
+- Prepare for Kodi official repository
+
 v.2.1.0
 - Language files updates
 - Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled

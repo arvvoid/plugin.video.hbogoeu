@@ -21,6 +21,18 @@ msgctxt "#30000"
 msgid "ENG"
 msgstr ""
 
+msgctxt "#30001"
+msgid "ERROR"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Setup failed"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Unsupported region"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Web registration on "
 msgstr ""

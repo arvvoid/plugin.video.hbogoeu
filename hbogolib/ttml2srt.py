@@ -26,7 +26,7 @@ class Ttml2srt(object):
         if (sys.version_info > (3, 0)):
             f = open(filename, 'w', encoding='utf-8')
         else:
-            f = open(filename, 'wb', )
+            f = open(filename, 'wb')
         self.subrip_writer(f, self.subtitle['lines'], f, shift, self.subtitle['fps'], self.subtitle['tick_rate'])
         return filename
 
