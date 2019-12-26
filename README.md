@@ -20,7 +20,7 @@ If an official app is available for your platform, use it instead of this.
 Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website for your region
 
-# hGO EU (watch HBO GO on Kodi) (plugin.video.hbogoeu)
+# hGO EU (watch HBO GO in Kodi) (plugin.video.hbogoeu)
 
 Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
