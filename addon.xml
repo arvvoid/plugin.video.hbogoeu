@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.1.0">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.1.1">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -19,6 +19,8 @@ Simple, Kodi add-on to access HBO® Go EU content. (This add-on is not officiall
 Important, HBO® Go must be paid for!!!  You need a valid account!
 Register on the official HBO® Go website for your region.
 
+Read the disclaimer!
+
 Curently support: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Norway, Denmark, Sweden, Finland
 
 To report bugs or request assistence with the add-on go to: https://github.com/arvvoid/plugin.video.hbogoeu
@@ -38,7 +40,7 @@ Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for th
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.1.0
+v.2.1.1
 - Language files updates
 - Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
 - Report playstatus back to Hbo Go (EU only)
@@ -49,16 +51,6 @@ v.2.1.0
 - History (EU only option)
 - Continue watching (only display the category, EU only option)
 - Fix Skylink CZ and SK (contribution ferdabasek)
-
-v.2.0.22
-- Nordic/Spain: Add Watchlist (My List)
-- Nordic/Spain: Add search function
-- Nordic/Spain: Add/Remove to/from My List
-- Code Optimizations
-
-v.2.0.20
-- THIS IS STABLE RELESE
-- Eu Handler: use api v8
     </news>
     <assets>
      <icon>resources/icon.png</icon>

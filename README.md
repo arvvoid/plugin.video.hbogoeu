@@ -76,8 +76,7 @@ REQUIRMENTS:
 
 ## Download/Install instructions
 
-* Download [repository.arvvoid-1.0.0.zip](https://raw.github.com/arvvoid/repository.arvvoid/master/repository.arvvoid/repository.arvvoid-1.0.0.zip) and use the install add-on from zip function in Kodi
-* Install the add-on from repository "Kodi ArvVoid Repository"
+* Install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
 * The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
@@ -101,10 +100,6 @@ sudo pip install wheel pycryptodomex
 ## Help
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
-
-## Video Demo and Install instructions
-
-[![Watch the video](https://img.youtube.com/vi/m326rV0vH8Q/hqdefault.jpg)](https://youtu.be/m326rV0vH8Q)
 
 ## History
 

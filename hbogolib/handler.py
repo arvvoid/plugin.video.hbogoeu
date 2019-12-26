@@ -113,12 +113,12 @@ class HbogoHandler(object):
         self.API_PLATFORM = 'COMP'
 
     @staticmethod
-    def get_resource(file):
-        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/' + file))
+    def get_resource(resourcefile):
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/' + resourcefile))
 
     @staticmethod
-    def get_media_resource(file):
-        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/' + file))
+    def get_media_resource(resourcefile):
+        return py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/' + resourcefile))
 
     def log(self, msg, level=xbmc.LOGDEBUG):
         try:
