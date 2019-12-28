@@ -479,7 +479,7 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 # Treat special 2nd confirm callback required by Telekom RO
                 if self.op_id == HbogoConstants.special_data['telekom_ro']['id']:
-                    auth_state=parse.parse_qs(parsed_url.query)['state'][0]
+                    auth_state = parse.parse_qs(parsed_url.query)['state'][0]
 
                     confirm_payload = HbogoConstants.special_data['telekom_ro']['payload']
                     confirm_payload['state'] = auth_state
