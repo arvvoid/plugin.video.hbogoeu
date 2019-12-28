@@ -198,8 +198,6 @@ class HbogoHandler(object):
         self.addon.setSetting('operator_redirect_url', '')
         self.addon.setSetting('individualization', '')
         self.addon.setSetting('customerId', '')
-        self.addon.setSetting('FavoritesGroupId', '')
-        self.addon.setSetting('KidsGroupId', '')
         self.addon.setSetting('username', '')
         self.addon.setSetting('password', '')
         self.log("Removed stored setup")
