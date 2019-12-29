@@ -477,6 +477,20 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("PARTED URL: " + str(parsed_url))
 
             try:
+                # Treat special 2nd confirm callback required by Telekom RO
+                if self.op_id == HbogoConstants.special_data['telekom_ro']['id']:
+                    auth_state = parse.parse_qs(parsed_url.query)['state'][0]
+
+                    confirm_payload = HbogoConstants.special_data['telekom_ro']['payload']
+                    confirm_payload['state'] = auth_state
+                    confirm_response = cp_session.post(
+                        HbogoConstants.special_data['telekom_ro']['confirm_uri'], 
+                        confirm_payload
+                    )
+                    
+                    self.log("URL confirm: " + confirm_response.url)
+                    parsed_url = parse.urlparse(confirm_response.url)
+                
                 ssoid = parse.parse_qs(parsed_url.query)['ssoid'][0]
             except Exception:
                 self.log("OAuth login attempt failed, operator not supported, stack trace: " + traceback.format_exc())
