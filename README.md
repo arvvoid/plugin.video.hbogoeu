@@ -149,6 +149,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/splichy"><img src="https://avatars3.githubusercontent.com/u/16658908?v=4" width="100px;" alt=""/><br /><sub><b>splichy</b></sub></a><br /><a href="#ideas-splichy" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=splichy" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/boblo1"><img src="https://avatars1.githubusercontent.com/u/58788554?v=4" width="100px;" alt=""/><br /><sub><b>boblo1</b></sub></a><br /><a href="#translation-boblo1" title="Translation">🌍</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://marianfocsa.info"><img src="https://avatars3.githubusercontent.com/u/17079638?v=4" width="100px;" alt=""/><br /><sub><b>Marian FX</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/commits?author=marianfx" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
