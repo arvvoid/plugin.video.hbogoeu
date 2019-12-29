@@ -12,7 +12,7 @@
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">HBO GO EU</summary>
+    <summary lang="en_GB">Watch HBO® GO EU+Nordic content in Kodi. Valid HBO® account required.</summary>
     <description lang="en_GB">
 Simple, Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
 
