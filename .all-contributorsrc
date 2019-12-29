@@ -285,6 +285,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "marianfx",
+      "name": "Marian FX",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17079638?v=4",
+      "profile": "http://marianfocsa.info",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
