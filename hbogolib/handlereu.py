@@ -818,10 +818,13 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 self.log("Categories Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                return
         except KeyError:
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            return
 
         position_home = -1
         position_series = -1
@@ -914,10 +917,13 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 self.log("List Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                return
         except KeyError:
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            return
 
         # If there is a subcategory / genres
         if len(jsonrsp['Container']) > 1:
@@ -945,10 +951,13 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 self.log("Season list Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                return
         except KeyError:
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            return
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
         KodiUtil.endDir(self.handle, self.use_content_type)
@@ -966,10 +975,13 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp['ErrorMessage']:
                 self.log("Episode list error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                return
         except KeyError:
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            return
 
         for episode in jsonrsp['ChildContents']['Items']:
             self.addLink(episode, HbogoConstants.ACTION_PLAY)
@@ -999,10 +1011,13 @@ class HbogoHandler_eu(HbogoHandler):
                     if jsonrsp['ErrorMessage']:
                         self.log("Search Error: " + py2_encode(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                        return
                 except KeyError:
                     pass  # all is ok no error message just pass
                 except Exception:
                     self.log("Unexpected error: " + traceback.format_exc())
+                    xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+                    return
 
                 if jsonrsp['Container'][0]['Contents']['Items']:
                     for item in jsonrsp['Container'][0]['Contents']['Items']:
