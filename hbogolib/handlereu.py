@@ -816,7 +816,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
-                self.log("Categories Error: " + str(jsonrsp['ErrorMessage']))
+                self.log("Categories Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except KeyError:
             pass  # all is ok no error message just pass
@@ -912,7 +912,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
-                self.log("List Error: " + str(jsonrsp['ErrorMessage']))
+                self.log("List Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except KeyError:
             pass  # all is ok no error message just pass
@@ -943,7 +943,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
-                self.log("Season list Error: " + str(jsonrsp['ErrorMessage']))
+                self.log("Season list Error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except KeyError:
             pass  # all is ok no error message just pass
@@ -964,7 +964,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrsp['ErrorMessage']:
-                self.log("Episode list error: " + str(jsonrsp['ErrorMessage']))
+                self.log("Episode list error: " + py2_encode(jsonrsp['ErrorMessage']))
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
         except KeyError:
             pass  # all is ok no error message just pass
@@ -997,7 +997,7 @@ class HbogoHandler_eu(HbogoHandler):
 
                 try:
                     if jsonrsp['ErrorMessage']:
-                        self.log("Search Error: " + str(jsonrsp['ErrorMessage']))
+                        self.log("Search Error: " + py2_encode(jsonrsp['ErrorMessage']))
                         xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
                 except KeyError:
                     pass  # all is ok no error message just pass
