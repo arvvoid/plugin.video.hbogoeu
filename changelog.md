@@ -1,3 +1,10 @@
+v.2.1.5
+- fix Telekom Romania (My Account) login
+- new logo
+- fix some encoding errors on log
+- better error handling on communication errors
+- media info optimizations
+
 v.2.1.1
 - Prepare for Kodi official repository
 
