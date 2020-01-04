@@ -34,7 +34,7 @@ msgid "Unsupported region"
 msgstr ""
 
 msgctxt "#30004"
-msgid "Unexpected error"
+msgid "An unexpected error has occurred."
 msgstr ""
 
 msgctxt "#30005"
