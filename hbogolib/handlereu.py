@@ -297,6 +297,8 @@ class HbogoHandler_eu(HbogoHandler):
 
     def getCustomerGroups(self):
         jsonrsp = self.get_from_hbogo(self.API_URL_SETTINGS)
+        if jsonrsp is False:
+            return
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
@@ -723,6 +725,9 @@ class HbogoHandler_eu(HbogoHandler):
         data = json.dumps(data_obj)
         self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
         jsonrspl = self.post_to_hbogo(url, headers, data)
+        if jsonrspl is False:
+            self.logout()
+            return False
 
         try:
             if jsonrspl['ErrorMessage']:
@@ -811,6 +816,8 @@ class HbogoHandler_eu(HbogoHandler):
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
+        if jsonrsp is False:
+            return
         if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
             jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
 
@@ -823,7 +830,7 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
 
         position_home = -1
@@ -910,6 +917,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("List: " + str(url))
 
         jsonrsp = self.get_from_hbogo(url)
+        if jsonrsp is False:
+            return
         if self.addon.getSetting('get_elapsed') == 'true':
             self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
@@ -922,7 +931,7 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
 
         # If there is a subcategory / genres
@@ -946,6 +955,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         self.log("Season: " + str(url))
         jsonrsp = self.get_from_hbogo(url)
+        if jsonrsp is False:
+            return
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -956,7 +967,7 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
@@ -968,6 +979,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("Episode: " + str(url))
 
         jsonrsp = self.get_from_hbogo(url)
+        if jsonrsp is False:
+            return
         if self.addon.getSetting('get_elapsed') == 'true':
             self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
@@ -980,7 +993,7 @@ class HbogoHandler_eu(HbogoHandler):
             pass  # all is ok no error message just pass
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
 
         for episode in jsonrsp['ChildContents']['Items']:
@@ -1001,6 +1014,8 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text) + '/0'))
                 jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + py2_encode(search_text) + '/0')
+                if jsonrsp is False:
+                    return
                 if self.addon.getSetting('get_elapsed') == 'true':
                     self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
 
@@ -1016,7 +1031,7 @@ class HbogoHandler_eu(HbogoHandler):
                     pass  # all is ok no error message just pass
                 except Exception:
                     self.log("Unexpected error: " + traceback.format_exc())
-                    xbmcgui.Dialog().ok(self.LB_ERROR, self.LB_ERROR)
+                    xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
                     return
 
                 if jsonrsp['Container'][0]['Contents']['Items']:
@@ -1072,6 +1087,8 @@ class HbogoHandler_eu(HbogoHandler):
         }
         self.log("Requesting purchase: " + str(self.API_URL_PURCHASE))
         jsonrspp = self.post_to_hbogo(self.API_URL_PURCHASE, purchase_headers, purchase_payload)
+        if jsonrspp is False:
+            return
         self.log('Purchase response: ' + self.mask_sensitive_data(str(jsonrspp)))
 
         try:
@@ -1422,7 +1439,7 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=category_url, listitem=liz, isFolder=True)
 
     def get_elapsed(self, externalid):
-        if self.addon.getSetting('get_elapsed') == 'true':
+        if self.addon.getSetting('get_elapsed') == 'true' and self.JsonHis is not False:
             for listIds in self.JsonHis:
                 if listIds['externalId'] == externalid:
                     return int(listIds['position'])

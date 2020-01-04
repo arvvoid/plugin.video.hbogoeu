@@ -139,6 +139,8 @@ class HbogoHandler_sp(HbogoHandler):
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
         response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        if response is False:
+            return False
 
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
@@ -198,6 +200,8 @@ class HbogoHandler_sp(HbogoHandler):
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
+        if browse_xml is False:
+            return
 
         home = None
         series = None
@@ -281,6 +285,8 @@ class HbogoHandler_sp(HbogoHandler):
     def list_pages(self, url, max_items=200, offset=0):
 
         response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
+        if response is False:
+            return
 
         count = 0
 
@@ -327,7 +333,8 @@ class HbogoHandler_sp(HbogoHandler):
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
                 response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
-
+                if response is False:
+                    return
                 count = 0
 
                 for item in response.findall('.//item'):
@@ -365,6 +372,8 @@ class HbogoHandler_sp(HbogoHandler):
             return
 
         media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
+        if media_item is False:
+            return
 
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
@@ -372,6 +381,8 @@ class HbogoHandler_sp(HbogoHandler):
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        if mpd is False:
+            return
         if self.lograwdata:
             self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
 
