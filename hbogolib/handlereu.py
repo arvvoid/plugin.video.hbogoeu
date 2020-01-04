@@ -486,13 +486,13 @@ class HbogoHandler_eu(HbogoHandler):
                     confirm_payload = HbogoConstants.special_data['telekom_ro']['payload']
                     confirm_payload['state'] = auth_state
                     confirm_response = cp_session.post(
-                        HbogoConstants.special_data['telekom_ro']['confirm_uri'], 
+                        HbogoConstants.special_data['telekom_ro']['confirm_uri'],
                         confirm_payload
                     )
-                    
+
                     self.log("URL confirm: " + confirm_response.url)
                     parsed_url = parse.urlparse(confirm_response.url)
-                
+
                 ssoid = parse.parse_qs(parsed_url.query)['ssoid'][0]
             except Exception:
                 self.log("OAuth login attempt failed, operator not supported, stack trace: " + traceback.format_exc())
@@ -1063,7 +1063,6 @@ class HbogoHandler_eu(HbogoHandler):
             return
         media_info = self.construct_media_info(item_info)
 
-
         purchase_payload = '<Purchase xmlns="go:v8:interop" ' \
                            'xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true' \
                            '</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + \
@@ -1329,21 +1328,22 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
-        return {"info": {
-                        "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
-                        "season": title['Tracking']['SeasonNumber'],
-                        "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
-                        "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
-                        "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
-                        "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
-                        "title": name, "originaltitle": title['OriginalName'],
-                        "year": title['ProductionYear']
-                    },
-                "art":  {
-                        'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
-                        'fanart': title['BackgroundUrl']
-                        }
-                }
+        return {
+            "info": {
+                "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
+                "season": title['Tracking']['SeasonNumber'],
+                "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
+                "mpaa": str(title['AgeRating']) + '+', "rating": title['ImdbRate'],
+                "cast": [title['Cast'].split(', ')][0], "director": title['Director'],
+                "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
+                "title": name, "originaltitle": title['OriginalName'],
+                "year": title['ProductionYear']
+            },
+            "art": {
+                'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
+                'fanart': title['BackgroundUrl']
+            }
+        }
 
     def addLink(self, title, mode):
         if self.lograwdata:

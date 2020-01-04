@@ -553,11 +553,11 @@ class HbogoHandler_sp(HbogoHandler):
 
         return {
             "info": {
-                        "mediatype": media_type, "episode": episode,
-                        "season": season,
-                        "tvshowtitle": series_name, "plot": plot,
-                        "title": name, "originaltitle": original_name
-                    },
+                "mediatype": media_type, "episode": episode,
+                "season": season,
+                "tvshowtitle": series_name, "plot": plot,
+                "title": name, "originaltitle": original_name
+            },
             "art": {'thumb': thumb, 'poster': thumb, 'banner': thumb, 'fanart': thumb}
         }
 
