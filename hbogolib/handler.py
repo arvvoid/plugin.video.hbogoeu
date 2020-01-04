@@ -359,6 +359,9 @@ class HbogoHandler(object):
     def procContext(self, action_type, content_id, optional=""):
         pass
 
+    def construct_media_info(self, title):
+        pass
+
     def addLink(self, title, mode):
         pass
 

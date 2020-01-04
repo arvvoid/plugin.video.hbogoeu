@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.1.4">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.1.5">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -40,10 +40,12 @@ Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for th
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.1.4
+v.2.1.5
 - fix Telekom Romania (My Account) login
 - new logo
 - fix some encoding errors on log
+- better error handling on communication errors
+- media info optimizations
     </news>
     <assets>
      <icon>resources/icon.png</icon>

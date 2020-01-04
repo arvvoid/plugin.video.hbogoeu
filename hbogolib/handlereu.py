@@ -1058,6 +1058,12 @@ class HbogoHandler_eu(HbogoHandler):
             self.logout()
             return
 
+        item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
+        if item_info is False:
+            return
+        media_info = self.construct_media_info(item_info)
+
+
         purchase_payload = '<Purchase xmlns="go:v8:interop" ' \
                            'xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><AirPlayAllowed>false</AirPlayAllowed><AllowHighResolution>true' \
                            '</AllowHighResolution><ContentId>' + content_id + '</ContentId><CustomerId>' + self.GOcustomerId + \
@@ -1118,6 +1124,8 @@ class HbogoHandler_eu(HbogoHandler):
             "{\"userId\":\"" + self.GOcustomerId + "\",\"sessionId\":\"" + player_session_id + "\",\"merchant\":\"hboeurope\"}")
 
         list_item = xbmcgui.ListItem(path=media_url)
+        list_item.setArt(media_info["art"])
+        list_item.setInfo(type="Video", infoLabels=media_info["info"])
 
         license_headers = 'dt-custom-data=' + dt_custom_data + '&x-dt-auth-token=' + x_dt_auth_token + '&Origin=' + self.API_HOST_ORIGIN + '&Content-Type='
         license_key = self.LICENSE_SERVER + '|' + license_headers + '|R{SSM}|JBlicense'
@@ -1286,13 +1294,7 @@ class HbogoHandler_eu(HbogoHandler):
                 return list(votes) + [remove_mylist]
             return [add_mylist] + list(votes)
 
-    def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-        cid = title['ObjectUrl'].rsplit('/', 2)[1]
-        externalid = title['Tracking']['ExternalId']
-        hbogo_position = self.get_elapsed(externalid)
-
+    def construct_media_info(self, title):
         plot = ""
         name = ""
         media_type = "movie"
@@ -1327,19 +1329,7 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
-        item_url = '%s?%s' % (self.base_url, urlencode({
-            'url': 'PLAY',
-            'mode': mode,
-            'cid': cid
-        }))
-
-        liz = xbmcgui.ListItem(name)
-        liz.setArt({
-            'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
-            'fanart': title['BackgroundUrl']
-        })
-        liz.setInfo(type="Video",
-                    infoLabels={
+        return {"info": {
                         "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
                         "season": title['Tracking']['SeasonNumber'],
                         "tvshowtitle": title['Tracking']['ShowName'], "plot": plot,
@@ -1348,9 +1338,32 @@ class HbogoHandler_eu(HbogoHandler):
                         "writer": title['Writer'], "duration": title['Duration'], "genre": title['Genre'],
                         "title": name, "originaltitle": title['OriginalName'],
                         "year": title['ProductionYear']
-                    })
-        liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
-        liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
+                    },
+                "art":  {
+                        'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
+                        'fanart': title['BackgroundUrl']
+                        }
+                }
+
+    def addLink(self, title, mode):
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+        cid = title['ObjectUrl'].rsplit('/', 2)[1]
+        externalid = title['Tracking']['ExternalId']
+        hbogo_position = self.get_elapsed(externalid)
+
+        media_info = self.construct_media_info(title)
+
+        item_url = '%s?%s' % (self.base_url, urlencode({
+            'url': 'PLAY',
+            'mode': mode,
+            'cid': cid
+        }))
+
+        liz = xbmcgui.ListItem(media_info["info"]["title"])
+        liz.setArt(media_info["art"])
+        liz.setInfo(type="Video", infoLabels=media_info["info"])
+        liz.addStreamInfo('video', {'width': 1920, 'height': 1080, 'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.setProperty("IsPlayable", "true")
         if self.addon.getSetting('get_elapsed') == 'true' and self.addon.getSetting('ignore_kodi_watched') == 'true':

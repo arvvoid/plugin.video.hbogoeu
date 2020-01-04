@@ -374,6 +374,7 @@ class HbogoHandler_sp(HbogoHandler):
         media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
         if media_item is False:
             return
+        media_info = self.construct_media_info(media_item.find('.//item'))
 
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
@@ -397,6 +398,8 @@ class HbogoHandler_sp(HbogoHandler):
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
+        li.setArt(media_info["art"])
+        li.setInfo(type="Video", infoLabels=media_info["info"])
 
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
@@ -506,14 +509,10 @@ class HbogoHandler_sp(HbogoHandler):
 
         return [add_mylist]
 
-    def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-
+    def construct_media_info(self, title):
         media_type = "episode"
 
         name = py2_encode(title.find('title').text)
-        guid = py2_encode(title.find('guid').text)
 
         original_name = py2_encode(title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text)
         if self.force_original_names:
@@ -550,25 +549,35 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
+        thumb = self.get_thumbnail_url(title)
+
+        return {
+            "info": {
+                        "mediatype": media_type, "episode": episode,
+                        "season": season,
+                        "tvshowtitle": series_name, "plot": plot,
+                        "title": name, "originaltitle": original_name
+                    },
+            "art": {'thumb': thumb, 'poster': thumb, 'banner': thumb, 'fanart': thumb}
+        }
+
+    def addLink(self, title, mode):
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+
+        media_info = self.construct_media_info(title)
+        guid = py2_encode(title.find('guid').text)
+
         item_url = '%s?%s' % (self.base_url, urlencode({
             'url': 'PLAY',
             'mode': mode,
             'cid': guid,
         }))
 
-        thunb = self.get_thumbnail_url(title)
-
-        liz = xbmcgui.ListItem(name)
-        liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
-        liz.setInfo(type="Video",
-                    infoLabels={
-                        "mediatype": media_type, "episode": episode,
-                        "season": season,
-                        "tvshowtitle": series_name, "plot": plot,
-                        "title": name, "originaltitle": original_name
-                    })
-        liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
-        liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
+        liz = xbmcgui.ListItem(media_info["info"]["title"])
+        liz.setArt(media_info["art"])
+        liz.setInfo(type="Video", infoLabels=media_info["info"])
+        liz.addStreamInfo('video', {'width': 1920, 'height': 1080, 'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.addContextMenuItems(items=self.genContextMenu(guid))
         liz.setProperty("IsPlayable", "true")
