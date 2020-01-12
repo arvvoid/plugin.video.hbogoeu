@@ -7,40 +7,32 @@
 # Disclaimer
 
 This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc.
-For more information visit the official HBO® Go website for your region.
-
-I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. All this add-on does is make simple HTTP requests to Hbo go servers to retrieve content just like any browser like Chrome, Firefox etc. would do!
-
-Playback is handled through inputstream.adaptive that use widevine to handle the DRM content like any web browser.
-
-THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
-
-If an official app is available for your platform, use it instead of this.
+For more information on HBO® Go visit the official HBO® Go website for your region.
+I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. All this add-on does is make simple HTTP requests to Hbo go servers to retrieve and display content just like any web browser would do!
 
 Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
 Register on the official HBO® Go website for your region
 
+THERE IS NO WARRANTY FOR THE ADD-ON, IT MIGHT NOT WORK AT ALL AND IT CAN BREAK AND STOP WORKING AT ANY TIME.
+
+If an official app is available for your platform, use it instead of this.
+
 # hGO EU (watch HBO GO in Kodi) (plugin.video.hbogoeu)
 
-Simple, Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
+Simple, [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) based Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
 | HBO REGIONS (API-s) / Feature | Europe | Nordic+Spain | USA | Latin America | Asia |
 |-------------------------------|--------|--------------|-----|---------------|------|
-| Listing Content | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Content Info | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Basic functions | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Search | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Login | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Playback up to 1080p (HW) | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Stereo Audio | ✔ | ✔ | ✖ | ✖ | ✖ |
 | 5.1 Audio | ⛔ | ✔ | ✖ | ✖ | ✖ |
 | Subtitles | ✔ | ✔ | ✖ | ✖ | ✖ |
 | My List | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Add/Remove from My List | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Add/Remove from/to My List | ✔ | ✔ | ✖ | ✖ | ✖ |
 | Voting | ✔ | ⛔ | ✖ | ✖ | ✖ |
 | Report play  status to HBO | ✔ | ✖ | ✖ | ✖ | ✖ |
 
 Legend: ✔ - feature availible for the region and working in the add-on, ✖ - feature availible for the region but not implemented or broken in the add-on, ⛔ feature not availible for the region
-
 
 This add-on support 18 countries atm: 
 *  __Bosnia and Herzegovina__ *[EU]*
@@ -64,29 +56,19 @@ This add-on support 18 countries atm:
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
-REQUIRMENTS:
-*  Kodi 18+
-*  script.module.kodi-six (should get installed automatically in Kodi 18+)
-*  script.module.requests 2.12.4+ (should get installed automatically in Kodi 18+)
-*  script.module.pycryptodome 3.4.3+ (*might require manual instalation on most Linux/MacOS systems, see install instructions)
-*  script.module.defusedxml 0.6.0+ (should get installed automatically in Kodi 18+)
-*  inputstream.adaptive 2.3.18+ (recommended most recent version, should get installed automatically in Kodi 18+)
-*  script.module.inputstreamhelper 0.4.2+ (should get installed automatically in Kodi 18+)
-*  Libwidevine 4.10.1440+
-
 ## Download/Install instructions
 
 * Install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
 * *OPTIONAL: Configure additional preferences in the add-on config*
-* The Add-on should download the inputstreamhelper Add-on which will handle all the DRM install for you if needed
-* *OPTIONAL: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
+* The Add-on should download the inputstreamhelper Add-on which will help with inputstream.adaptive and DRM setup if needed
+* The add-on will auto-update from repository as soon as a stable release is available
+* *MIGHT BE NECESSARY: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
 sudo apt update
 sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
-* The add-on will auto-update from repository as soon as a stable release is available
 
 ## Manual Download/Install
 
@@ -100,10 +82,6 @@ sudo pip install wheel pycryptodomex
 ## Help
 
 Join the discusion on the [Kodi Forum](https://forum.kodi.tv/showthread.php?tid=339798), if you have a bug or issue to report open a new [ISSUE](https://github.com/arvvoid/plugin.video.hbogoeu/issues)
-
-## History
-
-Initial version was derived from https://github.com/billsuxx/plugin.video.hbogohu witch is derived from https://kodibg.org/forum/thread-504.html, this now is a complete rewrite and restructure of the add-on.
 
 ## Contributors ✨
 
