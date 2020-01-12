@@ -61,7 +61,7 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 * Works on Kodi 18 (Leia) or later
 * Simply install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
-* The add-on should download the [inputstreamhelper](https://github.com/emilsvennesson/script.module.inputstreamhelper) add-on which will help with [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) and DRM setup if needed
+* The add-on should install the [inputstreamhelper](https://github.com/emilsvennesson/script.module.inputstreamhelper) add-on which will help with [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) and DRM setup if needed
 * The add-on will auto-update from repository as soon as a stable release is available
 * *MIGHT BE NECESSARY: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
