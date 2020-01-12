@@ -19,7 +19,7 @@ If an official app is available for your platform, use it instead of this.
 
 # hGO EU (watch HBO GO in Kodi) (plugin.video.hbogoeu)
 
-Simple, [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) based Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
+Simple Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
 | HBO REGIONS (API-s) / Feature | Europe | Nordic+Spain | USA | Latin America | Asia |
 |-------------------------------|--------|--------------|-----|---------------|------|
@@ -58,10 +58,10 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 
 ## Download/Install instructions
 
+* Works on Kodi 18 (Leia) or later
 * Install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
-* *OPTIONAL: Configure additional preferences in the add-on config*
-* The Add-on should download the inputstreamhelper Add-on which will help with inputstream.adaptive and DRM setup if needed
+* The add-on should download the [inputstreamhelper](https://github.com/emilsvennesson/script.module.inputstreamhelper) add-on which will help with [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) and DRM setup if needed
 * The add-on will auto-update from repository as soon as a stable release is available
 * *MIGHT BE NECESSARY: On OSMC/Raspbian/Debian you might have to install some dependency manually from shell, but first try to run the add-on, if you get a message informing you that pycryptodomex is missing perform this steps (or consult specific pycryptodomex install instructions for your distribution/platform):*
 ```
@@ -69,6 +69,7 @@ sudo apt update
 sudo apt install build-essential python-setuptools python-pip libnss3 libnspr4
 sudo pip install wheel pycryptodomex
 ```
+* *OPTIONAL: Configure additional preferences in the add-on config*
 
 ## Manual Download/Install
 
