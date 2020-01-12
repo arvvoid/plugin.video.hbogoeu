@@ -10,8 +10,8 @@ This add-on is not officially commissioned/supported by HBO®. The trademark HBO
 For more information on HBO® Go visit the official HBO® Go website for your region.
 I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. All this add-on does is make simple HTTP requests to Hbo go servers to retrieve and display content just like any web browser would do!
 
-Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
-Register on the official HBO® Go website for your region
+**Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work!
+Register on the official HBO® Go website for your region**
 
 THERE IS NO WARRANTY FOR THE ADD-ON, IT MIGHT NOT WORK AT ALL AND IT CAN BREAK AND STOP WORKING AT ANY TIME.
 
@@ -59,7 +59,7 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 ## Download/Install instructions
 
 * Works on Kodi 18 (Leia) or later
-* Install from the Kodi add-on repository
+* Simply install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
 * The add-on should download the [inputstreamhelper](https://github.com/emilsvennesson/script.module.inputstreamhelper) add-on which will help with [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) and DRM setup if needed
 * The add-on will auto-update from repository as soon as a stable release is available
