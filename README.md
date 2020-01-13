@@ -56,7 +56,7 @@ This add-on support 18 countries atm:
 
 PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/view/Log_file/Easy . Without a full log is difficult or impossible to guess what's going on.
 
-## Download/Install instructions
+## Install instructions
 
 * Works on Kodi 18 (Leia) or later
 * A valid HBO® Go account is needed for the add-on to work
