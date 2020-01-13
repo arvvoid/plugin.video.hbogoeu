@@ -59,6 +59,7 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 ## Download/Install instructions
 
 * Works on Kodi 18 (Leia) or later
+* A valid HBO® Go account is needed for the add-on to work
 * Simply install from the Kodi add-on repository
 * Follow the setup wizard at first add-on run
 * The add-on should install the [inputstreamhelper](https://github.com/emilsvennesson/script.module.inputstreamhelper) add-on which will help with [inputstream.adaptive](https://github.com/peak3d/inputstream.adaptive) and DRM setup if needed
