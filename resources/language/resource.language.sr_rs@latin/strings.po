@@ -389,6 +389,10 @@ msgctxt "#30671"
 msgid "Force scraper friendly titles"
 msgstr "Prisiliti griz po prijateljskim naslovima"
 
+msgctxt "#30672"
+msgid "Use episode media type in listings"
+msgstr ""
+
 msgctxt "#30680"
 msgid "Session"
 msgstr "Sesija"

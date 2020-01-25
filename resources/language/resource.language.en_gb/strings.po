@@ -53,6 +53,7 @@ msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr ""
 
+
 msgctxt "#30100"
 msgid "Web registration on "
 msgstr ""
@@ -312,6 +313,10 @@ msgstr ""
 
 msgctxt "#30671"
 msgid "Force scraper friendly titles"
+msgstr ""
+
+msgctxt "#30672"
+msgid "Use episode media type in listings"
 msgstr ""
 
 msgctxt "#30680"

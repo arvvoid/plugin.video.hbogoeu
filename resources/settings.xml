@@ -46,6 +46,7 @@
     <!-- Advanced -->
 	<category label="30670">
     <setting label="30671" type="bool" id="forcescrap" default="false"/>
+    <setting label="30672" type="bool" id="useepinlist" default="true"/>
     <setting label="30680" type="lsep"/>
     <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&amp;mode=7)" option="close"/>
     <setting label="30690" type="lsep"/>
