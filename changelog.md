@@ -1,3 +1,25 @@
+v.2.1.5
+- fix Telekom Romania (My Account) login
+- new logo
+- fix some encoding errors on log
+- better error handling on communication errors
+- media info optimizations
+
+v.2.1.1
+- Prepare for Kodi official repository
+
+v.2.1.0
+- Language files updates
+- Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
+- Report playstatus back to Hbo Go (EU only)
+- Fix UPC CZ and SK
+- Fix UPC Romania
+- Use Video as media type
+- Start screen customization
+- History (EU only option)
+- Continue watching (only display the category, EU only option)
+- Fix Skylink CZ and SK (contribution ferdabasek)
+
 v.2.0.22
 - Nordic/Spain: Add Watchlist (My List)
 - Nordic/Spain: Add search function

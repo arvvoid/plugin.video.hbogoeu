@@ -20,8 +20,8 @@ def get_system_platform():
         platform = "linux"
     elif xbmc.getCondVisibility('system.platform.linux') and xbmc.getCondVisibility('system.platform.android'):
         platform = "android"
-    elif xbmc.getCondVisibility('system.platform.xbox'):
-        platform = "xbox"
+    elif xbmc.getCondVisibility('system.platform.uwp'):
+        platform = "uwp"
     elif xbmc.getCondVisibility('system.platform.windows'):
         platform = "windows"
     elif xbmc.getCondVisibility('system.platform.osx'):
@@ -50,7 +50,7 @@ def _get_system_uuid():
     uuid_value = None
 
     system = get_system_platform()
-    if system in ['windows', 'xbox']:
+    if system in ['windows', 'uwp']:
         uuid_value = _get_windows_uuid()
         debug('Windows UUID Found')
     elif system == 'android':

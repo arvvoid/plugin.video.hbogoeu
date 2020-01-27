@@ -139,6 +139,8 @@ class HbogoHandler_sp(HbogoHandler):
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
         response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        if response is False:
+            return False
 
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
@@ -198,6 +200,8 @@ class HbogoHandler_sp(HbogoHandler):
         self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
+        if browse_xml is False:
+            return
 
         home = None
         series = None
@@ -219,11 +223,12 @@ class HbogoHandler_sp(HbogoHandler):
             else:
                 pass
 
-        if watchlist is not None:
-            self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
-                        HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Watchlist Category found")
+        if self.addon.getSetting('show_mylist') == 'true':
+            if watchlist is not None:
+                self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
+                            HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Watchlist Category found")
 
         if series is not None:
             self.addCat(py2_encode(series.find('title').text), series.find('link').text,
@@ -237,14 +242,19 @@ class HbogoHandler_sp(HbogoHandler):
         else:
             self.log("No Movies Category found")
 
-        if kids is not None:
-            self.addCat(py2_encode(kids.find('title').text), kids.find('link').text,
-                        self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Kids Category found")
+        if self.addon.getSetting('show_kids') == 'true':
+            if kids is not None:
+                self.addCat(py2_encode(kids.find('title').text), kids.find('link').text,
+                            self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.log("No Kids Category found")
 
         if home is not None:
-            self.list(home.find('link').text, True)
+            if self.addon.getSetting('group_home') == 'true':
+                self.addCat(py2_encode(self.language(30733)), home.find('link').text,
+                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
+            else:
+                self.list(home.find('link').text, True)
         else:
             self.log("No Home Category found")
 
@@ -274,8 +284,9 @@ class HbogoHandler_sp(HbogoHandler):
 
     def list_pages(self, url, max_items=200, offset=0):
 
-        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset),
-                                       'xml')
+        response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
+        if response is False:
+            return
 
         count = 0
 
@@ -303,9 +314,6 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
         self.log("List: " + str(url))
 
-        if not self.chk_login():
-            self.login()
-
         self.list_pages(url, 200, 0)
 
         if simple is False:
@@ -324,9 +332,9 @@ class HbogoHandler_sp(HbogoHandler):
             else:
                 self.addon.setSetting('lastsearch', search_text)
                 self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
-                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0",
-                                               'xml')
-
+                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
+                if response is False:
+                    return
                 count = 0
 
                 for item in response.findall('.//item'):
@@ -351,8 +359,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.use_content_type)
 
-    def play(self, url, content_id):
-        self.log("Play: " + str(url))
+    def play(self, content_id):
+        self.log("Initializing playback... " + str(content_id))
 
         if not self.chk_login():
             self.login()
@@ -363,15 +371,19 @@ class HbogoHandler_sp(HbogoHandler):
             self.logout()
             return
 
-        media_item = self.get_from_hbogo(url + self.LANGUAGE_CODE, 'xml')
+        media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
+        if media_item is False:
+            return
+        media_info = self.construct_media_info(media_item.find('.//item'))
 
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
 
-        mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get(
-            'url') + '&responseType=xml'
+        mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        if mpd is False:
+            return
         if self.lograwdata:
             self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
 
@@ -386,6 +398,8 @@ class HbogoHandler_sp(HbogoHandler):
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
+        li.setArt(media_info["art"])
+        li.setInfo(type="Video", infoLabels=media_info["info"])
 
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
@@ -495,14 +509,10 @@ class HbogoHandler_sp(HbogoHandler):
 
         return [add_mylist]
 
-    def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-
+    def construct_media_info(self, title):
         media_type = "episode"
 
         name = py2_encode(title.find('title').text)
-        guid = py2_encode(title.find('guid').text)
 
         original_name = py2_encode(title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text)
         if self.force_original_names:
@@ -539,23 +549,35 @@ class HbogoHandler_sp(HbogoHandler):
         if episode == 0:
             media_type = "movie"
 
+        thumb = self.get_thumbnail_url(title)
+
+        return {
+            "info": {
+                "mediatype": media_type, "episode": episode,
+                "season": season,
+                "tvshowtitle": series_name, "plot": plot,
+                "title": name, "originaltitle": original_name
+            },
+            "art": {'thumb': thumb, 'poster': thumb, 'banner': thumb, 'fanart': thumb}
+        }
+
+    def addLink(self, title, mode):
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+
+        media_info = self.construct_media_info(title)
+        guid = py2_encode(title.find('guid').text)
+
         item_url = '%s?%s' % (self.base_url, urlencode({
-            'url': title.find('link').text,
+            'url': 'PLAY',
             'mode': mode,
-            'name': name,
+            'cid': guid,
         }))
 
-        thunb = self.get_thumbnail_url(title)
-
-        liz = xbmcgui.ListItem(name)
-        liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
-        liz.setInfo(type="Video",
-                    infoLabels={"mediatype": media_type, "episode": episode,
-                                "season": season,
-                                "tvshowtitle": series_name, "plot": plot,
-                                "title": name, "originaltitle": original_name})
-        liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
-        liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
+        liz = xbmcgui.ListItem(media_info["info"]["title"])
+        liz.setArt(media_info["art"])
+        liz.setInfo(type="Video", infoLabels=media_info["info"])
+        liz.addStreamInfo('video', {'width': 1920, 'height': 1080, 'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.addContextMenuItems(items=self.genContextMenu(guid))
         liz.setProperty("IsPlayable", "true")
@@ -592,12 +614,16 @@ class HbogoHandler_sp(HbogoHandler):
         thumb = self.get_thumbnail_url(item)
 
         liz = xbmcgui.ListItem(item.find('title').text)
-        liz.setArt({'thumb': thumb, 'poster': thumb, 'banner': thumb,
-                    'fanart': thumb})
-        liz.setInfo(type="Video", infoLabels={"mediatype": media_type,
-                                              "tvshowtitle": series_name,
-                                              "title": item.find('title').text,
-                                              "Plot": plot})
+        liz.setArt({
+            'thumb': thumb, 'poster': thumb, 'banner': thumb,
+            'fanart': thumb
+        })
+        liz.setInfo(type="Video", infoLabels={
+            "mediatype": media_type,
+            "tvshowtitle": series_name,
+            "title": item.find('title').text,
+            "Plot": plot
+        })
 
         liz.setProperty('isPlayable', "false")
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)

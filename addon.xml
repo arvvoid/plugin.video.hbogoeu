@@ -1,104 +1,54 @@
-<addon id="plugin.video.hbogoeu" name="HBO GO EU" provider-name="arvvoid" version="2.0.22.GIT">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.1.6">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3" />
     <import addon="script.module.defusedxml" version="0.6.0" />
-    <import addon="inputstream.adaptive" version="2.3.18" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-      <summary lang="hr_HR">HBO GO EU</summary>
-      <description lang="hr_HR">
-Jednostavan, izvrstan Kodi dodatak za pristup HBO® Go EU sadržaju. (Ovaj dodatak nije službeno naručen / podržan od strane HBO-a.)
-
-Važno, HBO® Go mora biti plaćen !!! Trebate valjani račun!
-Registrirajte se na službenoj web stranici HBO® Go http://hbogo.eu
-
-Trenutno podržava: Bosna i Hercegovina, Bugarska, Hrvatska, Češka, Mađarska, Makedonija, Crna Gora, Poljska, Portugal, Rumunjska, Srbija, Slovačka, Slovenija, Španjolska, Norveška, Danska, Švedska, Finska
-
-Da biste prijavili greške ili zatražili pomoć s dodatkom, idite na: https://github.com/arvvoid/plugin.video.hbogoeu
-      </description>
-      <disclaimer lang="hr_HR">
-Ovaj dodatak nije službeno naručen / podržan od strane HBO-a. Zaštitni znak HBO® Go registriran je od strane Home Box Office, Inc. Za više informacija o HBO® Go Europe posjetite službenu web stranicu: http://hbogo.eu
-NEMA JAMSTVA ZA DODATAK, MOŽE PRESTATI RADITI U BILO KOJEM TRENUTKU.
-Ako je službena aplikacija dostupna za vašu platformu, preporučuje se da je koristite umjesto ovog add-on-a.
-Svi sadržaji HBO Go-a © 2019 Copyright © 2017 Home Box Office, Inc. Sva prava pridržana.
-      </disclaimer>
-    <summary lang="en_GB">HBO GO EU</summary>
+    <summary lang="en_GB">Watch HBO® GO EU+Nordic content in Kodi. Valid HBO® account required.</summary>
     <description lang="en_GB">
-Simple, great Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
+Simple, Kodi add-on to access HBO® Go EU content. (This add-on is not officially commissioned/supported by HBO®.)
 
 Important, HBO® Go must be paid for!!!  You need a valid account!
-Register on the official HBO® Go website http://hbogo.eu
+Register on the official HBO® Go website for your region.
+
+Read the disclaimer!
 
 Curently support: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Hungary, Macedonia, Montenegro, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Norway, Denmark, Sweden, Finland
 
 To report bugs or request assistence with the add-on go to: https://github.com/arvvoid/plugin.video.hbogoeu
     </description>
     <disclaimer lang="en_GB">
-This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc. For more information on HBO® Go Europe visit the official website: http://hbogo.eu
-THERE IS NO WARRANTY FOR THE ADD-ON, IT CAN BREAK AND STOP WORKING AT ANY TIME.
-If an official app is available for your platform, it's recommended to use it instead of this.
-All HBO Go content is © 2019 Copyright © 2017 Home Box Office, Inc. All rights reserved.
+This add-on is not officially commissioned/supported by HBO®. The trademark HBO® Go is registered by Home Box Office, Inc. 
+For more information on HBO® Go visit the official HBO® Go website for your region.
+I do not own any of the content this add-on lists. The content belongs to Home Box Office, Inc. 
+All this add-on does is make simple HTTP requests to Hbo go servers to retrieve and display content just like any web browser would do!
+
+Important: HBO® Go must be paid for!!! You need a valid HBO® Go account for the add-on to work! Register on the official HBO® Go website for your region
+
+THERE IS NO WARRANTY FOR THE ADD-ON, IT MIGHT NOT WORK AT ALL AND IT CAN BREAK AND STOP WORKING AT ANY TIME.
+
+If an official app is available for your platform, use it instead of this.
     </disclaimer>
-      <summary lang="hu_HU">HBO GO EU</summary>
-      <description lang="hu_HU">
-
-Egyszerű, nagy Kodi kiegészítő a HBO® Go EU tartalmának eléréséhez. (Ez a kiegészítő nem hivatalosan megbízott / támogatott a HBO® által.)
-
-Fontos, hogy a HBO® Go-t meg kell fizetni !!! Érvényes fiókra van szüksége!
-Regisztráljon a HBO® Go hivatalos honlapján http://hbogo.eu
-
-Curently support: Bosznia és Hercegovina, Bulgária, Horvátország, Csehország, Magyarország, Macedónia, Montenegró, Polónia, Portugália, Románia, Szerbia, Szlovákia, Szlovénia, Spanyolország, Norvégia, Dánia, Svédország, Finnország
-
-Ha hibákat vagy segítséget szeretne kérni a kiegészítő segítségével, látogasson el a következő oldalra: https://github.com/arvvoid/plugin.video.hbogoeu
-      </description>
-      <disclaimer lang="hu_HU">
-A HBO® nem támogatja ezt a kiegészítőt. A HBO® Go védjegyet a Home Box Office, Inc. regisztrálja. További információ a HBO® Go Europe webhelyről: http://hbogo.eu
-A GARANCIA NEM TÁMOGATOTT, A KÖVETKEZŐ TÁMOGATÁS ÉS A MŰKÖDÉS ELLENŐRZÉSE.
-Ha hivatalos alkalmazás áll rendelkezésre az Ön platformjára, javasoljuk, hogy használja ezt a helyett.
-Minden HBO Go tartalom © 2019 Copyright © 2017 Home Box Office, Inc. Minden jog fenntartva.
-      </disclaimer>
-    <language>en hr hu pl</language>
+    <language>en</language>
     <platform>all</platform>
     <license>GPL-2.0</license>
     <forum>https://forum.kodi.tv/showthread.php?tid=339798</forum>
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.0.22
-- Nordic/Spain: Add Watchlist (My List)
-- Nordic/Spain: Add search function
-- Nordic/Spain: Add/Remove to/from My List
-- Code Optimizations
-
-v.2.0.20
-- THIS IS STABLE RELESE
-- Eu Handler: use api v8
-
-v.2.0.19-beta38
-- THIS IS A RELEASE CANDIDATE VERSION
-- Fix failed del session bug
-- Use urlencode to create urls (contribution Ajnasz)
-- Fix uuid encoding on some systems
-
-v.2.0.18-beta37
-- THIS IS A RELEASE CANDIDATE VERSION
-- Compatibility fixes Python 2/3
-
-v.2.0.17-beta34
-- THIS IS A RELEASE CANDIDATE VERSION
-- SECURITY: make use of defusedxml
-- SECURITY: removed pickle, implemented alternative more secure method for storing the session
-- Code style fixes
-- add-on passing all kodi-addon-checker tests
-- moved widevine check/setup to initial step of add-on setup
-- update to Hungarian translation (contribution Ajnasz)
+v.2.1.5
+- fix Telekom Romania (My Account) login
+- new logo
+- fix some encoding errors on log
+- better error handling on communication errors
+- media info optimizations
     </news>
     <assets>
      <icon>resources/icon.png</icon>
