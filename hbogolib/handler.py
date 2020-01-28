@@ -78,9 +78,10 @@ class HbogoHandler(object):
         self.LB_NO_OPERATOR = py2_encode(self.language(30710))
         self.LB_SEARCH = py2_encode(self.language(30711))
 
-        self.use_content_type = "videos"
-        if self.addon.getSetting('useepinlist') == "true":
-            self.use_content_type = "episodes"
+        self.n_movies = 0
+        self.n_tvshows = 0
+        self.n_seasons = 0
+        self.n_episodes = 0
 
         self.force_original_names = self.addon.getSetting('origtitles')
         if self.force_original_names == "true":
@@ -113,6 +114,30 @@ class HbogoHandler(object):
 
         self.loggedin_headers = None  # DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
+
+    def reset_media_type_counters(self):
+        self.n_movies = 0
+        self.n_tvshows = 0
+        self.n_seasons = 0
+        self.n_episodes = 0
+
+    def decide_media_type(self):
+        if self.n_movies + self.n_tvshows + self.n_seasons + self.n_episodes == 0:
+            return "files"
+        # 0- movies
+        # 1- tvshows
+        # 2- seasons
+        # 3- episodes
+        media_types = [self.n_movies, self.n_tvshows, self.n_seasons, self.n_episodes]
+        sel_type = media_types.index(max(media_types))
+        if sel_type == 0:
+            return "movies"
+        if sel_type == 1:
+            return "tvshows"
+        if sel_type == 2:
+            return "seasons"
+        if sel_type == 3:
+            return "episodes"
 
     @staticmethod
     def get_resource(resourcefile):

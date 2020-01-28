@@ -916,6 +916,8 @@ class HbogoHandler_eu(HbogoHandler):
             self.login()
         self.log("List: " + str(url))
 
+        self.reset_media_type_counters()
+
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
             return
@@ -945,10 +947,15 @@ class HbogoHandler_eu(HbogoHandler):
                 # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
                 if title['ContentType'] == 1 or title['ContentType'] == 3:
                     self.addLink(title, HbogoConstants.ACTION_PLAY)
+                    if title['ContentType'] == 1:
+                        self.n_movies += 1
+                    if title['ContentType'] == 3:
+                        self.n_episodes += 1
                 else:
                     self.addDir(title, HbogoConstants.ACTION_SEASON, "tvshow")
+                    self.n_tvshows += 1
         if simple is False:
-            KodiUtil.endDir(self.handle, self.use_content_type)
+            KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def season(self, url):
         if not self.chk_login():
@@ -957,6 +964,8 @@ class HbogoHandler_eu(HbogoHandler):
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
             return
+
+        self.reset_media_type_counters()
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -971,12 +980,15 @@ class HbogoHandler_eu(HbogoHandler):
             return
         for season in jsonrsp['Parent']['ChildContents']['Items']:
             self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
-        KodiUtil.endDir(self.handle, self.use_content_type)
+            self.n_seasons += 1
+        KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def episode(self, url):
         if not self.chk_login():
             self.login()
         self.log("Episode: " + str(url))
+
+        self.reset_media_type_counters()
 
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
@@ -998,7 +1010,8 @@ class HbogoHandler_eu(HbogoHandler):
 
         for episode in jsonrsp['ChildContents']['Items']:
             self.addLink(episode, HbogoConstants.ACTION_PLAY)
-        KodiUtil.endDir(self.handle, self.use_content_type)
+            self.n_episodes += 1
+        KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def search(self):
         if not self.chk_login():
@@ -1039,13 +1052,18 @@ class HbogoHandler_eu(HbogoHandler):
                         # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
                         if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:
                             self.addLink(item, HbogoConstants.ACTION_PLAY)
+                            if item['ContentType'] == 1:
+                                self.n_movies += 1
+                            if item['ContentType'] == 3:
+                                self.n_episodes += 1
                         else:
                             self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
+                            self.n_tvshows += 1
                 else:
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                                 self.get_media_resource('DefaultFolderBack.png'), '')
 
-        KodiUtil.endDir(self.handle, self.use_content_type)
+        KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))

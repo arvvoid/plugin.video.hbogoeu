@@ -317,7 +317,7 @@ class HbogoHandler_sp(HbogoHandler):
         self.list_pages(url, 200, 0)
 
         if simple is False:
-            KodiUtil.endDir(self.handle, self.use_content_type)
+            KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def search(self):
         if not self.chk_login():
@@ -357,7 +357,7 @@ class HbogoHandler_sp(HbogoHandler):
                     self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                                 self.get_media_resource('DefaultFolderBack.png'), '')
 
-        KodiUtil.endDir(self.handle, self.use_content_type)
+        KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
