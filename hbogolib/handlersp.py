@@ -314,6 +314,8 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
         self.log("List: " + str(url))
 
+        self.reset_media_type_counters()
+
         self.list_pages(url, 200, 0)
 
         if simple is False:
@@ -362,14 +364,8 @@ class HbogoHandler_sp(HbogoHandler):
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
 
-        if not self.chk_login():
-            self.login()
-
-        if not self.chk_login():
-            self.log("NOT LOGGED IN, ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
-            self.logout()
-            return
+        self.del_login()
+        self.login()
 
         media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
         if media_item is False:
@@ -548,6 +544,9 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Error in season find processing: " + traceback.format_exc())
         if episode == 0:
             media_type = "movie"
+            self.n_movies += 1
+        else:
+            self.n_episodes += 1
 
         thumb = self.get_thumbnail_url(title)
 
@@ -587,7 +586,19 @@ class HbogoHandler_sp(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
-        media_type = "tvshow"
+        media_type = "file"
+        try:
+            if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "season":
+                media_type = "season"
+                self.n_seasons += 1
+        except AttributeError:
+            pass
+        try:
+            if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "series":
+                media_type = "tvshow"
+                self.n_tvshows += 1
+        except AttributeError:
+            pass
 
         plot = ""
         try:

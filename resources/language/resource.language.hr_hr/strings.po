@@ -329,8 +329,8 @@ msgid "Force scraper friendly titles"
 msgstr "Prisiliti naslove prikladne za brisanje"
 
 msgctxt "#30672"
-msgid "Use episode media type in listings"
-msgstr ""
+msgid "Use generic video media type in listings"
+msgstr "Koristi generički tip “video” u popisima"
 
 msgctxt "#30680"
 msgid "Session"

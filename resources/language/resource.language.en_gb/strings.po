@@ -316,7 +316,7 @@ msgid "Force scraper friendly titles"
 msgstr ""
 
 msgctxt "#30672"
-msgid "Use episode media type in listings"
+msgid "Use generic video media type in listings"
 msgstr ""
 
 msgctxt "#30680"

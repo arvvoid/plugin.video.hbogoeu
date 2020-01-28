@@ -122,6 +122,8 @@ class HbogoHandler(object):
         self.n_episodes = 0
 
     def decide_media_type(self):
+        if self.addon.getSetting('forceepispdelisting') == "true":
+            return "videos"
         if self.n_movies + self.n_tvshows + self.n_seasons + self.n_episodes == 0:
             return "files"
         # 0- movies

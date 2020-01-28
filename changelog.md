@@ -1,3 +1,9 @@
+v.2.2.0
+- duoble new line fix in ttml2srt on some subtitles
+- Translations update
+- Set content type for listings based on the media type of the majority of the items in the list
+- Option to force generic "video" media type for listings
+
 v.2.1.5
 - fix Telekom Romania (My Account) login
 - new logo

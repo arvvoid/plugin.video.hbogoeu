@@ -1068,13 +1068,8 @@ class HbogoHandler_eu(HbogoHandler):
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
 
-        if not self.chk_login():
-            self.login()
-        if not self.chk_login():
-            self.log("NO LOGED IN ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
-            self.logout()
-            return
+        self.del_login()
+        self.login()
 
         item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
         if item_info is False:
