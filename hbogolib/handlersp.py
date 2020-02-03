@@ -327,14 +327,14 @@ class HbogoHandler_sp(HbogoHandler):
         keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
         keyb.doModal()
         if keyb.isConfirmed():
-            search_text = quote(keyb.getText())
+            search_text = py2_encode(keyb.getText())
             if search_text == "":
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                             self.get_media_resource('DefaultFolderBack.png'), '')
             else:
                 self.addon.setSetting('lastsearch', search_text)
-                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
-                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
+                self.log("Performing search: " + self.API_URL_SEARCH + search_text)
+                response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
                 if response is False:
                     return
                 count = 0
