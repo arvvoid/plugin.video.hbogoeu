@@ -1056,15 +1056,16 @@ class HbogoHandler_eu(HbogoHandler):
 
             if jsonrsp['Container'][0]['Contents']['Items']:
                 for item in jsonrsp['Container'][0]['Contents']['Items']:
+                    item_info = self.get_from_hbogo(self.API_URL_CONTENT + item['ObjectUrl'].rsplit('/', 2)[1])
                     # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                    if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:
-                        self.addLink(item, HbogoConstants.ACTION_PLAY)
-                        if item['ContentType'] == 1:
+                    if item_info['ContentType'] == 1 or item_info['ContentType'] == 7 or item_info['ContentType'] == 3:
+                        self.addLink(item_info, HbogoConstants.ACTION_PLAY)
+                        if item_info['ContentType'] == 1:
                             self.n_movies += 1
-                        if item['ContentType'] == 3:
+                        if item_info['ContentType'] == 3:
                             self.n_episodes += 1
                     else:
-                        self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
+                        self.addDir(item_info, HbogoConstants.ACTION_SEASON, "tvshow")
                         self.n_tvshows += 1
             else:
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
