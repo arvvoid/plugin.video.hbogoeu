@@ -379,7 +379,7 @@ class HbogoHandler(object):
     def episode(self, url):
         pass
 
-    def search(self):
+    def search(self, query=None):
         pass
 
     def play(self, content_id):

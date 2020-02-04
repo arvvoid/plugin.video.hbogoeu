@@ -42,7 +42,7 @@ class hbogo(object):
 
         return index
 
-    def start(self):
+    def start(self, forceeng=False):
         country_id = self.addon.getSetting('country_code')
         country_index = self.country_index(country_id)
 
@@ -56,10 +56,10 @@ class hbogo(object):
 
         if HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_EU:
             from hbogolib.handlereu import HbogoHandler_eu
-            self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index])
+            self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index], forceeng)
         elif HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_SPAIN:
             from hbogolib.handlersp import HbogoHandler_sp
-            self.handler = HbogoHandler_sp(self.handle, self.base_url, HbogoConstants.countries[country_index])
+            self.handler = HbogoHandler_sp(self.handle, self.base_url, HbogoConstants.countries[country_index], forceeng)
         else:
             xbmcgui.Dialog().ok(self.language(30001), self.language(30003))
             sys.exit()
@@ -149,9 +149,20 @@ class hbogo(object):
             self.handler.episode(url)
 
         elif mode == HbogoConstants.ACTION_SEARCH:
-            self.start()
+            if url == "EXTERNAL_SEARCH_FORCE_ENG":
+                self.start(True)
+            else:
+                self.start()
             self.handler.setDispCat(self.language(30711))
-            self.handler.search()
+            query = None
+            try:
+                query = unquote(params["query"])
+            except KeyError:
+                pass
+            if query is None:
+                self.handler.search()
+            else:
+                self.handler.search(query)
 
         elif mode == HbogoConstants.ACTION_PLAY:
             self.start()

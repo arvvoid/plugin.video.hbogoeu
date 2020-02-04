@@ -37,7 +37,7 @@ from kodi_six.utils import py2_encode
 
 class HbogoHandler_eu(HbogoHandler):
 
-    def __init__(self, handle, base_url, country):
+    def __init__(self, handle, base_url, country, forceeng=False):
         HbogoHandler.__init__(self, handle, base_url)
         self.operator_name = ""
         self.op_id = ""
@@ -89,11 +89,11 @@ class HbogoHandler_eu(HbogoHandler):
 
         # check operator_id
         if self.addon.getSetting('operator_id'):
-            self.init_api(country)
+            self.init_api(country, forceeng)
         else:
-            self.setup(country)
+            self.setup(country, forceeng)
 
-    def init_api(self, country):
+    def init_api(self, country, forceeng=False):
         self.operator_name = self.addon.getSetting('operator_name')
         self.log("OPERATOR: " + self.operator_name)
         self.op_id = self.addon.getSetting('operator_id')
@@ -119,7 +119,7 @@ class HbogoHandler_eu(HbogoHandler):
         # API URLS
         self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
 
-        if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
+        if self.language(30000) == 'ENG' or forceeng:  # only englih or the default language for the selected operator is allowed
             self.LANGUAGE_CODE = 'ENG'
 
         # check if default language is forced
@@ -184,7 +184,7 @@ class HbogoHandler_eu(HbogoHandler):
             'Accept-Encoding': ''
         }
 
-    def setup(self, country):
+    def setup(self, country, forceeng=False):
         # setup operator
 
         self.log("SHOWING OPERATORS FOR: " + str(country))
@@ -259,7 +259,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.addon.setSetting('operator_redirect_url', op_list[index][4])
             # OPERATOR SETUP DONE
 
-            self.init_api(country)
+            self.init_api(country, forceeng)
             if self.inputCredentials():
                 return True
 
@@ -796,7 +796,7 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.setDispCat(self.operator_name)
-        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
         self.getCustomerGroups()
 
@@ -1013,55 +1013,62 @@ class HbogoHandler_eu(HbogoHandler):
             self.n_episodes += 1
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def search(self):
+    def search(self, query=None):
         if not self.chk_login():
             self.login()
-        keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
-        keyb.doModal()
-        if keyb.isConfirmed():
-            search_text = py2_encode(keyb.getText())
-            if search_text == "":
+
+        search_text = ""
+        if query is None:
+            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb.doModal()
+            if keyb.isConfirmed():
+                search_text = py2_encode(keyb.getText())
+        else:
+            self.force_original_names = False
+            search_text = py2_encode(query)
+
+        if search_text == "":
+            self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
+                        self.get_media_resource('DefaultFolderBack.png'), '')
+        else:
+            self.addon.setSetting('lastsearch', search_text)
+            self.log("Performing search: " + self.API_URL_SEARCH + search_text + '/0')
+            jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
+            if jsonrsp is False:
+                return
+            if self.addon.getSetting('get_elapsed') == 'true':
+                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+
+            if self.lograwdata:
+                self.log(str(jsonrsp))
+
+            try:
+                if jsonrsp['ErrorMessage']:
+                    self.log("Search Error: " + py2_encode(jsonrsp['ErrorMessage']))
+                    xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
+                    return
+            except KeyError:
+                pass  # all is ok no error message just pass
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
+                return
+
+            if jsonrsp['Container'][0]['Contents']['Items']:
+                for item in jsonrsp['Container'][0]['Contents']['Items']:
+                    # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                    if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:
+                        self.addLink(item, HbogoConstants.ACTION_PLAY)
+                        if item['ContentType'] == 1:
+                            self.n_movies += 1
+                        if item['ContentType'] == 3:
+                            self.n_episodes += 1
+                    else:
+                        self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
+                        self.n_tvshows += 1
+            else:
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                             self.get_media_resource('DefaultFolderBack.png'), '')
-            else:
-                self.addon.setSetting('lastsearch', search_text)
-                self.log("Performing search: " + self.API_URL_SEARCH + search_text + '/0')
-                jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
-                if jsonrsp is False:
-                    return
-                if self.addon.getSetting('get_elapsed') == 'true':
-                    self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
-
-                if self.lograwdata:
-                    self.log(str(jsonrsp))
-
-                try:
-                    if jsonrsp['ErrorMessage']:
-                        self.log("Search Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                        xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
-                        return
-                except KeyError:
-                    pass  # all is ok no error message just pass
-                except Exception:
-                    self.log("Unexpected error: " + traceback.format_exc())
-                    xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
-                    return
-
-                if jsonrsp['Container'][0]['Contents']['Items']:
-                    for item in jsonrsp['Container'][0]['Contents']['Items']:
-                        # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                        if item['ContentType'] == 1 or item['ContentType'] == 7 or item['ContentType'] == 3:
-                            self.addLink(item, HbogoConstants.ACTION_PLAY)
-                            if item['ContentType'] == 1:
-                                self.n_movies += 1
-                            if item['ContentType'] == 3:
-                                self.n_episodes += 1
-                        else:
-                            self.addDir(item, HbogoConstants.ACTION_SEASON, "tvshow")
-                            self.n_tvshows += 1
-                else:
-                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                                self.get_media_resource('DefaultFolderBack.png'), '')
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 

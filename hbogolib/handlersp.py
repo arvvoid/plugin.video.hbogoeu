@@ -34,7 +34,7 @@ except ImportError:
 
 class HbogoHandler_sp(HbogoHandler):
 
-    def __init__(self, handle, base_url, country):
+    def __init__(self, handle, base_url, country, forceeng=False):
         HbogoHandler.__init__(self, handle, base_url)
 
         self.LICENSE_SERVER = ""
@@ -59,19 +59,26 @@ class HbogoHandler_sp(HbogoHandler):
         self.API_HOST_GATEWAY_REFERER = self.API_HOST_GATEWAY + '/sign-in'
 
         self.DEFAULT_LANGUAGE = country[4]
-        self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+        self.LANGUAGE_CODE = self.language(30000)
+        self.LANGUAGE_ENG = ''
         self.operator_name = ''
-        if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
-            if country[1] == 'es':
-                self.LANGUAGE_CODE = 'en_hboespana'
-                self.operator_name = 'HBO SPAIN'
-            else:
-                self.LANGUAGE_CODE = 'en_hbon'
-                self.operator_name = 'HBO NORDIC'
+
+        if country[1] == 'es':
+            self.LANGUAGE_ENG = 'en_hboespana'
+            self.operator_name = 'HBO SPAIN'
+        else:
+            self.LANGUAGE_ENG = 'en_hbon'
+            self.operator_name = 'HBO NORDIC'
+
+        if self.LANGUAGE_CODE == 'ENG':  # only englih or the default language for the selected operator is allowed
+            self.LANGUAGE_CODE = self.LANGUAGE_ENG
 
         # check if default language is forced
         if self.addon.getSetting('deflang') == 'true':
             self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+
+        if forceeng:
+            self.LANGUAGE_CODE = self.LANGUAGE_ENG
 
         self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
         self.LANGUAGE_CODE = '?language=' + self.LANGUAGE_CODE
@@ -197,7 +204,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.setDispCat(self.operator_name)
 
-        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
         if browse_xml is False:
@@ -321,43 +328,50 @@ class HbogoHandler_sp(HbogoHandler):
         if simple is False:
             KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def search(self):
+    def search(self, query=None):
         if not self.chk_login():
             self.login()
-        keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
-        keyb.doModal()
-        if keyb.isConfirmed():
-            search_text = py2_encode(keyb.getText())
-            if search_text == "":
+
+        search_text = ""
+        if query is None:
+            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb.doModal()
+            if keyb.isConfirmed():
+                search_text = py2_encode(keyb.getText())
+        else:
+            self.force_original_names = False
+            search_text = py2_encode(query)
+
+        if search_text == "":
+            self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
+                        self.get_media_resource('DefaultFolderBack.png'), '')
+        else:
+            self.addon.setSetting('lastsearch', search_text)
+            self.log("Performing search: " + self.API_URL_SEARCH + search_text)
+            response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
+            if response is False:
+                return
+            count = 0
+
+            for item in response.findall('.//item'):
+                count += 1
+                item_link = item.find('link').text
+
+                if item_link:
+                    if self.lograwdata:
+                        self.log(ET.tostring(item, encoding='utf8'))
+                    item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
+                    if item_type != 'media':
+                        self.addDir(item)
+                    elif item_type == 'media':
+                        self.addLink(item, HbogoConstants.ACTION_PLAY)
+                    else:
+                        self.log('Unknown item type: ' + item_type)
+
+            if count == 0:
+                # No result
                 self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                             self.get_media_resource('DefaultFolderBack.png'), '')
-            else:
-                self.addon.setSetting('lastsearch', search_text)
-                self.log("Performing search: " + self.API_URL_SEARCH + search_text)
-                response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
-                if response is False:
-                    return
-                count = 0
-
-                for item in response.findall('.//item'):
-                    count += 1
-                    item_link = item.find('link').text
-
-                    if item_link:
-                        if self.lograwdata:
-                            self.log(ET.tostring(item, encoding='utf8'))
-                        item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
-                        if item_type != 'media':
-                            self.addDir(item)
-                        elif item_type == 'media':
-                            self.addLink(item, HbogoConstants.ACTION_PLAY)
-                        else:
-                            self.log('Unknown item type: ' + item_type)
-
-                if count == 0:
-                    # No result
-                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                                self.get_media_resource('DefaultFolderBack.png'), '')
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
