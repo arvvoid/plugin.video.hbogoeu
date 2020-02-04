@@ -358,7 +358,7 @@ class HbogoHandler(object):
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
-    def setup(self, country):
+    def setup(self, country, forceeng=False):
         pass
 
     def logout(self):

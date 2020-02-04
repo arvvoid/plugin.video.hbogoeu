@@ -1032,7 +1032,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.get_media_resource('DefaultFolderBack.png'), '')
         else:
             self.addon.setSetting('lastsearch', search_text)
-            self.log("Performing search: " + self.API_URL_SEARCH + search_text + '/0')
+            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/0')
             jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
             if jsonrsp is False:
                 return

@@ -172,7 +172,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         return False
 
-    def setup(self, country=None):
+    def setup(self, country=None, forceeng=False):
         self.init_api()
         if self.inputCredentials():
             return True
@@ -347,7 +347,7 @@ class HbogoHandler_sp(HbogoHandler):
                         self.get_media_resource('DefaultFolderBack.png'), '')
         else:
             self.addon.setSetting('lastsearch', search_text)
-            self.log("Performing search: " + self.API_URL_SEARCH + search_text)
+            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text))
             response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
             if response is False:
                 return
