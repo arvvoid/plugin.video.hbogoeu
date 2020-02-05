@@ -26,6 +26,8 @@ try:
 except ImportError:
     from urllib.parse import unquote_plus as unquote
 
+import sqlite3
+
 try:
     from Cryptodome import Random
     from Cryptodome.Cipher import AES
@@ -54,6 +56,7 @@ class HbogoHandler(object):
         self.handle = handle
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
+        self.db_version = 1
 
         self.base_addon_cat = ""
         self.cur_loc = ""
@@ -114,6 +117,35 @@ class HbogoHandler(object):
 
         self.loggedin_headers = None  # DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
+
+        self.log("Starting database connection...")
+        self.db = sqlite3.connect(xbmc.translatePath(self.addon.getAddonInfo('profile'))+'hgo.db')
+        cur = self.db.cursor()
+        try:
+            cur.execute("SELECT val_int FROM settings WHERE set_id='db_ver'")
+            r = cur.fetchone()
+            if r[0] != self.db_version:
+                self.log("Database version mismatch updating database.")
+                self.ceate_db(r[0])
+        except Exception:
+            self.log("Database error: " + traceback.format_exc())
+            self.ceate_db()
+
+    def __del__(self):
+        self.log("Handler ended. Database conection closed.")
+        self.db.close()
+
+    def ceate_db(self, cur_ver=0):
+        self.log("Creating database, current version: " + str(cur_ver) + " add-on needs version: " + str(self.db_version))
+
+        cur = self.db.cursor()
+        if cur_ver < 1:
+            cur.execute("create table settings (set_id text primary key, val_int integer, val_str text)")
+            cur.execute("create table request_cache (url_hash text primary key, request_data text, last_update text)")
+            cur.execute("create table request_cache_exclude (url_hash text primary key)")
+            cur.execute("create table search_history (search_query text primary key)")
+            cur.execute("INSERT INTO settings VALUES ('db_ver',1,'')")
+        self.db.commit()
 
     def reset_media_type_counters(self):
         self.n_movies = 0
