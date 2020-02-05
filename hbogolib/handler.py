@@ -358,7 +358,7 @@ class HbogoHandler(object):
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
-    def setup(self, country):
+    def setup(self, country, forceeng=False):
         pass
 
     def logout(self):
@@ -379,7 +379,7 @@ class HbogoHandler(object):
     def episode(self, url):
         pass
 
-    def search(self):
+    def search(self, query=None):
         pass
 
     def play(self, content_id):
