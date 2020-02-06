@@ -257,9 +257,49 @@ class HbogoHandler(object):
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return False
 
-    def get_from_hbogo(self, url, response_format='json', retry=0):
+    def get_from_cache(self, url_hash):
+        cur = self.db.cursor()
+        cur.execute("SELECT url_hash FROM request_cache_exclude WHERE url_hash=?", (url_hash,), )
+        if cur.fetchone() is not None:
+            self.log("URL IN CACHE EXCLUDE LIST")
+            return None
+        cur.execute("DELETE FROM request_cache WHERE last_update <= datetime('now','-1 day');")
+        self.db.commit()
+        cur.execute("SELECT request_data FROM request_cache WHERE url_hash=?", (url_hash,),)
+        result = cur.fetchone()
+        if result is not None:
+            self.log("URL FOUND IN CACHE")
+            return result[0]
+        return None
+
+    def cache(self, url_hash, data):
+        cur = self.db.cursor()
+        cur.execute("INSERT INTO request_cache(url_hash, request_data, last_update) VALUES (?, ?, datetime('now'))", (url_hash, data), )
+        self.db.commit()
+
+    def exclude_url_from_cache(self, url):
+        try:
+            cur = self.db.cursor()
+            cur.execute("INSERT INTO request_cache_exclude(url_hash) VALUES (?)", (Util.hash225_string(url), ), )
+            self.db.commit()
+        except Exception:
+            self.log("Exclude from cache WARNING: " + traceback.format_exc())
+
+    def get_from_hbogo(self, url, response_format='json', use_cache=True, retry=0):
         self.log("GET FROM HBO URL: " + url)
         self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
+
+        url_hash = Util.hash225_string(url)
+
+        if use_cache:
+            self.log("GET FROM HBO USING CACHE")
+            cached_data = self.get_from_cache(url_hash)
+
+            if cached_data is not None:
+                if response_format == 'json':
+                    return json.loads(py2_encode(cached_data))
+                elif response_format == 'xml':
+                    return ET.fromstring(py2_encode(cached_data))
         try:
             r = requests.get(url, headers=self.loggedin_headers)
             self.log("GET FROM HBO STATUS: " + str(r.status_code))
@@ -268,9 +308,16 @@ class HbogoHandler(object):
                 if int(r.status_code) == 401 and retry < self.max_comm_retry:
                     self.del_login()
                     self.login()
-                    return self.get_from_hbogo(url, response_format, retry+1)
+                    return self.get_from_hbogo(url, response_format, use_cache, retry+1)
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30008)+str(r.status_code))
                 return False
+
+            if use_cache:
+                try:
+                    self.log("SAVING URL TO CACHE")
+                    self.cache(url_hash, r.text)
+                except Exception:
+                    self.log("Caching WARNING: " + traceback.format_exc())
 
             if response_format == 'json':
                 return r.json()
@@ -281,7 +328,7 @@ class HbogoHandler(object):
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30005))
             return False
         except Exception:
-            self.log("POST TO HBO UNEXPECTED ERROR: " + traceback.format_exc())
+            self.log("GET TO HBO UNEXPECTED ERROR: " + traceback.format_exc())
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return False
 

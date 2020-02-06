@@ -302,6 +302,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
+        # add to cache exclude list
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false')
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -922,7 +926,7 @@ class HbogoHandler_eu(HbogoHandler):
         if jsonrsp is False:
             return
         if self.addon.getSetting('get_elapsed') == 'true':
-            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -994,7 +998,7 @@ class HbogoHandler_eu(HbogoHandler):
         if jsonrsp is False:
             return
         if self.addon.getSetting('get_elapsed') == 'true':
-            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -1038,7 +1042,7 @@ class HbogoHandler_eu(HbogoHandler):
             if jsonrsp is False:
                 return
             if self.addon.getSetting('get_elapsed') == 'true':
-                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
             if self.lograwdata:
                 self.log(str(jsonrsp))
