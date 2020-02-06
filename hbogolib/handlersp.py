@@ -232,6 +232,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         if self.addon.getSetting('show_mylist') == 'true':
             if watchlist is not None:
+                self.exclude_url_from_cache(watchlist.find('link').text)
                 self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
                             HbogoConstants.ACTION_LIST)
             else:
