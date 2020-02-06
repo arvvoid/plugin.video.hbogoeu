@@ -796,7 +796,7 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.setDispCat(self.operator_name)
-        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         self.getCustomerGroups()
 
@@ -1013,13 +1013,14 @@ class HbogoHandler_eu(HbogoHandler):
             self.n_episodes += 1
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
+
     def search(self, query=None):
         if not self.chk_login():
             self.login()
 
         search_text = ""
         if query is None:
-            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb = xbmc.Keyboard("", self.LB_SEARCH_DESC)
             keyb.doModal()
             if keyb.isConfirmed():
                 search_text = py2_encode(keyb.getText())
@@ -1031,7 +1032,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                         self.get_media_resource('DefaultFolderBack.png'), '')
         else:
-            self.addon.setSetting('lastsearch', search_text)
+            self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/0')
             jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
             if jsonrsp is False:

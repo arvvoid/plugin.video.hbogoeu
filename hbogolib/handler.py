@@ -13,20 +13,23 @@ import json
 import os
 import sys
 import traceback
+import sqlite3
 
 import defusedxml.ElementTree as ET
 import requests
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode, py2_decode
 
+from hbogolib.constants import HbogoConstants
+from hbogolib.kodiutil import KodiUtil
 from hbogolib.util import Util
 
 try:
     from urllib import unquote_plus as unquote
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
     from urllib.parse import unquote_plus as unquote
-
-import sqlite3
+    from urllib.parse import quote_plus as quote, urlencode
 
 try:
     from Cryptodome import Random
@@ -61,7 +64,6 @@ class HbogoHandler(object):
         self.base_addon_cat = ""
         self.cur_loc = ""
 
-        self.search_string = unquote(self.addon.getSetting('lastsearch'))
         xbmcplugin.setPluginFanart(self.handle, image=self.get_resource("fanart.jpg"))
 
         # LABELS
@@ -140,12 +142,43 @@ class HbogoHandler(object):
 
         cur = self.db.cursor()
         if cur_ver < 1:
+            self.log("Databae create STAGE 1...")
             cur.execute("create table settings (set_id text primary key, val_int integer, val_str text)")
             cur.execute("create table request_cache (url_hash text primary key, request_data text, last_update text)")
             cur.execute("create table request_cache_exclude (url_hash text primary key)")
             cur.execute("create table search_history (search_query text primary key)")
             cur.execute("INSERT INTO settings VALUES ('db_ver',1,'')")
+            self.log("Databae create STAGE 1...done.")
         self.db.commit()
+
+    def searchlist_del_history(self):
+        cur = self.db.cursor()
+        cur.execute("DELETE FROM search_history;")
+        self.db.commit()
+        self.log("Database: Truncate search_history")
+
+    def searchlist_del_history_item(self, itm):
+        cur = self.db.cursor()
+        cur.execute("DELETE FROM search_history WHERE search_query=?;", itm)
+        self.db.commit()
+        self.log("Database: Del "+itm+" from search_history")
+
+    def get_search_history(self):
+        cur = self.db.cursor()
+        cur.execute("SELECT * FROM search_history")
+        self.log("Database: Get search_history")
+        return cur.fetchall()
+
+    def add_to_search_history(self, itm):
+        cur = self.db.cursor()
+        self.log("Database: add " + itm + " to search_history")
+        try:
+            cur.execute("INSERT INTO search_history(search_query) VALUES (?)", (itm,),)
+            self.db.commit()
+            return True
+        except Exception:
+            self.log("Add to search history WARNING: " + traceback.format_exc())
+            return False
 
     def reset_media_type_counters(self):
         self.n_movies = 0
@@ -387,6 +420,25 @@ class HbogoHandler(object):
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None
+
+    def searchlist(self):
+        self.reset_media_type_counters()
+        self.addCat(self.language(30734), "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.language(30735), "DEL_SEARCH_HISTORY", self.get_media_resource('remove.png'), HbogoConstants.ACTION_SEARCH_CLEAR_HISTORY)
+        history_items = self.get_search_history()
+        for history_itm in history_items:
+            tmp_url = '%s?%s' % (self.base_url, urlencode({
+                'url': "INTERNAL_SEARCH",
+                'mode': HbogoConstants.ACTION_SEARCH,
+                'name': self.language(30734)+': '+history_itm[0],
+                'query': history_itm[0],
+            }))
+            liz = xbmcgui.ListItem(history_itm[0])
+            liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb': self.get_media_resource('search.png'), 'icon': self.get_media_resource('search.png')})
+            liz.setInfo(type="Video", infoLabels={"Title": self.language(30734)+': '+history_itm[0]})
+            liz.setProperty('isPlayable', "false")
+            xbmcplugin.addDirectoryItem(handle=self.handle, url=tmp_url, listitem=liz, isFolder=True)
+        KodiUtil.endDir(self.handle, None, True)
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 

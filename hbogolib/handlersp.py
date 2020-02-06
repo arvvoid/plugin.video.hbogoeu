@@ -204,7 +204,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.setDispCat(self.operator_name)
 
-        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
         if browse_xml is False:
@@ -334,7 +334,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         search_text = ""
         if query is None:
-            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb = xbmc.Keyboard("", self.LB_SEARCH_DESC)
             keyb.doModal()
             if keyb.isConfirmed():
                 search_text = py2_encode(keyb.getText())
@@ -346,7 +346,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
                         self.get_media_resource('DefaultFolderBack.png'), '')
         else:
-            self.addon.setSetting('lastsearch', search_text)
+            self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text))
             response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
             if response is False:

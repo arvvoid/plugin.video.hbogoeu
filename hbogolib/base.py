@@ -148,6 +148,29 @@ class hbogo(object):
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
+        elif mode == HbogoConstants.ACTION_SEARCH_LIST:
+            self.start()
+            self.handler.setDispCat(name)
+            self.handler.searchlist()
+
+        elif mode == HbogoConstants.ACTION_SEARCH_CLEAR_HISTORY:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.searchlist_del_history()
+            xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_SEARCH_REMOVE_HISTOY_ITEM:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            itm = None
+            try:
+                itm = unquote(params["itm"])
+            except KeyError:
+                pass
+            if itm is None:
+                handler.searchlist_del_history_item(itm)
+            xbmc.executebuiltin('Container.Refresh')
+
         elif mode == HbogoConstants.ACTION_SEARCH:
             if url == "EXTERNAL_SEARCH_FORCE_ENG":
                 self.start(True)

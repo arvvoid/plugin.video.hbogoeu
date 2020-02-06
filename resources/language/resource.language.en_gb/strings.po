@@ -283,6 +283,18 @@ msgctxt "#30733"
 msgid "Home Lists"
 msgstr ""
 
+msgctxt "#30734"
+msgid "New search"
+msgstr ""
+
+msgctxt "#30735"
+msgid "Clear search history"
+msgstr ""
+
+msgctxt "#30736"
+msgid "Remove"
+msgstr ""
+
 msgctxt "#30650"
 msgid "Language"
 msgstr ""
