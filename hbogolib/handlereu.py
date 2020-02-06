@@ -1031,7 +1031,8 @@ class HbogoHandler_eu(HbogoHandler):
         if search_text == "":
             xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
-            self.add_to_search_history(search_text)
+            if query is None:
+                self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/0')
             jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
             if jsonrsp is False:
