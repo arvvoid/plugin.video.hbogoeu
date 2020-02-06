@@ -1076,7 +1076,6 @@ class HbogoHandler_eu(HbogoHandler):
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
 
-        self.del_login()
         self.login()
 
         item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)

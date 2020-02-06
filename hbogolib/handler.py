@@ -57,6 +57,7 @@ class HbogoHandler(object):
         self.handle = handle
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
+        self.max_comm_retry = 1  # if unauthorized del sessionrelogin and try again max times
         self.db_version = 1
 
         self.base_addon_cat = ""
@@ -228,7 +229,7 @@ class HbogoHandler(object):
         xbmcplugin.setPluginCategory(self.handle, cur_loc)
         self.cur_loc = cur_loc
 
-    def post_to_hbogo(self, url, headers, data, response_format='json'):
+    def post_to_hbogo(self, url, headers, data, response_format='json', retry=0):
         self.log("POST TO HBO URL: " + url)
         self.log("POST TO HBO FORMAT: " + response_format)
         try:
@@ -236,6 +237,10 @@ class HbogoHandler(object):
             self.log("POST TO HBO RETURNED STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
+                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                    self.del_login()
+                    self.login()
+                    return self.post_to_hbogo(url, headers, data, response_format, retry+1)
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30008)+str(r.status_code))
                 return False
 
@@ -252,7 +257,7 @@ class HbogoHandler(object):
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return False
 
-    def get_from_hbogo(self, url, response_format='json'):
+    def get_from_hbogo(self, url, response_format='json', retry=0):
         self.log("GET FROM HBO URL: " + url)
         self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
         try:
@@ -260,6 +265,10 @@ class HbogoHandler(object):
             self.log("GET FROM HBO STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
+                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                    self.del_login()
+                    self.login()
+                    return self.get_from_hbogo(url, response_format, retry+1)
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30008)+str(r.status_code))
                 return False
 
@@ -276,7 +285,7 @@ class HbogoHandler(object):
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return False
 
-    def delete_from_hbogo(self, url, response_format='json'):
+    def delete_from_hbogo(self, url, response_format='json', retry=0):
         self.log("DEL FROM HBO URL: " + url)
         self.log("DEL FROM HBO RESPONSE FORMAT: " + response_format)
         try:
@@ -284,6 +293,10 @@ class HbogoHandler(object):
             self.log("DEL FROM HBO STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
+                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                    self.del_login()
+                    self.login()
+                    return self.delete_from_hbogo(url, response_format, retry+1)
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30008)+str(r.status_code))
                 return False
 

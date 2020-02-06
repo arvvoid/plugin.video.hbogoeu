@@ -44,6 +44,7 @@ If an official app is available for your platform, use it instead of this.
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
 v.2.2.2
+- Optimize re-login on unauthorized
 - Local sqllight database
 - Search history
 - external add-ons can search now (ability to create TMDB Helper Player)
