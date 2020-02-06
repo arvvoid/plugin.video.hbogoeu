@@ -26,10 +26,10 @@ from hbogolib.util import Util
 
 try:
     from urllib import unquote_plus as unquote
-    from urllib import quote_plus as urlencode
+    from urllib import quote_plus as quote, urlencode
 except ImportError:
     from urllib.parse import unquote_plus as unquote
-    from urllib.parse import quote_plus as urlencode
+    from urllib.parse import quote_plus as quote, urlencode
 
 try:
     from Cryptodome import Random
@@ -159,7 +159,7 @@ class HbogoHandler(object):
 
     def searchlist_del_history_item(self, itm):
         cur = self.db.cursor()
-        cur.execute("DELETE FROM search_history WHERE search_query=?;", (itm,),)
+        cur.execute("DELETE FROM search_history WHERE search_query=?;", (py2_decode(itm),),)
         self.db.commit()
         self.log("Database: Del "+itm+" from search_history")
 
@@ -173,7 +173,7 @@ class HbogoHandler(object):
         cur = self.db.cursor()
         self.log("Database: add " + itm + " to search_history")
         try:
-            cur.execute("INSERT INTO search_history(search_query) VALUES (?)", (itm,),)
+            cur.execute("INSERT INTO search_history(search_query) VALUES (?)", (py2_decode(itm),),)
             self.db.commit()
             return True
         except Exception:
@@ -430,12 +430,12 @@ class HbogoHandler(object):
             tmp_url = '%s?%s' % (self.base_url, urlencode({
                 'url': "INTERNAL_SEARCH",
                 'mode': HbogoConstants.ACTION_SEARCH,
-                'name': self.language(30734)+': '+history_itm[0],
-                'query': history_itm[0],
+                'name': py2_encode(self.language(30734))+': '+py2_encode(history_itm[0]),
+                'query': py2_encode(history_itm[0]),
             }))
-            liz = xbmcgui.ListItem(history_itm[0])
+            liz = xbmcgui.ListItem(py2_encode(history_itm[0]))
             liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb': self.get_media_resource('search.png'), 'icon': self.get_media_resource('search.png')})
-            liz.setInfo(type="Video", infoLabels={"Title": self.language(30734)+': '+history_itm[0]})
+            liz.setInfo(type="Video", infoLabels={"Title": py2_encode(self.language(30734))+': '+py2_encode(history_itm[0])})
             liz.setProperty('isPlayable', "false")
 
             runplugin = 'RunPlugin(%s?%s)'
@@ -443,7 +443,7 @@ class HbogoHandler(object):
             rem_search_query = urlencode({
                 'url': 'REM_SEARCH_QUERY',
                 'mode': HbogoConstants.ACTION_SEARCH_REMOVE_HISTOY_ITEM,
-                'itm': history_itm[0],
+                'itm': py2_encode(history_itm[0]),
             })
             rem_search = (py2_encode(self.language(30736)), runplugin %
                           (self.base_url, rem_search_query))
