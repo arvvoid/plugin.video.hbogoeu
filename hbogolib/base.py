@@ -167,7 +167,7 @@ class hbogo(object):
                 itm = unquote(params["itm"])
             except KeyError:
                 pass
-            if itm is None:
+            if itm is not None:
                 handler.searchlist_del_history_item(itm)
             xbmc.executebuiltin('Container.Refresh')
 

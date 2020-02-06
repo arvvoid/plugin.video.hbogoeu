@@ -26,10 +26,10 @@ from hbogolib.util import Util
 
 try:
     from urllib import unquote_plus as unquote
-    from urllib import quote_plus as quote, urlencode
+    from urllib import quote_plus as urlencode
 except ImportError:
     from urllib.parse import unquote_plus as unquote
-    from urllib.parse import quote_plus as quote, urlencode
+    from urllib.parse import quote_plus as urlencode
 
 try:
     from Cryptodome import Random
@@ -159,7 +159,7 @@ class HbogoHandler(object):
 
     def searchlist_del_history_item(self, itm):
         cur = self.db.cursor()
-        cur.execute("DELETE FROM search_history WHERE search_query=?;", itm)
+        cur.execute("DELETE FROM search_history WHERE search_query=?;", (itm,),)
         self.db.commit()
         self.log("Database: Del "+itm+" from search_history")
 
@@ -437,6 +437,17 @@ class HbogoHandler(object):
             liz.setArt({'fanart': self.get_resource("fanart.jpg"), 'thumb': self.get_media_resource('search.png'), 'icon': self.get_media_resource('search.png')})
             liz.setInfo(type="Video", infoLabels={"Title": self.language(30734)+': '+history_itm[0]})
             liz.setProperty('isPlayable', "false")
+
+            runplugin = 'RunPlugin(%s?%s)'
+
+            rem_search_query = urlencode({
+                'url': 'REM_SEARCH_QUERY',
+                'mode': HbogoConstants.ACTION_SEARCH_REMOVE_HISTOY_ITEM,
+                'itm': history_itm[0],
+            })
+            rem_search = (py2_encode(self.language(30736)), runplugin %
+                          (self.base_url, rem_search_query))
+            liz.addContextMenuItems(items=[rem_search])
             xbmcplugin.addDirectoryItem(handle=self.handle, url=tmp_url, listitem=liz, isFolder=True)
         KodiUtil.endDir(self.handle, None, True)
 
