@@ -1029,8 +1029,7 @@ class HbogoHandler_eu(HbogoHandler):
             search_text = py2_encode(query)
 
         if search_text == "":
-            self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                        self.get_media_resource('DefaultFolderBack.png'), '')
+            xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
             self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/0')
@@ -1069,8 +1068,7 @@ class HbogoHandler_eu(HbogoHandler):
                         self.addDir(item_info, HbogoConstants.ACTION_SEASON, "tvshow")
                         self.n_tvshows += 1
             else:
-                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                            self.get_media_resource('DefaultFolderBack.png'), '')
+                xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
