@@ -1,3 +1,11 @@
+v.2.3.0
+- Request caching                           
+- Optimize re-login on unauthorized
+- Local sqllight database
+- Search history
+- external add-ons can search now (ability to create TMDB Helper Player)
+- improved search
+
 v.2.2.0
 - duoble new line fix in ttml2srt on some subtitles
 - Translations update
