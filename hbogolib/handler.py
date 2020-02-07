@@ -17,7 +17,7 @@ import sqlite3
 
 import defusedxml.ElementTree as ET
 import requests
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from kodi_six.utils import py2_encode, py2_decode
 
 from hbogolib.constants import HbogoConstants
@@ -116,12 +116,6 @@ class HbogoHandler(object):
             self.use_cache = True
         else:
             self.use_cache = False
-
-        self.use_img_cache = self.addon.getSetting('use_img_cache')
-        if self.use_img_cache == "true":
-            self.use_img_cache = True
-        else:
-            self.use_img_cache = False
 
         if self.sensitive_debug:
             ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
@@ -303,12 +297,6 @@ class HbogoHandler(object):
         cur.execute("DELETE FROM request_cache;")
         self.db.commit()
         xbmcgui.Dialog().notification(self.language(30809), self.LB_SUCESS, self.get_resource("icon.png"))
-
-    def clear_image_cache(self):
-        pass
-
-    def img_cache(self, url):
-        return url
 
     def get_from_hbogo(self, url, response_format='json', use_cache=True, retry=0):
         self.log("GET FROM HBO URL: " + url)

@@ -1352,7 +1352,7 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
-            img = self.img_cache(title['BackgroundUrl'])
+        img = title['BackgroundUrl']
 
         return {
             "info": {
@@ -1435,7 +1435,8 @@ class HbogoHandler_eu(HbogoHandler):
             'name': '%s (%d)' % (py2_encode(item['OriginalName']), item['ProductionYear'])
         }))
         liz = xbmcgui.ListItem(item['Name'])
-        img = self.img_cache(item['BackgroundUrl'])
+        img = item['BackgroundUrl']
+
         liz.setArt({
             'thumb': img, 'poster': img, 'banner': img, 'fanart': img
         })
@@ -1463,7 +1464,6 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
-        icon = self.img_cache(icon)
         if self.lograwdata:
             self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         category_url = '%s?%s' % (self.base_url, urlencode({

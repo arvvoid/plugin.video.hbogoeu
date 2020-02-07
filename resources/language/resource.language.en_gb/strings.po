@@ -408,15 +408,8 @@ msgid "Use request cache"
 msgstr ""
 
 msgctxt "#30808"
-msgid "Use image cache"
-msgstr ""
-
-msgctxt "#30809"
 msgid "Clear request cache"
 msgstr ""
 
-msgctxt "#30810"
-msgid "Clear image cache"
-msgstr ""
 
 

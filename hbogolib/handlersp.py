@@ -277,15 +277,15 @@ class HbogoHandler_sp(HbogoHandler):
                 if thumb.get('height') == '1080':
                     if self.lograwdata:
                         self.log("Huge Poster found, using as thumbnail")
-                    return self.img_cache(str(thumb.get('url')))
+                    return str(thumb.get('url'))
             for thumb in thumbnails:
                 if thumb.get('height') == '720':
                     if self.lograwdata:
                         self.log("Large Poster found, using as thumbnail")
-                    return self.img_cache(str(thumb.get('url')))
+                    return str(thumb.get('url'))
             if self.lograwdata:
                 self.log("Poster not found using first one")
-            return self.img_cache(str(thumbnails[0].get('url')))
+            return str(thumbnails[0].get('url'))
         except Exception:
             self.log("Unexpected find thumbnail error: " + traceback.format_exc())
             return self.get_resource('fanart.jpg')
