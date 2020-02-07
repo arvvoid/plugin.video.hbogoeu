@@ -48,15 +48,13 @@
         <setting label="30672" type="bool" id="forceepispdelisting" default="false"/>
         <setting label="30680" type="lsep"/>
         <setting id="logout" type="action" label="30106" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=logou&amp;mode=7)" option="close"/>
-        <setting label="30690" type="lsep"/>
-        <setting label="30693" type="bool" id="lograwdata" default="false"/>
-        <setting label="30691" type="bool" id="sensitivedebug" default="false"/>
-    </category>
-    <!-- Cache -->
-    <category label="30806">
+        <setting label="30806" type="lsep"/>
         <setting label="30807" type="bool" id="use_req_cache" default="true"/>
         <setting label="30808" type="bool" id="use_img_cache" default="true"/>
         <setting id="delcache" type="action" label="30809" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delcache&amp;mode=16)"/>
         <setting id="delimgcache" type="action" label="30810" action="RunPlugin(plugin://plugin.video.hbogoeu/?url=delimgcache&amp;mode=17)"/>
+        <setting label="30690" type="lsep"/>
+        <setting label="30693" type="bool" id="lograwdata" default="false"/>
+        <setting label="30691" type="bool" id="sensitivedebug" default="false"/>
     </category>
 </settings>
