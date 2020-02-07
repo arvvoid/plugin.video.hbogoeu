@@ -728,7 +728,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         data = json.dumps(data_obj)
         self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
-        jsonrspl = self.post_to_hbogo(url, headers, data)
+        jsonrspl = self.post_to_hbogo(url, headers, data, 'json', self.max_comm_retry)   # last parameter prevents retry on failed login
         if jsonrspl is False:
             self.logout()
             return False

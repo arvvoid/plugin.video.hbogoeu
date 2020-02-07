@@ -145,7 +145,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
-        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml', self.max_comm_retry)  # last parameter prevent retry on failed login
         if response is False:
             return False
 

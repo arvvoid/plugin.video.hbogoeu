@@ -139,7 +139,9 @@ class HbogoHandler(object):
             self.ceate_db()
 
     def __del__(self):
-        self.log("Handler ended. Database conection closed.")
+        self.log("Checking DB VACUUM")
+        self.db_vacuum()  # vacuum database if more then 30 days have passed
+        self.log("Handler ended. Database connection closed.")
         self.db.close()
 
     def ceate_db(self, cur_ver=0):
@@ -155,6 +157,26 @@ class HbogoHandler(object):
             cur.execute("INSERT INTO settings VALUES ('db_ver',1,'')")
             self.log("Databae create STAGE 1...done.")
         self.db.commit()
+
+    def db_vacuum(self):
+        try:
+            cur = self.db.cursor()
+            cur.execute("SELECT (DATE(val_str, '+30 days')<DATE('now')) as tdiff FROM settings WHERE set_id='last_vacuum'")
+            r = cur.fetchone()
+
+            if r is None:
+                self.log("NO LAST VACUUMING DATA, inserting...")
+                cur.execute("INSERT INTO settings VALUES ('last_vacuum',0,DateTime('now'))")
+                self.db.commit()
+                return
+
+            if r[0]>0:
+                self.log("LAST VACUUM OLDER THEN 30 DAYS, VACUUMING DB...")
+                cur.execute("UPDATE settings SET val_str=DateTime('now') WHERE set_id='last_vacuum'")
+                self.db.commit()
+                cur.execute("VACUUM")
+        except Exception:
+            self.log("Vacuum error: " + traceback.format_exc())
 
     def searchlist_del_history(self):
         cur = self.db.cursor()
@@ -308,18 +330,21 @@ class HbogoHandler(object):
         url_hash = Util.hash225_string(url)
 
         if use_cache:
-            self.log("GET FROM HBO USING CACHE")
+            self.log("GET FROM HBO USING CACHE...")
             cached_data = self.get_from_cache(url_hash)
 
             if cached_data is not None and cached_data is not False:
+                self.log("GET FROM HBO Serving from cache...")
                 if response_format == 'json':
                     return json.loads(py2_encode(cached_data))
                 elif response_format == 'xml':
                     return ET.fromstring(py2_encode(cached_data))
             if cached_data is False:
+                self.log("GET FROM HBO, URL on exclude list, cache disabled...")
                 use_cache = False
 
         try:
+            self.log("GET FROM HBO, requesting from Hbo Go...")
             r = requests.get(url, headers=self.loggedin_headers)
             self.log("GET FROM HBO STATUS: " + str(r.status_code))
 
