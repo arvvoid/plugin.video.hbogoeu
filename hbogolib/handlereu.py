@@ -1017,7 +1017,6 @@ class HbogoHandler_eu(HbogoHandler):
             self.n_episodes += 1
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
-
     def search(self, query=None):
         if not self.chk_login():
             self.login()

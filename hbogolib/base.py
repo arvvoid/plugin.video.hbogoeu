@@ -204,11 +204,6 @@ class hbogo(object):
             handler = HbogoHandler(self.handle, self.base_url)
             handler.clear_request_cache()
 
-        elif mode == HbogoConstants.ACTION_CLEAR_IMAGE_CACHE:  # reset image cache
-            from hbogolib.handler import HbogoHandler
-            handler = HbogoHandler(self.handle, self.base_url)
-            handler.clear_image_cache()
-
         elif mode == HbogoConstants.ACTION_RESET_SESSION:  # reset session
             from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.handle, self.base_url)
