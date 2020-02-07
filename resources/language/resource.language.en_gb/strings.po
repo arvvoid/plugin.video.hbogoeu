@@ -398,3 +398,24 @@ msgstr ""
 msgctxt "#30805"
 msgid "Ignore Kodi Watched status (Only display HBO Go Watched status)"
 msgstr ""
+
+msgctxt "#30806"
+msgid "Cache"
+msgstr ""
+
+msgctxt "#30807"
+msgid "Use request cache"
+msgstr ""
+
+msgctxt "#30808"
+msgid "Use image cache"
+msgstr ""
+
+msgctxt "#30809"
+msgid "Clear request cache"
+msgstr ""
+
+msgctxt "#30810"
+msgid "Clear image cache"
+msgstr ""
+

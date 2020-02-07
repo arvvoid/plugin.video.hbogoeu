@@ -111,6 +111,18 @@ class HbogoHandler(object):
         else:
             self.lograwdata = False
 
+        self.use_cache = self.addon.getSetting('use_req_cache')
+        if self.use_cache == "true":
+            self.use_cache = True
+        else:
+            self.use_cache = False
+
+        self.use_img_cache = self.addon.getSetting('use_img_cache')
+        if self.use_img_cache == "true":
+            self.use_img_cache = True
+        else:
+            self.use_img_cache = False
+
         if self.sensitive_debug:
             ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
             if not ret:
@@ -263,7 +275,7 @@ class HbogoHandler(object):
         cur.execute("SELECT url_hash FROM request_cache_exclude WHERE url_hash=?", (url_hash,), )
         if cur.fetchone() is not None:
             self.log("URL IN CACHE EXCLUDE LIST")
-            return None
+            return False
         cur.execute("DELETE FROM request_cache WHERE last_update <= datetime('now','-1 day');")
         self.db.commit()
         cur.execute("SELECT request_data FROM request_cache WHERE url_hash=?", (url_hash,),)
@@ -286,9 +298,24 @@ class HbogoHandler(object):
         except Exception:
             self.log("Exclude from cache WARNING: " + traceback.format_exc())
 
+    def clear_request_cache(self):
+        cur = self.db.cursor()
+        cur.execute("DELETE FROM request_cache;")
+        self.db.commit()
+        xbmcgui.Dialog().notification(self.language(30809), self.LB_SUCESS, self.get_resource("icon.png"))
+
+    def clear_image_cache(self):
+        pass
+
+    def img_cache(self, url):
+        return url
+
     def get_from_hbogo(self, url, response_format='json', use_cache=True, retry=0):
         self.log("GET FROM HBO URL: " + url)
         self.log("GET FROM HBO RESPONSE FORMAT: " + response_format)
+
+        if not self.use_cache:
+            use_cache = False
 
         url_hash = Util.hash225_string(url)
 
@@ -296,11 +323,14 @@ class HbogoHandler(object):
             self.log("GET FROM HBO USING CACHE")
             cached_data = self.get_from_cache(url_hash)
 
-            if cached_data is not None:
+            if cached_data is not None and cached_data is not False:
                 if response_format == 'json':
                     return json.loads(py2_encode(cached_data))
                 elif response_format == 'xml':
                     return ET.fromstring(py2_encode(cached_data))
+            if cached_data is False:
+                use_cache = False
+
         try:
             r = requests.get(url, headers=self.loggedin_headers)
             self.log("GET FROM HBO STATUS: " + str(r.status_code))

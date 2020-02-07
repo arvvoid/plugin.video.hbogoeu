@@ -199,6 +199,16 @@ class hbogo(object):
                 handler.del_setup()
                 xbmc.executebuiltin('Container.Refresh')
 
+        elif mode == HbogoConstants.ACTION_CLEAR_REQUEST_CACHE:  # reset request cache
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.clear_request_cache()
+
+        elif mode == HbogoConstants.ACTION_CLEAR_IMAGE_CACHE:  # reset image cache
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.clear_image_cache()
+
         elif mode == HbogoConstants.ACTION_RESET_SESSION:  # reset session
             from hbogolib.handler import HbogoHandler
             handler = HbogoHandler(self.handle, self.base_url)
