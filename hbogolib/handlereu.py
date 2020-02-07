@@ -302,6 +302,10 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
+        # add to cache exclude list
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
+        self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.ContinueWatchingGroupId + '/-/-/-/1000/-/-/false')
 
     def chk_login(self):
         return self.loggedin_headers['GO-SessionId'] != '00000000-0000-0000-0000-000000000000' and len(
@@ -724,7 +728,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         data = json.dumps(data_obj)
         self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
-        jsonrspl = self.post_to_hbogo(url, headers, data)
+        jsonrspl = self.post_to_hbogo(url, headers, data, 'json', self.max_comm_retry)   # last parameter prevents retry on failed login
         if jsonrspl is False:
             self.logout()
             return False
@@ -796,7 +800,7 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.setDispCat(self.operator_name)
-        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         self.getCustomerGroups()
 
@@ -922,7 +926,7 @@ class HbogoHandler_eu(HbogoHandler):
         if jsonrsp is False:
             return
         if self.addon.getSetting('get_elapsed') == 'true':
-            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -994,7 +998,7 @@ class HbogoHandler_eu(HbogoHandler):
         if jsonrsp is False:
             return
         if self.addon.getSetting('get_elapsed') == 'true':
-            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+            self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -1019,7 +1023,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         search_text = ""
         if query is None:
-            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb = xbmc.Keyboard("", self.LB_SEARCH_DESC)
             keyb.doModal()
             if keyb.isConfirmed():
                 search_text = py2_encode(keyb.getText())
@@ -1028,16 +1032,16 @@ class HbogoHandler_eu(HbogoHandler):
             search_text = py2_encode(query)
 
         if search_text == "":
-            self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                        self.get_media_resource('DefaultFolderBack.png'), '')
+            xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
-            self.addon.setSetting('lastsearch', search_text)
+            if query is None:
+                self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/0')
             jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/0')
             if jsonrsp is False:
                 return
             if self.addon.getSetting('get_elapsed') == 'true':
-                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3')
+                self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
             if self.lograwdata:
                 self.log(str(jsonrsp))
@@ -1068,15 +1072,13 @@ class HbogoHandler_eu(HbogoHandler):
                         self.addDir(item_info, HbogoConstants.ACTION_SEASON, "tvshow")
                         self.n_tvshows += 1
             else:
-                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                            self.get_media_resource('DefaultFolderBack.png'), '')
+                xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
 
-        self.del_login()
         self.login()
 
         item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
@@ -1349,6 +1351,8 @@ class HbogoHandler_eu(HbogoHandler):
             if 'AvailabilityTo' in title:
                 plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
 
+        img = title['BackgroundUrl']
+
         return {
             "info": {
                 "mediatype": media_type, "episode": title['Tracking']['EpisodeNumber'],
@@ -1361,8 +1365,7 @@ class HbogoHandler_eu(HbogoHandler):
                 "year": title['ProductionYear']
             },
             "art": {
-                'thumb': title['BackgroundUrl'], 'poster': title['BackgroundUrl'], 'banner': title['BackgroundUrl'],
-                'fanart': title['BackgroundUrl']
+                'thumb': img, 'poster': img, 'banner': img, 'fanart': img
             }
         }
 
@@ -1431,9 +1434,10 @@ class HbogoHandler_eu(HbogoHandler):
             'name': '%s (%d)' % (py2_encode(item['OriginalName']), item['ProductionYear'])
         }))
         liz = xbmcgui.ListItem(item['Name'])
+        img = item['BackgroundUrl']
+
         liz.setArt({
-            'thumb': item['BackgroundUrl'], 'poster': item['BackgroundUrl'], 'banner': item['BackgroundUrl'],
-            'fanart': item['BackgroundUrl']
+            'thumb': img, 'poster': img, 'banner': img, 'fanart': img
         })
         plot = py2_encode(item['Abstract'])
         if 'Description' in item:

@@ -145,7 +145,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
-        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml', self.max_comm_retry)  # last parameter prevent retry on failed login
         if response is False:
             return False
 
@@ -204,7 +204,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.setDispCat(self.operator_name)
 
-        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
         if browse_xml is False:
@@ -232,6 +232,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         if self.addon.getSetting('show_mylist') == 'true':
             if watchlist is not None:
+                self.exclude_url_from_cache(watchlist.find('link').text)
                 self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
                             HbogoConstants.ACTION_LIST)
             else:
@@ -334,7 +335,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         search_text = ""
         if query is None:
-            keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
+            keyb = xbmc.Keyboard("", self.LB_SEARCH_DESC)
             keyb.doModal()
             if keyb.isConfirmed():
                 search_text = py2_encode(keyb.getText())
@@ -343,10 +344,10 @@ class HbogoHandler_sp(HbogoHandler):
             search_text = py2_encode(query)
 
         if search_text == "":
-            self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                        self.get_media_resource('DefaultFolderBack.png'), '')
+            xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
-            self.addon.setSetting('lastsearch', search_text)
+            if query is None:
+                self.add_to_search_history(search_text)
             self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text))
             response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
             if response is False:
@@ -370,15 +371,13 @@ class HbogoHandler_sp(HbogoHandler):
 
             if count == 0:
                 # No result
-                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                            self.get_media_resource('DefaultFolderBack.png'), '')
+                xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def play(self, content_id):
         self.log("Initializing playback... " + str(content_id))
 
-        self.del_login()
         self.login()
 
         media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')

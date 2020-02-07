@@ -148,6 +148,29 @@ class hbogo(object):
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
+        elif mode == HbogoConstants.ACTION_SEARCH_LIST:
+            self.start()
+            self.handler.setDispCat(name)
+            self.handler.searchlist()
+
+        elif mode == HbogoConstants.ACTION_SEARCH_CLEAR_HISTORY:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.searchlist_del_history()
+            xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_SEARCH_REMOVE_HISTOY_ITEM:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            itm = None
+            try:
+                itm = unquote(params["itm"])
+            except KeyError:
+                pass
+            if itm is not None:
+                handler.searchlist_del_history_item(itm)
+            xbmc.executebuiltin('Container.Refresh')
+
         elif mode == HbogoConstants.ACTION_SEARCH:
             if url == "EXTERNAL_SEARCH_FORCE_ENG":
                 self.start(True)
@@ -175,6 +198,11 @@ class hbogo(object):
                 handler = HbogoHandler(self.handle, self.base_url)
                 handler.del_setup()
                 xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_CLEAR_REQUEST_CACHE:  # reset request cache
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.clear_request_cache()
 
         elif mode == HbogoConstants.ACTION_RESET_SESSION:  # reset session
             from hbogolib.handler import HbogoHandler
