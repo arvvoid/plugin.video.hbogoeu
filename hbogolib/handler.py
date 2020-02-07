@@ -56,7 +56,7 @@ class HbogoHandler(object):
         self.base_url = base_url
         self.handle = handle
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
-        self.SESSION_VALIDITY = 0.5  # stored session valid for half hour
+        self.SESSION_VALIDITY = 4  # stored session valid for 4 hours
         self.max_comm_retry = 1  # if unauthorized del sessionrelogin and try again max times
         self.db_version = 1
 
@@ -237,7 +237,8 @@ class HbogoHandler(object):
             self.log("POST TO HBO RETURNED STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
-                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                if retry < self.max_comm_retry:
+                    self.log("RETURNED STATUS " + str(r.status_code) + " resetting login and retrying request...")
                     self.del_login()
                     self.login()
                     return self.post_to_hbogo(url, headers, data, response_format, retry+1)
@@ -305,7 +306,8 @@ class HbogoHandler(object):
             self.log("GET FROM HBO STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
-                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                if retry < self.max_comm_retry:
+                    self.log("RETURNED STATUS " + str(r.status_code) + " resetting login and retrying request...")
                     self.del_login()
                     self.login()
                     return self.get_from_hbogo(url, response_format, use_cache, retry+1)
@@ -340,7 +342,8 @@ class HbogoHandler(object):
             self.log("DEL FROM HBO STATUS: " + str(r.status_code))
 
             if int(r.status_code) != 200:
-                if int(r.status_code) == 401 and retry < self.max_comm_retry:
+                if retry < self.max_comm_retry:
+                    self.log("RETURNED STATUS "+str(r.status_code)+" resetting login and retrying request...")
                     self.del_login()
                     self.login()
                     return self.delete_from_hbogo(url, response_format, retry+1)
