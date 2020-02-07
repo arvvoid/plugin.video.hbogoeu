@@ -17,7 +17,7 @@ import sqlite3
 
 import defusedxml.ElementTree as ET
 import requests
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui
 from kodi_six.utils import py2_encode, py2_decode
 
 from hbogolib.constants import HbogoConstants
