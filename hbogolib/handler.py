@@ -170,7 +170,7 @@ class HbogoHandler(object):
                 self.db.commit()
                 return
 
-            if r[0]>0:
+            if r[0] > 0:
                 self.log("LAST VACUUM OLDER THEN 30 DAYS, VACUUMING DB...")
                 cur.execute("UPDATE settings SET val_str=DateTime('now') WHERE set_id='last_vacuum'")
                 self.db.commit()
