@@ -34,7 +34,7 @@ except ImportError:
 
 class HbogoHandler_sp(HbogoHandler):
 
-    def __init__(self, handle, base_url, country):
+    def __init__(self, handle, base_url, country, forceeng=False):
         HbogoHandler.__init__(self, handle, base_url)
 
         self.LICENSE_SERVER = ""
@@ -59,19 +59,26 @@ class HbogoHandler_sp(HbogoHandler):
         self.API_HOST_GATEWAY_REFERER = self.API_HOST_GATEWAY + '/sign-in'
 
         self.DEFAULT_LANGUAGE = country[4]
-        self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+        self.LANGUAGE_CODE = self.language(30000)
+        self.LANGUAGE_ENG = ''
         self.operator_name = ''
-        if self.language(30000) == 'ENG':  # only englih or the default language for the selected operator is allowed
-            if country[1] == 'es':
-                self.LANGUAGE_CODE = 'en_hboespana'
-                self.operator_name = 'HBO SPAIN'
-            else:
-                self.LANGUAGE_CODE = 'en_hbon'
-                self.operator_name = 'HBO NORDIC'
+
+        if country[1] == 'es':
+            self.LANGUAGE_ENG = 'en_hboespana'
+            self.operator_name = 'HBO SPAIN'
+        else:
+            self.LANGUAGE_ENG = 'en_hbon'
+            self.operator_name = 'HBO NORDIC'
+
+        if self.LANGUAGE_CODE == 'ENG':  # only englih or the default language for the selected operator is allowed
+            self.LANGUAGE_CODE = self.LANGUAGE_ENG
 
         # check if default language is forced
         if self.addon.getSetting('deflang') == 'true':
             self.LANGUAGE_CODE = self.DEFAULT_LANGUAGE
+
+        if forceeng:
+            self.LANGUAGE_CODE = self.LANGUAGE_ENG
 
         self.API_URL_BROWSE = 'https://' + self.API_HOST + '/cloffice/client/web/browse/'
         self.LANGUAGE_CODE = '?language=' + self.LANGUAGE_CODE
@@ -138,7 +145,9 @@ class HbogoHandler_sp(HbogoHandler):
 
         data = '<device><type>web</type><deviceId>' + self.API_DEVICE_ID + '</deviceId></device>'
 
-        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml')
+        response = self.post_to_hbogo(self.API_URL_AUTH_WEBBASIC, headers, data, 'xml', self.max_comm_retry)  # last parameter prevent retry on failed login
+        if response is False:
+            return False
 
         if response.find('status').text == 'Success':
             self.API_DEVICE_TOKEN = response.find('token').text
@@ -163,7 +172,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         return False
 
-    def setup(self, country=None):
+    def setup(self, country=None, forceeng=False):
         self.init_api()
         if self.inputCredentials():
             return True
@@ -195,9 +204,11 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.setDispCat(self.operator_name)
 
-        self.addCat(self.LB_SEARCH, self.LB_SEARCH, self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
+        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
+        if browse_xml is False:
+            return
 
         home = None
         series = None
@@ -221,6 +232,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         if self.addon.getSetting('show_mylist') == 'true':
             if watchlist is not None:
+                self.exclude_url_from_cache(watchlist.find('link').text)
                 self.addCat(self.LB_MYPLAYLIST, watchlist.find('link').text, self.get_media_resource('FavoritesFolder.png'),
                             HbogoConstants.ACTION_LIST)
             else:
@@ -281,6 +293,8 @@ class HbogoHandler_sp(HbogoHandler):
     def list_pages(self, url, max_items=200, offset=0):
 
         response = self.get_from_hbogo(url + self.LANGUAGE_CODE + "&max=" + str(max_items) + "&offset=" + str(offset), 'xml')
+        if response is False:
+            return
 
         count = 0
 
@@ -308,63 +322,68 @@ class HbogoHandler_sp(HbogoHandler):
             self.login()
         self.log("List: " + str(url))
 
+        self.reset_media_type_counters()
+
         self.list_pages(url, 200, 0)
 
         if simple is False:
-            KodiUtil.endDir(self.handle, self.use_content_type)
+            KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def search(self):
-        if not self.chk_login():
-            self.login()
-        keyb = xbmc.Keyboard(self.search_string, self.LB_SEARCH_DESC)
-        keyb.doModal()
-        if keyb.isConfirmed():
-            search_text = quote(keyb.getText())
-            if search_text == "":
-                self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                            self.get_media_resource('DefaultFolderBack.png'), '')
-            else:
-                self.addon.setSetting('lastsearch', search_text)
-                self.log("Performing search: " + str(self.API_URL_SEARCH + py2_encode(search_text)))
-                response = self.get_from_hbogo(str(self.API_URL_SEARCH + py2_encode(search_text)) + "&max=30&offset=0", 'xml')
-
-                count = 0
-
-                for item in response.findall('.//item'):
-                    count += 1
-                    item_link = item.find('link').text
-
-                    if item_link:
-                        if self.lograwdata:
-                            self.log(ET.tostring(item, encoding='utf8'))
-                        item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
-                        if item_type != 'media':
-                            self.addDir(item)
-                        elif item_type == 'media':
-                            self.addLink(item, HbogoConstants.ACTION_PLAY)
-                        else:
-                            self.log('Unknown item type: ' + item_type)
-
-                if count == 0:
-                    # No result
-                    self.addCat(self.LB_SEARCH_NORES, self.LB_SEARCH_NORES,
-                                self.get_media_resource('DefaultFolderBack.png'), '')
-
-        KodiUtil.endDir(self.handle, self.use_content_type)
-
-    def play(self, url, content_id):
-        self.log("Play: " + str(url))
-
+    def search(self, query=None):
         if not self.chk_login():
             self.login()
 
-        if not self.chk_login():
-            self.log("NOT LOGGED IN, ABORTING PLAY")
-            xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, self.language(30103))
-            self.logout()
+        search_text = ""
+        if query is None:
+            keyb = xbmc.Keyboard("", self.LB_SEARCH_DESC)
+            keyb.doModal()
+            if keyb.isConfirmed():
+                search_text = py2_encode(keyb.getText())
+        else:
+            self.force_original_names = False
+            search_text = py2_encode(query)
+
+        if search_text == "":
+            xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
+        else:
+            if query is None:
+                self.add_to_search_history(search_text)
+            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text))
+            response = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + "&max=30&offset=0", 'xml')
+            if response is False:
+                return
+            count = 0
+
+            for item in response.findall('.//item'):
+                count += 1
+                item_link = item.find('link').text
+
+                if item_link:
+                    if self.lograwdata:
+                        self.log(ET.tostring(item, encoding='utf8'))
+                    item_type = py2_encode(item.find('clearleap:itemType', namespaces=self.NAMESPACES).text)
+                    if item_type != 'media':
+                        self.addDir(item)
+                    elif item_type == 'media':
+                        self.addLink(item, HbogoConstants.ACTION_PLAY)
+                    else:
+                        self.log('Unknown item type: ' + item_type)
+
+            if count == 0:
+                # No result
+                xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
+
+        KodiUtil.endDir(self.handle, self.decide_media_type())
+
+    def play(self, content_id):
+        self.log("Initializing playback... " + str(content_id))
+
+        self.login()
+
+        media_item = self.get_from_hbogo(self.API_URL_BROWSE + content_id + self.LANGUAGE_CODE, 'xml')
+        if media_item is False:
             return
-
-        media_item = self.get_from_hbogo(url + self.LANGUAGE_CODE, 'xml')
+        media_info = self.construct_media_info(media_item.find('.//item'))
 
         if self.lograwdata:
             self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
@@ -372,6 +391,8 @@ class HbogoHandler_sp(HbogoHandler):
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
         mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        if mpd is False:
+            return
         if self.lograwdata:
             self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
 
@@ -386,6 +407,8 @@ class HbogoHandler_sp(HbogoHandler):
         license_url = 'https://' + self.API_HOST + '/cloffice/drm/wv/' + media_guid + '|' + license_headers + '|R{SSM}|'
 
         li = xbmcgui.ListItem(path=mpd_url)
+        li.setArt(media_info["art"])
+        li.setInfo(type="Video", infoLabels=media_info["info"])
 
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
@@ -495,14 +518,10 @@ class HbogoHandler_sp(HbogoHandler):
 
         return [add_mylist]
 
-    def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-
+    def construct_media_info(self, title):
         media_type = "episode"
 
         name = py2_encode(title.find('title').text)
-        guid = py2_encode(title.find('guid').text)
 
         original_name = py2_encode(title.find('clearleap:analyticsLabel', namespaces=self.NAMESPACES).text)
         if self.force_original_names:
@@ -538,26 +557,39 @@ class HbogoHandler_sp(HbogoHandler):
             self.log("Error in season find processing: " + traceback.format_exc())
         if episode == 0:
             media_type = "movie"
+            self.n_movies += 1
+        else:
+            self.n_episodes += 1
+
+        thumb = self.get_thumbnail_url(title)
+
+        return {
+            "info": {
+                "mediatype": media_type, "episode": episode,
+                "season": season,
+                "tvshowtitle": series_name, "plot": plot,
+                "title": name, "originaltitle": original_name
+            },
+            "art": {'thumb': thumb, 'poster': thumb, 'banner': thumb, 'fanart': thumb}
+        }
+
+    def addLink(self, title, mode):
+        if self.lograwdata:
+            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
+
+        media_info = self.construct_media_info(title)
+        guid = py2_encode(title.find('guid').text)
 
         item_url = '%s?%s' % (self.base_url, urlencode({
-            'url': title.find('link').text,
+            'url': 'PLAY',
             'mode': mode,
-            'name': name,
+            'cid': guid,
         }))
 
-        thunb = self.get_thumbnail_url(title)
-
-        liz = xbmcgui.ListItem(name)
-        liz.setArt({'thumb': thunb, 'poster': thunb, 'banner': thunb, 'fanart': thunb})
-        liz.setInfo(type="Video",
-                    infoLabels={
-                        "mediatype": media_type, "episode": episode,
-                        "season": season,
-                        "tvshowtitle": series_name, "plot": plot,
-                        "title": name, "originaltitle": original_name
-                    })
-        liz.addStreamInfo('video', {'width': 1920, 'height': 1080})
-        liz.addStreamInfo('video', {'aspect': 1.78, 'codec': 'h264'})
+        liz = xbmcgui.ListItem(media_info["info"]["title"])
+        liz.setArt(media_info["art"])
+        liz.setInfo(type="Video", infoLabels=media_info["info"])
+        liz.addStreamInfo('video', {'width': 1920, 'height': 1080, 'aspect': 1.78, 'codec': 'h264'})
         liz.addStreamInfo('audio', {'codec': 'aac', 'channels': 2})
         liz.addContextMenuItems(items=self.genContextMenu(guid))
         liz.setProperty("IsPlayable", "true")
@@ -567,7 +599,19 @@ class HbogoHandler_sp(HbogoHandler):
         if self.lograwdata:
             self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
 
-        media_type = "tvshow"
+        media_type = "file"
+        try:
+            if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "season":
+                media_type = "season"
+                self.n_seasons += 1
+        except AttributeError:
+            pass
+        try:
+            if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "series":
+                media_type = "tvshow"
+                self.n_tvshows += 1
+        except AttributeError:
+            pass
 
         plot = ""
         try:

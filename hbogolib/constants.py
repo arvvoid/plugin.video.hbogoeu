@@ -36,6 +36,10 @@ class HbogoConstants(object):
     ACTION_REMOVE_MY_LIST = 10
     ACTION_MARK_WATCHED = 11
     ACTION_MARK_UNWATCHED = 12
+    ACTION_SEARCH_LIST = 13
+    ACTION_SEARCH_CLEAR_HISTORY = 14
+    ACTION_SEARCH_REMOVE_HISTOY_ITEM = 15
+    ACTION_CLEAR_REQUEST_CACHE = 16
 
     CONTEXT_MODE_DEFAULT = 0
     CONTEXT_MODE_MOVIE = 1
@@ -103,6 +107,23 @@ class HbogoConstants(object):
     }
 
     SkylinkID = "c55e69f0-2471-46a9-a8b7-24dac54e6eb9"  # Skylink Operator ID, Skylink require special steps in login
+
+    # Special data for OAUTH that require custom actions
+    # each entry is one operator
+    # each operator has: 
+    #   id: the id of the operator for easy retrieval
+    #   confirm_uri: the URI that is called at a 2nd callback for auth success
+    #   payload: the data to send in this 2nd request
+    special_data = {
+        'telekom_ro': {
+            'id': "972706fe-094c-4ea5-ae98-e8c5d907f6a2",
+            'confirm_uri': "https://my.telekom.ro/oauth2/rest/approval",
+            'payload': {
+                'state': None,
+                'act': 1
+            }
+        }
+    }
 
     # 0 - operator website login form url, 1 - username field name, 2 - password field name, 3 form payload
     eu_redirect_login = {

@@ -1,22 +1,37 @@
-v.2.0.28-beta44
+v.2.3.0
+- Request caching                           
+- Optimize re-login on unauthorized
+- Local sqllight database
+- Search history
+- external add-ons can search now (ability to create TMDB Helper Player)
+- improved search
+
+v.2.2.0
+- duoble new line fix in ttml2srt on some subtitles
+- Translations update
+- Set content type for listings based on the media type of the majority of the items in the list
+- Option to force generic "video" media type for listings
+
+v.2.1.5
+- fix Telekom Romania (My Account) login
+- new logo
+- fix some encoding errors on log
+- better error handling on communication errors
+- media info optimizations
+
+v.2.1.1
+- Prepare for Kodi official repository
+
+v.2.1.0
 - Language files updates
 - Option to ignore Kodi watched status if Get Hbo Go Watched status is enabled
-
-v.2.0.27-beta43
-- Fixes to Report playstatus back to Hbo Go (EU only)
-
-v.2.0.26-beta42
 - Report playstatus back to Hbo Go (EU only)
-
-v.2.0.25-beta41
 - Fix UPC CZ and SK
 - Fix UPC Romania
 - Use Video as media type
 - Start screen customization
 - History (EU only option)
 - Continue watching (only display the category, EU only option)
-
-v.2.0.23-beta39
 - Fix Skylink CZ and SK (contribution ferdabasek)
 
 v.2.0.22

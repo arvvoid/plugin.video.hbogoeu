@@ -42,7 +42,7 @@ class hbogo(object):
 
         return index
 
-    def start(self):
+    def start(self, forceeng=False):
         country_id = self.addon.getSetting('country_code')
         country_index = self.country_index(country_id)
 
@@ -51,17 +51,17 @@ class hbogo(object):
             country_id = self.addon.getSetting('country_code')
             country_index = self.country_index(country_id)
             if country_index == -1:
-                xbmcgui.Dialog().ok("ERROR", "Setup failed")
+                xbmcgui.Dialog().ok(self.language(30001), self.language(30002))
                 sys.exit()
 
         if HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_EU:
             from hbogolib.handlereu import HbogoHandler_eu
-            self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index])
+            self.handler = HbogoHandler_eu(self.handle, self.base_url, HbogoConstants.countries[country_index], forceeng)
         elif HbogoConstants.countries[country_index][6] == HbogoConstants.HANDLER_SPAIN:
             from hbogolib.handlersp import HbogoHandler_sp
-            self.handler = HbogoHandler_sp(self.handle, self.base_url, HbogoConstants.countries[country_index])
+            self.handler = HbogoHandler_sp(self.handle, self.base_url, HbogoConstants.countries[country_index], forceeng)
         else:
-            xbmcgui.Dialog().ok("ERROR", "Unsupported region")
+            xbmcgui.Dialog().ok(self.language(30001), self.language(30003))
             sys.exit()
 
     def setup(self):
@@ -78,7 +78,7 @@ class hbogo(object):
             li_items_list.append(xbmcgui.ListItem(label=country[0], label2=country[1]))
             li_items_list[-1].setArt({'thumb': "https://www.countryflags.io/" + country[1] + "/flat/64.png",
                                       'icon': "https://www.countryflags.io/" + country[1] + "/flat/64.png"})
-        index = xbmcgui.Dialog().select(self.language(30441).encode('utf-8'), li_items_list, useDetails=True)
+        index = xbmcgui.Dialog().select(self.language(30441), li_items_list, useDetails=True)
         if index != -1:
             country_id = li_items_list[index].getLabel2()
             self.addon.setSetting('country_code', country_id)
@@ -148,23 +148,61 @@ class hbogo(object):
             self.handler.setDispCat(name)
             self.handler.episode(url)
 
-        elif mode == HbogoConstants.ACTION_SEARCH:
+        elif mode == HbogoConstants.ACTION_SEARCH_LIST:
             self.start()
-            self.handler.setDispCat(self.language(30711).encode('utf-8'))
-            self.handler.search()
+            self.handler.setDispCat(name)
+            self.handler.searchlist()
+
+        elif mode == HbogoConstants.ACTION_SEARCH_CLEAR_HISTORY:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.searchlist_del_history()
+            xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_SEARCH_REMOVE_HISTOY_ITEM:
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            itm = None
+            try:
+                itm = unquote(params["itm"])
+            except KeyError:
+                pass
+            if itm is not None:
+                handler.searchlist_del_history_item(itm)
+            xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_SEARCH:
+            if url == "EXTERNAL_SEARCH_FORCE_ENG":
+                self.start(True)
+            else:
+                self.start()
+            self.handler.setDispCat(self.language(30711))
+            query = None
+            try:
+                query = unquote(params["query"])
+            except KeyError:
+                pass
+            if query is None:
+                self.handler.search()
+            else:
+                self.handler.search(query)
 
         elif mode == HbogoConstants.ACTION_PLAY:
             self.start()
-            self.handler.setDispCat(name)
-            self.handler.play(url, content_id)
+            self.handler.play(content_id)
 
         elif mode == HbogoConstants.ACTION_RESET_SETUP:  # logout, destry setup
             # ask confirm
-            if xbmcgui.Dialog().yesno(self.addon.getAddonInfo('name'), self.language(30692).encode('utf-8')):
+            if xbmcgui.Dialog().yesno(self.addon.getAddonInfo('name'), self.language(30692)):
                 from hbogolib.handler import HbogoHandler
                 handler = HbogoHandler(self.handle, self.base_url)
                 handler.del_setup()
                 xbmc.executebuiltin('Container.Refresh')
+
+        elif mode == HbogoConstants.ACTION_CLEAR_REQUEST_CACHE:  # reset request cache
+            from hbogolib.handler import HbogoHandler
+            handler = HbogoHandler(self.handle, self.base_url)
+            handler.clear_request_cache()
 
         elif mode == HbogoConstants.ACTION_RESET_SESSION:  # reset session
             from hbogolib.handler import HbogoHandler
