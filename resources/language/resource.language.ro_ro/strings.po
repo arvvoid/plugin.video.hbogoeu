@@ -356,7 +356,7 @@ msgstr "Forțează nume prietenoase pentru titluri"
 
 msgctxt "#30672"
 msgid "Use generic video media type in listings"
-msgstr "Folosește un tip generic pentru video în listări"
+msgstr "Folosește un tip generic pentru media video în liste"
 
 msgctxt "#30680"
 msgid "Session"
