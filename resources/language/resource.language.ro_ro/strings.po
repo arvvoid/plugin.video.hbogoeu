@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: plugin.video.hbogoeu\n"
 "Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-02-08 00:20+0100\n"
+"PO-Revision-Date: 2020-02-10 11:09+0100\n"
 "Last-Translator: arvvoid\n"
 "Language-Team: arvvoid\n"
 "Language: ro_RO\n"
@@ -22,42 +22,34 @@ msgctxt "#30000"
 msgid "ENG"
 msgstr "RON"
 
-#, fuzzy
 msgctxt "#30001"
 msgid "ERROR"
 msgstr "EROARE"
 
-#, fuzzy
 msgctxt "#30002"
 msgid "Setup failed"
 msgstr "Instalarea nu a reușit"
 
-#, fuzzy
 msgctxt "#30003"
 msgid "Unsupported region"
 msgstr "Regiune neacceptată"
 
-#, fuzzy
 msgctxt "#30004"
 msgid "An unexpected error has occurred."
 msgstr "S-a produs o eroare neașteptată."
 
-#, fuzzy
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
+msgid "Error getting content from Hbo Go"
 msgstr "Eroare obtinerea de conținut de la HBO Go"
 
-#, fuzzy
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
+msgid "Error sending data to Hbo Go"
 msgstr "Eroare la trimiterea de date la HBO Go"
 
-#, fuzzy
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
+msgid "Error deleting data from Hbo Go"
 msgstr "Eroare la ștergerea datelor de la HBO Go"
 
-#, fuzzy
 msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr "Eroare de comunicare, returnat STATUS: "
@@ -72,8 +64,8 @@ msgid ""
 "UNOFFICIAL ADD-ON AND HAVE NO OFFICIAL SUPPORT! COMMUNITY HELP CAN BE FOUND "
 "ON THE ADD-ON GITHUB PAGE OR KODI FORUM"
 msgstr ""
-"VĂ RUGĂM SĂ NU CONTACTAȚI OPERATORUL DUMNEAVOASTRĂ ÎN LEGĂTURĂ CU ACEST ADD-ON,"
-"ESTE UN ADD-ON NEOFICIAL ȘI NU ARE SUPORT OFICIAL! PUTEȚI OBȚINE AJUTOR "
+"VĂ RUGĂM SĂ NU CONTACTAȚI OPERATORUL DUMNEAVOASTRĂ ÎN LEGĂTURĂ CU ACEST ADD-"
+"ON,ESTE UN ADD-ON NEOFICIAL ȘI NU ARE SUPORT OFICIAL! PUTEȚI OBȚINE AJUTOR "
 "DIN PARTEA COMUNITĂȚII PE PAGINA GITHUB A ADD-ON-ULUI SAU TOPICUL DE PE "
 "FORUMUL KODI"
 

@@ -38,15 +38,15 @@ msgid "An unexpected error has occurred."
 msgstr ""
 
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
+msgid "Error getting content from Hbo Go"
 msgstr ""
 
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
+msgid "Error sending data to Hbo Go"
 msgstr ""
 
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
+msgid "Error deleting data from Hbo Go"
 msgstr ""
 
 msgctxt "#30008"

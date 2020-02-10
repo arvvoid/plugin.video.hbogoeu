@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: plugin.video.hbogoeu\n"
 "Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-02-08 00:15+0100\n"
+"PO-Revision-Date: 2020-02-10 10:51+0100\n"
 "Last-Translator: arvvoid\n"
 "Language-Team: arvvoid\n"
 "Language: bs_BA@latin\n"
@@ -38,16 +38,25 @@ msgctxt "#30004"
 msgid "An unexpected error has occurred."
 msgstr "Dogodila se neočekivana greška."
 
+#, fuzzy
+#| msgctxt "#30005"
+#| msgid "Error getting content from Hbo go"
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
+msgid "Error getting content from Hbo Go"
 msgstr "Greška prilikom povlačenja sadržaja iz HBO-a"
 
+#, fuzzy
+#| msgctxt "#30006"
+#| msgid "Error sending data to Hbo go"
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
+msgid "Error sending data to Hbo Go"
 msgstr "Greška pri slanju podataka na HBO"
 
+#, fuzzy
+#| msgctxt "#30007"
+#| msgid "Error deleting data from Hbo go"
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
+msgid "Error deleting data from Hbo Go"
 msgstr "Greška pri brisanju podataka sa HBO-a"
 
 msgctxt "#30008"

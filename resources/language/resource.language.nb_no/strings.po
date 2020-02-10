@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: plugin.video.hbogoeu\n"
 "Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-02-08 00:19+0100\n"
+"PO-Revision-Date: 2020-02-10 11:06+0100\n"
 "Last-Translator: arvvoid\n"
 "Language-Team: arvvoid\n"
 "Language: nb_NO\n"
@@ -42,17 +42,17 @@ msgstr "Det har oppstått en uventet feil."
 
 #, fuzzy
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
+msgid "Error getting content from Hbo Go"
 msgstr "Feil ved henting av innhold fra HBO Go"
 
 #, fuzzy
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
+msgid "Error sending data to Hbo Go"
 msgstr "Feil ved sending av data til HBO Go"
 
 #, fuzzy
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
+msgid "Error deleting data from Hbo Go"
 msgstr "Feil ved sletting av data fra HBO Go"
 
 #, fuzzy
