@@ -58,6 +58,7 @@ class HbogoHandler(object):
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 4  # stored session valid for 4 hours
         self.max_comm_retry = 1  # if unauthorized del sessionrelogin and try again max times
+        self.max_play_retry = 1  # max play retry on soft error
         self.db_version = 1
 
         self.base_addon_cat = ""
@@ -585,7 +586,7 @@ class HbogoHandler(object):
     def search(self, query=None):
         pass
 
-    def play(self, content_id):
+    def play(self, content_id, retry=0):
         pass
 
     def procContext(self, action_type, content_id, optional=""):

@@ -1076,7 +1076,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def play(self, content_id):
+    def play(self, content_id, retry=0):
         self.log("Initializing playback... " + str(content_id))
 
         self.login()
@@ -1121,9 +1121,13 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrspp['ErrorMessage']:
-                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
-                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 self.logout()
+                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
+                if retry < self.max_play_retry:
+                    #  probably to long inactivity, retry playback after re-login, avoid try again after login again message
+                    self.log("Try again playback after error: " + str(jsonrspp['ErrorMessage']))
+                    return self.play(content_id, retry + 1)
+                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 return
         except KeyError:
             pass  # all is ok no error message just pass
