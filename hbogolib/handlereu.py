@@ -1084,6 +1084,35 @@ class HbogoHandler_eu(HbogoHandler):
         item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
         if item_info is False:
             return
+
+        ExternalSubtitles = None
+
+        try:
+            ExternalSubtitles = item_info['Subtitles']
+            self.log("Subs... " + str(ExternalSubtitles))
+        except KeyError:
+            pass
+
+        availfrom = ''
+        try:
+            availfrom = item_info['AvailabilityFromUtcIso']
+            self.log("Availible from... " + availfrom)
+        except KeyError:
+            self.log("Availible from...NOT FOUND ")
+        if len(availfrom) > 10:
+            from datetime import datetime
+            try:
+                avail_datetime = datetime.strptime(availfrom, "%Y-%m-%dT%H:%M:%SZ")
+            except TypeError:
+                avail_datetime = datetime.fromtimestamp(time.mktime(time.strptime(availfrom, "%Y-%m-%dT%H:%M:%SZ")))
+            except ValueError:
+                avail_datetime = datetime.now()
+            self.log("Converted avail_from.. " + str(avail_datetime) + " now: " + str(datetime.now()))
+            if datetime.now() < avail_datetime:
+                self.log("Content is not available, aborting play")
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30009)+" "+avail_datetime.strftime("%d/%m/%Y %H:%M:%S"))
+                return
+
         media_info = self.construct_media_info(item_info)
 
         purchase_payload = '<Purchase xmlns="go:v8:interop" ' \

@@ -48,6 +48,10 @@ msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr "Pogreška u komunikaciji, vraćeni STATUS: "
 
+msgctxt "#30009"
+msgid "The content is availible from:"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Web registration on "
 msgstr "Registracija web-mjesta "
