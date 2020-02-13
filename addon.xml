@@ -45,7 +45,7 @@ If an official app is available for your platform, use it instead of this.
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
 v.2.3.4
-- BUG FIX: Correnc available from date and time
+- BUG FIX: Correct available from date and time
 - Detect not available content before attempt play (show dialog when the content will be available)
 - On playback start long inactivity error, silently re-login and retry playback automatically
 - Request caching                           
