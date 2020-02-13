@@ -1093,14 +1093,20 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Availible from...NOT FOUND ")
         if len(availfrom) > 10:
             from datetime import datetime
+            from dateutil import tz
+            from_zone = tz.tzutc()  # UTC ZONE
+            to_zone = tz.tzlocal()  # LOCAL TIMEZONE
             try:
-                avail_datetime = datetime.strptime(availfrom, "%Y-%m-%dT%H:%M:%SZ")
-            except TypeError:
                 avail_datetime = datetime.fromtimestamp(time.mktime(time.strptime(availfrom, "%Y-%m-%dT%H:%M:%SZ")))
+                avail_datetime = avail_datetime.replace(tzinfo=from_zone)
+                avail_datetime = avail_datetime.astimezone(to_zone)
             except ValueError:
                 avail_datetime = datetime.now()
-            self.log("Converted avail_from.. " + str(avail_datetime) + " now: " + str(datetime.now()))
-            if datetime.now() < avail_datetime:
+                avail_datetime = avail_datetime.replace(tzinfo=to_zone)
+            current_time = datetime.now()
+            current_time = current_time.replace(tzinfo=to_zone)
+            self.log("Converted avail_from.. " + str(avail_datetime) + " now: " + str(current_time))
+            if current_time < avail_datetime:
                 self.log("Content is not available, aborting play")
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30009)+" "+avail_datetime.strftime("%d/%m/%Y %H:%M:%S"))
                 return

@@ -1,10 +1,11 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.3">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.4">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3" />
     <import addon="script.module.defusedxml" version="0.6.0" />
+    <import addon="script.module.dateutil" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
@@ -43,9 +44,10 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.3.3
+v.2.3.4
+- BUG FIX: Correnc available from date and time
 - Detect not available content before attempt play (show dialog when the content will be available)
-- Retry playback automatically on first soft error (usually after long inactivity EU handler)
+- On playback start long inactivity error, silently re-login and retry playback automatically
 - Request caching                           
 - Optimize re-login on unauthorized
 - Local sqllight database
