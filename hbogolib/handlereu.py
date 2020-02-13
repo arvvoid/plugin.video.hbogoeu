@@ -1085,14 +1085,6 @@ class HbogoHandler_eu(HbogoHandler):
         if item_info is False:
             return
 
-        ExternalSubtitles = None
-
-        try:
-            ExternalSubtitles = item_info['Subtitles']
-            self.log("Subs... " + str(ExternalSubtitles))
-        except KeyError:
-            pass
-
         availfrom = ''
         try:
             availfrom = item_info['AvailabilityFromUtcIso']

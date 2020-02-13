@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.2">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.3">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -43,7 +43,7 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.3.2
+v.2.3.3
 - Detect not available content before attempt play (show dialog when the content will be available)
 - Retry playback automatically on first soft error (usually after long inactivity EU handler)
 - Request caching                           
