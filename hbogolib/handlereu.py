@@ -1092,23 +1092,10 @@ class HbogoHandler_eu(HbogoHandler):
         except KeyError:
             self.log("Availible from...NOT FOUND ")
         if len(availfrom) > 10:
-            from datetime import datetime
-            from dateutil import tz
-            from_zone = tz.tzutc()  # UTC ZONE
-            to_zone = tz.tzlocal()  # LOCAL TIMEZONE
-            try:
-                avail_datetime = datetime.fromtimestamp(time.mktime(time.strptime(availfrom, "%Y-%m-%dT%H:%M:%SZ")))
-                avail_datetime = avail_datetime.replace(tzinfo=from_zone)
-                avail_datetime = avail_datetime.astimezone(to_zone)
-            except ValueError:
-                avail_datetime = datetime.now()
-                avail_datetime = avail_datetime.replace(tzinfo=to_zone)
-            current_time = datetime.now()
-            current_time = current_time.replace(tzinfo=to_zone)
-            self.log("Converted avail_from.. " + str(avail_datetime) + " now: " + str(current_time))
-            if current_time < avail_datetime:
+            avail_datetime = Util.is_utc_datetime_past_now(availfrom)
+            if avail_datetime is not True:
                 self.log("Content is not available, aborting play")
-                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30009)+" "+avail_datetime.strftime("%d/%m/%Y %H:%M:%S"))
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30009)+" "+avail_datetime)
                 return
 
         media_info = self.construct_media_info(item_info)
@@ -1351,6 +1338,15 @@ class HbogoHandler_eu(HbogoHandler):
         plot = ""
         name = ""
         media_type = "movie"
+        availfrom = ''
+        try:
+            availfrom = title['AvailabilityFromUtcIso']
+        except KeyError:
+            pass
+        if len(availfrom) > 10:
+            avail_datetime = Util.is_utc_datetime_past_now(availfrom)
+            if avail_datetime is not True:
+                plot = py2_encode("[COLOR red]" + self.language(30009) + " [B]" + avail_datetime + "[/B][/COLOR] ")
         if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
             name = py2_encode(title['Name'])
             if self.force_original_names:
@@ -1358,13 +1354,10 @@ class HbogoHandler_eu(HbogoHandler):
             scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = scrapname
-            plot = py2_encode(title['Abstract'])
+            plot += py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = py2_encode(title['Description'])
-            if 'AvailabilityTo' in title:
-                if title['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+                    plot += py2_encode(title['Description'])
         elif title['ContentType'] == 3:
             media_type = "episode"
             name = py2_encode(title['SeriesName']) + " - " + str(
@@ -1375,12 +1368,10 @@ class HbogoHandler_eu(HbogoHandler):
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = scrapname
-            plot = py2_encode(title['Abstract'])
+            plot += py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = py2_encode(title['Description'])
-            if 'AvailabilityTo' in title:
-                plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+                    plot += py2_encode(title['Description'])
 
         img = title['BackgroundUrl']
 
