@@ -5,7 +5,7 @@
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3" />
     <import addon="script.module.defusedxml" version="0.6.0" />
-    <import addon="script.module.dateutil" />
+    <import addon="script.module.dateutil" version="2.8.1" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
@@ -45,17 +45,17 @@ If an official app is available for your platform, use it instead of this.
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
 v.2.3.5
-- If not currently available, show available from date and time in plot
-- BUG FIX: Correct available from date and time
+- If not currently available, show available from date and time in the plot
+- BUGFIX: Correct available from date and time
 - Detect not available content before attempt play (show dialog when the content will be available)
 - On playback start long inactivity error, silently re-login and retry playback automatically
 - Request caching                           
 - Optimize re-login on unauthorized
-- Local sqlight database
+- Local SQlight database
 - Search history
 - external add-ons can search now (ability to create TMDB Helper Player)
 - improved search
-- duble new line fix in ttml2srt on some subtitles
+- double new line fix in ttml2srt on some subtitles
 - Translations update
 - Set content type for listings based on the media type of the majority of the items in the list
 - Option to force generic "video" media type for listings
