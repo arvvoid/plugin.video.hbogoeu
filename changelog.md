@@ -1,7 +1,13 @@
+v.2.3.5
+- If not currently available, show available from date and time in the plot
+- BUGFIX: Correct available from date and time
+- Detect not available content before attempt play (show dialog when the content will be available)
+- On playback start long inactivity error, silently re-login and retry playback automatically
+
 v.2.3.0
 - Request caching                           
 - Optimize re-login on unauthorized
-- Local sqllight database
+- Local SQlight database
 - Search history
 - external add-ons can search now (ability to create TMDB Helper Player)
 - improved search
