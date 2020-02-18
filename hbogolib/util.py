@@ -30,8 +30,7 @@ class Util(object):
         current_time = current_time.replace(tzinfo=to_zone)
         if current_time < avail_datetime:
             return avail_datetime.strftime(output_format)  # if not past current date time return the local datetime as string
-        else:
-            return True  # if available return True
+        return True  # if available return True
 
     @staticmethod
     def base64enc(data):

@@ -25,11 +25,6 @@ from hbogolib.kodiutil import KodiUtil
 from hbogolib.util import Util
 
 try:
-    from urllib import unquote_plus as unquote
-except ImportError:
-    from urllib.parse import unquote_plus as unquote
-
-try:
     from Cryptodome import Random
     from Cryptodome.Cipher import AES
     from Cryptodome.Util import Padding
