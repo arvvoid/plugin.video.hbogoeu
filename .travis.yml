@@ -7,7 +7,8 @@ install:
 
 before_script:
 - rm -R .github/ISSUE_TEMPLATE
-- rm .*
+- rm .all-contributorsrc
+- rm .gitignore
 - rm *.yml
 - rm CODE_OF_CONDUCT.md
 - rm PULL_REQUEST_TEMPLATE.md
