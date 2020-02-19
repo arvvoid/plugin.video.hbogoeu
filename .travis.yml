@@ -6,7 +6,8 @@ install:
   - pip install kodi-addon-checker
 
 before_script:
-- rm -R .*
+- rm -R .github/ISSUE_TEMPLATE
+- rm .*
 - rm *.yml
 - rm CODE_OF_CONDUCT.md
 - rm PULL_REQUEST_TEMPLATE.md
