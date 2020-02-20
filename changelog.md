@@ -1,3 +1,10 @@
+v.2.3.7
+- Update to hr_hr translation (by @arvvoid)
+- Update to hu_hu translation (by @Ajnasz)
+- Update to es_es translation (by @boblo1)
+- Update to ro_ro translation (by @tmihai20)
+- Update to fi_fi translation (by @jumakki)
+
 v.2.3.6
 - Update to es_es translation (by @boblo1)
 
