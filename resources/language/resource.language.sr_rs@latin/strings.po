@@ -35,20 +35,24 @@ msgid "An unexpected error has occurred."
 msgstr "Došlo je do neočekivane greške."
 
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
-msgstr "Greška pri dobijanju sadržaja iz HBO go"
+msgid "Error getting content from Hbo Go"
+msgstr "Greška pri dobijanju sadržaja iz HBO Go"
 
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
-msgstr "Greška pri slanju podataka u HBO go"
+msgid "Error sending data to Hbo Go"
+msgstr "Greška pri slanju podataka u HBO Go"
 
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
-msgstr "Greška pri brisanju podataka iz HBO go"
+msgid "Error deleting data from Hbo Go"
+msgstr "Greška pri brisanju podataka iz HBO Go"
 
 msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr "Greška u komunikaciji, vraćeni STATUS: "
+
+msgctxt "#30009"
+msgid "The content is availible from:"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Web registration on "

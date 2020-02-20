@@ -1076,7 +1076,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def play(self, content_id):
+    def play(self, content_id, retry=0):
         self.log("Initializing playback... " + str(content_id))
 
         self.login()
@@ -1084,6 +1084,20 @@ class HbogoHandler_eu(HbogoHandler):
         item_info = self.get_from_hbogo(self.API_URL_CONTENT + content_id)
         if item_info is False:
             return
+
+        availfrom = ''
+        try:
+            availfrom = item_info['AvailabilityFromUtcIso']
+            self.log("Availible from... " + availfrom)
+        except KeyError:
+            self.log("Availible from...NOT FOUND ")
+        if len(availfrom) > 10:
+            avail_datetime = Util.is_utc_datetime_past_now(availfrom)
+            if avail_datetime is not True:
+                self.log("Content is not available, aborting play")
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30009)+" "+avail_datetime)
+                return
+
         media_info = self.construct_media_info(item_info)
 
         purchase_payload = '<Purchase xmlns="go:v8:interop" ' \
@@ -1121,9 +1135,13 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrspp['ErrorMessage']:
-                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
-                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 self.logout()
+                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
+                if retry < self.max_play_retry:
+                    #  probably to long inactivity, retry playback after re-login, avoid try again after login again message
+                    self.log("Try again playback after error: " + str(jsonrspp['ErrorMessage']))
+                    return self.play(content_id, retry + 1)
+                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 return
         except KeyError:
             pass  # all is ok no error message just pass
@@ -1320,6 +1338,15 @@ class HbogoHandler_eu(HbogoHandler):
         plot = ""
         name = ""
         media_type = "movie"
+        availfrom = ''
+        try:
+            availfrom = title['AvailabilityFromUtcIso']
+        except KeyError:
+            pass
+        if len(availfrom) > 10:
+            avail_datetime = Util.is_utc_datetime_past_now(availfrom)
+            if avail_datetime is not True:
+                plot = py2_encode("[COLOR red]" + self.language(30009) + " [B]" + avail_datetime + "[/B][/COLOR] ")
         if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
             name = py2_encode(title['Name'])
             if self.force_original_names:
@@ -1327,13 +1354,10 @@ class HbogoHandler_eu(HbogoHandler):
             scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = scrapname
-            plot = py2_encode(title['Abstract'])
+            plot += py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = py2_encode(title['Description'])
-            if 'AvailabilityTo' in title:
-                if title['AvailabilityTo'] is not None:
-                    plot = plot + ' ' + self.LB_FILM_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+                    plot += py2_encode(title['Description'])
         elif title['ContentType'] == 3:
             media_type = "episode"
             name = py2_encode(title['SeriesName']) + " - " + str(
@@ -1344,12 +1368,10 @@ class HbogoHandler_eu(HbogoHandler):
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = scrapname
-            plot = py2_encode(title['Abstract'])
+            plot += py2_encode(title['Abstract'])
             if 'Description' in title:
                 if title['Description'] is not None:
-                    plot = py2_encode(title['Description'])
-            if 'AvailabilityTo' in title:
-                plot = plot + ' ' + self.LB_EPISODE_UNTILL + ' ' + py2_encode(title['AvailabilityTo'])
+                    plot += py2_encode(title['Description'])
 
         img = title['BackgroundUrl']
 

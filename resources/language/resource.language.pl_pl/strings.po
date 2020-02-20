@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: plugin.video.hbogoeu\n"
 "Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-02-08 00:19+0100\n"
+"PO-Revision-Date: 2020-02-13 00:57+0100\n"
 "Last-Translator: arvvoid\n"
 "Language-Team: arvvoid, kowalmisiek\n"
 "Language: pl_PL\n"
@@ -43,25 +43,26 @@ msgctxt "#30004"
 msgid "An unexpected error has occurred."
 msgstr "Wystąpił nieoczekiwany błąd."
 
-#, fuzzy
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
-msgstr "Błąd pobierania zawartości z HBO go"
+msgid "Error getting content from Hbo Go"
+msgstr "Błąd pobierania zawartości z HBO Go"
 
-#, fuzzy
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
-msgstr "Błąd wysyłania danych do HBO go"
+msgid "Error sending data to Hbo Go"
+msgstr "Błąd wysyłania danych do HBO Go"
 
-#, fuzzy
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
-msgstr "Błąd podczas usuwania danych z HBO go"
+msgid "Error deleting data from Hbo Go"
+msgstr "Błąd podczas usuwania danych z HBO Go"
 
 #, fuzzy
 msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr "Błąd komunikacji, zwrócony STATUS: "
+
+msgctxt "#30009"
+msgid "The content is availible from:"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Web registration on "

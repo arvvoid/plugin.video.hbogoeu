@@ -375,7 +375,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def play(self, content_id):
+    def play(self, content_id, retry=0):
         self.log("Initializing playback... " + str(content_id))
 
         self.login()

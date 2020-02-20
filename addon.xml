@@ -1,10 +1,11 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.0">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.3.6">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
     <import addon="script.module.requests" version="2.12.4" />
     <import addon="script.module.pycryptodome" version="3.4.3" />
     <import addon="script.module.defusedxml" version="0.6.0" />
+    <import addon="script.module.dateutil" version="2.8.1" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
   </requires>
   <extension library="main.py" point="xbmc.python.pluginsource">
@@ -43,17 +44,8 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-v.2.3.0
-- Request caching                           
-- Optimize re-login on unauthorized
-- Local sqllight database
-- Search history
-- external add-ons can search now (ability to create TMDB Helper Player)
-- improved search
-- duoble new line fix in ttml2srt on some subtitles
-- Translations update
-- Set content type for listings based on the media type of the majority of the items in the list
-- Option to force generic "video" media type for listings
+v.2.3.6
+- Update to es_es translation (by @boblo1)
     </news>
     <assets>
      <icon>resources/icon.png</icon>

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: plugin.video.hbogoeu\n"
 "Report-Msgid-Bugs-To: https://github.com/arvvoid/plugin.video.hbogoeu/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-02-08 00:22+0100\n"
+"PO-Revision-Date: 2020-02-13 00:58+0100\n"
 "Last-Translator: arvvoid\n"
 "Language-Team: arvvoid\n"
 "Language: sl_SI\n"
@@ -44,23 +44,27 @@ msgstr "Prišlo je do nepričakovane napake."
 
 #, fuzzy
 msgctxt "#30005"
-msgid "Error getting content from Hbo go"
-msgstr "Napaka pri pridobivanju vsebine iz HBO go"
+msgid "Error getting content from Hbo Go"
+msgstr "Napaka pri pridobivanju vsebine iz HBO Go"
 
 #, fuzzy
 msgctxt "#30006"
-msgid "Error sending data to Hbo go"
-msgstr "Napaka pri pošiljanju podatkov v HBO go"
+msgid "Error sending data to Hbo Go"
+msgstr "Napaka pri pošiljanju podatkov v HBO Go"
 
 #, fuzzy
 msgctxt "#30007"
-msgid "Error deleting data from Hbo go"
-msgstr "Napaka pri brisanju podatkov iz HBO go"
+msgid "Error deleting data from Hbo Go"
+msgstr "Napaka pri brisanju podatkov iz HBO Go"
 
 #, fuzzy
 msgctxt "#30008"
 msgid "Communication error, returned STATUS: "
 msgstr "Sporočilo zmota, vrnjen STALEŽ: "
+
+msgctxt "#30009"
+msgid "The content is availible from:"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Web registration on "
