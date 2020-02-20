@@ -1,3 +1,6 @@
+v.2.3.6
+- Update to es_es translation (by @boblo1)
+
 v.2.3.5
 - If not currently available, show available from date and time in the plot
 - BUGFIX: Correct available from date and time
