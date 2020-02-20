@@ -30,6 +30,7 @@ deploy:
     on:
       repo: arvvoid/plugin.video.hbogoeu
       tags: true
+      type: push
 # Prepare for the official Kodi repo
   - provider: script
     script: submit-addon -r repo-plugins -b leia --push-branch plugin.video.hbogoeu
@@ -37,6 +38,7 @@ deploy:
       repo: arvvoid/plugin.video.hbogoeu
       branch: master
       tags: true
+      type: push
       condition: "$TRAVIS_TAG =~ ^[0-9]{1,2}[.]{1}[0-9]{1,2}[.]{1}[0-9]{1,3}-repo"
 notifications:
   webhooks: https://www.travisbuddy.com/
