@@ -7,6 +7,7 @@ before_script:
 - rm -R .github/ISSUE_TEMPLATE
 - rm .all-contributorsrc
 - rm .gitignore
+- rm .gitattributes
 - rm *.yml
 - rm CODE_OF_CONDUCT.md
 - rm PULL_REQUEST_TEMPLATE.md
