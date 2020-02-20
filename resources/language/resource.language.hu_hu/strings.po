@@ -50,7 +50,7 @@ msgid "Communication error, returned STATUS: "
 msgstr "Kommunikációs hiba, visszaadott állapot: "
 
 msgctxt "#30009"
-msgid "The content is availible from:"
+msgid "The content is available from:"
 msgstr "A tartalom elérhető:"
 
 msgctxt "#30100"
