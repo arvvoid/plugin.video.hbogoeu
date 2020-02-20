@@ -1,10 +1,8 @@
 dist: xenial
 language: python
 python: 3.7
-
 install:
-  - pip install kodi-addon-checker
-
+- pip install kodi-addon-checker
 before_script:
 - rm -R .github/ISSUE_TEMPLATE
 - rm .all-contributorsrc
@@ -15,10 +13,30 @@ before_script:
 - rm changelog.md
 - rm test.py
 - git config core.quotepath false
-
-# command to run our tests
 script:
-  - kodi-addon-checker --branch=leia
+- kodi-addon-checker --branch=leia
+before_deploy:
+  - pip install git+https://github.com/romanvm/kodi-addon-submitter.git
+  - submit-addon -z plugin.video.hbogoeu # Create an installable ZIP
+  - export RELEASE_ZIP=$(ls *.zip)
+deploy:
+  provider: releases
+  api_key:
+    secure: H9GOLDoTczA9uRvm6OW9fKn7jbWahRn39vq4s7WK+AOwc/Q8rUbEb9tILgDuqZX4sPDaNHdsq73ElvgESfB/20ksi+8ngDzlHDEUkVhvHQHa1pkqa5+GQioNweOUB1al849vpcafvc57xCmvPR12gODhKO5Q7yw1uLLhZNvc5PxsvRsVoA+Xy3oIUOhU0qPpqVeVrJeuyINq8tgFhkaqAex1haj7mq+UTcCEE+PuNULiVfuLnJq2kjfYGo6AXOSzvG+68gpRE0rQKH6Y5cNDPPDDTHrGxwYq14CZFj+OBE001wzAOs/xngnJ12a53JdKJi6Vg63CZeeqUhCE4nBRqgy+D7/LtdZChs7s6oqldAXXmN2OXWOJYYxL4Ko+STsLH1dW613zyeWt0I9ZvxKQP7tnulmlT2TUTKU0uSkHIYWUs+9TeVYEKOjSzPoOyxAKrm4aauqcV61jWf5wRbeCKt3UMtchFg3R1JEDyEvtoaFsAccEkAKShUimBCacTl5y8c9hX+yrHTA2lIJ7Cv8U1j36JOYEDXc2yBe/ndLs0pGAyQhc4gQuArqb9jrI/H0qRqD6B3kwq7KOcCrfijVGxEqPHeOHx2OYMfQGC4Ck/Ez+/V2IzZtHVxxCQ3yDDvi6IBY/XDAt1I5qgnc7GlEfEv/d0VAJQNKJWW3uux/arkA=
+  file: $RELEASE_ZIP
+  skip_cleanup: true
+  on:
+    repo: arvvoid/plugin.video.hbogoeu
+    tags: true
+    prerelease: true
+# Prepare for the official Kodi repo
+  - provider: script
+    script: submit-addon -r repo-plugins -b leia --push-branch plugin.video.hbogoeu
+    on:
+      repo: arvvoid/plugin.video.hbogoeu
+      branch: master
+      tags: true
+      condition: "$TRAVIS_TAG =~ ^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}-repo"
 notifications:
-    webhooks: https://www.travisbuddy.com/
-    email: true
+  webhooks: https://www.travisbuddy.com/
+  email: true
