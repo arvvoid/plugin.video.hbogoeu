@@ -55,8 +55,8 @@ msgid "Communication error, returned STATUS: "
 msgstr "Eroare de comunicare, returnat STATUS: "
 
 msgctxt "#30009"
-msgid "The content is availible from:"
-msgstr ""
+msgid "The content is available from:"
+msgstr "Conținutul este disponibil de pe:"
 
 msgctxt "#30100"
 msgid "Web registration on "
