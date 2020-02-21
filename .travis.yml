@@ -9,6 +9,7 @@ before_script:
 - rm .gitignore
 - rm .gitattributes
 - rm *.yml
+- rm travis-buddy-*.md
 - rm CODE_OF_CONDUCT.md
 - rm PULL_REQUEST_TEMPLATE.md
 - rm changelog.md
@@ -42,4 +43,5 @@ deploy:
       condition: "$TRAVIS_TAG =~ ^[0-9]{1,2}[.]{1}[0-9]{1,2}[.]{1}[0-9]{1,3}-repo"
 notifications:
   webhooks: https://www.travisbuddy.com/
-  email: true
+travisBuddy:
+    successBuildLog: true
