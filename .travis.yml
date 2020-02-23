@@ -2,6 +2,7 @@ dist: xenial
 language: python
 python: 3.7
 install:
+- pip install pycryptodomex
 - pip install kodi-addon-checker
 - pip install pycodestyle
 - pip install mypy
