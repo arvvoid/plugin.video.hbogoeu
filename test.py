@@ -28,11 +28,11 @@ if __name__ == '__main__':
         if test_type == "ttml2srt":
             from hbogolib.ttml2srt import Ttml2srt
             input_subs_path = str(sys.argv[2])
-            print("Loading TTML file "+input_subs_path+" ...")
+            print("Loading TTML file " + input_subs_path + " ...")
             ttml = Ttml2srt(input_subs_path, 25)
             print("Converting...")
             srt_file = ttml.write_srt_file("test_sub")
-            print("SRT written to: "+srt_file)
+            print("SRT written to: " + srt_file)
             print("DONE!")
         else:
             print("Ivalid test!")
