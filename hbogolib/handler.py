@@ -523,9 +523,9 @@ class HbogoHandler(object):
 
     def searchlist(self):
         try:
-            from urllib import quote_plus as quote, urlencode
+            from urllib import quote_plus as urlencode
         except ImportError:
-            from urllib.parse import quote_plus as quote, urlencode
+            from urllib.parse import quote_plus as urlencode
         self.reset_media_type_counters()
         self.addCat(self.language(30734), "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH)
         self.addCat(self.language(30735), "DEL_SEARCH_HISTORY", self.get_media_resource('remove.png'), HbogoConstants.ACTION_SEARCH_CLEAR_HISTORY)

@@ -4,7 +4,7 @@ python: 3.7
 install:
 - pip install pycryptodomex
 - pip install kodi-addon-checker
-- pip install pycodestyle
+- pip install flake8
 - pip install mypy
 before_script:
 - rm -R .github/ISSUE_TEMPLATE
@@ -19,7 +19,7 @@ before_script:
 - rm test.py
 - git config core.quotepath false
 script:
-- pycodestyle . --show-source --ignore=E501 --statistics --show-pep8 --count  # Check PEP8 coding standard, ignore long lines
+- flake8 . --ignore E501 --statistics --count  # Check basic errors, PEP8 coding standard, ignore long lines
 - mypy . --no-incremental --cache-dir=/dev/null  # Check for errors with mypy
 - kodi-addon-checker --branch=leia  # check with official Kodi add-on checker
 before_deploy:

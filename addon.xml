@@ -50,6 +50,7 @@ v.2.3.8
 - Update to es_es translation (by @boblo1)
 - Update to ro_ro translation (by @tmihai20)
 - Update to fi_fi translation (by @jumakki)
+- Minor fixes
     </news>
     <assets>
      <icon>resources/icon.png</icon>
