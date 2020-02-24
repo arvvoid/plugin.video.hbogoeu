@@ -2,7 +2,7 @@
 
 -  [ ] My changes respect the [Kodi add-on development rules](https://kodi.wiki/view/Add-on_rules)
 -  [ ] My code is both Python 2 and 3 compatible
--  [ ] My code follows the code style of this project
+-  [ ] My code follows the code style of this project (PEP8, long lines allowed if make sense)
 -  [ ] I made sure there wasn't another Pull Request opened for the same update/change
 -  [ ] I have successfully tested my changes locally
 
