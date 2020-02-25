@@ -17,7 +17,7 @@ before_script:
 - rm PULL_REQUEST_TEMPLATE.md
 - rm changelog.md
 - rm test.py
-- rm makefile
+- rm Makefile
 - git config core.quotepath false
 script:
 - flake8 . --ignore E501,N801,N802,N803,N806 --statistics --count  # Check basic errors, PEP8 coding standard, ignore long lines

@@ -4,6 +4,9 @@ addon_xml := addon.xml
 name = $(shell xmllint --xpath 'string(/addon/@id)' $(addon_xml))
 version = $(shell xmllint --xpath 'string(/addon/@version)' $(addon_xml))
 date_time_str = $(shell date +"%Y_%m_%d_%H_%M_%S")
+git_branch = $(shell git rev-parse --abbrev-ref HEAD)
+git_hash = $(shell git rev-parse --short HEAD)
+zip_file_o = $(name)-$(git_branch)-$(git_hash).zip
 
 zip_name = $(name)-$(version)-local-$(date_time_str).zip
 include_files = main.py addon.xml LICENSE.txt README.md resources/ hbogolib/
@@ -43,4 +46,9 @@ zip: clean
 	@echo "Building Kodi add-on ZIP: $(zip_name)..."
 	@rm -f ../$(zip_name)
 	cd ..; zip -r $(zip_name) $(include_paths)
+	@echo "Done."
+
+git-zip: clean
+	@echo "Building Kodi add-on ZIP from last commit: $(zip_file_o)"
+	@git archive -v --format zip --prefix=$(name)/ --worktree-attributes -9 -o ../$(zip_file_o) HEAD
 	@echo "Done."
