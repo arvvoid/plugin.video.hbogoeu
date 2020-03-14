@@ -5,7 +5,7 @@ kodi_stable_branch=leia
 name = $(shell xmllint --xpath 'string(/addon/@id)' $(addon_xml))
 version = $(shell xmllint --xpath 'string(/addon/@version)' $(addon_xml))
 date_time_str = $(shell date +"%Y_%m_%d_%H_%M_%S")
-git_branch = $(shell git rev-parse --abbrev-ref HEAD)
+git_branch = $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
 chk_branch = $(kodi_stable_branch)
 ifeq ($(git_branch),matrix)
 	chk_branch = matrix
