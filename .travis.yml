@@ -3,7 +3,7 @@ language: python
 python: 3.7
 before_install:
   - sudo apt-get update
-  - sudo apt-get -y install libxml2-dev
+  - sudo apt-get -y install libxml2-utils
 install:
 - pip install pycryptodomex
 - pip install kodi-addon-checker
