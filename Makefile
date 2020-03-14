@@ -2,10 +2,15 @@ addon_xml := addon.xml
 export CDPATH=.
 
 # Collect information to build as sensible package name
+kodi_stable_branch=leia
 name = $(shell xmllint --xpath 'string(/addon/@id)' $(addon_xml))
 version = $(shell xmllint --xpath 'string(/addon/@version)' $(addon_xml))
 date_time_str = $(shell date +"%Y_%m_%d_%H_%M_%S")
 git_branch = $(shell git rev-parse --abbrev-ref HEAD)
+chk_branch = $(kodi_stable_branch)
+ifeq ($(git_branch),matrix)
+	chk_branch = matrix
+endif
 git_hash = $(shell git rev-parse --short HEAD)
 zip_file_o = $(name)-$(git_branch)-$(git_hash).zip
 
@@ -29,7 +34,11 @@ clean:
 
 test: sanity
 
+test-multi: sanity-multi
+
 sanity: flake8 mypy kodi
+
+sanity-multi: flake8 mypy kodi-all
 
 flake8:
 	@echo "Starting flake8 test"
@@ -40,21 +49,23 @@ mypy:
 	@mypy . --no-incremental --cache-dir=/dev/null
 
 kodi: clean
-	@echo "Starting official kodi-addon-checker for both leia and matrix+"
-	# make sure the ABI is set for leia
+	@echo "Starting official kodi-addon-checker for $(chk_branch) ($(git_hash))"
+	@kodi-addon-checker --branch=$(chk_branch)
+	@rm -f *.log
+
+kodi-all: clean
+	@echo "Starting official kodi-addon-checker for both leia and matrix+ on branch $(chk_branch) ($(git_hash))"
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=leia
 	@rm -f *.log
-	#switch to ABI 3
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=matrix
 	@rm -f *.log
-	# switch back to 2.75 ABI
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 
 
 zip: clean
-	@echo "Building Kodi add-on ZIPs: $(zip_name)..."
+	@echo "Building Kodi add-on ZIPs: $(zip_name_leia) and $(zip_name_matrix) from $(chk_branch) ($(git_hash))..."
 	@rm -f *.zip
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	cd ..; zip -r $(zip_name_leia) $(include_paths)
@@ -64,7 +75,7 @@ zip: clean
 	@echo "Done."
 
 git-zip: clean
-	@echo "Building Kodi add-on ZIP from last commit on branch $(git_branch): $(zip_file_o)"
+	@echo "Building Kodi add-on ZIP from last commit on branch $(chk_branch) ($(git_hash)): $(zip_file_o)"
 	@git archive -v --format zip --prefix=$(name)/ --worktree-attributes -9 -o ../$(zip_file_o) HEAD
 	@echo "Done."
 
