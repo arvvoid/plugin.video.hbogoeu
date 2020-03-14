@@ -1,5 +1,4 @@
 addon_xml := addon.xml
-export CDPATH=.
 
 # Collect information to build as sensible package name
 kodi_stable_branch=leia
