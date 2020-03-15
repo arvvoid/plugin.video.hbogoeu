@@ -1,3 +1,6 @@
+v.2.4.0
+- New enhanced Kids category (EU handler)
+
 v.2.3.11
 - Enhanced search to include Kids shows (EU handler)
 

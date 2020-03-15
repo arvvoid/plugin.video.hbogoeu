@@ -67,14 +67,15 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_AUTH_WEBBASIC = ""
         self.API_URL_AUTH_OPERATOR = ""
         self.API_URL_CUSTOMER_GROUP = ""
+        self.API_URL_GROUP = ""
         self.API_URL_GROUPS = ""
-        self.API_URL_GROUPS_OLD = ""
         self.API_URL_CONTENT = ""
         self.API_URL_PURCHASE = ""
         self.API_URL_SEARCH = ""
         self.API_URL_ADD_RATING = ""
         self.API_URL_ADD_MYLIST = ""
         self.API_URL_HIS = ""
+        self.KidsGroup = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -140,14 +141,14 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
-        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/ANMO'
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + \
                                      self.API_PLATFORM
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + \
                                      self.API_PLATFORM
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
-        self.API_URL_GROUPS = 'http://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
-        self.API_URL_GROUPS_OLD = 'https://' + self.API_HOST + '/v5/Groups/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_GROUP = 'https://' + self.API_HOST + '/v8/Group/json/' + self.LANGUAGE_CODE + '/ANMO/'
+        self.API_URL_GROUPS = 'https://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
         self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v8/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v8/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
@@ -302,6 +303,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
+        self.KidsGroup = jsonrsp['KidsGroupId']
         # add to cache exclude list
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
@@ -822,8 +824,6 @@ class HbogoHandler_eu(HbogoHandler):
         jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
         if jsonrsp is False:
             return
-        if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
-            jsonrsp2 = self.get_from_hbogo(self.API_URL_GROUPS_OLD)
 
         try:
             if jsonrsp['ErrorMessage']:
@@ -840,8 +840,6 @@ class HbogoHandler_eu(HbogoHandler):
         position_home = -1
         position_series = -1
         position_movies = -1
-        position_week_top = -1
-        position_kids = -1
 
         position = 0
 
@@ -857,16 +855,6 @@ class HbogoHandler_eu(HbogoHandler):
                 if position_home > -1 and position_series > -1 and position_movies > -1:
                     break
                 position += 1
-            position = 0
-            if self.addon.getSetting('show_kids') == 'true' or self.addon.getSetting('show_week_top') == 'true':
-                for cat in jsonrsp2['Items']:
-                    if py2_encode(cat["Tracking"]['Name']) == "Weekly Top":
-                        position_week_top = position
-                    if py2_encode(cat["Tracking"]['Name']) == "Kids":
-                        position_kids = position
-                    if position_week_top > -1 and position_kids > -1:
-                        break
-                    position += 1
         except Exception:
             self.log("Unexpected error in find key categories: " + traceback.format_exc())
 
@@ -887,21 +875,9 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("No Movies Category found")
 
         if self.addon.getSetting('show_kids') == 'true':
-            if position_kids != -1:
                 self.addCat(py2_encode(self.language(30729)),
-                            jsonrsp2['Items'][position_kids]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                                  '/0/0/1/1024/0/0'),
+                            self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True',
                             self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-            else:
-                self.log("No Kids Category found")
-
-        if self.addon.getSetting('show_week_top') == 'true':
-            if position_week_top != -1:
-                self.addCat(py2_encode(self.language(30730)), jsonrsp2['Items'][position_week_top]['ObjectUrl'].replace(
-                    '/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-                    self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
-            else:
-                self.log("No Week Top Category found")
 
         if position_home != -1:
             if self.addon.getSetting('group_home') == 'true':
