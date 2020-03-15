@@ -875,9 +875,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("No Movies Category found")
 
         if self.addon.getSetting('show_kids') == 'true':
-                self.addCat(py2_encode(self.language(30729)),
-                            self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True',
-                            self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
 
         if position_home != -1:
             if self.addon.getSetting('group_home') == 'true':
