@@ -1,3 +1,6 @@
+v.2.3.11
+- Enhanced search to include Kids shows (EU handler)
+
 v.2.3.10
 - Fixed encoding error on opening search category
 

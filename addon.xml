@@ -44,7 +44,7 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Fixed encoding error on opening search category
+- Enhanced search to include Kids shows (EU handler)
     </news>
     <assets>
      <icon>resources/icon.png</icon>
