@@ -44,13 +44,13 @@ deploy:
       type: push
 # Prepare for the official Kodi repo
   - provider: script
-    script: submit-addon -r repo-plugins -b leia --push-branch plugin.video.hbogoeu
+    script: submit-addon -r repo-plugins -b leia --pull-request plugin.video.hbogoeu
     on:
       repo: arvvoid/plugin.video.hbogoeu
       branch: leia
       type: push
   - provider: script
-    script: submit-addon -r repo-plugins -b matrix --push-branch plugin.video.hbogoeu
+    script: submit-addon -r repo-plugins -b matrix --pull-request plugin.video.hbogoeu
     on:
       repo: arvvoid/plugin.video.hbogoeu
       branch: matrix
