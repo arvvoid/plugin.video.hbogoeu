@@ -1033,7 +1033,11 @@ class HbogoHandler_eu(HbogoHandler):
                 return
 
             if jsonrsp['Container'][0]['Contents']['Items']:
+                n_items = 0
                 for item in jsonrsp['Container'][0]['Contents']['Items']:
+                    n_items += 1
+                    if n_items > 20:
+                        break
                     item_info = self.get_from_hbogo(self.API_URL_CONTENT + item['ObjectUrl'].rsplit('/', 2)[1])
                     # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
                     if item_info['ContentType'] == 1 or item_info['ContentType'] == 7 or item_info['ContentType'] == 3:
