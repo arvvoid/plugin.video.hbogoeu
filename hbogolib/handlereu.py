@@ -1005,13 +1005,13 @@ class HbogoHandler_eu(HbogoHandler):
             self.force_original_names = False
             search_text = py2_encode(query)
 
-        if search_text == "":
+        if search_text == "" or len(search_text) < 3:
             xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
             if query is None:
                 self.add_to_search_history(search_text)
-            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/-/-/-/-/-/3')
-            jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/-/-/-/-/-/3')
+            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/-/-/1/20/-/3')
+            jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/-/-/1/20/-/3')
             if jsonrsp is False:
                 return
             if self.addon.getSetting('get_elapsed') == 'true':
