@@ -1005,7 +1005,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.force_original_names = False
             search_text = py2_encode(query)
 
-        if search_text == "" or len(search_text) < 3:
+        if len(search_text) < 3:
             xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
         else:
             if query is None:
