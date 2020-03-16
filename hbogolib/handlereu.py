@@ -149,7 +149,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_GROUP = 'https://' + self.API_HOST + '/v8/Group/json/' + self.LANGUAGE_CODE + '/ANMO/'
         self.API_URL_GROUPS = 'https://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
-        self.API_URL_CONTENT = 'http://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
+        self.API_URL_CONTENT = 'https://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v8/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v8/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
 
@@ -806,6 +806,11 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.getCustomerGroups()
 
+        if self.addon.getSetting('enforce_kids') == 'true':
+            self.list(self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True', True)
+            KodiUtil.endDir(self.handle, None, True)
+            return
+
         if self.addon.getSetting('show_mylist') == 'true':
             self.addCat(self.LB_MYPLAYLIST,
                         self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false',
@@ -1010,8 +1015,11 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             if query is None:
                 self.add_to_search_history(search_text)
-            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + '/-/-/1/20/-/3')
-            jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + '/-/-/1/20/-/3')
+            search_mode = '/-/-/1/20/-/3'
+            if self.addon.getSetting('enforce_kids') == 'true':
+                search_mode = '/-/-/1/20/-/2'
+            self.log("Performing search: " + self.API_URL_SEARCH + quote(search_text) + search_mode)
+            jsonrsp = self.get_from_hbogo(self.API_URL_SEARCH + quote(search_text) + search_mode)
             if jsonrsp is False:
                 return
             if self.addon.getSetting('get_elapsed') == 'true':
@@ -1032,25 +1040,34 @@ class HbogoHandler_eu(HbogoHandler):
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
                 return
 
-            if jsonrsp['Container'][0]['Contents']['Items']:
-                n_items = 0
-                for item in jsonrsp['Container'][0]['Contents']['Items']:
-                    n_items += 1
-                    if n_items > 20:
-                        break
-                    item_info = self.get_from_hbogo(self.API_URL_CONTENT + item['ObjectUrl'].rsplit('/', 2)[1])
-                    # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
-                    if item_info['ContentType'] == 1 or item_info['ContentType'] == 7 or item_info['ContentType'] == 3:
-                        self.addLink(item_info, HbogoConstants.ACTION_PLAY)
-                        if item_info['ContentType'] == 1:
-                            self.n_movies += 1
-                        if item_info['ContentType'] == 3:
-                            self.n_episodes += 1
-                    else:
-                        self.addDir(item_info, HbogoConstants.ACTION_SEASON, "tvshow")
-                        self.n_tvshows += 1
-            else:
+            try:
+                if jsonrsp['Container'][0]['Contents']['Items']:
+                    n_items = 0
+                    for item in jsonrsp['Container'][0]['Contents']['Items']:
+                        n_items += 1
+                        if n_items > 20:
+                            break
+                        item_info = self.get_from_hbogo(self.API_URL_CONTENT + item['ObjectUrl'].rsplit('/', 2)[1])
+                        # 1,7=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
+                        if item_info['ContentType'] == 1 or item_info['ContentType'] == 7 or item_info['ContentType'] == 3:
+                            self.addLink(item_info, HbogoConstants.ACTION_PLAY)
+                            if item_info['ContentType'] == 1:
+                                self.n_movies += 1
+                            if item_info['ContentType'] == 3:
+                                self.n_episodes += 1
+                        else:
+                            self.addDir(item_info, HbogoConstants.ACTION_SEASON, "tvshow")
+                            self.n_tvshows += 1
+                else:
+                    xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
+            except IndexError:
                 xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
+            except KeyError:
+                xbmcgui.Dialog().notification(self.LB_SEARCH_NORES, self.LB_ERROR, self.get_media_resource('search.png'))
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+                xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
+                return
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
