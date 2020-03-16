@@ -1067,7 +1067,6 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Unexpected error: " + traceback.format_exc())
                 xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
-                return
 
         KodiUtil.endDir(self.handle, self.decide_media_type())
 

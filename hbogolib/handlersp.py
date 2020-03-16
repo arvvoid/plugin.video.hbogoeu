@@ -234,10 +234,10 @@ class HbogoHandler_sp(HbogoHandler):
         if self.addon.getSetting('enforce_kids') == 'true':
             if kids is not None:
                 self.list(kids.find('link').text, True)
-                KodiUtil.endDir(self.handle, None, True)
-                return
             else:
                 self.log("No Kids Category found")
+            KodiUtil.endDir(self.handle, None, True)
+            return
 
         if self.addon.getSetting('show_mylist') == 'true':
             if watchlist is not None:
