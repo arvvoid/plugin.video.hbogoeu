@@ -365,6 +365,10 @@ msgctxt "#30736"
 msgid "Remove"
 msgstr ""
 
+msgctxt "#30737"
+msgid "Kids only mode"
+msgstr ""
+
 #, fuzzy
 msgctxt "#30650"
 msgid "Language"
