@@ -26,9 +26,9 @@ clean:
 	@find . -name '*.pyo' -type f -delete
 	@find . -name __pycache__ -type d -delete
 	@find . -name '.DS_Store' -type f -delete
-	@rm -rf .pytest_cache/ .tox/
-	@rm -f *.log
-	@rm -f *.zip
+	-@rm -rf .pytest_cache/ .tox/
+	-@rm -f *.log
+	-@rm -f *.zip
 	@echo "Cleaning done..."
 
 test: sanity
@@ -50,38 +50,59 @@ mypy:
 kodi: clean
 	@echo "Starting official kodi-addon-checker for $(chk_branch) ($(git_hash))"
 	@kodi-addon-checker --branch=$(chk_branch)
-	@rm -f *.log
+	-@rm -f *.log
 
 kodi-all: clean
 	@echo "Starting official kodi-addon-checker for both leia and matrix+ on branch $(chk_branch) ($(git_hash))"
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=leia
-	@rm -f *.log
+	-@rm -f *.log
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=matrix
-	@rm -f *.log
+	-@rm -f *.log
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 
-test-translations:
-	@echo "Running translation checks"
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bg_bg/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bs_ba/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.da_dk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.mk_mk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.nb_no/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pt_pt/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sk_sk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sl_si/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sr_rs@latin/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
-	@echo "Translation checks Done."
+test-language-sync:
+	@echo "Test if all language files are sync properly"
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bg_bg/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bs_ba/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.da_dk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.mk_mk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.nb_no/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pt_pt/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sk_sk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sl_si/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sr_rs@latin/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
+	@echo "Done."
+
+test-language-maintained:
+	@echo "Test all maintained language files, INFORMATIVE: "
+	-@msgcmp resources/language/resource.language.bg_bg/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.bs_ba/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.da_dk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.mk_mk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.nb_no/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.pt_pt/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.sk_sk/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.sl_si/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.sr_rs@latin/strings.po resources/language/resource.language.en_gb/strings.po
+	-@msgcmp resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
+	@echo "Done."
 
 zip: clean
 	@echo "Building Kodi add-on ZIPs: $(zip_name_leia) and $(zip_name_matrix) from $(chk_branch) ($(git_hash))..."

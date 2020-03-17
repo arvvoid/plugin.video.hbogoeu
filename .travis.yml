@@ -23,7 +23,7 @@ before_script:
 - git config core.quotepath false
 script:
 - make test
-- make test-translations
+- make test-language-sync
 before_deploy:
   - pip install git+https://github.com/romanvm/kodi-addon-submitter.git
   - make zip
