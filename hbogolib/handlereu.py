@@ -75,7 +75,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_ADD_RATING = ""
         self.API_URL_ADD_MYLIST = ""
         self.API_URL_HIS = ""
-        self.KidsGroup = ""
 
         self.individualization = ""
         self.goToken = ""
@@ -85,6 +84,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = ""
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
+        self.KidsGroupId = ""
         self.loggedin_headers = {}
         self.JsonHis = ""
 
@@ -303,7 +303,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.FavoritesGroupId = jsonrsp['FavoritesGroupId']
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
-        self.KidsGroup = jsonrsp['KidsGroupId']
+        self.KidsGroupId = jsonrsp['KidsGroupId']
         # add to cache exclude list
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
@@ -807,7 +807,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.getCustomerGroups()
 
         if self.addon.getSetting('enforce_kids') == 'true':
-            self.list(self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True', True)
+            self.list(self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', True)
             KodiUtil.endDir(self.handle, None, True)
             return
 
@@ -880,7 +880,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("No Movies Category found")
 
         if self.addon.getSetting('show_kids') == 'true':
-            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroup + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
 
         if position_home != -1:
             if self.addon.getSetting('group_home') == 'true':
