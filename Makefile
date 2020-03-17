@@ -62,6 +62,26 @@ kodi-all: clean
 	@rm -f *.log
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 
+test-translations:
+	@echo "Running translation checks"
+	@msgcmp resources/language/resource.language.bg_bg/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.bs_ba/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.da_dk/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.mk_mk/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.nb_no/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.pt_pt/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.sk_sk/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.sl_si/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.sr_rs@latin/strings.po resources/language/resource.language.en_gb/strings.po
+	@msgcmp resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
+	@echo "Translation checks Done."
 
 zip: clean
 	@echo "Building Kodi add-on ZIPs: $(zip_name_leia) and $(zip_name_matrix) from $(chk_branch) ($(git_hash))..."
