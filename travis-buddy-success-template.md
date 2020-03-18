@@ -8,7 +8,7 @@ Hey @{{pullRequestAuthor}},
 <details>
   <summary>
     <strong>
-     {{command}}
+     Expand here
     </strong>
   </summary>
 
