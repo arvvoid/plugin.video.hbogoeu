@@ -1,7 +1,6 @@
 addon_xml := addon.xml
 TRANSLATION_DIR = ./resources/language/
 TRANSLATION_POT = ./resources//language/resource.language.en_gb/strings.po
-TRANSLATION_NOSYNC = 0
 
 # Collect information to build as sensible package name
 kodi_stable_branch=leia
