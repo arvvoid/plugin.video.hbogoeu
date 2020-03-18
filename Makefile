@@ -1,4 +1,7 @@
 addon_xml := addon.xml
+TRANSLATION_DIR = ./resources/language/
+TRANSLATION_POT = ./resources//language/resource.language.en_gb/strings.po
+TRANSLATION_NOSYNC = 0
 
 # Collect information to build as sensible package name
 kodi_stable_branch=leia
@@ -64,35 +67,11 @@ kodi-all: clean
 
 test-language-sync:
 	@echo "Test if all language files are sync properly"
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bg_bg/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.bs_ba/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.da_dk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.mk_mk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.nb_no/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.pt_pt/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sk_sk/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sl_si/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sr_rs@latin/strings.po resources/language/resource.language.en_gb/strings.po
-	@msgcmp --use-fuzzy --use-untranslated resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
-	@echo "Done."
+	@for f in $(shell ls ${TRANSLATION_DIR} -I "*.en_gb"); do echo "TESTING $${f}:";msgcmp --use-fuzzy --use-untranslated ${TRANSLATION_DIR}$${f}/strings.po ${TRANSLATION_POT};if [ $$? -eq 0 ]; then echo " OK\n"; else exit 1; fi done
 
 test-language-maintained:
 	@echo "Test all maintained language files, INFORMATIVE: "
-	-@msgcmp resources/language/resource.language.cs_cz/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.es_es/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.fi_fi/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.hr_hr/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.hu_hu/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.pl_pl/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.ro_ro/strings.po resources/language/resource.language.en_gb/strings.po
-	-@msgcmp resources/language/resource.language.sv_se/strings.po resources/language/resource.language.en_gb/strings.po
+	-@for f in $(shell ls ${TRANSLATION_DIR} -I "*.en_gb"); do echo "TESTING $${f}:";msgcmp ${TRANSLATION_DIR}$${f}/strings.po ${TRANSLATION_POT};if [ $$? -eq 0 ]; then echo " OK\n"; else echo "\n"; fi done
 	@echo "Done."
 
 zip: clean
