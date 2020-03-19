@@ -294,6 +294,26 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "artemplaksiy",
+      "name": "artemplaksiy",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/34888588?v=4",
+      "profile": "https://github.com/artemplaksiy",
+      "contributions": [
+        "bug",
+        "ideas"
+      ]
+    },
+    {
+      "login": "dagwieers",
+      "name": "Dag Wieers",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/388198?v=4",
+      "profile": "http://dag.wiee.rs/blog/",
+      "contributions": [
+        "bug",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,

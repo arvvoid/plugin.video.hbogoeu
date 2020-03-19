@@ -1,45 +1,63 @@
 dist: xenial
 language: python
 python: 3.7
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install libxml2-utils
 install:
+- pip install pycryptodomex
 - pip install kodi-addon-checker
+- pip install flake8
+- pip install mypy
 before_script:
 - rm -R .github/ISSUE_TEMPLATE
 - rm .all-contributorsrc
 - rm .gitignore
 - rm .gitattributes
 - rm *.yml
+- rm travis-buddy-*.md
 - rm CODE_OF_CONDUCT.md
 - rm PULL_REQUEST_TEMPLATE.md
 - rm changelog.md
 - rm test.py
 - git config core.quotepath false
 script:
-- kodi-addon-checker --branch=leia
+- make test
+- make test-language-sync
+- make test-language-maintained
 before_deploy:
   - pip install git+https://github.com/romanvm/kodi-addon-submitter.git
-  - submit-addon -z plugin.video.hbogoeu # Create an installable ZIP
-  - export RELEASE_ZIP=$(ls *.zip)
+  - make zip
+  - export RELEASE_ZIP_LEIA=$(ls ../*-leia.zip)
+  - export RELEASE_ZIP_MATRIX=$(ls ../*-matrix.zip)
 deploy:
   - provider: releases
     api_key:
       secure: H9GOLDoTczA9uRvm6OW9fKn7jbWahRn39vq4s7WK+AOwc/Q8rUbEb9tILgDuqZX4sPDaNHdsq73ElvgESfB/20ksi+8ngDzlHDEUkVhvHQHa1pkqa5+GQioNweOUB1al849vpcafvc57xCmvPR12gODhKO5Q7yw1uLLhZNvc5PxsvRsVoA+Xy3oIUOhU0qPpqVeVrJeuyINq8tgFhkaqAex1haj7mq+UTcCEE+PuNULiVfuLnJq2kjfYGo6AXOSzvG+68gpRE0rQKH6Y5cNDPPDDTHrGxwYq14CZFj+OBE001wzAOs/xngnJ12a53JdKJi6Vg63CZeeqUhCE4nBRqgy+D7/LtdZChs7s6oqldAXXmN2OXWOJYYxL4Ko+STsLH1dW613zyeWt0I9ZvxKQP7tnulmlT2TUTKU0uSkHIYWUs+9TeVYEKOjSzPoOyxAKrm4aauqcV61jWf5wRbeCKt3UMtchFg3R1JEDyEvtoaFsAccEkAKShUimBCacTl5y8c9hX+yrHTA2lIJ7Cv8U1j36JOYEDXc2yBe/ndLs0pGAyQhc4gQuArqb9jrI/H0qRqD6B3kwq7KOcCrfijVGxEqPHeOHx2OYMfQGC4Ck/Ez+/V2IzZtHVxxCQ3yDDvi6IBY/XDAt1I5qgnc7GlEfEv/d0VAJQNKJWW3uux/arkA=
-    file: $RELEASE_ZIP
+    file:
+      - $RELEASE_ZIP_LEIA
+      - $RELEASE_ZIP_MATRIX
     skip_cleanup: true
     prerelease: true
-    on:
-      repo: arvvoid/plugin.video.hbogoeu
-      tags: true
-      type: push
-# Prepare for the official Kodi repo
-  - provider: script
-    script: submit-addon -r repo-plugins -b leia --push-branch plugin.video.hbogoeu
     on:
       repo: arvvoid/plugin.video.hbogoeu
       branch: master
       tags: true
       type: push
-      condition: "$TRAVIS_TAG =~ ^[0-9]{1,2}[.]{1}[0-9]{1,2}[.]{1}[0-9]{1,3}-repo"
+# Prepare for the official Kodi repo
+  - provider: script
+    script: submit-addon -r repo-plugins -b leia --pull-request plugin.video.hbogoeu
+    on:
+      repo: arvvoid/plugin.video.hbogoeu
+      branch: leia
+      type: push
+  - provider: script
+    script: submit-addon -r repo-plugins -b matrix --pull-request plugin.video.hbogoeu
+    on:
+      repo: arvvoid/plugin.video.hbogoeu
+      branch: matrix
+      type: push
 notifications:
   webhooks: https://www.travisbuddy.com/
-  email: true
+travisBuddy:
+    successBuildLog: true

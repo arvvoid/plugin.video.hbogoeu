@@ -15,10 +15,10 @@ import sys
 import time
 import traceback
 
-import defusedxml.ElementTree as ET
+import defusedxml.ElementTree as ET  # type: ignore
 import requests
-from kodi_six import xbmc, xbmcplugin, xbmcgui
-from kodi_six.utils import py2_encode
+from kodi_six import xbmc, xbmcplugin, xbmcgui  # type: ignore
+from kodi_six.utils import py2_encode  # type: ignore
 
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
@@ -27,9 +27,9 @@ from hbogolib.ttml2srt import Ttml2srt
 from hbogolib.util import Util
 
 try:
-    from urllib import quote_plus as quote, urlencode
+    from urllib import quote_plus as quote, urlencode  # type: ignore
 except ImportError:
-    from urllib.parse import quote_plus as quote, urlencode
+    from urllib.parse import quote_plus as quote, urlencode  # type: ignore
 
 
 class HbogoHandler_sp(HbogoHandler):
@@ -204,7 +204,8 @@ class HbogoHandler_sp(HbogoHandler):
 
         self.setDispCat(self.operator_name)
 
-        self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
+        if self.addon.getSetting('enforce_kids') != 'true':
+            self.addCat(self.LB_SEARCH, "INTERNAL_SEARCH", self.get_media_resource('search.png'), HbogoConstants.ACTION_SEARCH_LIST)
 
         browse_xml = self.get_from_hbogo(self.API_URL_BROWSE + self.LANGUAGE_CODE, response_format='xml')
         if browse_xml is False:
@@ -229,6 +230,14 @@ class HbogoHandler_sp(HbogoHandler):
                 kids = item
             else:
                 pass
+
+        if self.addon.getSetting('enforce_kids') == 'true':
+            if kids is not None:
+                self.list(kids.find('link').text, True)
+            else:
+                self.log("No Kids Category found")
+            KodiUtil.endDir(self.handle, None, True)
+            return
 
         if self.addon.getSetting('show_mylist') == 'true':
             if watchlist is not None:
@@ -390,7 +399,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
-        mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        mpd = self.get_from_hbogo(mpd_pre_url, 'xml', False)
         if mpd is False:
             return
         if self.lograwdata:
@@ -412,7 +421,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         protocol = 'mpd'
         drm = 'com.widevine.alpha'
-        from inputstreamhelper import Helper
+        from inputstreamhelper import Helper  # type: ignore
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
             li.setProperty('inputstreamaddon', 'inputstream.adaptive')

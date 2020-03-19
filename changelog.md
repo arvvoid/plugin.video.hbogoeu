@@ -1,3 +1,31 @@
+v.2.4.0
+- New enhanced Kids category (EU handler)
+- Legacy Kids category removed (removed from API, EU handler)
+- Enhanced search too include Kids shows and movies (EU handler)
+- Kids only mode (activate in settings to display only Kids category and nothing else)
+  [mainly intended for use with Kodi profiles, you have to prevent changing settings with the profile where you want too enforce this]
+- Search result limits fixes
+- Language files fixes
+- Minor fixes
+
+v.2.3.10
+- Fixed encoding error on opening search category
+
+v.2.3.9
+- Update to hr_hr translation (by @arvvoid)
+- Update to hu_hu translation (by @Ajnasz)
+- Update to es_es translation (by @boblo1)
+- Update to ro_ro translation (by @tmihai20)
+- Update to fi_fi translation (by @jumakki)
+- Minor fixes
+
+v.2.3.7
+- Update to hr_hr translation (by @arvvoid)
+- Update to hu_hu translation (by @Ajnasz)
+- Update to es_es translation (by @boblo1)
+- Update to ro_ro translation (by @tmihai20)
+- Update to fi_fi translation (by @jumakki)
+
 v.2.3.6
 - Update to es_es translation (by @boblo1)
 
