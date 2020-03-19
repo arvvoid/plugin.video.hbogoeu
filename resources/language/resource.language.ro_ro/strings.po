@@ -320,7 +320,7 @@ msgstr "Elimină"
 
 msgctxt "#30737"
 msgid "Kids only mode"
-msgstr "Modul pentru copii"
+msgstr "Mod doar pentru copii"
 
 msgctxt "#30650"
 msgid "Language"
