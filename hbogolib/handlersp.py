@@ -399,7 +399,7 @@ class HbogoHandler_sp(HbogoHandler):
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
-        mpd = self.get_from_hbogo(mpd_pre_url, 'xml')
+        mpd = self.get_from_hbogo(mpd_pre_url, 'xml', False)
         if mpd is False:
             return
         if self.lograwdata:
