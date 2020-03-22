@@ -130,22 +130,18 @@ msgctxt "#30665"
 msgid "Inputstream Adaptive Settings (max bitrate, resolution, etc.)"
 msgstr "Inputstream Adaptive nastavenie (max. dát. tok, rozlíšenie, atď.)"
 
-#, fuzzy
 msgctxt "#30666"
 msgid "InputStream Helper information"
 msgstr "InputStream Helper informácie"
 
-#, fuzzy
 msgctxt "#30667"
 msgid "(Re)install Widevine CDM..."
 msgstr "Preinštalovať Widevine CDM..."
 
-#, fuzzy
 msgctxt "#30668"
 msgid "Remove Widevine CDM..."
 msgstr "Odobrať Widevine CDM..."
 
-#, fuzzy
 msgctxt "#30669"
 msgid "InputStream Helper settings..."
 msgstr "InputStream Helper nastavenie..."
@@ -388,18 +384,10 @@ msgstr ""
 "Naozaj chcete úplne resetovať nastavenie (registrácia zariadenia "
 "bude stratená ) ?"
 
-#, fuzzy
-#| msgctxt "#30693"
-#| msgid "Include full details/RAW retrived data in Debug log"
 msgctxt "#30693"
 msgid "Include full details/RAW retrieved data in Debug log"
 msgstr "Zahrnúť všetky podrobnosti z načítaných údajov do ladiaceho výpisu"
 
-#, fuzzy
-#| msgctxt "#30694"
-#| msgid ""
-#| "Cryptodome dependency not present on your system, HBO go add-on can't "
-#| "run. For help consult install instructions/official support thread"
 msgctxt "#30694"
 msgid ""
 "Cryptodome dependency not present on your system, HBO Go add-on can't run. "
