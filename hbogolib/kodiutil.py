@@ -1,6 +1,6 @@
 # encoding: utf-8
 # util class for Hbo Go Kodi add-on
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
 # Relesed under GPL version 2
 #########################################################
 

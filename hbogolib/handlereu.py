@@ -1,6 +1,6 @@
 # encoding: utf-8
 # HboGo EU handler class for Hbo Go Kodi add-on
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
 # Derived from version v.2.0-beta5 of the add-on, witch was initialy
 # derived from https://github.com/billsuxx/plugin.video.hbogohu witch is
 # derived from https://kodibg.org/forum/thread-504.html

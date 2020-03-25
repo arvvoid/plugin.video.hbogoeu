@@ -1,6 +1,6 @@
 # encoding: utf-8
 # HBO Go EU Add-on lib Test Script
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
 #
 # USAGE:
 #    > python test.py [TEST_TYPE] [PARAM1] [PARAM2] ...
