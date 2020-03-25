@@ -124,7 +124,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
         self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
-        login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
+        login_hash = Util.hash256_string(str(self.API_DEVICE_ID) + str(username) + str(password))
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -155,7 +155,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
 
-            login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
+            login_hash = Util.hash256_string(str(self.API_DEVICE_ID) + str(username) + str(password))
             self.log("LOGIN HASH: " + login_hash)
             saved_session = {
 

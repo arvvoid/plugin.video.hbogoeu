@@ -578,7 +578,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
             # save the session with validity of n hours to not relogin every run of the add-on
 
-            login_hash = Util.hash225_string(
+            login_hash = Util.hash256_string(
                 self.individualization + self.customerId + username + password + self.op_id)
             self.log("LOGIN HASH: " + login_hash)
 
@@ -615,7 +615,7 @@ class HbogoHandler_eu(HbogoHandler):
             sys.exit()
             return False
 
-        login_hash = Util.hash225_string(
+        login_hash = Util.hash256_string(
             self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
@@ -783,7 +783,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
         # save the session with validity of n hours to not relogin every run of the add-on
 
-        login_hash = Util.hash225_string(
+        login_hash = Util.hash256_string(
             self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 

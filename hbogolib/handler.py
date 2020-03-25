@@ -305,7 +305,7 @@ class HbogoHandler(object):
     def exclude_url_from_cache(self, url):
         try:
             cur = self.db.cursor()
-            cur.execute("INSERT INTO request_cache_exclude(url_hash) VALUES (?)", (Util.hash225_string(url), ), )
+            cur.execute("INSERT INTO request_cache_exclude(url_hash) VALUES (?)", (Util.hash256_string(url), ), )
             self.db.commit()
         except Exception:
             self.log("Exclude from cache WARNING: " + traceback.format_exc())
@@ -323,7 +323,7 @@ class HbogoHandler(object):
         if not self.use_cache:
             use_cache = False
 
-        url_hash = Util.hash225_string(url)
+        url_hash = Util.hash256_string(url)
 
         if use_cache:
             self.log("GET FROM HBO USING CACHE...")
@@ -497,7 +497,7 @@ class HbogoHandler(object):
     def get_device_id_v1(self):
         from .uuid_device import get_crypt_key
         dev_key = get_crypt_key()
-        return Util.hash225_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
+        return Util.hash256_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
 
     def encrypt_credential_v1(self, raw):
         if sys.version_info < (3, 0):

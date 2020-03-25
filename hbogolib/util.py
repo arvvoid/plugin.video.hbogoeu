@@ -57,7 +57,7 @@ class Util(object):
         return base64.b64decode(base64data)
 
     @staticmethod
-    def hash225_bytes(data):
+    def hash256_bytes(data):
         if sys.version_info < (3, 0):
             return hashlib.sha256(bytes(data)).digest()
         try:
@@ -66,7 +66,7 @@ class Util(object):
             return hashlib.sha256(bytes(data)).digest()
 
     @staticmethod
-    def hash225_string(data):
+    def hash256_string(data):
         if sys.version_info < (3, 0):
             return hashlib.sha256(bytes(data)).hexdigest()
         try:
