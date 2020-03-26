@@ -6,6 +6,9 @@ TRANSLATION_POT = ./resources//language/resource.language.en_gb/strings.po
 kodi_stable_branch=leia
 name = $(shell xmllint --xpath 'string(/addon/@id)' $(addon_xml))
 version = $(shell xmllint --xpath 'string(/addon/@version)' $(addon_xml))
+version := $(subst +matrix.1,,$(version))
+version_matrix := $(version)+matrix.1
+version_matrix_srch := $(version)\+matrix.1
 date_time_str = $(shell date +"%Y_%m_%d_%H_%M_%S")
 git_branch = $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
 chk_branch = $(kodi_stable_branch)
@@ -56,12 +59,15 @@ kodi: clean
 
 kodi-all: clean
 	@echo "Starting official kodi-addon-checker for both leia and matrix+ on branch $(chk_branch) ($(git_hash))"
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix_srch)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=leia
 	-@rm -f *.log
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
 	@kodi-addon-checker --branch=matrix
 	-@rm -f *.log
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix_srch)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 
 test-language-sync:
@@ -76,10 +82,13 @@ test-language-maintained:
 zip: clean
 	@echo "Building Kodi add-on ZIPs: $(zip_name_leia) and $(zip_name_matrix) from $(chk_branch) ($(git_hash))..."
 	@rm -f *.zip
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix_srch)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	cd ..; zip -r $(zip_name_leia) $(include_paths)
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
 	cd ..; zip -r $(zip_name_matrix) $(include_paths)
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix_srch)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	@echo "Done."
 
@@ -89,7 +98,9 @@ git-zip: clean
 	@echo "Done."
 
 abi-leia: clean
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix_srch)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 
 abi-matrix: clean
+	@perl -i -pe's/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version)\">/<addon id=\"plugin.video.hbogoeu\" name=\"hGO EU\" provider-name=\"arvvoid\" version=\"$(version_matrix)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
