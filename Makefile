@@ -49,7 +49,7 @@ sanity-multi: flake8 mypy kodi-all
 
 flake8:
 	@echo "Starting flake8 test"
-	@flake8 . --ignore E501,N801,N802,N803,N806 --exclude ./exlibs --statistics --count
+	@flake8 . --ignore E501,N801,N802,N803,N806 --statistics --count
 
 mypy:
 	@echo "Starting mypy test"
