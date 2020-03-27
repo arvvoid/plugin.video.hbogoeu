@@ -24,19 +24,7 @@ from hbogolib.constants import HbogoConstants
 from hbogolib.kodiutil import KodiUtil
 from hbogolib.util import Util
 
-try:
-    from Cryptodome import Random
-    from Cryptodome.Cipher import AES
-    from Cryptodome.Util import Padding
-except ImportError:
-    # no Cryptodome gracefully fail with an informative message
-    msg = xbmcaddon.Addon().getLocalizedString(30694)
-    xbmc.log("[" + str(
-        xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(),
-        xbmc.LOGDEBUG)
-    xbmcgui.Dialog().ok(xbmcaddon.Addon().getAddonInfo('name') + " ERROR", msg)
-    sys.exit()
-
+from libs import pyaes
 
 class HbogoHandler(object):
     UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
@@ -504,19 +492,16 @@ class HbogoHandler(object):
             raw = bytes(raw)
         else:
             raw = bytes(raw, 'utf-8')
-        raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return Util.base64enc(iv + cipher.encrypt(raw))
+        aes = pyaes.AESModeOfOperationCTR(self.get_device_id_v1())
+        return Util.base64enc(aes.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:
             enc = Util.base64dec_bytes(enc)
-            iv = enc[:AES.block_size]
-            cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
+            aes = pyaes.AESModeOfOperationCTR(self.get_device_id_v1())
             if sys.version_info < (3, 0):
-                return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
-            return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
+                return py2_decode(aes.decrypt(enc))
+            return aes.decrypt(enc).decode('utf8')
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None

@@ -1,3 +1,11 @@
+v.2.5.0
+- Fix playing the same content twice with caching enabled for Spain/Nordic region
+- Minor code/style fixes
+- Update translations
+- Remove pycryptodomex dependency ,use a pure python aes implementation
+  [THIS VERSION WILL ASK TO RE-ENTER CREDENTIALS]
+  [THIS IMPROVE OUT OF THE BOX COMPATIBILITY WITH MORE DEVICES]
+  
 v.2.4.0
 - New enhanced Kids category (EU handler)
 - Legacy Kids category removed (removed from API, EU handler)
