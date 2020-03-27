@@ -49,11 +49,11 @@ sanity-multi: flake8 mypy kodi-all
 
 flake8:
 	@echo "Starting flake8 test"
-	@flake8 . --ignore E501,N801,N802,N803,N806 --statistics --count
+	@flake8 . --ignore E501,N801,N802,N803,N806 --exclude ./exlibs --statistics --count
 
 mypy:
 	@echo "Starting mypy test"
-	@mypy . --no-incremental --cache-dir=/dev/null
+	@mypy --no-incremental --cache-dir=/dev/null .
 
 kodi: clean
 	@echo "Starting official kodi-addon-checker for $(chk_branch) ($(git_hash))"
