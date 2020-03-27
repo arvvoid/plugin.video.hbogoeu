@@ -23,7 +23,7 @@ zip_file_o = $(name)-$(git_branch)-$(git_hash).zip
 
 zip_name_leia = $(name)-$(version)-leia.zip
 zip_name_matrix = $(name)-$(version)-matrix.zip
-include_files = main.py addon.xml LICENSE.txt README.md resources/ hbogolib/ pyaes/
+include_files = main.py addon.xml LICENSE.txt README.md resources/ hbogolib/ libs/
 include_paths = $(patsubst %,$(name)/%,$(include_files))
 zip_dir = $(name)/
 

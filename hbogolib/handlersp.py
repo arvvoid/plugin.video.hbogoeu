@@ -22,9 +22,9 @@ from kodi_six.utils import py2_encode  # type: ignore
 
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.ttml2srt import Ttml2srt
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.ttml2srt import Ttml2srt
+from libs.util import Util
 
 try:
     from urllib import quote_plus as quote, urlencode  # type: ignore

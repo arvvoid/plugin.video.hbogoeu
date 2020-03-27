@@ -21,8 +21,8 @@ from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui  # type: ignore
 from kodi_six.utils import py2_encode, py2_decode  # type: ignore
 
 from hbogolib.constants import HbogoConstants
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.util import Util
 
 from libs import pyaes
 
@@ -483,7 +483,7 @@ class HbogoHandler(object):
         self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + self.encrypt_credential_v1(value))
 
     def get_device_id_v1(self):
-        from .uuid_device import get_crypt_key
+        from libs.uuid_device import get_crypt_key
         dev_key = get_crypt_key()
         return Util.hash256_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
 

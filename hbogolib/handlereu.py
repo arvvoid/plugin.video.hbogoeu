@@ -21,8 +21,8 @@ import requests
 
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.util import Util
 
 try:
     import urlparse as parse  # type: ignore

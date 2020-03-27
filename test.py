@@ -26,7 +26,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         test_type = str(sys.argv[1])
         if test_type == "ttml2srt":
-            from hbogolib.ttml2srt import Ttml2srt
+            from libs.ttml2srt import Ttml2srt
             input_subs_path = str(sys.argv[2])
             print("Loading TTML file " + input_subs_path + " ...")
             ttml = Ttml2srt(input_subs_path, 25)
