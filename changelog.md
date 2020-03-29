@@ -1,3 +1,7 @@
+v.2.5.3
+- SPDX License update
+- Support for non  ascii username/password (experimental)
+
 v.2.5.0
 - Fix playing the same content twice with caching enabled for Spain/Nordic region
 - Minor code/style fixes
