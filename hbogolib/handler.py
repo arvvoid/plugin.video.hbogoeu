@@ -106,6 +106,8 @@ class HbogoHandler(object):
         self.loggedin_headers = None  # DEFINE IN SPECIFIC HANDLER
         self.API_PLATFORM = 'COMP'
 
+        self.log(Util.base64dec_string(Util.base64enc("čćčććčćččdjdjjdžžžćžć")))
+
         self.log("Starting database connection...")
         self.db = sqlite3.connect(xbmc.translatePath(self.addon.getAddonInfo('profile')) + 'hgo.db')
         cur = self.db.cursor()

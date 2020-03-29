@@ -57,7 +57,7 @@ class Util(object):
     @staticmethod
     def hash256_bytes(data):
         if sys.version_info < (3, 0):
-            return hashlib.sha256(bytes(data)).digest()
+            return hashlib.sha256(bytes(data.encode('utf8'))).digest()
         try:
             return hashlib.sha256(bytes(data, 'utf8')).digest()
         except TypeError:
@@ -66,7 +66,7 @@ class Util(object):
     @staticmethod
     def hash256_string(data):
         if sys.version_info < (3, 0):
-            return hashlib.sha256(bytes(data)).hexdigest()
+            return hashlib.sha256(bytes(data.encode('utf8'))).hexdigest()
         try:
             return hashlib.sha256(bytes(data, 'utf8')).hexdigest()
         except TypeError:
