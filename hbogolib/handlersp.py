@@ -1,11 +1,7 @@
 # encoding: utf-8
-# Hbo Spain and Nordic handler class for Hbo Go Kodi add-on
 # Copyright (C) 2019 Sakerdot (https://github.com/Sakerdot)
 # Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
-# Relesed under GPL version 2
-#########################################################
-# HBO Spain and Nordic HANDLER CLASS
-#########################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 from __future__ import absolute_import, division
 

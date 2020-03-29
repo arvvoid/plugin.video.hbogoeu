@@ -1,10 +1,6 @@
 # encoding: utf-8
-# generic handler class for Hbo Go Kodi add-on
 # Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
-# Relesed under GPL version 2
-#########################################################
-# GENERIC HBOGO HANDLER CLASS
-#########################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 from __future__ import absolute_import, division
 
@@ -490,7 +486,7 @@ class HbogoHandler(object):
 
     def encrypt_credential_v1(self, raw):
         if sys.version_info < (3, 0):
-            raw = bytes(raw)
+            raw = bytes(py2_encode(raw))
         else:
             raw = bytes(raw, 'utf-8')
         aes = pyaes.AESModeOfOperationCTR(self.get_device_id_v1())

@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.5.2">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.5.3">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -39,7 +39,7 @@ If an official app is available for your platform, use it instead of this.
     </disclaimer>
     <language>en</language>
     <platform>all</platform>
-    <license>GPL-2.0</license>
+    <license>GPL-2.0-or-later</license>
     <forum>https://forum.kodi.tv/showthread.php?tid=339798</forum>
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>

@@ -5,10 +5,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install libxml2-utils
 install:
-- pip install pycryptodomex
-- pip install kodi-addon-checker
-- pip install flake8
-- pip install mypy
+- pip install -r requirements.txt
 before_script:
 - rm -R .github/ISSUE_TEMPLATE
 - rm .all-contributorsrc

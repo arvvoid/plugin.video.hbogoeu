@@ -11,3 +11,4 @@ test.py export-ignore
 travis-buddy-failure-template.md export-ignore
 travis-buddy-success-template.md export-ignore
 Makefile export-ignore
+requirements.txt export-ignore
