@@ -58,9 +58,9 @@ NOTE: If the add-on fail after the update probably the required module didn't ge
     <assets>
      <icon>resources/icon.png</icon>
      <fanart>resources/fanart.jpg</fanart>
-     <screenshot>resources/screen1.png</screenshot>
-     <screenshot>resources/screen7.png</screenshot>
-     <screenshot>resources/screen8.png</screenshot>
+     <screenshot>resources/screen1.jpg</screenshot>
+     <screenshot>resources/screen2.jpg</screenshot>
+     <screenshot>resources/screen3.jpg</screenshot>
     </assets>
   </extension>
 </addon>
