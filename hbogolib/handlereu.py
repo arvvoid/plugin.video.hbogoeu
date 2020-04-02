@@ -6,6 +6,8 @@ from __future__ import absolute_import, division
 
 import json
 import sys
+import errno
+import os
 import time
 import traceback
 
@@ -1166,6 +1168,39 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_type', drm)
             list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
+
+            #  inject subtitles for the EU region, workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+            folder = folder + 'subs' + os.sep + content_id + os.sep
+            if self.addon.getSetting('forcesubs') == 'true':
+                #  if inject subtitles is enable cache direct subtitle links if available and set subtitles from cache
+                self.log("Cache subtitles enabled, downloading and converting subtitles in: " + str(folder))
+                if not os.path.exists(os.path.dirname(folder)):
+                    try:
+                        os.makedirs(os.path.dirname(folder))
+                    except OSError as exc:  # Guard against race condition
+                        if exc.errno != errno.EEXIST:
+                            raise
+                try:
+                    subtitles = jsonrspp['Purchase']['Subtitles']
+                    if len(subtitles) > 0:
+                        subs_paths = []
+                        for sub in subtitles:
+                            self.log("Processing subtitle language code: " + str(sub['Code']) + " URL: " + str(sub['Url']))
+                            r = requests.get(sub['Url'])
+                            with open(str(folder) + str(sub['Code']) + ".srt", 'wb') as f:
+                                f.write(r.content)
+                            subs_paths.append(str(folder) + str(sub['Code']) + ".srt")
+                        self.log("Setting subtitles: " + str(subs_paths))
+                        list_item.setSubtitles(subs_paths)
+                        self.log("Local subtitles set")
+                    else:
+                        self.log("Inject subtitles error: No subtitles for the media")
+                except KeyError:
+                    self.log("Inject subtitles error: No subtitles key")
+                except Exception:
+                    self.log("Unexpected inject subtitles error: " + traceback.format_exc())
+
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
             if self.addon.getSetting('send_elapsed') == 'true':
