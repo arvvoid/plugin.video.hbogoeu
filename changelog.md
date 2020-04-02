@@ -1,3 +1,6 @@
+v.2.5.4
+- Cache subtitles for the EU region if inject subtitles option is enabled (default), workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
+
 v.2.5.3
 - SPDX License update
 - Support for non  ascii username/password (experimental)
