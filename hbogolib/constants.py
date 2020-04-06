@@ -8,15 +8,6 @@ from __future__ import absolute_import, division
 
 class HbogoConstants(object):
 
-    # supported countries:
-    #   0 name
-    #   1 national domain
-    #   2 country code short
-    #   3 country code long
-    #   4 default language code
-    #   5 special domain
-    #   6 hbogo region/handler to use
-
     HANDLER_EU = 0
     HANDLER_NORDIC = 1
     HANDLER_SPAIN = 1
@@ -44,6 +35,15 @@ class HbogoConstants(object):
     CONTEXT_MODE_DEFAULT = 0
     CONTEXT_MODE_MOVIE = 1
     CONTEXT_MODE_EPISODE = 2
+
+    # supported countries:
+    #   0 name
+    #   1 national domain
+    #   2 country code short
+    #   3 country code long
+    #   4 default language code
+    #   5 special domain
+    #   6 hbogo region/handler to use
 
     countries = [
         ['Bosnia and Herzegovina', 'ba', 'ba', 'BIH', 'HRV', '', HANDLER_EU],
