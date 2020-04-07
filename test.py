@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # encoding: utf-8
 # HBO Go EU Add-on lib Test Script
 # Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
@@ -12,7 +13,7 @@
 #           Messages on the console
 #           The test_sub.srt file will contain the result of the conversion
 #
-# Relesed under GPL version 2
+# SPDX-License-Identifier: GPL-2.0-or-later
 #########################################################
 
 from __future__ import absolute_import, division
