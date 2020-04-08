@@ -37,7 +37,7 @@ Simple Kodi add-on to access HBO® Go content from Kodi Media Center (http://kod
 
 Legend: ✔ - feature availible for the region and working in the add-on, ✖ - feature availible for the region but not implemented or broken in the add-on, ⛔ feature not availible for the region
 
-This add-on support 18 countries atm: 
+This add-on support 18 countries atm ([FULL OPERATOR LIST]()): 
 *  __Bosnia and Herzegovina__ *[EU]*
 *  __Bulgaria__ *[EU]*
 *  __Croatia__ *[EU]*

@@ -17,8 +17,9 @@ from datetime import date
 
 from hbogolib.constants import HbogoConstants
 
-info_string = ""
-print('HBO Go Eu Operator retriver V2.0: ')
+info_string = "|COUNTRY|OPERATOR|LOGIN TYPE|API" + os.linesep
+info_string = info_string + "|-------|--------|----------|---|" + os.linesep
+print('HBO Go EU Operator list generator V2.0: ')
 print('')
 print('')
 for countrie in HbogoConstants.countries:
@@ -26,27 +27,28 @@ for countrie in HbogoConstants.countries:
         url_basic = 'https://api.ugw.hbogo.eu/v3.0/Operators/' + str(countrie[3]) + '/JSON/' + str(countrie[4]) + '/COMP'
         url_operators = 'https://' + str(countrie[2]) + 'gwapi.hbogo.eu/v2.1/Operators/json/' + str(countrie[3]) + '/COMP'
         print('Processing operators for: ' + str(countrie[0]) + '...')
-        info_string = info_string + os.linesep
-        info_string = info_string + "* " + str(countrie[0]) + os.linesep
         json_web_operators = requests.get(url_basic).json()
         for operator in json_web_operators['Items']:
             print('DIRECT ' + operator['Type'] + ': ' + operator['Name'])
-            info_string = info_string + "   * " + 'DIRECT ' + operator['Type'] + ': ' + operator['Name'] + os.linesep
+            info_string = info_string + "|" + str(countrie[0]) + "|" + operator['Name'] + "|" + 'DIRECT (' + operator['Type'] + ")|EU|" + os.linesep
         json_operators = requests.get(url_operators).json()
         for operator in json_operators['Items']:
-            strtype = "AFFILIATE: "
+            strtype = "AFFILIATE GATEWAY"
             if len(operator['RedirectionUrl']) > 0:
-                strtype = "AFFILIATE REDIRECT LOGIN: "
+                strtype = "AFFILIATE OAuth External (Redirect)"
             print(strtype + ': ' + operator['Name'])
-            info_string = info_string + "   * " + strtype + operator['Name'] + os.linesep
+            info_string = info_string + "|" + str(countrie[0]) + "|" + operator['Name'] + "|" + strtype + "|EU|" + os.linesep
+    if countrie[6] == HbogoConstants.HANDLER_NORDIC: #  or HANDLER_SPAIN (same value)
+        print('Processing operators for: ' + str(countrie[0]) + '...')
+        info_string = info_string + "|" + str(countrie[0]) + "|" + "HBO Subscription " + str(countrie[0]) + "|DIRECT|NORDIC/SPAIN|" + os.linesep
 
 print("")
 print("Preparing output...")
 
-output = "Last update: " + str(date.today()) + os.linesep + info_string + os.linesep + os.linesep
+output = "Last update: " + str(date.today()) + os.linesep + os.linesep + info_string + os.linesep + os.linesep
 
-print("eu_operators.md...")
-file = codecs.open("eu_operators.md", "w", "utf-8")
+print("operators.md...")
+file = codecs.open("operators.md", "w", "utf-8")
 file.write(output)
 file.close()
 print("Done!")
