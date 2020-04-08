@@ -193,7 +193,7 @@ class HbogoHandler_eu(HbogoHandler):
         op_list = []
 
         for operator in json_basic_operators['Items']:
-            icon = self.get_resource("icon.png")
+            icon = HbogoConstants.fallback_operator_icon_eu
             try:
                 if operator['LogoUrl']:
                     icon = operator['LogoUrl']
@@ -208,7 +208,7 @@ class HbogoHandler_eu(HbogoHandler):
 
             op_list.append([operator['Name'], operator['Id'], icon, 'true', redirect_url])
         for operator in json_operators['Items']:
-            icon = self.get_resource("icon.png")
+            icon = HbogoConstants.fallback_operator_icon_eu
             try:
                 if operator['LogoUrl']:
                     icon = operator['LogoUrl']
