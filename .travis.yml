@@ -17,6 +17,7 @@ before_script:
 - rm PULL_REQUEST_TEMPLATE.md
 - rm changelog.md
 - rm test.py
+- rm gen_operator_list.py
 - git config core.quotepath false
 script:
 - make test
