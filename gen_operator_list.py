@@ -38,7 +38,7 @@ for countrie in HbogoConstants.countries:
                 strtype = "AFFILIATE OAuth External (Redirect)"
             print(strtype + ': ' + operator['Name'])
             info_string = info_string + "|" + str(countrie[0]) + "|" + operator['Name'] + "|" + strtype + "|EU|" + os.linesep
-    if countrie[6] == HbogoConstants.HANDLER_NORDIC: #  or HANDLER_SPAIN (same value)
+    if countrie[6] == HbogoConstants.HANDLER_NORDIC:  # or HANDLER_SPAIN (same value)
         print('Processing operators for: ' + str(countrie[0]) + '...')
         info_string = info_string + "|" + str(countrie[0]) + "|" + "HBO Subscription " + str(countrie[0]) + "|DIRECT|NORDIC/SPAIN|" + os.linesep
 
