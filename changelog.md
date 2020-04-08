@@ -1,3 +1,6 @@
+v.2.5.5
+- Fix setup for operators with direct (affiliate) login. Fix setup and login for these operators: Bulgaria: Telekabel, NET1; Czech Republic: Vodafone Česká republika, Skylink CZ from 1.4.2020, UPC TV (from 1.4.2020); Montenegro: MTEL; Romania: Telekom Romania; Serbia: Test RS 1, Supernova; Slovakia: Skylink SK from 1.4.2020, Portugal: Vodafone TV, Vodafone Móvel
+
 v.2.5.4
 - Cache subtitles for the EU region if inject subtitles option is enabled (default), workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
 

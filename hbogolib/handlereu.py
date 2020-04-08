@@ -104,7 +104,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.is_web = True
         else:
             self.is_web = False
-        self.log("WEB OPERATOR: " + str(self.is_web))
+        self.log("DIRECT OPERATOR D2C: " + str(self.is_web))
         self.REDIRECT_URL = self.addon.getSetting('operator_redirect_url')
         self.log("OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
         self.SPECIALHOST_URL = country[5]
@@ -200,22 +200,13 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
 
-            web = 'true'
-            try:
-                if operator['Type'] == "D2_C":
-                    web = 'true'
-                else:
-                    web = 'false'
-            except Exception:
-                self.log("Generic error, operator type, Stack trace: " + traceback.format_exc())
-
             redirect_url = ""
             try:
                 redirect_url = operator['RedirectionUrl']
             except Exception:
                 self.log("Generic error, redirect url, Stack trace: " + traceback.format_exc())
 
-            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+            op_list.append([operator['Name'], operator['Id'], icon, 'true', redirect_url])
         for operator in json_operators['Items']:
             icon = self.get_resource("icon.png")
             try:
@@ -224,15 +215,13 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
 
-            web = 'false'
-
             redirect_url = ""
             try:
                 redirect_url = operator['RedirectionUrl']
             except Exception:
                 self.log("Generic error, operator custom url, Stack trace: " + traceback.format_exc())
 
-            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+            op_list.append([operator['Name'], operator['Id'], icon, 'false', redirect_url])
 
         li_items_list = []
 
