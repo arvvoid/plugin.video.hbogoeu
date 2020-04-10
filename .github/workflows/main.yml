@@ -7,6 +7,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  create:
+    tags:
+      - v*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
