@@ -1,0 +1,58 @@
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    
+    # Install requirments
+    - name: Install requirements
+      run: |
+        sudo apt update
+        sudo apt -y install libxml2-utils
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    # Clean files not accepted by kodi add-on checker
+    - name: Clean
+      id: clean
+      run: |
+        rm -R .github/
+        rm .all-contributorsrc
+        rm .gitignore
+        rm .gitattributes
+        rm *.yml    
+
+    # Runs a single command using the runners shell
+    - name: Main Test, Leia
+      id: test
+      run: make test
+    
+    # Language files sync test
+    - name: Test if language files are in sync with POT
+      id: lang-test
+      run: make test-language-sync
+
+    # Language files translation status
+    - name: Just report traslations status
+      id: lang-status
+      run: make test-language-maintained
