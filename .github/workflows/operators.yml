@@ -32,6 +32,8 @@ jobs:
     - name: Update Wiki
       run: |
         cd ../hgowiki
+        git config user.email "${{secrets.EMAIL}}"
+        git config user.name "${{ github.actor }}"
         git add .
         git commit -m "Auto-update operators list"
         git push
