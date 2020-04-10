@@ -13,7 +13,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+
   test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -48,7 +48,6 @@ jobs:
         rm .gitattributes
         rm *.yml    
 
-    # Runs a single command using the runners shell
     - name: Main Test, Leia and Matrix
       id: test
       run: make test-multi
@@ -97,8 +96,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ env.RELEASE_NAME }}
-          body: |
-            ${{ env.RELEASE_CHANGES }}
           draft: false
           prerelease: true
       - name: Upload Addon zip Leia to github release
@@ -121,3 +118,26 @@ jobs:
           asset_path: ${{ env.RELEASE_ZIP_MATRIX }}
           asset_name: ${{ env.RELEASE_ASSET_NAME_MATRIX }}
           asset_content_type: application/zip
+
+  # if release is success send to the official Kodi add-on repository both Leia and Matrix
+  kodi-addon-submitter:
+    needs: release
+    if: contains(github.ref, "v.") # if tag starting with v.
+
+    runs-on: ubuntu-latest
+    name: Kodi addon submitter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Submit to official kodi repository
+        id: kodi-addon-submitter
+        uses: xbmc/action-kodi-addon-submitter@v1.1
+        with:
+          kodi-repository: repo-plugins
+          kodi-version: leia
+          addon-id: plugin.video.hbogoeu
+          kodi-matrix: true # Submit a Python 2/3 compatible addon to matrix branch in addition to the target branch
+        env: # Make sure you create the below secrets (GH_TOKEN and EMAIL)
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+          EMAIL: ${{secrets.EMAIL}}
