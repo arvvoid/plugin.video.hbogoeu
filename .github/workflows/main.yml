@@ -76,11 +76,15 @@ jobs:
         run: make zip
       - name: Set env
         run: |
-          echo ::set-env name=RELEASE_ZIP_LEIA::$(ls ../*-leia.zip)
-          echo ::set-env name=RELEASE_ZIP_MATRIX::$(ls ../*-matrix.zip)
+          echo ::set-env name=RELEASE_ZIP_LEIA::$(ls *-leia.zip)
+          echo ::set-env name=RELEASE_ZIP_MATRIX::$(ls *-matrix.zip)
+          echo ::set-env name=RELEASE_NAME::$(xmllint --xpath 'string(/addon/@version)' addon.xml)
+          echo ::set-env name=RELEASE_CHANGES::$(xmllint --xpath 'string(//addon/extension/news)' addon.xml)
       - name: Publish Release
         id: publish-release
         run: |
           echo $RELEASE_ZIP_LEIA
           echo $RELEASE_ZIP_MATRIX
+          echo $RELEASE_NAME
+          echo $RELEASE_CHANGES
 

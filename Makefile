@@ -89,10 +89,10 @@ zip: clean
 	@rm -f *.zip
 	@perl -i -pe's/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider_srch)\" version=\"$(version_matrix_srch)\">/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider)\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
-	cd ..; zip -r $(zip_name_leia) $(include_paths)
+	zip -r $(zip_name_leia) $(include_paths)
 	@perl -i -pe's/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider_srch)\" version=\"$(version)\">/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider)\" version=\"$(version_matrix)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
-	cd ..; zip -r $(zip_name_matrix) $(include_paths)
+	zip -r $(zip_name_matrix) $(include_paths)
 	@perl -i -pe's/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider_srch)\" version=\"$(version_matrix_srch)\">/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider)\" version=\"$(version)\">/g' addon.xml
 	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
 	@echo "Done."
