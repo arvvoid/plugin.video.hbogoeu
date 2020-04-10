@@ -80,6 +80,6 @@ jobs:
       - name: Publish Release
         id: publish-release
         run: |
-          echo $(RELEASE_ZIP_LEIA)
-          echo $(RELEASE_ZIP_MATRIX)
+          echo $RELEASE_ZIP_LEIA
+          echo $RELEASE_ZIP_MATRIX
 
