@@ -58,7 +58,7 @@ jobs:
       id: lang-status
       run: make test-language-maintained
 
-  # If build success and this is a tag make a release
+  # If build success and this is a tag in format v.VERSION make a release
   release:
     if: contains(github.ref, "v.")
     needs: build
@@ -95,7 +95,7 @@ jobs:
           draft: false
           prerelease: true
       - name: Upload Addon zip Leia to github release
-        id: upload-release-asset
+        id: upload-release-asset-leia
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -105,7 +105,7 @@ jobs:
           asset_name: $RELEASE_ASSET_NAME_LEIA
           asset_content_type: application/zip
       - name: Upload Addon zip Matrix to github release
-        id: upload-release-asset
+        id: upload-release-asset-matrix
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
