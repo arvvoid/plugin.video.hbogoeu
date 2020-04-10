@@ -60,11 +60,12 @@ jobs:
 
   # If build success and this is a tag make a release
   release:
+    needs: build
+
     runs-on: ubuntu-latest
 
-    if: ${{ github.ref == 'master' }}
-    needs: build
     steps:
+      - uses: actions/checkout@v2
       - name: Make GitHub Release Zip for Leia and Matrix
         id: release-multi
         run: |
