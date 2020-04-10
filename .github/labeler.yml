@@ -16,4 +16,4 @@ Nordic/Spain regional handler changes:
 GitHub Config Changes:
   - .github/*
 
-Translation: resources/language/*
+Translation: resources/language/**/*
