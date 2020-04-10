@@ -60,11 +60,12 @@ jobs:
 
   # If build success and this is a tag in format v.VERSION make a release
   release:
-    if: contains(github.ref, "v.")
     needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
 
     runs-on: ubuntu-latest
 
+    name: Release
     steps:
       - uses: actions/checkout@v2
       - name: Install requirements
@@ -114,4 +115,3 @@ jobs:
           asset_path: $RELEASE_ZIP_MATRIX
           asset_name: $RELEASE_ASSET_NAME_MATRIX
           asset_content_type: application/zip
-
