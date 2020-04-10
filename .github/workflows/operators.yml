@@ -26,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         yes | pip install requests
     - name: Get hGo Wiki
-      run: git clone https://github.com/arvvoid/plugin.video.hbogoeu.wiki.git ../hgowiki
+      run: git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/arvvoid/plugin.video.hbogoeu.wiki.git ../hgowiki
     - name: Generate Operators list
       run: python gen_operator_list.py
     - name: Update Wiki
