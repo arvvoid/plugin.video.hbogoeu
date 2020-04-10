@@ -73,13 +73,13 @@ jobs:
 
       - name: Make GitHub Release Zip for Leia and Matrix
         id: release-multi
-        run: |
-          make zip
-          set-env RELEASE_ZIP_LEIA=$(ls ../*-leia.zip)
-          set-env RELEASE_ZIP_MATRIX=$(ls ../*-matrix.zip)
+        run: make zip
       - name: Publish Release
         id: publish-release
         run: |
           echo $RELEASE_ZIP_LEIA
           echo $RELEASE_ZIP_MATRIX
+        env:
+          RELEASE_ZIP_LEIA: $(ls ../*-leia.zip)
+          RELEASE_ZIP_MATRIX: $(ls ../*-matrix.zip)
 
