@@ -122,7 +122,7 @@ jobs:
   # if release is success send to the official Kodi add-on repository both Leia and Matrix
   kodi-addon-submitter:
     needs: release
-    if: contains(github.ref, "v.") # if tag starting with v.
+    if: startsWith(github.ref, 'refs/tags/v')
 
     runs-on: ubuntu-latest
     name: Kodi addon submitter

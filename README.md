@@ -69,10 +69,6 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 * The add-on will auto-update from repository as soon as a stable release is available
 * *OPTIONAL: Configure additional preferences in the add-on config*
 
-## Manual Download/Install
-
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/arvvoid/plugin.video.hbogoeu)](https://github.com/arvvoid/plugin.video.hbogoeu/releases/latest)
-
 ## Change Log
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
