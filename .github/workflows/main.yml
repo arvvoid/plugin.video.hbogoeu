@@ -60,6 +60,8 @@ jobs:
 
   # If build success and this is a tag make a release
   release:
+    runs-on: ubuntu-latest
+
     if: ${{ github.ref == 'master' }}
     needs: build
     steps:
