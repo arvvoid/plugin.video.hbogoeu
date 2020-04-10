@@ -1,4 +1,4 @@
-# Kodi Media Center language file
+# Test Kodi Media Center language file
 # Addon Name: HBO GO EU
 # Addon id: plugin.video.hbogoeu
 # Addon Provider: arvvoid
