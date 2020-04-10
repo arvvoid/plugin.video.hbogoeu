@@ -29,6 +29,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt -y install libxml2-utils
+        sudo apt -y install gettext
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
@@ -43,9 +44,9 @@ jobs:
         rm *.yml    
 
     # Runs a single command using the runners shell
-    - name: Main Test, Leia
+    - name: Main Test, Leia and Matrix
       id: test
-      run: make test
+      run: make test-multi
     
     # Language files sync test
     - name: Test if language files are in sync with POT
