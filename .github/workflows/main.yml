@@ -66,6 +66,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+
       - name: Make GitHub Release Zip for Leia and Matrix
         id: release-multi
         run: |
