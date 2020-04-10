@@ -75,8 +75,8 @@ jobs:
         id: release-multi
         run: |
           make zip
-          export RELEASE_ZIP_LEIA=$(ls ../*-leia.zip)
-          export RELEASE_ZIP_MATRIX=$(ls ../*-matrix.zip)
+          set-env RELEASE_ZIP_LEIA=$(ls ../*-leia.zip)
+          set-env RELEASE_ZIP_MATRIX=$(ls ../*-matrix.zip)
       - name: Publish Release
         id: publish-release
         run: |
