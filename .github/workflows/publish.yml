@@ -1,0 +1,139 @@
+name: Publish
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  create:
+    tags:
+      - v*
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Test
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    
+    # Install requirments
+    - name: Install requirements
+      run: |
+        sudo apt update
+        sudo apt -y install libxml2-utils
+        sudo apt -y install gettext
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    # Clean files not accepted by kodi add-on checker
+    - name: Clean
+      id: clean
+      run: |
+        rm -R .github/
+        rm .all-contributorsrc
+        rm .gitignore
+        rm .gitattributes
+        rm *.yml    
+
+    - name: Main Test, Leia and Matrix
+      id: test
+      run: make test-multi
+    
+    # Language files sync test
+    - name: Test if language files are in sync with POT
+      id: lang-test
+      run: make test-language-sync
+
+    # Language files translation status
+    - name: Just report traslations status
+      id: lang-status
+      run: make test-language-maintained
+
+  # If build success and this is a tag in format v.VERSION make a release
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
+
+    runs-on: ubuntu-latest
+
+    name: Release
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+
+      - name: Make GitHub Release Zip for Leia and Matrix
+        id: release-multi
+        run: make zip
+      - name: Set env
+        run: |
+          echo ::set-env name=RELEASE_ZIP_LEIA::$(ls ../*-leia.zip)
+          echo ::set-env name=RELEASE_ZIP_MATRIX::$(ls ../*-matrix.zip)
+          echo ::set-env name=RELEASE_ASSET_NAME_LEIA::$(cd ..;ls *-leia.zip)
+          echo ::set-env name=RELEASE_ASSET_NAME_MATRIX::$(cd ..;ls *-matrix.zip)
+          echo ::set-env name=RELEASE_NAME::$(xmllint --xpath 'string(/addon/@version)' addon.xml)
+          echo ::set-env name=RELEASE_CHANGES::$(xmllint --xpath 'string(//addon/extension/news)' addon.xml)
+      - name: Create Github Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ env.RELEASE_NAME }}
+          draft: false
+          prerelease: true
+      - name: Upload Addon zip Leia to github release
+        id: upload-release-asset-leia
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.RELEASE_ZIP_LEIA }}
+          asset_name: ${{ env.RELEASE_ASSET_NAME_LEIA }}
+          asset_content_type: application/zip
+      - name: Upload Addon zip Matrix to github release
+        id: upload-release-asset-matrix
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.RELEASE_ZIP_MATRIX }}
+          asset_name: ${{ env.RELEASE_ASSET_NAME_MATRIX }}
+          asset_content_type: application/zip
+
+  # if release is success send to the official Kodi add-on repository both Leia and Matrix
+  kodi-addon-submitter:
+    needs: release
+    if: startsWith(github.ref, 'refs/tags/')
+
+    runs-on: ubuntu-latest
+    name: Kodi addon submitter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Submit to official kodi repository
+        id: kodi-addon-submitter
+        uses: xbmc/action-kodi-addon-submitter@v1.1
+        with:
+          kodi-repository: repo-plugins
+          kodi-version: leia
+          addon-id: plugin.video.hbogoeu
+          kodi-matrix: true # Submit a Python 2/3 compatible addon to matrix branch in addition to the target branch
+        env: # Make sure you create the below secrets (GH_TOKEN and EMAIL)
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+          EMAIL: ${{secrets.EMAIL}}
