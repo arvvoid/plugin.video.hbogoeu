@@ -14,6 +14,6 @@ Nordic/Spain regional handler changes:
   - hbogolib/handlersp.py
     
 GitHub Config Changes:
-  - .github/*
+  - .github/**/*
 
 Translation: resources/language/**/*
