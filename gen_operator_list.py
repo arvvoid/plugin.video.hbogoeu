@@ -11,11 +11,19 @@ from __future__ import absolute_import, division
 #  will generate marked-up list for documentation
 
 import requests
-import os
+import os.path
 import codecs
 from datetime import date
 
 from hbogolib.constants import HbogoConstants
+
+
+def replacetextbetween(original, delimeter_a, delimter_b, newtext):
+    leadingtext = original.split(delimeter_a)[0]
+    trailingtext = original.split(delimter_b)[1]
+
+    return leadingtext + delimeter_a + newtext + delimter_b + trailingtext
+
 
 info_string = "|COUNTRY|OPERATOR|LOGIN TYPE|API" + os.linesep
 info_string = info_string + "|-------|--------|----------|---|" + os.linesep
@@ -45,10 +53,20 @@ for countrie in HbogoConstants.countries:
 print("")
 print("Preparing output...")
 
-output = "Last update: " + str(date.today()) + os.linesep + os.linesep + info_string + os.linesep + os.linesep
+output = os.linesep + "Last update: " + str(date.today()) + os.linesep + os.linesep + info_string + os.linesep
 
-print("operators.md...")
-file = codecs.open("operators.md", "w", "utf-8")
-file.write(output)
-file.close()
-print("Done!")
+if os.path.isfile('../hgowiki/Regional-support.md'):
+    file_r = codecs.open('../hgowiki/Regional-support.md', encoding='utf-8')
+    original = file_r.read()
+    file_r.close()
+    output = replacetextbetween(original, "<!--- BEGIN GENERATED --->", "<!--- END GENERATED --->", output)
+    file = codecs.open("../hgowiki/Regional-support.md", "w", "utf-8")
+    file.write(output)
+    file.close()
+    print("Done!")
+else:
+    print("operators.md...")
+    file = codecs.open("operators.md", "w", "utf-8")
+    file.write(output)
+    file.close()
+    print("Done!")

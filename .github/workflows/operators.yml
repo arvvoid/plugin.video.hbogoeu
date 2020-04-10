@@ -11,15 +11,11 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   update-op-list-wiki:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     name: Update Wiki operator list
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -29,17 +25,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         yes | pip install requests
-    - name: Generate and get Operator list
-      run: |
-        python gen_operator_list.py
-        echo ::set-env name=OPERATORS_LIST::$(cat operators.md)
-
-    # Runs a set of commands using the runners shell
+    - name: Get hGo Wiki
+      run: git clone https://github.com/arvvoid/plugin.video.hbogoeu.wiki.git ../hgowiki
+    - name: Generate Operators list
+      run: python gen_operator_list.py
     - name: Update Wiki
       run: |
-        git clone https://github.com/arvvoid/plugin.video.hbogoeu.wiki.git ../hgowiki
         cd ../hgowiki
-        perl -i -pe "s/(<!--- BEGIN GENERATED --->\\n).*(\\n<!--- END GENERATED --->)/\$1$OPERATORS_LIST\$2/s" Regional-support.md
         git add .
         git commit -m "Auto-update operators list"
         git push
