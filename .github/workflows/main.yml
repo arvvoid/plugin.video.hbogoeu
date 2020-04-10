@@ -84,34 +84,34 @@ jobs:
           echo ::set-env name=RELEASE_NAME::$(xmllint --xpath 'string(/addon/@version)' addon.xml)
           echo ::set-env name=RELEASE_CHANGES::$(xmllint --xpath 'string(//addon/extension/news)' addon.xml)
       - name: Create Github Release
-          id: create_release
-          uses: actions/create-release@v1.0.0
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            tag_name: ${{ github.ref }}
-            release_name: Release $RELEASE_NAME
-            body: $RELEASE_CHANGES
-            draft: false
-            prerelease: true
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release $RELEASE_NAME
+          body: $RELEASE_CHANGES
+          draft: false
+          prerelease: true
       - name: Upload Addon zip Leia to github release
-          id: upload-release-asset
-          uses: actions/upload-release-asset@v1.0.1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: $RELEASE_ZIP_LEIA
-            asset_name: $RELEASE_ASSET_NAME_LEIA
-            asset_content_type: application/zip
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: $RELEASE_ZIP_LEIA
+          asset_name: $RELEASE_ASSET_NAME_LEIA
+          asset_content_type: application/zip
       - name: Upload Addon zip Matrix to github release
-          id: upload-release-asset
-          uses: actions/upload-release-asset@v1.0.1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: $RELEASE_ZIP_MATRIX
-            asset_name: $RELEASE_ASSET_NAME_MATRIX
-            asset_content_type: application/zip
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: $RELEASE_ZIP_MATRIX
+          asset_name: $RELEASE_ASSET_NAME_MATRIX
+          asset_content_type: application/zip
 
