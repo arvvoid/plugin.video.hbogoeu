@@ -418,5 +418,9 @@ msgctxt "#30808"
 msgid "Clear request cache"
 msgstr ""
 
+msgctxt "#30809"
+msgid "Encrypt credentials"
+msgstr ""
+
 
 
