@@ -54,11 +54,6 @@ jobs:
       id: lang-test
       run: make test-language-sync
 
-    # Language files translation status
-    - name: Just report traslations status
-      id: lang-status
-      run: make test-language-maintained
-
   # If build success and this is a tag in format v.VERSION make a release
   release:
     needs: test
