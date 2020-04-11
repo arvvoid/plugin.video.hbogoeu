@@ -436,10 +436,13 @@ class HbogoHandler(object):
 
     def inputCredentials(self):
         if not self.usedevkey:
-            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30810))
+            ret = xbmcgui.Dialog().yesno('[COLOR red]' + self.language(30813) + '[/COLOR]', self.language(30810))
             if not ret:
                 return False
-        username = xbmcgui.Dialog().input(self.language(30442), type=xbmcgui.INPUT_ALPHANUM)
+        encrypted_info_label = "[COLOR green][B]" + self.language(30811) + "[/B][/COLOR]"
+        if not self.usedevkey:
+            encrypted_info_label = "[COLOR red][B]" + self.language(30812) + "[/B][/COLOR]"
+        username = xbmcgui.Dialog().input('[B]' + self.addon.getAddonInfo('name') + '[/B]: ' + self.language(30442) + ' ' + encrypted_info_label, type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
@@ -447,7 +450,7 @@ class HbogoHandler(object):
                 self.addon.setSetting('password', '')
                 return False
             return self.inputCredentials()
-        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM,
+        password = xbmcgui.Dialog().input('[B]' + self.addon.getAddonInfo('name') + '[/B]: ' + self.language(30443) + ' ' + encrypted_info_label, type=xbmcgui.INPUT_ALPHANUM,
                                           option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
