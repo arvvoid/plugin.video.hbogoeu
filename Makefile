@@ -45,6 +45,8 @@ test-multi: sanity-multi
 
 sanity: flake8 mypy kodi
 
+test-light: flake8 mypy
+
 sanity-multi: flake8 mypy kodi-all
 
 flake8:
@@ -58,6 +60,20 @@ mypy:
 kodi: clean
 	@echo "Starting official kodi-addon-checker for $(chk_branch) ($(git_hash))"
 	@kodi-addon-checker --branch=$(chk_branch)
+	-@rm -f *.log
+
+kodi-leia: clean
+	@echo "Starting official kodi-addon-checker for Leia ($(git_hash))"
+	@perl -i -pe's/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider_srch)\" version=\"$(version_matrix_srch)\">/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider)\" version=\"$(version)\">/g' addon.xml
+	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/g' addon.xml
+	@kodi-addon-checker --branch=leia
+	-@rm -f *.log
+
+kodi-matrix: clean
+	@echo "Starting official kodi-addon-checker for matrix on branch $(git_branch) ($(git_hash))"
+	@perl -i -pe's/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider_srch)\" version=\"$(version)\">/<addon id=\"$(name)\" name=\"$(name_for_show)\" provider-name=\"$(provider)\" version=\"$(version_matrix)\">/g' addon.xml
+	@perl -i -pe's/<import addon=\"xbmc.python\" version=\"2.26.0\" \/>/<import addon=\"xbmc.python\" version=\"3.0.0\" \/>/g' addon.xml
+	@kodi-addon-checker --branch=matrix
 	-@rm -f *.log
 
 kodi-all: clean
