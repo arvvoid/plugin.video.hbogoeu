@@ -10,11 +10,11 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  test:
+  test-before-release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    name: Test
+    name: Pre-release Tests
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
