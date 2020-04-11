@@ -435,6 +435,10 @@ class HbogoHandler(object):
             return None
 
     def inputCredentials(self):
+        if not self.usedevkey:
+            ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30810))
+            if not ret:
+                return False
         username = xbmcgui.Dialog().input(self.language(30442), type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))

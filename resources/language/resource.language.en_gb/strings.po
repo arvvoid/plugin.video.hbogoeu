@@ -422,5 +422,9 @@ msgctxt "#30809"
 msgid "Encrypt credentials"
 msgstr ""
 
+msgctxt "#30810"
+msgid "Encrypt credentials is disabled. If this is not intended for debugging/testing or because of experiencing problems on the device please do NOT continue. If you don't know why the option is disabled don't input credentials and exit now, enable the option and then try again. If you disabled the option on purpose and know exactly why then please continue. This message will appear only now on credential input."
+msgstr ""
+
 
 
