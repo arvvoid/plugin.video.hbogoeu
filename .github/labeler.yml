@@ -17,3 +17,5 @@ GitHub Config Changes:
   - .github/**/*
 
 Translation: resources/language/**/*
+
+Add-on settings: resources/settings.xml
