@@ -1,22 +1,17 @@
 name: Publish
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# Run only on new tag
 on:
   create:
     tags:
       - v*
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
   test-before-release:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     name: Pre-release Tests
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
@@ -25,7 +20,7 @@ jobs:
       with:
         python-version: 3.7
     
-    # Install requirments
+    # Install requirements
     - name: Install requirements
       run: |
         sudo apt update
@@ -35,7 +30,7 @@ jobs:
         pip install -r requirements.txt
         pip install kodi-addon-checker
         
-    # Clean files not accepted by kodi add-on checker
+    # Clean files not accepted by Kodi add-on checker
     - name: Clean
       id: clean
       run: |
@@ -54,7 +49,7 @@ jobs:
       id: lang-test
       run: make test-language-sync
 
-  # If build success and this is a tag in format v.VERSION make a release
+  # If test success and this is a tag make a release
   release:
     needs: test-before-release
     if: startsWith(github.ref, 'refs/tags/') && github.actor == 'arvvoid'
@@ -114,7 +109,8 @@ jobs:
           asset_name: ${{ env.RELEASE_ASSET_NAME_MATRIX }}
           asset_content_type: application/zip
 
-  # if release is success send to the official Kodi add-on repository both Leia and Matrix
+  # if release is success send to the official Kodi add-on repository
+  # both Leia and Matrix
   kodi-addon-submitter:
     needs: release
     if: startsWith(github.ref, 'refs/tags/') && github.actor == 'arvvoid'
