@@ -22,9 +22,12 @@ Steps to reproduce the behaviour:
 **Expected behaviour**
 A clear and concise description of what you expected to happen.
 
-## Debug log
+## Debug log - https://kodi.wiki/view/Log_file/Easy
 
-[Please include a link to your debug log. Follow these instructions https://kodi.wiki/view/Log_file/Easy]
+[First of all thanks for making the effort to report an issue, reporting issues is critical to improve the project quality]
+[Please include a link to your full debug log. Follow these instructions https://kodi.wiki/view/Log_file/Easy]
+
+[Please note, bug reports without full logs will most likley not be taken into consideration]
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
