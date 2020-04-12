@@ -88,6 +88,9 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ env.RELEASE_NAME }}
+          body: |
+            Changes in this Release
+            ${{ env.RELEASE_CHANGES }}
           draft: false
           prerelease: true
       - name: Upload Addon zip Leia to github release
