@@ -9,7 +9,7 @@ assignees: ''
 
 * [ ] Are you running the latest version?
 
-**Befor sending the support request this resources can be checked:
+**Befor sending the support request this resources can be checked:**
 
 [Kodi Forum thread](https://forum.kodi.tv/showthread.php?tid=339798) |
 [Project wiki](https://github.com/arvvoid/plugin.video.hbogoeu/wiki) | 
