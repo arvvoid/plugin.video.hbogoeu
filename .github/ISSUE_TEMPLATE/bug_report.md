@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve, make sure to include a full debug log https://kodi.wiki/view/Log_file/Easy
 title: "[BUG] "
 labels: bug
 assignees: ''
