@@ -1,6 +1,6 @@
 ---
 name: Support request
-about: Aks for help or clarification, provide feedback, contact us
+about: Ask for help or clarification, provide feedback, contact us
 title: "[SUPPORT]"
 labels: SUPPORT
 assignees: ''
