@@ -24,7 +24,6 @@
 #	libxml2-utils    (on Ubuntu/Debian sudo apt -y install libxml2-utils)
 #	gettext			 (on Ubuntu/Debian sudo apt -y install gettext)
 #	python -m pip install --upgrade pip
-#	python -m pip install --upgrade pip
 #	pip install -r requirements.txt
 #	pip install kodi-addon-checker
 #

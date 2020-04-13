@@ -1,4 +1,4 @@
-name: Build
+name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -39,6 +39,8 @@ jobs:
       run: make test-light
 
   kodi-addon-checker-leia:
+    # Run only if basic test pass
+    needs: test-py
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -76,6 +78,8 @@ jobs:
       run: make kodi-leia
 
   kodi-addon-checker-matrix:
+    # Run only if basic test pass
+    needs: test-py
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -116,7 +120,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    name: Translations test
+    name: Translations sync test
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -134,6 +138,24 @@ jobs:
       - name: Test if language files are in sync with POT
         id: lang-test
         run: make test-language-sync
+
+  language-info:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Translations status (JUST INFO)
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Install requirements
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+          sudo apt -y install gettext
 
       # Language files translation status
       - name: Traslations status (JUST INFO)
