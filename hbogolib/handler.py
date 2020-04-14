@@ -107,7 +107,7 @@ class HbogoHandler(object):
         self.API_PLATFORM = 'COMP'
 
         self.log("Starting database connection...")
-        self.db = sqlite3.connect(py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile'))) + 'hgo.db')
+        self.db = sqlite3.connect(xbmc.translatePath(self.addon.getAddonInfo('profile')) + 'hgo.db')
         cur = self.db.cursor()
         try:
             cur.execute("SELECT val_int FROM settings WHERE set_id='db_ver'")
@@ -389,7 +389,7 @@ class HbogoHandler(object):
 
     def del_login(self):
         try:
-            folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             self.log("Removing stored session: " + folder + self.addon_id + "_session" + ".ecdata")
             os.remove(folder + self.addon_id + "_session" + ".ecdata")
         except Exception:
@@ -409,7 +409,7 @@ class HbogoHandler(object):
         self.log("Removed stored setup")
 
     def save_obj(self, obj, name):
-        folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
         self.log("Saving: " + folder + name + '.ecdata')
         with open(folder + name + '.ecdata', 'wb') as f:
             try:
@@ -418,7 +418,7 @@ class HbogoHandler(object):
                 f.write(bytes(self.encrypt_credential_v1(json.dumps(obj)), 'utf8'))
 
     def load_obj(self, name):
-        folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
+        folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
         self.log("Trying to load: " + folder + name + '.ecdata')
         try:
             with open(folder + name + '.ecdata', 'rb') as f:

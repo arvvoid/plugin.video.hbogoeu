@@ -1159,11 +1159,11 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
 
             #  inject subtitles for the EU region, workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
-            folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             folder = folder + 'subs' + os.sep + content_id + os.sep
             if self.addon.getSetting('forcesubs') == 'true':
                 #  if inject subtitles is enable cache direct subtitle links if available and set subtitles from cache
-                self.log("Cache subtitles enabled, downloading and converting subtitles in: " + str(folder))
+                self.log("Cache subtitles enabled, downloading and converting subtitles in: " + folder)
                 if not os.path.exists(os.path.dirname(folder)):
                     try:
                         os.makedirs(os.path.dirname(folder))
@@ -1175,12 +1175,11 @@ class HbogoHandler_eu(HbogoHandler):
                     if len(subtitles) > 0:
                         subs_paths = []
                         for sub in subtitles:
-                            self.log("Processing subtitle language code: " + str(sub['Code']) + " URL: " + str(sub['Url']))
+                            self.log("Processing subtitle language code: " + sub['Code'] + " URL: " + sub['Url'])
                             r = requests.get(sub['Url'])
-                            with open(str(folder) + str(sub['Code']) + ".srt", 'wb') as f:
+                            with open(folder + sub['Code'] + ".srt", 'wb') as f:
                                 f.write(r.content)
-                            subs_paths.append(str(folder) + str(sub['Code']) + ".srt")
-                        self.log("Setting subtitles: " + str(subs_paths))
+                            subs_paths.append(folder + sub['Code'] + ".srt")
                         list_item.setSubtitles(subs_paths)
                         self.log("Local subtitles set")
                     else:
