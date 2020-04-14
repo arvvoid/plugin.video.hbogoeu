@@ -1159,7 +1159,7 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
 
             #  inject subtitles for the EU region, workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
-            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+            folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
             folder = folder + 'subs' + os.sep + content_id + os.sep
             if self.addon.getSetting('forcesubs') == 'true':
                 #  if inject subtitles is enable cache direct subtitle links if available and set subtitles from cache

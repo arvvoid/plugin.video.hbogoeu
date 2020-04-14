@@ -428,7 +428,7 @@ class HbogoHandler_sp(HbogoHandler):
             li.setMimeType('application/dash+xml')
             li.setContentLookup(False)
             # GET SUBTITLES
-            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+            folder = py2_encode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
             folder = folder + 'subs' + os.sep + media_guid + os.sep
             if self.addon.getSetting('forcesubs') == 'true':
                 self.log("Cache subtitles enabled, downloading and converting subtitles in: " + str(folder))
