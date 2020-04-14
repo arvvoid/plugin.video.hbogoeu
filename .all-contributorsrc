@@ -324,6 +324,24 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "gbelovai",
+      "name": "gbelovai",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/63640826?v=4",
+      "profile": "https://github.com/gbelovai",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "petakpa1",
+      "name": "petakpa1",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/47955298?v=4",
+      "profile": "https://github.com/petakpa1",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
