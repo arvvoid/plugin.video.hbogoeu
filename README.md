@@ -127,6 +127,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://dag.wiee.rs/blog/"><img src="https://avatars0.githubusercontent.com/u/388198?v=4" width="100px;" alt=""/><br /><sub><b>Dag Wieers</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Adagwieers" title="Bug reports">🐛</a> <a href="#ideas-dagwieers" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/Buraddo23"><img src="https://avatars0.githubusercontent.com/u/28982082?v=4" width="100px;" alt=""/><br /><sub><b>vladsing</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3ABuraddo23" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/gbelovai"><img src="https://avatars2.githubusercontent.com/u/63640826?v=4" width="100px;" alt=""/><br /><sub><b>gbelovai</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Agbelovai" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/petakpa1"><img src="https://avatars1.githubusercontent.com/u/47955298?v=4" width="100px;" alt=""/><br /><sub><b>petakpa1</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Apetakpa1" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
