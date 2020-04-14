@@ -119,8 +119,8 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_DEVICE_ID = self.generate_device_id()
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
-        self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
-        login_hash = Util.hash256_string(str(self.API_DEVICE_ID) + str(username) + str(password))
+        self.log("DEVICE ID: " + self.API_DEVICE_ID)
+        login_hash = Util.hash256_string(self.API_DEVICE_ID + username + password)
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -577,9 +577,6 @@ class HbogoHandler_sp(HbogoHandler):
         }
 
     def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-
         media_info = self.construct_media_info(title)
         guid = py2_encode(title.find('guid').text)
 
@@ -599,9 +596,6 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode=HbogoConstants.ACTION_LIST, media_type=None):
-        if self.lograwdata:
-            self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-
         media_type = "file"
         try:
             if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "season":
@@ -656,8 +650,6 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
-        if self.lograwdata:
-            self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         category_url = '%s?%s' % (self.base_url, urlencode({
             'url': url,
             'mode': mode,
