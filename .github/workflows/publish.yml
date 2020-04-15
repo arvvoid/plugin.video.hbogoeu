@@ -3,8 +3,6 @@ name: Publish
 # Run only on new tag
 on:
   create:
-    tags:
-      - v*
 
 jobs:
 
