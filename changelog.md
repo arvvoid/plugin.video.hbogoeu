@@ -1,3 +1,6 @@
+v.2.5.7
+- Option to disable device-id based credential encryption (for troubleshooting, or if problems, expert option, warning for users if disabled)
+
 v.2.5.6
 - Fix encoding problems in profile paths with unicode characters (ex. Windows username with special characters)
 - Clean-up and revision of encoding problematic points (to prevent surprises in the future)
