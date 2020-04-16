@@ -44,7 +44,8 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Fix encoding problems in profile paths with unicode characters
+- Fix encoding problems in profile paths with unicode characters (ex. Windows username with special characters)
+- Clean-up and revision of encoding problematic points (to prevent surprises in the future)
     </news>
     <assets>
      <icon>resources/icon.png</icon>
