@@ -1,0 +1,163 @@
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  test-py:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Test Py
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    # Install requirements
+    - name: Install requirements
+      run: |
+        sudo apt update
+        sudo apt -y install libxml2-utils
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Basic sanity check
+      id: test
+      run: make test-light
+
+  kodi-addon-checker-leia:
+    # Run only if basic test pass
+    needs: test-py
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Kodi add-on check for Leia
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    # Install requirements
+    - name: Install requirements
+      run: |
+        sudo apt update
+        sudo apt -y install libxml2-utils
+        python -m pip install --upgrade pip
+        pip install kodi-addon-checker
+
+    # Clean files not accepted by kodi add-on checker
+    - name: Clean
+      id: clean
+      run: |
+        rm -R .github/
+        rm .all-contributorsrc
+        rm .gitignore
+        rm .gitattributes
+        rm *.yml
+
+    - name: Kodi add-on check for Leia
+      id: test-leia
+      run: make kodi-leia
+
+  kodi-addon-checker-matrix:
+    # Run only if basic test pass
+    needs: test-py
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Kodi add-on check for Matrix
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      # Install requirements
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+          python -m pip install --upgrade pip
+          pip install kodi-addon-checker
+
+      # Clean files not accepted by kodi add-on checker
+      - name: Clean
+        id: clean
+        run: |
+          rm -R .github/
+          rm .all-contributorsrc
+          rm .gitignore
+          rm .gitattributes
+          rm *.yml
+
+      - name: Kodi add-on check for Matrix
+        id: test-matrix
+        run: make kodi-matrix
+
+  language:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Translations sync test
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Install requirements
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+          sudo apt -y install gettext
+
+      # Language files sync test
+      - name: Test if language files are in sync with POT
+        id: lang-test
+        run: make test-language-sync
+
+  language-info:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: Translations status (JUST INFO)
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Install requirements
+      - name: Install requirements
+        run: |
+          sudo apt update
+          sudo apt -y install libxml2-utils
+          sudo apt -y install gettext
+
+      # Language files translation status
+      - name: Traslations status (JUST INFO)
+        id: lang-status
+        run: make test-language-maintained

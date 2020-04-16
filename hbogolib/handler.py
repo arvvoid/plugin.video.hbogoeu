@@ -1,10 +1,6 @@
 # encoding: utf-8
-# generic handler class for Hbo Go Kodi add-on
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
-# Relesed under GPL version 2
-#########################################################
-# GENERIC HBOGO HANDLER CLASS
-#########################################################
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 from __future__ import absolute_import, division
 
@@ -21,21 +17,10 @@ from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui  # type: ignore
 from kodi_six.utils import py2_encode, py2_decode  # type: ignore
 
 from hbogolib.constants import HbogoConstants
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.util import Util
 
-try:
-    from Cryptodome import Random
-    from Cryptodome.Cipher import AES
-    from Cryptodome.Util import Padding
-except ImportError:
-    # no Cryptodome gracefully fail with an informative message
-    msg = xbmcaddon.Addon().getLocalizedString(30694)
-    xbmc.log("[" + str(
-        xbmcaddon.Addon().getAddonInfo('id')) + "] MISSING Cryptodome dependency...exiting..." + traceback.format_exc(),
-        xbmc.LOGDEBUG)
-    xbmcgui.Dialog().ok(xbmcaddon.Addon().getAddonInfo('name') + " ERROR", msg)
-    sys.exit()
+import pyaes  # type: ignore
 
 
 class HbogoHandler(object):
@@ -52,7 +37,7 @@ class HbogoHandler(object):
         self.handle = handle
         self.DEBUG_ID_STRING = "[" + str(self.addon_id) + "] "
         self.SESSION_VALIDITY = 4  # stored session valid for 4 hours
-        self.max_comm_retry = 1  # if unauthorized del sessionrelogin and try again max times
+        self.max_comm_retry = 1  # if unauthorized del session and re-login and try again max times
         self.max_play_retry = 1  # max play retry on soft error
         self.db_version = 1
 
@@ -112,6 +97,12 @@ class HbogoHandler(object):
             self.use_cache = True
         else:
             self.use_cache = False
+
+        self.usedevkey = self.addon.getSetting('usedevkey')
+        if self.usedevkey == "true":
+            self.usedevkey = True
+        else:
+            self.usedevkey = False
 
         if self.sensitive_debug:
             ret = xbmcgui.Dialog().yesno(self.LB_INFO, self.language(30712), self.language(30714), self.language(30715))
@@ -305,7 +296,7 @@ class HbogoHandler(object):
     def exclude_url_from_cache(self, url):
         try:
             cur = self.db.cursor()
-            cur.execute("INSERT INTO request_cache_exclude(url_hash) VALUES (?)", (Util.hash225_string(url), ), )
+            cur.execute("INSERT INTO request_cache_exclude(url_hash) VALUES (?)", (Util.hash256_string(url), ), )
             self.db.commit()
         except Exception:
             self.log("Exclude from cache WARNING: " + traceback.format_exc())
@@ -323,7 +314,7 @@ class HbogoHandler(object):
         if not self.use_cache:
             use_cache = False
 
-        url_hash = Util.hash225_string(url)
+        url_hash = Util.hash256_string(url)
 
         if use_cache:
             self.log("GET FROM HBO USING CACHE...")
@@ -444,7 +435,14 @@ class HbogoHandler(object):
             return None
 
     def inputCredentials(self):
-        username = xbmcgui.Dialog().input(self.language(30442), type=xbmcgui.INPUT_ALPHANUM)
+        if not self.usedevkey:
+            ret = xbmcgui.Dialog().yesno('[COLOR red]' + self.language(30813) + '[/COLOR]', self.language(30810))
+            if not ret:
+                return False
+        encrypted_info_label = "[COLOR green][B]" + self.language(30811) + "[/B][/COLOR]"
+        if not self.usedevkey:
+            encrypted_info_label = "[COLOR red][B]" + self.language(30812) + "[/B][/COLOR]"
+        username = xbmcgui.Dialog().input('[B]' + self.addon.getAddonInfo('name') + '[/B]: ' + self.language(30442) + ' ' + encrypted_info_label, type=xbmcgui.INPUT_ALPHANUM)
         if len(username) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
             if not ret:
@@ -452,7 +450,7 @@ class HbogoHandler(object):
                 self.addon.setSetting('password', '')
                 return False
             return self.inputCredentials()
-        password = xbmcgui.Dialog().input(self.language(30443), type=xbmcgui.INPUT_ALPHANUM,
+        password = xbmcgui.Dialog().input('[B]' + self.addon.getAddonInfo('name') + '[/B]: ' + self.language(30443) + ' ' + encrypted_info_label, type=xbmcgui.INPUT_ALPHANUM,
                                           option=xbmcgui.ALPHANUM_HIDE_INPUT)
         if len(password) == 0:
             ret = xbmcgui.Dialog().yesno(self.LB_ERROR, self.language(30728))
@@ -495,28 +493,28 @@ class HbogoHandler(object):
         self.addon.setSetting(credential_id, self.addon_id + '.credentials.v1.' + self.encrypt_credential_v1(value))
 
     def get_device_id_v1(self):
-        from .uuid_device import get_crypt_key
-        dev_key = get_crypt_key()
-        return Util.hash225_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
+        if self.usedevkey:
+            from libs.uuid_device import get_crypt_key
+            dev_key = get_crypt_key()
+        else:
+            dev_key = HbogoConstants.fallback_ck
+        return Util.hash256_bytes(dev_key + self.addon_id + '.credentials.v1.' + codecs.encode(dev_key, 'rot_13'))
 
     def encrypt_credential_v1(self, raw):
         if sys.version_info < (3, 0):
-            raw = bytes(raw)
+            raw = bytes(py2_encode(raw))
         else:
             raw = bytes(raw, 'utf-8')
-        raw = bytes(Padding.pad(data_to_pad=raw, block_size=32))
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
-        return Util.base64enc(iv + cipher.encrypt(raw))
+        aes = pyaes.AESModeOfOperationCTR(self.get_device_id_v1())
+        return Util.base64enc(aes.encrypt(raw))
 
     def decrypt_credential_v1(self, enc):
         try:
             enc = Util.base64dec_bytes(enc)
-            iv = enc[:AES.block_size]
-            cipher = AES.new(self.get_device_id_v1(), AES.MODE_CBC, iv)
+            aes = pyaes.AESModeOfOperationCTR(self.get_device_id_v1())
             if sys.version_info < (3, 0):
-                return py2_decode(Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32))
-            return Padding.unpad(padded_data=cipher.decrypt(enc[AES.block_size:]), block_size=32).decode('utf8')
+                return py2_decode(aes.decrypt(enc))
+            return aes.decrypt(enc).decode('utf8')
         except Exception:
             self.log("Decrypt credentials error: " + traceback.format_exc())
             return None

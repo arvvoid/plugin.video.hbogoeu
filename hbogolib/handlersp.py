@@ -1,11 +1,7 @@
 # encoding: utf-8
-# Hbo Spain and Nordic handler class for Hbo Go Kodi add-on
 # Copyright (C) 2019 Sakerdot (https://github.com/Sakerdot)
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
-# Relesed under GPL version 2
-#########################################################
-# HBO Spain and Nordic HANDLER CLASS
-#########################################################
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 from __future__ import absolute_import, division
 
@@ -22,9 +18,9 @@ from kodi_six.utils import py2_encode  # type: ignore
 
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.ttml2srt import Ttml2srt
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.ttml2srt import Ttml2srt
+from libs.util import Util
 
 try:
     from urllib import quote_plus as quote, urlencode  # type: ignore
@@ -123,8 +119,8 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_DEVICE_ID = self.generate_device_id()
             self.addon.setSetting('individualization', str(self.API_DEVICE_ID))
 
-        self.log("DEVICE ID: " + str(self.API_DEVICE_ID))
-        login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
+        self.log("DEVICE ID: " + self.API_DEVICE_ID)
+        login_hash = Util.hash256_string(self.API_DEVICE_ID + username + password)
         self.log("LOGIN HASH: " + login_hash)
 
         loaded_session = self.load_obj(self.addon_id + "_es_session")
@@ -155,7 +151,7 @@ class HbogoHandler_sp(HbogoHandler):
             self.API_ACCOUNT_GUID = response.find('accountGuid').text
             self.init_api()
 
-            login_hash = Util.hash225_string(str(self.API_DEVICE_ID) + str(username) + str(password))
+            login_hash = Util.hash256_string(str(self.API_DEVICE_ID) + str(username) + str(password))
             self.log("LOGIN HASH: " + login_hash)
             saved_session = {
 
@@ -279,7 +275,8 @@ class HbogoHandler_sp(HbogoHandler):
 
     def get_thumbnail_url(self, item):
         if self.lograwdata:
-            self.log("get thumbnail xml" + ET.tostring(item, encoding='utf8'))
+            self.log("get thumbnail xml:")
+            self.log(ET.tostring(item, encoding='utf8'))
         try:
             thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
             for thumb in thumbnails:
@@ -395,7 +392,8 @@ class HbogoHandler_sp(HbogoHandler):
         media_info = self.construct_media_info(media_item.find('.//item'))
 
         if self.lograwdata:
-            self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
+            self.log("Play Media: ")
+            self.log(ET.tostring(media_item, encoding='utf8'))
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
@@ -403,7 +401,8 @@ class HbogoHandler_sp(HbogoHandler):
         if mpd is False:
             return
         if self.lograwdata:
-            self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
+            self.log("Manifest: ")
+            self.log(ET.tostring(mpd, encoding='utf8'))
 
         mpd_url = mpd.find('.//url').text
         self.log("Manifest url: " + str(mpd_url))
@@ -435,7 +434,7 @@ class HbogoHandler_sp(HbogoHandler):
             folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             folder = folder + 'subs' + os.sep + media_guid + os.sep
             if self.addon.getSetting('forcesubs') == 'true':
-                self.log("Force subtitles enabled, downloading and converting subtitles in: " + str(folder))
+                self.log("Cache subtitles enabled, downloading and converting subtitles in: " + folder)
                 if not os.path.exists(os.path.dirname(folder)):
                     try:
                         os.makedirs(os.path.dirname(folder))
@@ -446,19 +445,17 @@ class HbogoHandler_sp(HbogoHandler):
                     subs = media_item.findall('.//media:subTitle', namespaces=self.NAMESPACES)
                     subs_paths = []
                     for sub in subs:
-                        self.log("Processing subtitle language code: " + str(sub.get('lang')) + " URL: " + str(
-                            sub.get('href')))
+                        self.log("Processing subtitle language code: " + sub.get('lang') + " URL: " + sub.get('href'))
                         r = requests.get(sub.get('href'))
-                        with open(str(folder) + str(sub.get('lang')) + ".xml", 'wb') as f:
+                        with open(folder + sub.get('lang') + ".xml", 'wb') as f:
                             f.write(r.content)
-                        ttml = Ttml2srt(str(folder) + str(sub.get('lang')) + ".xml", 25)
-                        srt_file = ttml.write_srt_file(str(folder) + str(sub.get('lang')))
+                        ttml = Ttml2srt(py2_encode(folder + sub.get('lang') + ".xml"), 25)
+                        srt_file = ttml.write_srt_file(py2_encode(folder + sub.get('lang')))
                         self.log("Subtitle converted to srt format")
                         subs_paths.append(srt_file)
                         self.log("Subtitle added: " + srt_file)
-                    self.log("Setting subtitles: " + str(subs_paths))
                     li.setSubtitles(subs_paths)
-                    self.log("Subtitles set")
+                    self.log("Local subtitles set")
                 except Exception:
                     self.log("Unexpected error in subtitles processing: " + traceback.format_exc())
 
@@ -583,9 +580,6 @@ class HbogoHandler_sp(HbogoHandler):
         }
 
     def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
-
         media_info = self.construct_media_info(title)
         guid = py2_encode(title.find('guid').text)
 
@@ -605,9 +599,6 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode=HbogoConstants.ACTION_LIST, media_type=None):
-        if self.lograwdata:
-            self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
-
         media_type = "file"
         try:
             if py2_encode(item.find('media:keywords', namespaces=self.NAMESPACES).text) == "season":
@@ -662,8 +653,6 @@ class HbogoHandler_sp(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
-        if self.lograwdata:
-            self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         category_url = '%s?%s' % (self.base_url, urlencode({
             'url': url,
             'mode': mode,

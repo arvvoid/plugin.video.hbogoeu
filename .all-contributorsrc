@@ -264,7 +264,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/13102223?v=4",
       "profile": "https://github.com/durip",
       "contributions": [
-        "userTesting"
+        "userTesting",
+        "translation"
       ]
     },
     {
@@ -313,6 +314,33 @@
       "contributions": [
         "bug",
         "ideas"
+      ]
+    },
+    {
+      "login": "Buraddo23",
+      "name": "vladsing",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/28982082?v=4",
+      "profile": "https://github.com/Buraddo23",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "gbelovai",
+      "name": "gbelovai",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/63640826?v=4",
+      "profile": "https://github.com/gbelovai",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "petakpa1",
+      "name": "petakpa1",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/47955298?v=4",
+      "profile": "https://github.com/petakpa1",
+      "contributions": [
+        "bug"
       ]
     }
   ],

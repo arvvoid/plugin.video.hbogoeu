@@ -1,3 +1,29 @@
+v.2.5.7
+- Option to disable device-id based credential encryption (for troubleshooting, or if problems, expert option, warning for users if disabled)
+
+v.2.5.6
+- Fix encoding problems in profile paths with unicode characters (ex. Windows username with special characters)
+- Clean-up and revision of encoding problematic points (to prevent surprises in the future)
+
+v.2.5.5
+- Fix setup for operators with direct (affiliate) login. Fix setup and login for these operators: Bulgaria: Telekabel, NET1; Czech Republic: Vodafone Česká republika, Skylink CZ from 1.4.2020, UPC TV (from 1.4.2020); Montenegro: MTEL; Romania: Telekom Romania; Serbia: Test RS 1, Supernova; Slovakia: Skylink SK from 1.4.2020, Portugal: Vodafone TV, Vodafone Móvel
+
+v.2.5.4
+- Cache subtitles for the EU region if inject subtitles option is enabled (default), workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
+
+v.2.5.3
+- SPDX License update
+- Support for non  ascii username/password (experimental)
+
+v.2.5.0
+- Fix playing the same content twice with caching enabled for Spain/Nordic region
+- Minor code/style fixes
+- Update translations
+- Remove pycryptodomex dependency ,use a pure python aes implementation (pyaes)
+  [THIS VERSION WILL ASK TO RE-ENTER CREDENTIALS]
+  [THIS IMPROVE OUT OF THE BOX COMPATIBILITY WITH MORE DEVICES, NO NOTICABLE PERFORMANCE DIFFERENCE FOR THE USE]
+  [pycryptodomex had to be installed from command line on many Linux, macOS]
+  
 v.2.4.0
 - New enhanced Kids category (EU handler)
 - Legacy Kids category removed (removed from API, EU handler)

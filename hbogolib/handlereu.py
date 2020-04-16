@@ -1,19 +1,13 @@
 # encoding: utf-8
-# HboGo EU handler class for Hbo Go Kodi add-on
-# Copyright (C) 2019 ArvVoid (https://github.com/arvvoid)
-# Derived from version v.2.0-beta5 of the add-on, witch was initialy
-# derived from https://github.com/billsuxx/plugin.video.hbogohu witch is
-# derived from https://kodibg.org/forum/thread-504.html
-# Oauth login/solution for providers with login redirection derived from https://github.com/kszaq/plugin.video.hbogopl
-# Relesed under GPL version 2
-#########################################################
-# http://hbogo.eu HBOGO EU HANDLER CLASS
-#########################################################
+# Copyright (C) 2019-2020 ArvVoid (https://github.com/arvvoid)
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 from __future__ import absolute_import, division
 
 import json
 import sys
+import errno
+import os
 import time
 import traceback
 
@@ -21,8 +15,8 @@ import requests
 
 from hbogolib.constants import HbogoConstants
 from hbogolib.handler import HbogoHandler
-from hbogolib.kodiutil import KodiUtil
-from hbogolib.util import Util
+from libs.kodiutil import KodiUtil
+from libs.util import Util
 
 try:
     import urlparse as parse  # type: ignore
@@ -110,7 +104,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.is_web = True
         else:
             self.is_web = False
-        self.log("WEB OPERATOR: " + str(self.is_web))
+        self.log("DIRECT OPERATOR D2C: " + str(self.is_web))
         self.REDIRECT_URL = self.addon.getSetting('operator_redirect_url')
         self.log("OPERATOR REDIRECT: " + str(self.REDIRECT_URL))
         self.SPECIALHOST_URL = country[5]
@@ -199,21 +193,12 @@ class HbogoHandler_eu(HbogoHandler):
         op_list = []
 
         for operator in json_basic_operators['Items']:
-            icon = self.get_resource("icon.png")
+            icon = HbogoConstants.fallback_operator_icon_eu
             try:
                 if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error, operator logo url, Stack trace: " + traceback.format_exc())
-
-            web = 'true'
-            try:
-                if operator['Type'] == "D2_C":
-                    web = 'true'
-                else:
-                    web = 'false'
-            except Exception:
-                self.log("Generic error, operator type, Stack trace: " + traceback.format_exc())
 
             redirect_url = ""
             try:
@@ -221,16 +206,14 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Generic error, redirect url, Stack trace: " + traceback.format_exc())
 
-            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+            op_list.append([operator['Name'], operator['Id'], icon, 'true', redirect_url])
         for operator in json_operators['Items']:
-            icon = self.get_resource("icon.png")
+            icon = HbogoConstants.fallback_operator_icon_eu
             try:
                 if operator['LogoUrl']:
                     icon = operator['LogoUrl']
             except Exception:
                 self.log("Generic error Operator icon, Stack trace: " + traceback.format_exc())
-
-            web = 'false'
 
             redirect_url = ""
             try:
@@ -238,7 +221,7 @@ class HbogoHandler_eu(HbogoHandler):
             except Exception:
                 self.log("Generic error, operator custom url, Stack trace: " + traceback.format_exc())
 
-            op_list.append([operator['Name'], operator['Id'], icon, web, redirect_url])
+            op_list.append([operator['Name'], operator['Id'], icon, 'false', redirect_url])
 
         li_items_list = []
 
@@ -457,8 +440,6 @@ class HbogoHandler_eu(HbogoHandler):
 
             payload = HbogoConstants.eu_redirect_login[self.op_id][3]
 
-            self.log("LOGIN FORM PAYLOAD: " + str(payload))
-
             if self.op_id == HbogoConstants.SkylinkID:  # Perform special steps for Skylink
                 import re
                 payload['__VIEWSTATE'] = re.compile('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" />').findall(r.text)[0]
@@ -533,8 +514,8 @@ class HbogoHandler_eu(HbogoHandler):
 
             try:
                 if jsonrspl['ErrorMessage']:
-                    self.log("OAuth Login Error: " + str(str(jsonrspl['ErrorMessage'])))
-                    xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
+                    self.log("OAuth Login Error: " + py2_encode(jsonrspl['ErrorMessage']))
+                    xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, jsonrspl['ErrorMessage'])
                     self.logout()
                     return False
             except Exception:
@@ -578,7 +559,7 @@ class HbogoHandler_eu(HbogoHandler):
             self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
             # save the session with validity of n hours to not relogin every run of the add-on
 
-            login_hash = Util.hash225_string(
+            login_hash = Util.hash256_string(
                 self.individualization + self.customerId + username + password + self.op_id)
             self.log("LOGIN HASH: " + login_hash)
 
@@ -615,7 +596,7 @@ class HbogoHandler_eu(HbogoHandler):
             sys.exit()
             return False
 
-        login_hash = Util.hash225_string(
+        login_hash = Util.hash256_string(
             self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
@@ -737,8 +718,8 @@ class HbogoHandler_eu(HbogoHandler):
 
         try:
             if jsonrspl['ErrorMessage']:
-                self.log("LOGIN ERROR: " + str(jsonrspl['ErrorMessage']))
-                xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, str(jsonrspl['ErrorMessage']))
+                self.log("LOGIN ERROR: " + py2_encode(jsonrspl['ErrorMessage']))
+                xbmcgui.Dialog().ok(self.LB_LOGIN_ERROR, jsonrspl['ErrorMessage'])
                 self.logout()
                 return False
         except KeyError:
@@ -783,7 +764,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.loggedin_headers['GO-CustomerId'] = str(self.GOcustomerId)
         # save the session with validity of n hours to not relogin every run of the add-on
 
-        login_hash = Util.hash225_string(
+        login_hash = Util.hash256_string(
             self.individualization + self.customerId + username + password + self.op_id)
         self.log("LOGIN HASH: " + login_hash)
 
@@ -1025,9 +1006,6 @@ class HbogoHandler_eu(HbogoHandler):
             if self.addon.getSetting('get_elapsed') == 'true':
                 self.JsonHis = self.get_from_hbogo(self.API_URL_HIS + self.GOcustomerId + '/' + self.COUNTRY_CODE + '/3', 'json', False)
 
-            if self.lograwdata:
-                self.log(str(jsonrsp))
-
             try:
                 if jsonrsp['ErrorMessage']:
                     self.log("Search Error: " + py2_encode(jsonrsp['ErrorMessage']))
@@ -1130,10 +1108,10 @@ class HbogoHandler_eu(HbogoHandler):
         try:
             if jsonrspp['ErrorMessage']:
                 self.logout()
-                self.log("Purchase error: " + str(jsonrspp['ErrorMessage']))
+                self.log("Purchase error: " + py2_encode(jsonrspp['ErrorMessage']))
                 if retry < self.max_play_retry:
                     #  probably to long inactivity, retry playback after re-login, avoid try again after login again message
-                    self.log("Try again playback after error: " + str(jsonrspp['ErrorMessage']))
+                    self.log("Try again playback after error: " + py2_encode(jsonrspp['ErrorMessage']))
                     return self.play(content_id, retry + 1)
                 xbmcgui.Dialog().ok(self.LB_ERROR, jsonrspp['ErrorMessage'])
                 return
@@ -1174,6 +1152,38 @@ class HbogoHandler_eu(HbogoHandler):
             list_item.setProperty('inputstream.adaptive.license_type', drm)
             list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
             list_item.setProperty('inputstream.adaptive.license_key', license_key)
+
+            #  inject subtitles for the EU region, workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
+            folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+            folder = folder + 'subs' + os.sep + content_id + os.sep
+            if self.addon.getSetting('forcesubs') == 'true':
+                #  if inject subtitles is enable cache direct subtitle links if available and set subtitles from cache
+                self.log("Cache subtitles enabled, downloading and converting subtitles in: " + folder)
+                if not os.path.exists(os.path.dirname(folder)):
+                    try:
+                        os.makedirs(os.path.dirname(folder))
+                    except OSError as exc:  # Guard against race condition
+                        if exc.errno != errno.EEXIST:
+                            raise
+                try:
+                    subtitles = jsonrspp['Purchase']['Subtitles']
+                    if len(subtitles) > 0:
+                        subs_paths = []
+                        for sub in subtitles:
+                            self.log("Processing subtitle language code: " + sub['Code'] + " URL: " + sub['Url'])
+                            r = requests.get(sub['Url'])
+                            with open(folder + sub['Code'] + ".srt", 'wb') as f:
+                                f.write(r.content)
+                            subs_paths.append(folder + sub['Code'] + ".srt")
+                        list_item.setSubtitles(subs_paths)
+                        self.log("Local subtitles set")
+                    else:
+                        self.log("Inject subtitles error: No subtitles for the media")
+                except KeyError:
+                    self.log("Inject subtitles error: No subtitles key")
+                except Exception:
+                    self.log("Unexpected inject subtitles error: " + traceback.format_exc())
+
             self.log("Play url: " + str(list_item))
             xbmcplugin.setResolvedUrl(self.handle, True, list_item)
             if self.addon.getSetting('send_elapsed') == 'true':
@@ -1386,8 +1396,6 @@ class HbogoHandler_eu(HbogoHandler):
         }
 
     def addLink(self, title, mode):
-        if self.lograwdata:
-            self.log("Adding Link: " + str(title) + " MODE: " + str(mode))
         cid = title['ObjectUrl'].rsplit('/', 2)[1]
         externalid = title['Tracking']['ExternalId']
         hbogo_position = self.get_elapsed(externalid)
@@ -1441,8 +1449,6 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=item_url, listitem=liz, isFolder=False)
 
     def addDir(self, item, mode, media_type):
-        if self.lograwdata:
-            self.log("Adding Dir: " + str(item) + " MODE: " + str(mode))
         directory_url = "%s?%s" % (self.base_url, urlencode({
             'url': item['ObjectUrl'],
             'mode': mode,
@@ -1478,8 +1484,6 @@ class HbogoHandler_eu(HbogoHandler):
         xbmcplugin.addDirectoryItem(handle=self.handle, url=directory_url, listitem=liz, isFolder=True)
 
     def addCat(self, name, url, icon, mode):
-        if self.lograwdata:
-            self.log("Adding Cat: " + str(name) + "," + str(url) + "," + str(icon) + " MODE: " + str(mode))
         category_url = '%s?%s' % (self.base_url, urlencode({
             'url': url,
             'mode': mode,

@@ -1,9 +1,9 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.4.2">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.5.7">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
     <import addon="script.module.requests" version="2.12.4" />
-    <import addon="script.module.pycryptodome" version="3.4.3" />
+    <import addon="script.module.pyaes" version="1.6.1" />
     <import addon="script.module.defusedxml" version="0.6.0" />
     <import addon="script.module.dateutil" version="2.8.1" />
     <import addon="script.module.inputstreamhelper" version="0.4.2" />
@@ -39,21 +39,21 @@ If an official app is available for your platform, use it instead of this.
     </disclaimer>
     <language>en</language>
     <platform>all</platform>
-    <license>GPL-2.0</license>
+    <license>GPL-2.0-or-later</license>
     <forum>https://forum.kodi.tv/showthread.php?tid=339798</forum>
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Fix playing the same content twice with caching enabled for Spain/Nordic region
-- Minor code/style fixes
-- Update to fi_fi translation by (by @jumakki)
+- Fix encoding problems in profile paths with unicode characters (ex. Windows username with special characters)
+- Clean-up and revision of encoding problematic points (to prevent surprises in the future)
+- Option to disable device-id based credential encryption (for troubleshooting, or if problems, expert option, warning for users if disabled)
     </news>
     <assets>
      <icon>resources/icon.png</icon>
      <fanart>resources/fanart.jpg</fanart>
-     <screenshot>resources/screen1.png</screenshot>
-     <screenshot>resources/screen7.png</screenshot>
-     <screenshot>resources/screen8.png</screenshot>
+     <screenshot>resources/screen1.jpg</screenshot>
+     <screenshot>resources/screen2.jpg</screenshot>
+     <screenshot>resources/screen3.jpg</screenshot>
     </assets>
   </extension>
 </addon>

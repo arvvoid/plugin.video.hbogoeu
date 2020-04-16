@@ -1,0 +1,36 @@
+# Update automatically the operators list in wiki
+
+name: Update operator list
+
+on:
+  schedule:
+  - cron: "0 4 * * 0"
+
+jobs:
+  update-op-list-wiki:
+    if: github.actor == 'arvvoid'
+    runs-on: ubuntu-latest
+
+    name: Update Wiki operator list
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install requirements
+      run: |
+        python -m pip install --upgrade pip
+        yes | pip install requests
+    - name: Get hGo Wiki
+      run: git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/arvvoid/plugin.video.hbogoeu.wiki.git ../hgowiki
+    - name: Generate Operators list
+      run: python gen_operator_list.py
+    - name: Update Wiki
+      run: |
+        cd ../hgowiki
+        git config user.email "${{secrets.EMAIL}}"
+        git config user.name "${{ github.actor }}"
+        git add .
+        git commit -m "Auto-update operators list"
+        git push
