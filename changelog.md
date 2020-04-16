@@ -1,3 +1,7 @@
+v.2.5.6
+- Fix encoding problems in profile paths with unicode characters (ex. Windows username with special characters)
+- Clean-up and revision of encoding problematic points (to prevent surprises in the future)
+
 v.2.5.5
 - Fix setup for operators with direct (affiliate) login. Fix setup and login for these operators: Bulgaria: Telekabel, NET1; Czech Republic: Vodafone Česká republika, Skylink CZ from 1.4.2020, UPC TV (from 1.4.2020); Montenegro: MTEL; Romania: Telekom Romania; Serbia: Test RS 1, Supernova; Slovakia: Skylink SK from 1.4.2020, Portugal: Vodafone TV, Vodafone Móvel
 
