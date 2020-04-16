@@ -275,7 +275,8 @@ class HbogoHandler_sp(HbogoHandler):
 
     def get_thumbnail_url(self, item):
         if self.lograwdata:
-            self.log("get thumbnail xml" + ET.tostring(item, encoding='utf8'))
+            self.log("get thumbnail xml:")
+            self.log(ET.tostring(item, encoding='utf8'))
         try:
             thumbnails = item.findall('.//media:thumbnail', namespaces=self.NAMESPACES)
             for thumb in thumbnails:
@@ -391,7 +392,8 @@ class HbogoHandler_sp(HbogoHandler):
         media_info = self.construct_media_info(media_item.find('.//item'))
 
         if self.lograwdata:
-            self.log("Play Media: " + ET.tostring(media_item, encoding='utf8'))
+            self.log("Play Media: ")
+            self.log(ET.tostring(media_item, encoding='utf8'))
 
         mpd_pre_url = media_item.find('.//media:content[@profile="HBO-DASH-WIDEVINE"]', namespaces=self.NAMESPACES).get('url') + '&responseType=xml'
 
@@ -399,7 +401,8 @@ class HbogoHandler_sp(HbogoHandler):
         if mpd is False:
             return
         if self.lograwdata:
-            self.log("Manifest: " + ET.tostring(mpd, encoding='utf8'))
+            self.log("Manifest: ")
+            self.log(ET.tostring(mpd, encoding='utf8'))
 
         mpd_url = mpd.find('.//url').text
         self.log("Manifest url: " + str(mpd_url))
