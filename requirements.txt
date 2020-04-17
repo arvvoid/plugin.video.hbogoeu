@@ -1,3 +1,4 @@
+requests
 pyaes
 Kodistubs
 flake8
