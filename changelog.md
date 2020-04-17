@@ -1,3 +1,6 @@
+v.2.5.8
+- Translations update
+
 v.2.5.7
 - Option to disable device-id based credential encryption (for troubleshooting, or if problems, expert option, warning for users if disabled)
 
