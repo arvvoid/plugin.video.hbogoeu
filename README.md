@@ -1,7 +1,6 @@
 [![Build Status](https://github.com/arvvoid/plugin.video.hbogoeu/workflows/CI/badge.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/actions)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/arvvoid/plugin.video.hbogoeu)](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/README.md#install-instructions) 
-[![Python Version](https://img.shields.io/badge/python-2.7%20%7C%203.7-blue)](https://kodi.tv/article/attention-addon-developers-migration-python-3)
-[![Kodi Version](https://img.shields.io/badge/kodi-18%20or%20%2B-blue)](https://kodi.tv/)
+[![Kodi Version](https://img.shields.io/badge/kodi-18%20, 19%20%2B-blue)](https://kodi.tv/)
 [![GitHub](https://img.shields.io/github/license/arvvoid/plugin.video.hbogoeu?style=flat)](https://opensource.org/licenses/gpl-2.0.php)
 [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors)
 [![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
@@ -61,7 +60,7 @@ PLEASE IF YOU ARE REPORTING AN ISSUE PROVIDE Kodi Debug Logs: https://kodi.wiki/
 
 ## Install instructions
 
-* Works on Kodi 18 (Leia) or later
+* Works on Kodi 18 (Leia), Kodi 19 (Matrix) or later
 * A valid HBO® Go account is needed for the add-on to work
 * Simply install from the Kodi add-on repository (search hgo or hbo to find quickly or browse under the video category)
 * Follow the setup wizard at first add-on run
