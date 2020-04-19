@@ -921,7 +921,7 @@ class HbogoHandler_eu(HbogoHandler):
         if simple is False:
             KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def season(self, url):
+    def season(self, url, retry=0):
         if not self.chk_login():
             self.login()
         self.log("Season: " + str(url))
@@ -942,9 +942,19 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
-        for season in jsonrsp['Parent']['ChildContents']['Items']:
-            self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
-            self.n_seasons += 1
+        try:
+            for season in jsonrsp['Parent']['ChildContents']['Items']:
+                self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
+                self.n_seasons += 1
+        except TypeError:
+            if retry == 0:
+                self.log("Season listing: there is no parent node to extract seasons from. Trying alternative method.")
+                self.season(jsonrsp['ChildContents']['Items'][0]['ObjectUrl'], retry + 1)
+            else:
+                self.log("Season listing: There was no luck retriving the season data, trying to simply list episodes in this response.")
+                self.episode(url)
+        except Exception:
+            self.log("Unexpected error: " + traceback.format_exc())
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def episode(self, url):
