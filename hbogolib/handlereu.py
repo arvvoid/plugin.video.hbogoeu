@@ -948,15 +948,7 @@ class HbogoHandler_eu(HbogoHandler):
                 self.n_seasons += 1
         except TypeError:
             self.log("Season listing: there is no parent node to extract seasons from. Trying alternative method.")
-            # This happens rarely and when it do its temporary within few hours to a a few days the item will return
-            # again correct data under the parent node from the api, but until it do this will load the first episode listed and
-            # try to pull season data from that listing as an alternative to retrive the seasons.
-            # If that fails as well will simply list episodes that are returned (better something then nothing).
-            # I was able to test this in the rare ocasion it occured and it worked.
-            # The next day the item was returning correct data again so this is an elusive event.
-            # But there is one log from a different user confirming the existence of the event.
-            # The next day the problem disapered by itself becouse the api started returning correct data under the parent node again.
-            # This implementation mitigate the event, the user won't notice anything, all will probably work as supposed thanks to this.
+            # Alternative way to get season listing if parent node is temporarily missing from the normal listing
             try:
                 jsonrsp2 = self.get_from_hbogo(jsonrsp['ChildContents']['Items'][0]['ObjectUrl'])
                 for season in jsonrsp2['Parent']['Parent']['ChildContents']['Items']:
