@@ -921,7 +921,7 @@ class HbogoHandler_eu(HbogoHandler):
         if simple is False:
             KodiUtil.endDir(self.handle, self.decide_media_type())
 
-    def season(self, url, retry=0):
+    def season(self, url):
         if not self.chk_login():
             self.login()
         self.log("Season: " + str(url))
@@ -947,11 +947,23 @@ class HbogoHandler_eu(HbogoHandler):
                 self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
                 self.n_seasons += 1
         except TypeError:
-            if retry == 0:
-                self.log("Season listing: there is no parent node to extract seasons from. Trying alternative method.")
-                self.season(jsonrsp['ChildContents']['Items'][0]['ObjectUrl'], retry + 1)
-            else:
-                self.log("Season listing: There was no luck retriving the season data, trying to simply list episodes in this response.")
+            self.log("Season listing: there is no parent node to extract seasons from. Trying alternative method.")
+            # This happens rarely and when it do its temporary within few hours to a a few days the item will return
+            # again correct data under the parent node from the api, but until it do this will load the first episode listed and
+            # try to pull season data from that listing as an alternative to retrive the seasons.
+            # If that fails as well will simply list episodes that are returned (better something then nothing).
+            # I was able to test this in the rare ocasion it occured and it worked.
+            # The next day the item was returning correct data again so this is an elusive event.
+            # But there is one log from a different user confirming the existence of the event.
+            # The next day the problem disapered by itself becouse the api started returning correct data under the parent node again.
+            # This implementation mitigate the event, the user won't notice anything, all will probably work as supposed thanks to this.
+            try:
+                jsonrsp2 = self.get_from_hbogo(jsonrsp['ChildContents']['Items'][0]['ObjectUrl'])
+                for season in jsonrsp2['Parent']['Parent']['ChildContents']['Items']:
+                    self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
+                    self.n_seasons += 1
+            except Exception:
+                self.log("Unexpected error in alternative season processing: " + traceback.format_exc())
                 self.episode(url)
         except Exception:
             self.log("Unexpected error: " + traceback.format_exc())
