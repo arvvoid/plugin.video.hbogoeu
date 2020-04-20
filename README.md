@@ -5,6 +5,7 @@
 [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors)
 [![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
 [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
+[![Donate](https://img.shields.io/badge/Donate-buy%20a%20beer-orange)](https://github.com/arvvoid/plugin.video.hbogoeu#support)
 
 # Disclaimer
 
