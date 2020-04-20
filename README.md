@@ -139,7 +139,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Support
 
-If you want to buy me a coffee for maintenance and support and all the free time spent on this you can do so here. 
+If you want to buy me a coffee for maintenance, support and the free time spent on this you can do so here. 
 Please note that this is completely optional and brings no special benefits.
 
 <a href="https://www.buymeacoffee.com/arvvoid" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee/Beer" style="height: 51px !important;width: 217px !important;" ></a>
