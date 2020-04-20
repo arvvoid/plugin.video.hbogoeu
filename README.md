@@ -138,6 +138,6 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Support
 
-This is completely optional but if you want to pay me a beer for maintenance and support you can do so here
+This is completely optional but if you want to pay me a coffee/beer for maintenance and support you can do so here
 
-<a href="https://www.buymeacoffee.com/arvvoid" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Beer" style="height: 51px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/arvvoid" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee/Beer" style="height: 51px !important;width: 217px !important;" ></a>
