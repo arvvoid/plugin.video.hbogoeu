@@ -942,9 +942,23 @@ class HbogoHandler_eu(HbogoHandler):
             self.log("Unexpected error: " + traceback.format_exc())
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
-        for season in jsonrsp['Parent']['ChildContents']['Items']:
-            self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
-            self.n_seasons += 1
+        try:
+            for season in jsonrsp['Parent']['ChildContents']['Items']:
+                self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
+                self.n_seasons += 1
+        except TypeError:
+            self.log("Season listing: there is no parent node to extract seasons from. Trying alternative method.")
+            # Alternative way to get season listing if parent node is temporarily missing from the normal listing
+            try:
+                jsonrsp2 = self.get_from_hbogo(jsonrsp['ChildContents']['Items'][0]['ObjectUrl'])
+                for season in jsonrsp2['Parent']['Parent']['ChildContents']['Items']:
+                    self.addDir(season, HbogoConstants.ACTION_EPISODE, "season")
+                    self.n_seasons += 1
+            except Exception:
+                self.log("Unexpected error in alternative season processing: " + traceback.format_exc())
+                self.episode(url)
+        except Exception:
+            self.log("Unexpected error: " + traceback.format_exc())
         KodiUtil.endDir(self.handle, self.decide_media_type())
 
     def episode(self, url):
