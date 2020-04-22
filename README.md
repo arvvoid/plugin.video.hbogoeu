@@ -5,6 +5,8 @@
 [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors)
 [![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
 [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
+[![HowToSupport](https://img.shields.io/badge/How%20to-support%20the%20add--on-orange)](https://github.com/arvvoid/plugin.video.hbogoeu#support-the-add-on)
+
 
 # Disclaimer
 
@@ -116,4 +118,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## Support the add-on
 
 You can help with the development and support the add-on in many different ways 😊
-<br>To read more on the Wiki page [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
+<br>Read more on the Wiki page: [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
