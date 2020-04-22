@@ -53,7 +53,6 @@ Please use the provided templates and provide all asked information, including [
 
 [CHANGE LOG](https://github.com/arvvoid/plugin.video.hbogoeu/blob/master/changelog.md)
 
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -117,4 +116,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## Support the add-on
 
 You can help with the development and support the add-on in many different ways 😊
-To read more on the Wiki page [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
+<br>To read more on the Wiki page [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
