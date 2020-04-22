@@ -116,4 +116,5 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Support the add-on
 
-To read more on how you can support the add-on go to the Wiki page [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
+You can help with the development and support the add-on in many different ways 😊
+To read more on the Wiki page [How to support the add-on](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/How-to-support-the-add-on)
