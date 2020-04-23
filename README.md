@@ -25,7 +25,7 @@ If an official app is available for your platform, use it instead of this.
 
 Simple Kodi add-on to access HBO® Go content from Kodi Media Center (http://kodi.tv).
 
-This add-on support 18 countries at the moment Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Denmark, Finland, Hungary, Macedonia, Montenegro, Norway, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Sweden), to see the full list of supported regions/countries/operoators go to the [REGIONAL SUPPORT](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Regional-support) wiki page.
+This add-on support 18 countries at the moment Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Denmark, Finland, Hungary, Macedonia, Montenegro, Norway, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Sweden, to see the full list of supported regions/countries/operoators go to the [REGIONAL SUPPORT](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Regional-support) wiki page.
 
 ## Install instructions
 
