@@ -1530,7 +1530,8 @@ class HbogoHandler_eu(HbogoHandler):
 
     def track_elapsed(self, externalid, playfile):
         monitor = xbmc.Monitor()
-        monitor.waitForAbort(1)  # Give some time for the previous loop to end
+        monitor.waitForAbort(4)  # Give some time for the previous loop to end
+        total_time = 0
         current_time = 0
         percent_elapsed = 0
         mediatype = "None"
@@ -1546,26 +1547,32 @@ class HbogoHandler_eu(HbogoHandler):
                 return False
 
         self.log("TRACKING ELAPSED for " + str(externalid) + ": Playback started " + xbmc.Player().getPlayingFile() + "...")
+        monitor.waitForAbort(2)
         # loop if media that started this tracking is still playing if not abort
         while xbmc.Player().isPlayingVideo() and playfile == xbmc.Player().getPlayingFile() and not monitor.abortRequested():
-            if mediatype == "None":
-                infotag = xbmc.Player().getVideoInfoTag()
-                mediatype = infotag.getMediaType()
-            current_time = int(xbmc.Player().getTime())
-            total_time = int(xbmc.Player().getTotalTime())
             try:
+                if mediatype == "None":
+                    infotag = xbmc.Player().getVideoInfoTag()
+                    mediatype = infotag.getMediaType()
+                current_time = int(xbmc.Player().getTime())
+                total_time = int(xbmc.Player().getTotalTime())
                 percent_elapsed = int(current_time / total_time * 100)
             except ZeroDivisionError:
                 percent_elapsed = 0
+            except Exception:
+                self.log("Unexpected error in track elapsed loop: " + traceback.format_exc())
             if monitor.waitForAbort(0.3):
                 break
 
-        self.log("TRACKING ELAPSED for " + str(externalid) + ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
+        try:
+            self.log("TRACKING ELAPSED for " + str(externalid) + ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
+        except Exception:
+            self.log("Unexpected error in logging track elapsed: " + traceback.format_exc())
         if percent_elapsed > 89:
             self.log("TRACKING ELAPSED for " + str(externalid) + ": 90% reached setting as watched")
             self.update_history(externalid, mediatype, str(total_time), str(100))
         else:
-            if current_time > 10:  # if more then 10 sec played update
+            if current_time > 60:  # if more then 60 sec (1min) played update
                 self.log("TRACKING ELAPSED for " + str(externalid) + ": Sending current time to Hbo GO...")
                 self.update_history(externalid, mediatype, str(current_time), str(percent_elapsed))
         return True
