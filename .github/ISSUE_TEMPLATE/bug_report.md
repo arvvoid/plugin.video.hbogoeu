@@ -27,7 +27,7 @@ A clear and concise description of what you expected to happen.
 [First of all thanks for making the effort to report an issue, reporting issues is critical to improve the project quality]
 [Please include a link to your full debug log. Follow these instructions https://kodi.wiki/view/Log_file/Easy]
 
-[Please note, bug reports without full logs will most likley not be taken into consideration]
+[Please note, bug reports without full logs will be marked as ignored rules and ignored untill a log is provided]
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
