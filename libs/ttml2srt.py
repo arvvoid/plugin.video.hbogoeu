@@ -483,6 +483,7 @@ class Ttml2Srt(object):
             if (handle is output and close_fd) or \
                     (handle is not output and handle is not sys.stdout):
                 handle.close()
+        return output
 
     @staticmethod
     def mfn2srtfn(media_filename, lang=None, m_ext=True):
