@@ -449,8 +449,8 @@ class HbogoHandler_sp(HbogoHandler):
                         r = requests.get(sub.get('href'))
                         with open(folder + sub.get('lang') + ".xml", 'wb') as f:
                             f.write(r.content)
-                        ttml = Ttml2Srt(folder + sub.get('lang') + ".xml", 25)
-                        srt_file = ttml.write2file(ttml.mfn2srtfn(folder + sub.get('lang'), ttml.lang, False))
+                        ttml = Ttml2Srt(py2_encode(folder + sub.get('lang') + ".xml"), 25)
+                        srt_file = ttml.write2file(ttml.mfn2srtfn(py2_encode(folder + sub.get('lang')), ttml.lang, False))
                         self.log("Subtitle converted to srt format")
                         subs_paths.append(srt_file)
                         self.log("Subtitle added: " + srt_file)
