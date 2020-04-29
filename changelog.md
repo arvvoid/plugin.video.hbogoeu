@@ -1,3 +1,6 @@
+v.2.6.0
+- Updated and improved subtitle support for Spain/Nordic region (major ttml2srt update)
+
 v.2.5.10
 - Improve elapsed time function (prevent failed report play status to Hbo in some cases)
 - Alternative method to retrieve season listing (slower) in case standard one fail for some reason (happen rarely, usually its just temporary error, but the add-on can deal with it now without bothering the user)
