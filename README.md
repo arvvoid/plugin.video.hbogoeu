@@ -3,7 +3,7 @@
 [![Kodi Version](https://img.shields.io/badge/kodi-18%20%7C%2019%2B-blue)](https://kodi.tv/)
 [![GitHub](https://img.shields.io/github/license/arvvoid/plugin.video.hbogoeu?style=flat)](https://opensource.org/licenses/gpl-2.0.php)
 [![Contributors](https://img.shields.io/github/contributors/arvvoid/plugin.video.hbogoeu.svg)](https://github.com/arvvoid/plugin.video.hbogoeu/graphs/contributors)
-[![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
 [![HitCount](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu.svg)](http://hits.dwyl.io/arvvoid/pluginvideohbogoeu)
 [![HowToSupport](https://img.shields.io/badge/How%20to-support%20the%20add--on-orange)](https://github.com/arvvoid/plugin.video.hbogoeu#support-the-add-on)
 
@@ -106,6 +106,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Buraddo23"><img src="https://avatars0.githubusercontent.com/u/28982082?v=4" width="100px;" alt=""/><br /><sub><b>vladsing</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3ABuraddo23" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/gbelovai"><img src="https://avatars2.githubusercontent.com/u/63640826?v=4" width="100px;" alt=""/><br /><sub><b>gbelovai</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Agbelovai" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/petakpa1"><img src="https://avatars1.githubusercontent.com/u/47955298?v=4" width="100px;" alt=""/><br /><sub><b>petakpa1</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Apetakpa1" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/rocknrollnor"><img src="https://avatars2.githubusercontent.com/u/64284359?v=4" width="100px;" alt=""/><br /><sub><b>rocknrollnor</b></sub></a><br /><a href="https://github.com/arvvoid/plugin.video.hbogoeu/issues?q=author%3Arocknrollnor" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
