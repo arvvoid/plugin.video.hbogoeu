@@ -1161,7 +1161,10 @@ class HbogoHandler_eu(HbogoHandler):
         from inputstreamhelper import Helper  # type: ignore
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
-            list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            if sys.version_info < (3, 0):  # if python version < 3 is safe to assume we are running on Kodi 18
+                list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')   # compatible with Kodi 18 API
+            else:
+                list_item.setProperty('inputstream', 'inputstream.adaptive')  # compatible with recent builds Kodi 19 API
             list_item.setProperty('inputstream.adaptive.manifest_type', protocol)
             list_item.setProperty('inputstream.adaptive.license_type', drm)
             list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
