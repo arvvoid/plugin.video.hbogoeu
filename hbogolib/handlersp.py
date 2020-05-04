@@ -427,12 +427,12 @@ class HbogoHandler_sp(HbogoHandler):
                 li.setProperty('inputstreamaddon', 'inputstream.adaptive')  # compatible with Kodi 18 API
             else:
                 li.setProperty('inputstream', 'inputstream.adaptive')  # compatible with recent builds Kodi 19 API
+            li.setContentLookup(False)
+            li.setMimeType('application/dash+xml')
             li.setProperty('inputstream.adaptive.license_type', drm)
             li.setProperty('inputstream.adaptive.manifest_type', protocol)
             li.setProperty('inputstream.adaptive.license_key', license_url)
 
-            li.setMimeType('application/dash+xml')
-            li.setContentLookup(False)
             # GET SUBTITLES
             folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             folder = folder + 'subs' + os.sep + media_guid + os.sep

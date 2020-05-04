@@ -1165,6 +1165,8 @@ class HbogoHandler_eu(HbogoHandler):
                 list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')   # compatible with Kodi 18 API
             else:
                 list_item.setProperty('inputstream', 'inputstream.adaptive')  # compatible with recent builds Kodi 19 API
+            list_item.setContentLookup(False)
+            list_item.setMimeType('application/vnd.ms-sstr+xml')
             list_item.setProperty('inputstream.adaptive.manifest_type', protocol)
             list_item.setProperty('inputstream.adaptive.license_type', drm)
             list_item.setProperty('inputstream.adaptive.license_data', 'ZmtqM2xqYVNkZmFsa3Izag==')
