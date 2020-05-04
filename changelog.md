@@ -1,3 +1,7 @@
+v.2.6.1
+- Recent Kodi 19 API compatibility changes
+- Minor changes
+
 v.2.6.0
 - Updated and improved subtitle support for Spain/Nordic region (major ttml2srt update)
 
