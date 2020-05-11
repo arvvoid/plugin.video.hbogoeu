@@ -21,12 +21,10 @@ msgctxt "#30000"
 msgid "ENG"
 msgstr "sv_hbon"
 
-#, fuzzy
 msgctxt "#30001"
 msgid "ERROR"
 msgstr "FEL"
 
-#, fuzzy
 msgctxt "#30002"
 msgid "Setup failed"
 msgstr "Konfigurationen misslyckades"
