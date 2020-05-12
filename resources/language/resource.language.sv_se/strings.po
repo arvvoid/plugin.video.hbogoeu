@@ -39,7 +39,7 @@ msgstr "Ett oväntat fel har uppstått."
 
 msgctxt "#30005"
 msgid "Error getting content from Hbo Go"
-msgstr ""
+msgstr "Det gick inte att hämta innehåll från Hbo Go"
 
 msgctxt "#30006"
 msgid "Error sending data to Hbo Go"
@@ -94,7 +94,7 @@ msgstr ""
 
 msgctxt "#30105"
 msgid "Logout (Reset setup)"
-msgstr "Logga ut (Återställ inställningar)"
+msgstr "Logga ut (Återställ konfigurationen)"
 
 msgctxt "#30106"
 msgid "Destroy current session"
