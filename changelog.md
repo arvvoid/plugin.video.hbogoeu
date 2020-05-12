@@ -1,5 +1,6 @@
 v.2.6.1
 - Recent Kodi 19 API compatibility changes
+- Swedish translation by @Sopor
 - Minor changes
 
 v.2.6.0
