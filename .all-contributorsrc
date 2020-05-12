@@ -351,6 +351,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Sopor",
+      "name": "Sopor",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5789283?v=4",
+      "profile": "http://try.to.find.it",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
