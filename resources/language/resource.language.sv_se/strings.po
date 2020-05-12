@@ -390,7 +390,6 @@ msgctxt "#30693"
 msgid "Include full details/RAW retrieved data in Debug log"
 msgstr "Inkludera fullständiga detaljer/RAW-hämtad data i felsökningslogg"
 
-#, fuzzy
 msgctxt "#30694"
 msgid ""
 "Cryptodome dependency not present on your system, HBO Go add-on can't run. "
