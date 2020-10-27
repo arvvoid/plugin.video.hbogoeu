@@ -484,3 +484,11 @@ msgstr "Nem titkosított"
 msgctxt "#30813"
 msgid "WARNING: Credential Encryption disabled"
 msgstr "FIGYELEM! A hitelesítési adatok titkosítása le van tiltva"
+
+msgctxt "#30814"
+msgid "Subtitles cache cleaned"
+msgstr ""
+
+msgctxt "#30815"
+msgid "Clean subtitles cache"
+msgstr ""

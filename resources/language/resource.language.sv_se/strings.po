@@ -485,3 +485,11 @@ msgstr "[INTE Krypterad]"
 msgctxt "#30813"
 msgid "WARNING: Credential Encryption disabled"
 msgstr "VARNING: Kryptering av inloggningsuppgifter inaktiverad"
+
+msgctxt "#30814"
+msgid "Subtitles cache cleaned"
+msgstr ""
+
+msgctxt "#30815"
+msgid "Clean subtitles cache"
+msgstr ""

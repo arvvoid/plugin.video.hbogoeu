@@ -480,3 +480,11 @@ msgstr "[NIJE šifrirano]"
 msgctxt "#30813"
 msgid "WARNING: Credential Encryption disabled"
 msgstr "UPOZORENJE: Šifriranje vjerodajnica onemogućeno"
+
+msgctxt "#30814"
+msgid "Subtitles cache cleaned"
+msgstr ""
+
+msgctxt "#30815"
+msgid "Clean subtitles cache"
+msgstr ""
