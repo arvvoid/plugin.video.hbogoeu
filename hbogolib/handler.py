@@ -562,8 +562,6 @@ class HbogoHandler(object):
             icon = self.get_resource("icon.png")
             xbmcgui.Dialog().notification(self.language(30726), self.LB_INFO, icon)
 
-
-
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
     def setup(self, country, forceeng=False):
