@@ -1378,10 +1378,10 @@ class HbogoHandler_eu(HbogoHandler):
             scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = scrapname
-            plot += py2_encode(title['Abstract'])
-            if 'Description' in title:
-                if title['Description'] is not None:
-                    plot += py2_encode(title['Description'])
+            if 'Description' in title and title['Description'] is not None:
+                plot += py2_encode(title['Description'])
+            else:
+                plot += py2_encode(title['Abstract'])
         elif title['ContentType'] == 3:
             media_type = "episode"
             name = py2_encode(title['SeriesName']) + " - " + str(
@@ -1392,10 +1392,10 @@ class HbogoHandler_eu(HbogoHandler):
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = scrapname
-            plot += py2_encode(title['Abstract'])
-            if 'Description' in title:
-                if title['Description'] is not None:
-                    plot += py2_encode(title['Description'])
+            if 'Description' in title and title['Description'] is not None:
+                plot += py2_encode(title['Description'])
+            else:
+                plot += py2_encode(title['Abstract'])
 
         img = title['BackgroundUrl']
 
