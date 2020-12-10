@@ -1358,6 +1358,13 @@ class HbogoHandler_eu(HbogoHandler):
                 return list(votes) + [remove_mylist]
             return [add_mylist] + list(votes)
 
+    @staticmethod
+    def get_series_plot(title):
+        if 'Description' in title and title['Description'] is not None:
+            return py2_encode(title['Description'])
+
+        return py2_encode(title['Abstract'])
+
     def construct_media_info(self, title):
         plot = ""
         name = ""
@@ -1378,10 +1385,7 @@ class HbogoHandler_eu(HbogoHandler):
             scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = scrapname
-            if 'Description' in title and title['Description'] is not None:
-                plot += py2_encode(title['Description'])
-            else:
-                plot += py2_encode(title['Abstract'])
+            plot = HbogoHandler_eu.get_series_plot(title)
         elif title['ContentType'] == 3:
             media_type = "episode"
             name = py2_encode(title['SeriesName']) + " - " + str(
@@ -1392,10 +1396,7 @@ class HbogoHandler_eu(HbogoHandler):
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = scrapname
-            if 'Description' in title and title['Description'] is not None:
-                plot += py2_encode(title['Description'])
-            else:
-                plot += py2_encode(title['Abstract'])
+            plot = HbogoHandler_eu.get_series_plot(title)
 
         img = title['BackgroundUrl']
 
