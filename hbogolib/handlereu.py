@@ -1358,6 +1358,13 @@ class HbogoHandler_eu(HbogoHandler):
                 return list(votes) + [remove_mylist]
             return [add_mylist] + list(votes)
 
+    @staticmethod
+    def get_series_plot(title):
+        if 'Description' in title and title['Description'] is not None:
+            return py2_encode(title['Description'])
+
+        return py2_encode(title['Abstract'])
+
     def construct_media_info(self, title):
         plot = ""
         name = ""
@@ -1371,6 +1378,7 @@ class HbogoHandler_eu(HbogoHandler):
             avail_datetime = Util.is_utc_datetime_past_now(availfrom)
             if avail_datetime is not True:
                 plot = py2_encode("[COLOR red]" + self.language(30009) + " [B]" + avail_datetime + "[/B][/COLOR] ")
+
         if title['ContentType'] == 1:  # 1=MOVIE/EXTRAS, 2=SERIES(serial), 3=SERIES(episode)
             name = py2_encode(title['Name'])
             if self.force_original_names:
@@ -1378,10 +1386,7 @@ class HbogoHandler_eu(HbogoHandler):
             scrapname = py2_encode(title['Name']) + " (" + str(title['ProductionYear']) + ")"
             if self.force_scraper_names:
                 name = scrapname
-            plot += py2_encode(title['Abstract'])
-            if 'Description' in title:
-                if title['Description'] is not None:
-                    plot += py2_encode(title['Description'])
+            plot += HbogoHandler_eu.get_series_plot(title)
         elif title['ContentType'] == 3:
             media_type = "episode"
             name = py2_encode(title['SeriesName']) + " - " + str(
@@ -1392,10 +1397,7 @@ class HbogoHandler_eu(HbogoHandler):
                 title['Tracking']['SeasonNumber']) + "E" + str(title['Tracking']['EpisodeNumber'])
             if self.force_scraper_names:
                 name = scrapname
-            plot += py2_encode(title['Abstract'])
-            if 'Description' in title:
-                if title['Description'] is not None:
-                    plot += py2_encode(title['Description'])
+            plot += HbogoHandler_eu.get_series_plot(title)
 
         img = title['BackgroundUrl']
 
