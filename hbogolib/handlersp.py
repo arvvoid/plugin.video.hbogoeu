@@ -435,7 +435,7 @@ class HbogoHandler_sp(HbogoHandler):
 
             # GET SUBTITLES
             if self.addon.getSetting('forcesubs') == 'true':
-                folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+                folder = KodiUtil.translatePath(self.addon.getAddonInfo('profile'))
                 folder = folder + 'subs'
                 self.clean_sub_cache(folder)
                 folder = folder + os.sep + media_guid + os.sep

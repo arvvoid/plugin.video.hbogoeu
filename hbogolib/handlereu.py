@@ -1175,7 +1175,7 @@ class HbogoHandler_eu(HbogoHandler):
 
             #  inject subtitles for the EU region, workaround to avoid the sometimes disappearing internal subtitles defined in the manifest
             if self.addon.getSetting('forcesubs') == 'true':
-                folder = xbmc.translatePath(self.addon.getAddonInfo('profile'))
+                folder = KodiUtil.translatePath(self.addon.getAddonInfo('profile'))
                 folder = folder + 'subs'
                 self.clean_sub_cache(folder)
                 folder = folder + os.sep + content_id + os.sep
