@@ -44,9 +44,10 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Recent Kodi 19 API compatibility changes
-- Swedish translation by @Sopor
-- Minor changes
+- Subtitle cache autocleaning and manual subtitle cache cleaning
+- Translations updates
+- Optimize plot (show only "abstract" or "description")
+- Move from deprecated xbmc.translatePath to new xbmcvfs.translatePath for Kodi 19+
     </news>
     <assets>
      <icon>resources/icon.png</icon>

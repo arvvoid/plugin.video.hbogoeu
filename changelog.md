@@ -1,3 +1,9 @@
+v.2.6.2
+- Subtitle cache autocleaning and manual subtitle cache cleaning
+- Translations updates
+- Optimize plot (show only "abstract" or "description")
+- Move from deprecated xbmc.translatePath to new xbmcvfs.translatePath for Kodi 19+
+
 v.2.6.1
 - Recent Kodi 19 API compatibility changes
 - Swedish translation by @Sopor
