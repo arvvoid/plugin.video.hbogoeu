@@ -488,3 +488,11 @@ msgstr "[EI salattu]"
 msgctxt "#30813"
 msgid "WARNING: Credential Encryption disabled"
 msgstr "VAROITUS: Käyttäjätunnusten salaus ei ole päällä"
+
+msgctxt "#30814"
+msgid "Subtitles cache cleaned"
+msgstr ""
+
+msgctxt "#30815"
+msgid "Clean subtitles cache"
+msgstr ""
