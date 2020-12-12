@@ -2,7 +2,7 @@
 # based on https://github.com/CastagnaIT/plugin.video.netflix/blob/master/resources/lib/common/uuid_device.py
 #
 # Copyright (C) 2017 Sebastian Golasch (plugin.video.netflix)
-# Copyright (C) 2019 Stefano Gottardo - @CastagnaIT (original implementation module)
+# Copyright (C) 2019-2020 Stefano Gottardo - @CastagnaIT (original implementation module)
 # Get the UUID of the device
 # SPDX-License-Identifier: MIT
 #    -----------------------------
@@ -25,7 +25,10 @@ def debug(msg):
 def get_system_platform():
     platform = "unknown"
     if xbmc.getCondVisibility('system.platform.linux') and not xbmc.getCondVisibility('system.platform.android'):
-        platform = "linux"
+        if xbmc.getCondVisibility('system.platform.linux.raspberrypi'):
+            platform = "linux raspberrypi"
+        else:
+            platform = "linux"
     elif xbmc.getCondVisibility('system.platform.linux') and xbmc.getCondVisibility('system.platform.android'):
         platform = "android"
     elif xbmc.getCondVisibility('system.platform.uwp'):
@@ -36,6 +39,8 @@ def get_system_platform():
         platform = "osx"
     elif xbmc.getCondVisibility('system.platform.ios'):
         platform = "ios"
+    elif xbmc.getCondVisibility('system.platform.tvos'):  # Supported only on Kodi 19.x
+        platform = "tvos"
     return platform
 
 
@@ -64,15 +69,17 @@ def _get_system_uuid():
     elif system == 'android':
         uuid_value = _get_android_uuid()
         debug('Android UUID Found')
-    elif system == 'linux':
+    elif system in ['linux', 'linux raspberrypi']:
         uuid_value = _get_linux_uuid()
         debug('Linux UUID Found')
-    elif system in ['osx', 'ios']:
+    elif system == 'osx':
+        # Due to OS restrictions on 'ios' and 'tvos' is not possible to use _get_macos_uuid()
+        # See python limits in the wiki development page
         uuid_value = _get_macos_uuid()
         debug('OSX, IOS UUID Found')
     if not uuid_value:
         debug('It is not possible to get a system UUID creating a new UUID')
-        uuid_value = _get_fake_uuid(system != 'android')
+        uuid_value = _get_fake_uuid(system not in ['android', 'linux', 'linux raspberrypi'])
     if (sys.version_info > (3, 0)):
         return str(uuid_value)
     return uuid_value.encode('ascii', 'replace')
