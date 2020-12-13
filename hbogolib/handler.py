@@ -560,7 +560,7 @@ class HbogoHandler(object):
         shutil.rmtree(subs_folder, ignore_errors=True)
         if not silent:
             icon = self.get_resource("icon.png")
-            xbmcgui.Dialog().notification(self.language(30726), self.LB_INFO, icon)
+            xbmcgui.Dialog().notification(self.language(30814), self.LB_INFO, icon)
 
     # IMPLEMENT THESE IN SPECIFIC REGIONAL HANDLER
 
