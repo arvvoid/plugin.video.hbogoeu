@@ -24,9 +24,9 @@ jobs:
     # Install requirements
     - name: Install requirements
       run: |
-        sudo apt update
-        sudo apt -y install libxml2-utils
-        sudo apt -y install gettext
+        sudo apt-get update
+        sudo apt-get -y install libxml2-utils
+        sudo apt-get -y install gettext
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install kodi-addon-checker
@@ -62,8 +62,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install requirements
         run: |
-          sudo apt update
-          sudo apt -y install libxml2-utils
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
 
       - name: Make GitHub Release Zip for Leia and Matrix
         id: release-multi
