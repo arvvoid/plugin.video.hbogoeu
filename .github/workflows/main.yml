@@ -29,9 +29,10 @@ jobs:
     # Install requirements
     - name: Install requirements
       run: |
-        sudo apt update
-        sudo apt -y install libxml2-utils
+        sudo apt-get update
+        sudo apt-get -y install libxml2-utils
         python -m pip install --upgrade pip
+        pip install wheel
         pip install -r requirements.txt
 
     - name: Basic sanity check
@@ -58,9 +59,10 @@ jobs:
     # Install requirements
     - name: Install requirements
       run: |
-        sudo apt update
-        sudo apt -y install libxml2-utils
+        sudo apt-get update
+        sudo apt-get -y install libxml2-utils
         python -m pip install --upgrade pip
+        pip install wheel
         pip install kodi-addon-checker
 
     # Clean files not accepted by kodi add-on checker
@@ -97,9 +99,10 @@ jobs:
       # Install requirements
       - name: Install requirements
         run: |
-          sudo apt update
-          sudo apt -y install libxml2-utils
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
           python -m pip install --upgrade pip
+          pip install wheel
           pip install kodi-addon-checker
 
       # Clean files not accepted by kodi add-on checker
@@ -130,9 +133,9 @@ jobs:
       # Install requirements
       - name: Install requirements
         run: |
-          sudo apt update
-          sudo apt -y install libxml2-utils
-          sudo apt -y install gettext
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
+          sudo apt-get -y install gettext
 
       # Language files sync test
       - name: Test if language files are in sync with POT
@@ -153,9 +156,9 @@ jobs:
       # Install requirements
       - name: Install requirements
         run: |
-          sudo apt update
-          sudo apt -y install libxml2-utils
-          sudo apt -y install gettext
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
+          sudo apt-get -y install gettext
 
       # Language files translation status
       - name: Traslations status (JUST INFO)

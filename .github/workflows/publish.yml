@@ -24,10 +24,11 @@ jobs:
     # Install requirements
     - name: Install requirements
       run: |
-        sudo apt update
-        sudo apt -y install libxml2-utils
-        sudo apt -y install gettext
+        sudo apt-get update
+        sudo apt-get -y install libxml2-utils
+        sudo apt-get -y install gettext
         python -m pip install --upgrade pip
+        pip install wheel
         pip install -r requirements.txt
         pip install kodi-addon-checker
         
@@ -62,20 +63,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install requirements
         run: |
-          sudo apt update
-          sudo apt -y install libxml2-utils
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
 
       - name: Make GitHub Release Zip for Leia and Matrix
         id: release-multi
         run: make zip
       - name: Set env
         run: |
-          echo ::set-env name=RELEASE_ZIP_LEIA::$(ls ../*-leia.zip)
-          echo ::set-env name=RELEASE_ZIP_MATRIX::$(ls ../*-matrix.zip)
-          echo ::set-env name=RELEASE_ASSET_NAME_LEIA::$(cd ..;ls *-leia.zip)
-          echo ::set-env name=RELEASE_ASSET_NAME_MATRIX::$(cd ..;ls *-matrix.zip)
-          echo ::set-env name=RELEASE_NAME::$(xmllint --xpath 'string(/addon/@version)' addon.xml)
-          echo ::set-env name=RELEASE_CHANGES::$(xmllint --xpath 'string(//addon/extension/news)' addon.xml)
+          echo "RELEASE_ZIP_LEIA=$(ls ../*-leia.zip)" >> $GITHUB_ENV
+          echo "RELEASE_ZIP_MATRIX=$(ls ../*-matrix.zip)" >> $GITHUB_ENV
+          echo "RELEASE_ASSET_NAME_LEIA=$(cd ..;ls *-leia.zip)" >> $GITHUB_ENV
+          echo "RELEASE_ASSET_NAME_MATRIX=$(cd ..;ls *-matrix.zip)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$(xmllint --xpath 'string(/addon/@version)' addon.xml)" >> $GITHUB_ENV
       - name: Create Github Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -84,9 +84,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ env.RELEASE_NAME }}
-          body: |
-            Changes in this Release
-            ${{ env.RELEASE_CHANGES }}
           draft: false
           prerelease: true
       - name: Upload Addon zip Leia to github release
