@@ -76,9 +76,7 @@ jobs:
           echo "RELEASE_ASSET_NAME_LEIA=$(cd ..;ls *-leia.zip)" >> $GITHUB_ENV
           echo "RELEASE_ASSET_NAME_MATRIX=$(cd ..;ls *-matrix.zip)" >> $GITHUB_ENV
           echo "RELEASE_NAME=$(xmllint --xpath 'string(/addon/@version)' addon.xml)" >> $GITHUB_ENV
-          echo 'RELEASE_CHANGES<<EOF' >> $GITHUB_ENV
-          echo $(xmllint --xpath 'string(//addon/extension/news)' addon.xml)" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          echo "RELEASE_CHANGES=$(xmllint --xpath 'string(//addon/extension/news)' addon.xml | tr '\r\n' ' ' | tr '\n' ' ' | sed 's/ -/<br>-/g')" >> $GITHUB_ENV
       - name: Create Github Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -88,7 +86,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: $RELEASE_NAME
           body: |
-            Changes in this Release:
+            <b>Changes in this Release:</b><br>
             $RELEASE_CHANGES
           draft: false
           prerelease: true
