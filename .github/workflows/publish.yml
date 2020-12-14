@@ -111,7 +111,7 @@ jobs:
   # both Leia and Matrix
   kodi-addon-submitter:
     needs: release
-    if: startsWith(github.ref, 'refs/tags/') && github.actor == 'arvvoidtest'
+    if: startsWith(github.ref, 'refs/tags/') && github.actor == 'arvvoid'
 
     runs-on: ubuntu-latest
     name: Kodi addon submitter
