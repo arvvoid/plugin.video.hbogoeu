@@ -88,8 +88,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ $RELEASE_NAME }}
           body: |
-            Changes in this Release
-            ${{ $RELEASE_CHANGES }}
+            Changes in this Release:
+            $RELEASE_CHANGES
           draft: false
           prerelease: true
       - name: Upload Addon zip Leia to github release
@@ -99,8 +99,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ $RELEASE_ZIP_LEIA }}
-          asset_name: ${{ $RELEASE_ASSET_NAME_LEIA }}
+          asset_path: $RELEASE_ZIP_LEIA
+          asset_name: $RELEASE_ASSET_NAME_LEIA
           asset_content_type: application/zip
       - name: Upload Addon zip Matrix to github release
         id: upload-release-asset-matrix
@@ -109,8 +109,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ $RELEASE_ZIP_MATRIX }}
-          asset_name: ${{ $RELEASE_ASSET_NAME_MATRIX }}
+          asset_path: $RELEASE_ZIP_MATRIX
+          asset_name: $RELEASE_ASSET_NAME_MATRIX
           asset_content_type: application/zip
 
   # if release is success send to the official Kodi add-on repository
