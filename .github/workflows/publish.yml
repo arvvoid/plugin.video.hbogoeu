@@ -28,6 +28,7 @@ jobs:
         sudo apt-get -y install libxml2-utils
         sudo apt-get -y install gettext
         python -m pip install --upgrade pip
+        pip install wheel
         pip install -r requirements.txt
         pip install kodi-addon-checker
         
