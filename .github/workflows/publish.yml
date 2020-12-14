@@ -86,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ $RELEASE_NAME }}
+          release_name: $RELEASE_NAME
           body: |
             Changes in this Release:
             $RELEASE_CHANGES
