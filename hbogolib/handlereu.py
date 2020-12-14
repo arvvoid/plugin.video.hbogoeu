@@ -1531,7 +1531,7 @@ class HbogoHandler_eu(HbogoHandler):
             MediaType = '1'
         elif (MediaType == 'episode'):
             MediaType = '3'
-        resume_payload = '{"CustomerId":"' + self.GOcustomerId + '","CountryCode":"' + self.LANGUAGE_CODE + '","ExternalId":"' + ExternalId + \
+        resume_payload = '{"CustomerId":"' + self.GOcustomerId + '","CountryCode":"' + self.COUNTRY_CODE + '","ExternalId":"' + ExternalId + \
                          '","ContentType":' + MediaType + ',"Position":' + Current_Time + ',"ElapsedPercentage":' + Percent_Elapsed + \
                          ',"LoginSessionId":"' + str(self.sessionId) + '"}'
         history_headers = self.loggedin_headers
