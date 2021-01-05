@@ -101,7 +101,7 @@ msgstr ""
 
 msgctxt "#30105"
 msgid "Logout (Reset setup)"
-msgstr "Wylogowanie (Restart ustawień)"
+msgstr "Wyloguj (Restart ustawień)"
 
 msgctxt "#30106"
 msgid "Destroy current session"
@@ -157,11 +157,11 @@ msgstr "Ustawienia InputStream Helper..."
 
 msgctxt "#30700"
 msgid "Find movies and TV Shows..."
-msgstr "Znajdź filmy i seriale …"
+msgstr "Znajdź filmy i seriale..."
 
 msgctxt "#30701"
 msgid "No results"
-msgstr "Brak rezultatów"
+msgstr "Brak wyników"
 
 msgctxt "#30702"
 msgid "Error"
@@ -291,7 +291,7 @@ msgstr "Sukces"
 
 msgctxt "#30728"
 msgid "Login failed, do you want to input your credentials again?"
-msgstr "Logowanie nieudane, spróbować ponownie"
+msgstr "Logowanie nieudane, spróbować ponownie?"
 
 msgctxt "#30729"
 msgid "KIDS"
@@ -327,7 +327,7 @@ msgstr "Usuń"
 
 msgctxt "#30737"
 msgid "Kids only mode"
-msgstr "Tryb tylko dza dzieci"
+msgstr "Tryb tylko dla dzieci"
 
 msgctxt "#30650"
 msgid "Language"
@@ -433,12 +433,12 @@ msgstr "Synchronizacja oglądania z HBO go"
 #, fuzzy
 msgctxt "#30801"
 msgid "Send elapsed time to HBO Go"
-msgstr "Wyślij obejrzane do HBO go"
+msgstr "Wyślij statusy obejrzane do HBO go"
 
 #, fuzzy
 msgctxt "#30802"
 msgid "Get elapsed time from HBO Go"
-msgstr "Pobierz obejrzane czasu z HBO go"
+msgstr "Pobierz statusy obejrzane z HBO go"
 
 #, fuzzy
 msgctxt "#30803"
