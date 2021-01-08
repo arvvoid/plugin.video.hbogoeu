@@ -399,7 +399,7 @@ msgid ""
 "Cryptodome dependency not present on your system, HBO Go add-on can't run. "
 "For help consult install instructions/official support thread"
 msgstr ""
-"Zależność od Cryptodome nie występuje w twoim systemie, nie można uruchomić dodatku HBO Go. "
+"Zależność Cryptodome nie występuje w twoim systemie, nie można uruchomić dodatku HBO Go. "
 "Aby uzyskać pomoc zapoznaj się z instrukcją instalacji/oficjalnym wątkiem wsparcia"
 
 msgctxt "#30696"
