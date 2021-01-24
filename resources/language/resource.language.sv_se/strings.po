@@ -432,19 +432,19 @@ msgstr "Ignorera Kodi:s titta på-status (visa endast HBO Go:s status"
 
 msgctxt "#30806"
 msgid "Cache"
-msgstr "Buffert"
+msgstr "Cache"
 
 msgctxt "#30807"
 msgid "Use request cache"
-msgstr "Använd buffert"
+msgstr "Använd cachen"
 
 msgctxt "#30808"
 msgid "Clear request cache"
-msgstr "Rensa buffert"
+msgstr "Rensa cachen"
 
 msgctxt "#30809"
 msgid "Encrypt credentials"
-msgstr "Kryptera inloggningsuppgifter"
+msgstr "Kryptera inloggningsuppgifterna"
 
 msgctxt "#30810"
 msgid ""
@@ -488,8 +488,8 @@ msgstr "VARNING: Kryptering av inloggningsuppgifter inaktiverad"
 
 msgctxt "#30814"
 msgid "Subtitles cache cleaned"
-msgstr ""
+msgstr "Undertextcachen är tömd"
 
 msgctxt "#30815"
 msgid "Clean subtitles cache"
-msgstr ""
+msgstr "Töm undertextcachen"

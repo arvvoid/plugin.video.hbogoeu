@@ -86,7 +86,8 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/5084042?v=4",
       "profile": "https://github.com/Paco8",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -357,6 +358,15 @@
       "name": "Sopor",
       "avatar_url": "https://avatars3.githubusercontent.com/u/5789283?v=4",
       "profile": "http://try.to.find.it",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "barqqlsky",
+      "name": "barqqlsky",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3319985?v=4",
+      "profile": "https://github.com/barqqlsky",
       "contributions": [
         "translation"
       ]
