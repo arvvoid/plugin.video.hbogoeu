@@ -1,3 +1,8 @@
+v.2.6.3
+- Fix minor subtitle offset (sp/no handler)
+- Translations updates
+- Minor fixes and optimizations
+
 v.2.6.2
 - Subtitle cache autocleaning and manual subtitle cache cleaning
 - Translations updates
