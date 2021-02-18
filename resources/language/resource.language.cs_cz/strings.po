@@ -233,7 +233,7 @@ msgstr "Stop, chci změnit nastavení"
 
 msgctxt "#30716"
 msgid "TV Shows"
-msgstr "TV seriály"
+msgstr "Seriály"
 
 msgctxt "#30717"
 msgid "Movies"
@@ -285,7 +285,7 @@ msgstr "Přihlášení selhalo, chcete zadat přihlašovací údaje znovu?"
 
 msgctxt "#30729"
 msgid "KIDS"
-msgstr "DĚTSKÉ"
+msgstr "Dětské"
 
 msgctxt "#30730"
 msgid "Weekly Top"
