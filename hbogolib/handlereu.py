@@ -1391,8 +1391,8 @@ class HbogoHandler_eu(HbogoHandler):
             plot += HbogoHandler_eu.get_series_plot(title)
         elif title['ContentType'] == 3:
             media_type = "episode"
-            name = py2_encode(title['SeriesName']) + " - " + str(
-                title['SeasonIndex']) + " " + self.LB_SEASON + ", " + self.LB_EPISODE + " " + str(title['Index'])
+            name = py2_encode(title['SeriesName']) + " " + "S" + str(
+                title['SeasonIndex']) + " " + "E" + str(title['Index'])
             if self.force_original_names:
                 name = py2_encode(title['OriginalName'])
             scrapname = py2_encode(title['Tracking']['ShowName']) + " - S" + str(
