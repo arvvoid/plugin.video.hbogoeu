@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.6.3">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.6.5">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -44,9 +44,8 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Fix minor subtitle offset (sp/no handler)
-- Translations updates
-- Minor fixes and optimizations
+- Hot Fix: new retrive method for home lists [EU region]
+- Group home lists in special category is the new default (deactivate the option in config for old behaviour)
     </news>
     <assets>
      <icon>resources/icon.png</icon>

@@ -263,7 +263,7 @@ class HbogoHandler_sp(HbogoHandler):
                 self.log("No Kids Category found")
 
         if home is not None:
-            if self.addon.getSetting('group_home') == 'true':
+            if self.addon.getSetting('group_home_v2') == 'true':
                 self.addCat(py2_encode(self.language(30733)), home.find('link').text,
                             self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
             else:

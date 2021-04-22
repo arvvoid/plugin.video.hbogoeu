@@ -79,6 +79,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.HistoryGroupId = ""
         self.ContinueWatchingGroupId = ""
         self.KidsGroupId = ""
+        self.HomeGroupId = ""
         self.loggedin_headers = {}
         self.JsonHis = ""
 
@@ -287,6 +288,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
         self.KidsGroupId = jsonrsp['KidsGroupId']
+        self.HomeGroupId = jsonrsp['HomeGroupId']
         # add to cache exclude list
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
@@ -823,7 +825,6 @@ class HbogoHandler_eu(HbogoHandler):
             xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
             return
 
-        position_home = -1
         position_series = -1
         position_movies = -1
 
@@ -832,13 +833,11 @@ class HbogoHandler_eu(HbogoHandler):
         # Find key categories positions
         try:
             for cat in jsonrsp['Items']:
-                if py2_encode(cat["Tracking"]['Name']) == "Home":
-                    position_home = position
                 if py2_encode(cat["Tracking"]['Name']) == "Series":
                     position_series = position
                 if py2_encode(cat["Tracking"]['Name']) == "Movies":
                     position_movies = position
-                if position_home > -1 and position_series > -1 and position_movies > -1:
+                if position_series > -1 and position_movies > -1:
                     break
                 position += 1
         except Exception:
@@ -863,15 +862,14 @@ class HbogoHandler_eu(HbogoHandler):
         if self.addon.getSetting('show_kids') == 'true':
             self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
 
-        if position_home != -1:
-            if self.addon.getSetting('group_home') == 'true':
-                self.addCat(py2_encode(self.language(30733)),
-                            jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'),
-                            self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
-            else:
-                self.list(jsonrsp['Items'][position_home]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0', '/0/0/1/1024/0/0'), True)
+
+        if self.addon.getSetting('group_home_v2') == 'true':
+            self.addCat(py2_encode(self.language(30733)),
+                        self.API_URL_GROUP + self.HomeGroupId + '/0/0/0/0/0/0/False',
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
         else:
-            self.log("No Home Category found")
+            self.list(self.API_URL_GROUP + self.HomeGroupId + '/0/0/0/0/0/0/False', True)
+
 
         KodiUtil.endDir(self.handle, None, True)
 
