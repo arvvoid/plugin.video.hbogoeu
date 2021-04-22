@@ -884,7 +884,6 @@ class HbogoHandler_eu(HbogoHandler):
         else:
             self.list(homegroupurl, True)
 
-
         KodiUtil.endDir(self.handle, None, True)
 
     def list(self, url, simple=False):
