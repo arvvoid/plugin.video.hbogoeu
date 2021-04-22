@@ -63,6 +63,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_CUSTOMER_GROUP = ""
         self.API_URL_GROUP = ""
         self.API_URL_GROUPS = ""
+        self.API_URL_MENU = ""
         self.API_URL_CONTENT = ""
         self.API_URL_PURCHASE = ""
         self.API_URL_SEARCH = ""
@@ -144,6 +145,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_GROUP = 'https://' + self.API_HOST + '/v8/Group/json/' + self.LANGUAGE_CODE + '/ANMO/'
         self.API_URL_GROUPS = 'https://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
+        self.API_URL_MENU = 'https://' + self.API_HOST + '/v8/Menu/json/ENG/APTV/0/false'
         self.API_URL_CONTENT = 'https://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v8/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_SEARCH = 'https://' + self.API_HOST + '/v8/Search/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
@@ -862,13 +864,25 @@ class HbogoHandler_eu(HbogoHandler):
         if self.addon.getSetting('show_kids') == 'true':
             self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
 
+        jsonrsp = self.get_from_hbogo(self.API_URL_MENU)
+        homegroupurl = ""
+        # Find key home
+        try:
+            for cat in jsonrsp['Items']:
+                if py2_encode(cat['Name']) == "Home":
+                    homegroupurl = cat['ObjectUrl']
+                    if self.LANGUAGE_CODE != "ENG":
+                        homegroupurl.replace("ENG", self.LANGUAGE_CODE)
+                    break
+        except Exception:
+            self.log("Unexpected error in find key in menu for home: " + traceback.format_exc())
 
         if self.addon.getSetting('group_home_v2') == 'true':
             self.addCat(py2_encode(self.language(30733)),
-                        self.API_URL_GROUP + self.HomeGroupId + '/0/0/0/0/0/0/False',
+                        homegroupurl,
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
         else:
-            self.list(self.API_URL_GROUP + self.HomeGroupId + '/0/0/0/0/0/0/False', True)
+            self.list(homegroupurl, True)
 
 
         KodiUtil.endDir(self.handle, None, True)
