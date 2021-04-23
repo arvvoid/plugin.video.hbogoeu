@@ -917,6 +917,9 @@ class HbogoHandler_eu(HbogoHandler):
 
         self.reset_media_type_counters()
 
+        if excludeindex is None:
+            excludeindex = []
+
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
             return
