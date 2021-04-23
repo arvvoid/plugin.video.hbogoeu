@@ -901,7 +901,7 @@ class HbogoHandler_eu(HbogoHandler):
                     if len(excludeindex_home) > 1:
                         break
 
-        if self.addon.getSetting('group_home_v2') == 'true':
+        if self.addon.getSetting('group_home') == 'true':
             self.addCat(py2_encode(self.language(30733)),
                         self.homeGroupUrl,
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_home))
