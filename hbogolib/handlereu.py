@@ -291,7 +291,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.HistoryGroupId = jsonrsp['HistoryGroupId']
         self.ContinueWatchingGroupId = jsonrsp['ContinueWatchingGroupId']
         self.KidsGroupId = jsonrsp['KidsGroupId']
-        self.HomeGroupId = jsonrsp['HomeGroupId']
         # add to cache exclude list
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.FavoritesGroupId + '/-/-/-/1000/-/-/false')
         self.exclude_url_from_cache(self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false')
@@ -873,7 +872,7 @@ class HbogoHandler_eu(HbogoHandler):
                     self.homeGroupUrlEng = cat['ObjectUrl']
                     self.homeGroupUrl = cat['ObjectUrl']
                     if self.LANGUAGE_CODE != "ENG":
-                        self.homeGroupUrl.replace("ENG", self.LANGUAGE_CODE)
+                        self.homeGroupUrl = self.homeGroupUrl.replace("ENG", self.LANGUAGE_CODE)
                     break
         except Exception:
             self.log("Unexpected error in find key in menu for home: " + traceback.format_exc())
