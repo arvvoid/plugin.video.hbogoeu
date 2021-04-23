@@ -1,3 +1,9 @@
+v.2.7.0
+- Hot Fix: new retrieve method for home lists [EU region]
+- This fix avoid the "a new version of the application should be used" error message coming from HBO Go
+- The additional home lists (recommendation, featured, various editor lists, ecc... are fully functional again)
+- Minor fixes
+
 v.2.6.3
 - Fix minor subtitle offset (sp/no handler)
 - Translations updates
