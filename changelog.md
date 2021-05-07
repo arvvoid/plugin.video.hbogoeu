@@ -1,3 +1,6 @@
+v.2.7.1
+- Hot Fix: fix kids category [EU region]
+
 v.2.7.0
 - Hot Fix: new retrieve method for home lists [EU region]
 - This fix avoid the "a new version of the application should be used" error message coming from HBO Go
