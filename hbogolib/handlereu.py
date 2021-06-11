@@ -83,6 +83,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.homeGroupUrl = ""
         self.seriesGroupUrl = ""
         self.moviesGroupUrl = ""
+        self.seriesGroupUrlEng = ""
+        self.moviesGroupUrlEng = ""
         self.loggedin_headers = {}
         self.JsonHis = ""
 
@@ -823,11 +825,13 @@ class HbogoHandler_eu(HbogoHandler):
                         self.homeGroupUrl = self.homeGroupUrl.replace("ENG", self.LANGUAGE_CODE)
                     found_items += 1
                 if py2_encode(cat['Name']) == "Series":
+                    self.seriesGroupUrlEng = cat['ObjectUrl']
                     self.seriesGroupUrl = cat['ObjectUrl']
                     if self.LANGUAGE_CODE != "ENG":
                         self.seriesGroupUrl = self.seriesGroupUrl.replace("ENG", self.LANGUAGE_CODE)
                     found_items += 1
                 if py2_encode(cat['Name']) == "Movies":
+                    self.moviesGroupUrlEng = cat['ObjectUrl']
                     self.moviesGroupUrl = cat['ObjectUrl']
                     if self.LANGUAGE_CODE != "ENG":
                         self.moviesGroupUrl = self.moviesGroupUrl.replace("ENG", self.LANGUAGE_CODE)
@@ -860,13 +864,57 @@ class HbogoHandler_eu(HbogoHandler):
                     if len(excludeindex_home) > 1:
                         break
 
+        jsonrsp = self.get_from_hbogo(self.seriesGroupUrlEng)
+        excludeindex_series = []
+        if jsonrsp is False:
+            pass
+        else:
+            try:
+                if jsonrsp['ErrorMessage']:
+                    self.log("Get series exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
+                    pass
+            except KeyError:
+                pass  # all is ok no error message just pass
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+                pass
+            # find watchlist and continue watching positions for exclusion
+            if len(jsonrsp['Container']) > 1:
+                for container_index in range(0, len(jsonrsp['Container'])):
+                    container_item = jsonrsp['Container'][container_index]
+                    if py2_encode(container_item['Name']) == "Genres":
+                        excludeindex_series.append(container_index)
+                        break
+
+        jsonrsp = self.get_from_hbogo(self.moviesGroupUrlEng)
+        excludeindex_movies = []
+        if jsonrsp is False:
+            pass
+        else:
+            try:
+                if jsonrsp['ErrorMessage']:
+                    self.log("Get movies exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
+                    pass
+            except KeyError:
+                pass  # all is ok no error message just pass
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+                pass
+            # find watchlist and continue watching positions for exclusion
+            if len(jsonrsp['Container']) > 1:
+                for container_index in range(0, len(jsonrsp['Container'])):
+                    container_item = jsonrsp['Container'][container_index]
+                    if py2_encode(container_item['Name']) == "Genres":
+                        excludeindex_movies.append(container_index)
+                        break
+
         if self.seriesGroupUrl != "":
-            self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
+            self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_series))
         else:
             self.log("No Series Category found")
 
         if self.moviesGroupUrl != "":
-            self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST)
+            self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_movies))
         else:
             self.log("No Movies Category found")
 
