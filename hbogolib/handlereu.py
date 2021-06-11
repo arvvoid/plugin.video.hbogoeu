@@ -62,7 +62,6 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_URL_AUTH_OPERATOR = ""
         self.API_URL_CUSTOMER_GROUP = ""
         self.API_URL_GROUP = ""
-        self.API_URL_GROUPS = ""
         self.API_URL_MENU = ""
         self.API_URL_CONTENT = ""
         self.API_URL_PURCHASE = ""
@@ -82,6 +81,8 @@ class HbogoHandler_eu(HbogoHandler):
         self.KidsGroupId = ""
         self.homeGroupUrlEng = ""
         self.homeGroupUrl = ""
+        self.seriesGroupUrl = ""
+        self.moviesGroupUrl = ""
         self.loggedin_headers = {}
         self.JsonHis = ""
 
@@ -138,14 +139,13 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
-        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/ANMO'
+        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + \
                                      self.API_PLATFORM
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + \
                                      self.API_PLATFORM
         self.API_URL_CUSTOMER_GROUP = 'https://' + self.API_HOST + '/v8/CustomerGroup/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_GROUP = 'https://' + self.API_HOST + '/v8/Group/json/' + self.LANGUAGE_CODE + '/APTV/'
-        self.API_URL_GROUPS = 'https://' + self.API_HOST + '/v8/Groups/json/' + self.LANGUAGE_CODE + '/ANMO/0/True'
         self.API_URL_MENU = 'https://' + self.API_HOST + '/v8/Menu/json/ENG/APTV/0/False'
         self.API_URL_CONTENT = 'https://' + self.API_HOST + '/v8/Content/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM + '/'
         self.API_URL_PURCHASE = 'https://' + self.API_HOST + '/v8/Purchase/Json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
@@ -811,61 +811,9 @@ class HbogoHandler_eu(HbogoHandler):
                         self.API_URL_CUSTOMER_GROUP + self.HistoryGroupId + '/-/-/-/1000/-/-/false',
                         self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST)
 
-        jsonrsp = self.get_from_hbogo(self.API_URL_GROUPS)
-        if jsonrsp is False:
-            return
-
-        try:
-            if jsonrsp['ErrorMessage']:
-                self.log("Categories Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                xbmcgui.Dialog().ok(self.LB_ERROR, jsonrsp['ErrorMessage'])
-                return
-        except KeyError:
-            pass  # all is ok no error message just pass
-        except Exception:
-            self.log("Unexpected error: " + traceback.format_exc())
-            xbmcgui.Dialog().ok(self.LB_ERROR, self.language(30004))
-            return
-
-        position_series = -1
-        position_movies = -1
-
-        position = 0
-
-        # Find key categories positions
-        try:
-            for cat in jsonrsp['Items']:
-                if py2_encode(cat["Tracking"]['Name']) == "Series":
-                    position_series = position
-                if py2_encode(cat["Tracking"]['Name']) == "Movies":
-                    position_movies = position
-                if position_series > -1 and position_movies > -1:
-                    break
-                position += 1
-        except Exception:
-            self.log("Unexpected error in find key categories: " + traceback.format_exc())
-
-        if position_series != -1:
-            self.addCat(py2_encode(self.language(30716)),
-                        jsonrsp['Items'][position_series]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                               '/0/0/1/1024/0/0'),
-                        self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Series Category found")
-
-        if position_movies != -1:
-            self.addCat(py2_encode(self.language(30717)),
-                        jsonrsp['Items'][position_movies]['ObjectUrl'].replace('/0/{sort}/{pageIndex}/{pageSize}/0/0',
-                                                                               '/0/0/1/1024/0/0'),
-                        self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST)
-        else:
-            self.log("No Movies Category found")
-
-        if self.addon.getSetting('show_kids') == 'true':
-            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
-
         jsonrsp = self.get_from_hbogo(self.API_URL_MENU)
-        # Find key home
+        found_items = 0
+        # Find key home, series and movies
         try:
             for cat in jsonrsp['Items']:
                 if py2_encode(cat['Name']) == "Home":
@@ -873,6 +821,18 @@ class HbogoHandler_eu(HbogoHandler):
                     self.homeGroupUrl = cat['ObjectUrl']
                     if self.LANGUAGE_CODE != "ENG":
                         self.homeGroupUrl = self.homeGroupUrl.replace("ENG", self.LANGUAGE_CODE)
+                    found_items += 1
+                if py2_encode(cat['Name']) == "Series":
+                    self.seriesGroupUrl = cat['ObjectUrl']
+                    if self.LANGUAGE_CODE != "ENG":
+                        self.seriesGroupUrl = self.seriesGroupUrl.replace("ENG", self.LANGUAGE_CODE)
+                    found_items += 1
+                if py2_encode(cat['Name']) == "Movies":
+                    self.moviesGroupUrl = cat['ObjectUrl']
+                    if self.LANGUAGE_CODE != "ENG":
+                        self.moviesGroupUrl = self.moviesGroupUrl.replace("ENG", self.LANGUAGE_CODE)
+                    found_items += 1
+                if found_items > 2:
                     break
         except Exception:
             self.log("Unexpected error in find key in menu for home: " + traceback.format_exc())
@@ -899,6 +859,19 @@ class HbogoHandler_eu(HbogoHandler):
                         excludeindex_home.append(container_index)
                     if len(excludeindex_home) > 1:
                         break
+
+        if self.seriesGroupUrl != "":
+            self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST)
+        else:
+            self.log("No Series Category found")
+
+        if self.moviesGroupUrl != "":
+            self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST)
+        else:
+            self.log("No Movies Category found")
+
+        if self.addon.getSetting('show_kids') == 'true':
+            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
 
         if self.addon.getSetting('group_home') == 'true':
             self.addCat(py2_encode(self.language(30733)),
