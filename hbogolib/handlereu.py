@@ -4,10 +4,10 @@
 
 from __future__ import absolute_import, division
 
-import json
-import sys
 import errno
+import json
 import os
+import sys
 import time
 import traceback
 
@@ -141,7 +141,7 @@ class HbogoHandler_eu(HbogoHandler):
         self.API_HOST_GATEWAY = 'https://gateway.hbogo.eu'
         self.API_HOST_GATEWAY_REFERER = 'https://gateway.hbogo.eu/signin/form'
 
-        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/' + self.API_PLATFORM
+        self.API_URL_SETTINGS = 'https://' + self.API_HOST + '/v8/Settings/json/' + self.LANGUAGE_CODE + '/APTV'
         self.API_URL_AUTH_WEBBASIC = 'https://api.ugw.hbogo.eu/v3.0/Authentication/' + self.COUNTRY_CODE + '/JSON/' + self.LANGUAGE_CODE + '/' + \
                                      self.API_PLATFORM
         self.API_URL_AUTH_OPERATOR = 'https://' + self.COUNTRY_CODE_SHORT + 'gwapi.hbogo.eu/v2.1/Authentication/json/' + self.LANGUAGE_CODE + '/' + \
@@ -717,7 +717,7 @@ class HbogoHandler_eu(HbogoHandler):
 
         data = json.dumps(data_obj)
         self.log('PERFORMING LOGIN: ' + self.mask_sensitive_data(str(data)))
-        jsonrspl = self.post_to_hbogo(url, headers, data, 'json', self.max_comm_retry)   # last parameter prevents retry on failed login
+        jsonrspl = self.post_to_hbogo(url, headers, data, 'json', self.max_comm_retry)  # last parameter prevents retry on failed login
         if jsonrspl is False:
             self.logout()
             return False
@@ -909,17 +909,20 @@ class HbogoHandler_eu(HbogoHandler):
                         break
 
         if self.seriesGroupUrl != "":
-            self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_series))
+            self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST,
+                        ','.join(str(e) for e in excludeindex_series))
         else:
             self.log("No Series Category found")
 
         if self.moviesGroupUrl != "":
-            self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_movies))
+            self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST,
+                        ','.join(str(e) for e in excludeindex_movies))
         else:
             self.log("No Movies Category found")
 
         if self.addon.getSetting('show_kids') == 'true':
-            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'), HbogoConstants.ACTION_LIST)
+            self.addCat(py2_encode(self.language(30729)), self.API_URL_GROUP + self.KidsGroupId + '/0/0/0/0/0/0/True', self.get_media_resource('kids.png'),
+                        HbogoConstants.ACTION_LIST)
 
         if self.addon.getSetting('group_home') == 'true':
             self.addCat(py2_encode(self.language(30733)),
@@ -1224,7 +1227,7 @@ class HbogoHandler_eu(HbogoHandler):
         is_helper = Helper(protocol, drm=drm)
         if is_helper.check_inputstream():
             if sys.version_info < (3, 0):  # if python version < 3 is safe to assume we are running on Kodi 18
-                list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')   # compatible with Kodi 18 API
+                list_item.setProperty('inputstreamaddon', 'inputstream.adaptive')  # compatible with Kodi 18 API
             else:
                 list_item.setProperty('inputstream', 'inputstream.adaptive')  # compatible with recent builds Kodi 19 API
             list_item.setProperty('inputstream.adaptive.manifest_type', protocol)
@@ -1501,7 +1504,8 @@ class HbogoHandler_eu(HbogoHandler):
             liz.setInfo(type="Video", infoLabels={"PlayCount": "0"})
             liz.setProperty("resumetime", str(0))
         if hbogo_position > -1:
-            self.log("Found elapsed time on Hbo go for " + cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(title['Duration']))
+            self.log("Found elapsed time on Hbo go for " + cid + " External ID: " + externalid + " Elapsed: " + str(hbogo_position) + " of " + str(
+                title['Duration']))
             liz.setProperty("totaltime", str(title['Duration']))
             liz.setProperty("resumetime", str(hbogo_position))
             if int(hbogo_position) == 0:
@@ -1635,7 +1639,8 @@ class HbogoHandler_eu(HbogoHandler):
                 break
 
         try:
-            self.log("TRACKING ELAPSED for " + str(externalid) + ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(percent_elapsed) + "%")
+            self.log("TRACKING ELAPSED for " + str(externalid) + ": Current time: " + str(current_time) + " of " + str(total_time) + " " + str(
+                percent_elapsed) + "%")
         except Exception:
             self.log("Unexpected error in logging track elapsed: " + traceback.format_exc())
         if percent_elapsed > 89:
