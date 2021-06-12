@@ -22,7 +22,6 @@ class AddOnIntegrity(object):
     def get_list_source_files(dirname):
         files = os.listdir(dirname)
         all_files = list()
-        # Iterate over all the entries
         for entry in files:
             # Create full path
             fullpath = os.path.join(dirname, entry)
