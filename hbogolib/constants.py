@@ -67,7 +67,7 @@ class HbogoConstants(object):
         ['Sweden', 'se', 'se', 'SWE', 'sv_hbon', 'https://se.hbonordic.com/', HANDLER_NORDIC]
     ]
 
-    fallback_operator_icon_eu = 'https://www.hbo-europe.com/images/hbo_eu_logo.png'
+    fallback_operator_icon_eu = 'http://www.hbo.eu/images/hboeu_logo.png'
 
     platforms = {
 
