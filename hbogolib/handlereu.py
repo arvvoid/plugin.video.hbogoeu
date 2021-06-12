@@ -513,6 +513,34 @@ class HbogoHandler_eu(HbogoHandler):
         self.save_obj(saved_session, self.addon_id + "_session")
         return True
 
+    def gen_exclusion_list(self, hbo_go_cat_url, list_of_items_to_exlude, return_as_string=False):
+        jsonrsp = self.get_from_hbogo(hbo_go_cat_url)
+        excludeindex = []
+        if jsonrsp is False:
+            pass
+        else:
+            try:
+                if jsonrsp['ErrorMessage']:
+                    self.log("Get " + py2_encode(hbo_go_cat_url) + " exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
+                    pass
+            except KeyError:
+                pass  # all is ok no error message just pass
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+                pass
+            # find watchlist and continue watching positions for exclusion
+            if len(jsonrsp['Container']) > 1:
+                for container_index in range(0, len(jsonrsp['Container'])):
+                    container_item = jsonrsp['Container'][container_index]
+                    if py2_encode(container_item['Name']) in list_of_items_to_exlude:
+                        excludeindex.append(container_index)
+                    if len(excludeindex) == len(list_of_items_to_exlude):
+                        break
+            if return_as_string:
+                return ','.join(str(e) for e in excludeindex)
+            else:
+                return excludeindex
+
     def categories(self):
         if not self.chk_login():
             self.login()
@@ -569,82 +597,15 @@ class HbogoHandler_eu(HbogoHandler):
         except Exception:
             self.log("Unexpected error in find key in menu for home: " + traceback.format_exc())
 
-        jsonrsp = self.get_from_hbogo(self.homeGroupUrlEng)
-        excludeindex_home = []
-        if jsonrsp is False:
-            pass
-        else:
-            try:
-                if jsonrsp['ErrorMessage']:
-                    self.log("Get home list exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                    pass
-            except KeyError:
-                pass  # all is ok no error message just pass
-            except Exception:
-                self.log("Unexpected error: " + traceback.format_exc())
-                pass
-            # find watchlist and continue watching positions for exclusion
-            if len(jsonrsp['Container']) > 1:
-                for container_index in range(0, len(jsonrsp['Container'])):
-                    container_item = jsonrsp['Container'][container_index]
-                    if py2_encode(container_item['Name']) == "Watchlist" or py2_encode(container_item['Name']) == "Continue Watching":
-                        excludeindex_home.append(container_index)
-                    if len(excludeindex_home) > 1:
-                        break
-
-        jsonrsp = self.get_from_hbogo(self.seriesGroupUrlEng)
-        excludeindex_series = []
-        if jsonrsp is False:
-            pass
-        else:
-            try:
-                if jsonrsp['ErrorMessage']:
-                    self.log("Get series exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                    pass
-            except KeyError:
-                pass  # all is ok no error message just pass
-            except Exception:
-                self.log("Unexpected error: " + traceback.format_exc())
-                pass
-            # find watchlist and continue watching positions for exclusion
-            if len(jsonrsp['Container']) > 1:
-                for container_index in range(0, len(jsonrsp['Container'])):
-                    container_item = jsonrsp['Container'][container_index]
-                    if py2_encode(container_item['Name']) == "Genres":
-                        excludeindex_series.append(container_index)
-                        break
-
-        jsonrsp = self.get_from_hbogo(self.moviesGroupUrlEng)
-        excludeindex_movies = []
-        if jsonrsp is False:
-            pass
-        else:
-            try:
-                if jsonrsp['ErrorMessage']:
-                    self.log("Get movies exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                    pass
-            except KeyError:
-                pass  # all is ok no error message just pass
-            except Exception:
-                self.log("Unexpected error: " + traceback.format_exc())
-                pass
-            # find watchlist and continue watching positions for exclusion
-            if len(jsonrsp['Container']) > 1:
-                for container_index in range(0, len(jsonrsp['Container'])):
-                    container_item = jsonrsp['Container'][container_index]
-                    if py2_encode(container_item['Name']) == "Genres":
-                        excludeindex_movies.append(container_index)
-                        break
-
         if self.seriesGroupUrl != "":
             self.addCat(py2_encode(self.language(30716)), self.seriesGroupUrl, self.get_media_resource('tv.png'), HbogoConstants.ACTION_LIST,
-                        ','.join(str(e) for e in excludeindex_series))
+                        self.gen_exclusion_list(self.seriesGroupUrlEng, ["Genres"], True))
         else:
             self.log("No Series Category found")
 
         if self.moviesGroupUrl != "":
             self.addCat(py2_encode(self.language(30717)), self.moviesGroupUrl, self.get_media_resource('movie.png'), HbogoConstants.ACTION_LIST,
-                        ','.join(str(e) for e in excludeindex_movies))
+                        self.gen_exclusion_list(self.moviesGroupUrlEng, ["Genres"], True))
         else:
             self.log("No Movies Category found")
 
@@ -655,9 +616,9 @@ class HbogoHandler_eu(HbogoHandler):
         if self.addon.getSetting('group_home') == 'true':
             self.addCat(py2_encode(self.language(30733)),
                         self.homeGroupUrl,
-                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST, ','.join(str(e) for e in excludeindex_home))
+                        self.get_media_resource('DefaultFolder.png'), HbogoConstants.ACTION_LIST, self.gen_exclusion_list(self.homeGroupUrlEng, ["Watchlist", "Continue Watching"], True))
         else:
-            self.list(self.homeGroupUrl, True, excludeindex_home)
+            self.list(self.homeGroupUrl, True, self.gen_exclusion_list(self.homeGroupUrlEng, ["Watchlist", "Continue Watching"]))
 
         KodiUtil.endDir(self.handle, None, True)
 
