@@ -21,7 +21,7 @@ if __name__ == '__main__':
     add_on = xbmcaddon.Addon()
     if add_on.getSetting('debugon') == 'true':
         xbmc.log("[" + add_on.getAddonInfo('id') + "] STARTING VERSION: " + add_on.getAddonInfo('version') + " provided by " + add_on.getAddonInfo('author'),
-                xbmc.LOGDEBUG)
+                 xbmc.LOGDEBUG)
         from libs.addonintegrity import AddOnIntegrity
         AddOnIntegrity.gen_integrity()
     addon_main = hbogo(PLUGIN_HANDLE, BASE_URL)

@@ -42,6 +42,8 @@ class AddOnIntegrity(object):
     # if its the same unmodified code version.
     # Also this helps weed out eventual file corruption, malicious software modifications and
     # similar when looking at debug log.
+    # A LIST OF INTEGRITY CHECKSUMS PER RELEASED VERSION
+    # IS AVAILABLE AT https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Releses-checksum
     @staticmethod
     def gen_integrity():
         tot_hash = ""
