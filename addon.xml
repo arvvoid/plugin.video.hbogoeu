@@ -48,6 +48,7 @@ If an official app is available for your platform, use it instead of this.
 - Remove obsolete non standard login redirect methods (no longer needed and abandoned by all operators) [EU region]
 - Change fallback icon url
 - Add-on integrity hash output to debug log if debug logging is active
+- Debug mode has to be explicitly enabled in add-on config
     </news>
     <assets>
      <icon>resources/icon.png</icon>
