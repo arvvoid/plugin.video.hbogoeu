@@ -52,7 +52,7 @@ class AddOnIntegrity(object):
             file_hash = ""
             with open(file[0], "rb") as f:
                 source_data = f.read()  # read entire file as bytes
-                file_hash = hashlib.md5(source_data).hexdigest();
+                file_hash = hashlib.md5(source_data).hexdigest()
             AddOnIntegrity.debug("Add-on file: " + file[1] + " Checksum: " + file_hash)
             tot_hash += file_hash
         checksum = ""
