@@ -19,10 +19,8 @@ from libs.kodiutil import KodiUtil
 from libs.util import Util
 
 try:
-    import urlparse as parse  # type: ignore
     from urllib import quote_plus as quote, urlencode  # type: ignore
 except ImportError:
-    import urllib.parse as parse  # type: ignore
     from urllib.parse import quote_plus as quote, urlencode  # type: ignore
 
 from kodi_six import xbmc, xbmcplugin, xbmcgui  # type: ignore
