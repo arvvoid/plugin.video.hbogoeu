@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve, make sure to include a full debug log https://kodi.wiki/view/Log_file/Easy
+about: Create a report to help us improve, make sure to include a [full debug log](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log)
 title: "[BUG] "
 labels: bug
 assignees: ''
@@ -22,7 +22,7 @@ Steps to reproduce the behaviour:
 **Expected behaviour**
 A clear and concise description of what you expected to happen.
 
-## Debug log - https://kodi.wiki/view/Log_file/Easy
+## Debug log - https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log
 
 [First of all thanks for making the effort to report an issue, reporting issues is critical to improve the project quality]
 [Please include a link to your full debug log. Follow these instructions https://kodi.wiki/view/Log_file/Easy]
