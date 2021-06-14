@@ -22,10 +22,10 @@ Steps to reproduce the behaviour:
 **Expected behaviour**
 A clear and concise description of what you expected to happen.
 
-## Debug log - https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log
+## Debug log
 
 [First of all thanks for making the effort to report an issue, reporting issues is critical to improve the project quality]
-[Please include a link to your full debug log. Follow these instructions https://kodi.wiki/view/Log_file/Easy]
+[Please include a link to your full debug log. Follow these instructions https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log]
 
 [Please note, bug reports without full logs will be marked as ignored rules and ignored untill a log is provided]
 
