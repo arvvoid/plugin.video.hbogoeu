@@ -1,3 +1,11 @@
+v.2.7.4
+- Hot Fix: fix playback going throu TV Shows or Movies category [EU region]
+- Remove obsolete non standard login redirect methods (no longer needed and abandoned by all operators) [EU region]
+- Change fallback icon url
+- Add-on integrity hash output to debug log if debug logging is active
+- Debug mode has to be explicitly enabled in add-on config
+- Translations updates
+
 v.2.7.1
 - Hot Fix: fix kids category [EU region]
 
