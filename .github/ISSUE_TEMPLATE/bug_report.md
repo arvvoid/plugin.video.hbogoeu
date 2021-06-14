@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve, make sure to include a [full debug log](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log)
+about: Create a report to help us improve, make sure to include a full debug log https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Debug-log
 title: "[BUG] "
 labels: bug
 assignees: ''
