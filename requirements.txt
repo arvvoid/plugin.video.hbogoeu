@@ -1,7 +1,9 @@
 requests
+types-requests
 pyaes
 Kodistubs
 flake8
 flake8_polyfill
 mypy
+types-python-dateutil
 #kodi-addon-checker
