@@ -15,7 +15,10 @@ class AddOnIntegrity(object):
 
     @staticmethod
     def debug(msg):
-        xbmc.log("[" + xbmcaddon.Addon().getAddonInfo('id') + "] " + msg, xbmc.LOGDEBUG)
+        try:
+            xbmc.log("[" + xbmcaddon.Addon().getAddonInfo('id') + "] " + msg, xbmc.LOGDEBUG)
+        except TypeError:
+            xbmc.log("[" + xbmcaddon.Addon().getAddonInfo('id') + "] " + msg.decode('utf-8'), xbmc.LOGDEBUG)
 
     # create a list of file and sub directories
     @staticmethod
@@ -37,11 +40,6 @@ class AddOnIntegrity(object):
     # The purpose of this function is to generate a checksum of all source files of the add-on
     # and a global add-on checksum and output them on the debug log.
     # This should run only if debug is explicitly turned on in add-on settings.
-    # The purpose of this is when reciving a debug log to debug a defect or provide support
-    # to be able to quikly identify by comparing own debug log with the one submitted
-    # if its the same unmodified code version.
-    # Also this helps weed out eventual file corruption, malicious software modifications and
-    # similar when looking at debug log.
     # A LIST OF INTEGRITY CHECKSUMS PER RELEASED VERSION
     # IS AVAILABLE AT https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Releses-checksum
     @staticmethod
