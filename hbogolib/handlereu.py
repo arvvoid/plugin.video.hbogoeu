@@ -520,24 +520,25 @@ class HbogoHandler_eu(HbogoHandler):
             try:
                 if jsonrsp['ErrorMessage']:
                     self.log("Get " + py2_encode(hbo_go_cat_url) + " exclude index Error: " + py2_encode(jsonrsp['ErrorMessage']))
-                    pass
             except KeyError:
                 pass  # all is ok no error message just pass
             except Exception:
                 self.log("Unexpected error: " + traceback.format_exc())
-                pass
             # find watchlist and continue watching positions for exclusion
-            if len(jsonrsp['Container']) > 1:
-                for container_index in range(0, len(jsonrsp['Container'])):
-                    container_item = jsonrsp['Container'][container_index]
-                    if py2_encode(container_item['Name']) in list_of_items_to_exlude:
-                        excludeindex.append(container_index)
-                    if len(excludeindex) == len(list_of_items_to_exlude):
-                        break
-            if return_as_string:
-                return ','.join(str(e) for e in excludeindex)
-            else:
-                return excludeindex
+            try:
+                if len(jsonrsp['Container']) > 1:
+                    for container_index in range(0, len(jsonrsp['Container'])):
+                        container_item = jsonrsp['Container'][container_index]
+                        if py2_encode(container_item['Name']) in list_of_items_to_exlude:
+                            excludeindex.append(container_index)
+                        if len(excludeindex) == len(list_of_items_to_exlude):
+                            break
+            except Exception:
+                self.log("Unexpected error: " + traceback.format_exc())
+        if return_as_string:
+            return ','.join(str(e) for e in excludeindex)
+        else:
+            return excludeindex
 
     def categories(self):
         if not self.chk_login():
