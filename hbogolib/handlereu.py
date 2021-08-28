@@ -679,6 +679,7 @@ class HbogoHandler_eu(HbogoHandler):
         # temp fix for "new version" errors in series/season listings
         url = url.replace("APTV", self.API_PLATFORM)
         url = url.replace("ANMO", self.API_PLATFORM)
+        self.log("Season url fix: " + str(url))
         # end fix
 
         jsonrsp = self.get_from_hbogo(url)
@@ -727,6 +728,7 @@ class HbogoHandler_eu(HbogoHandler):
         # temp fix for "new version" errors in series/season listings
         url = url.replace("APTV", self.API_PLATFORM)
         url = url.replace("ANMO", self.API_PLATFORM)
+        self.log("Episode url fix: " + str(url))
         # end fix
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
