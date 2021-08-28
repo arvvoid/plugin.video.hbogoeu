@@ -1,3 +1,6 @@
+v.2.7.8
+- Fixes "new version" errors on series/season listings
+
 v.2.7.4
 - Hot Fix: fix playback going throu TV Shows or Movies category [EU region]
 - Remove obsolete non standard login redirect methods (no longer needed and abandoned by all operators) [EU region]
