@@ -1,4 +1,4 @@
-<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.7.5">
+<addon id="plugin.video.hbogoeu" name="hGO EU" provider-name="arvvoid" version="2.7.8">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
     <import addon="script.module.kodi-six" version="0.1.0" />
@@ -44,7 +44,7 @@ If an official app is available for your platform, use it instead of this.
     <source>https://github.com/arvvoid/plugin.video.hbogoeu</source>
     <website>https://arvvoid.github.io/plugin.video.hbogoeu</website>
     <news>
-- Fixes
+- Fixes "new version" errors on series/season listings
     </news>
     <assets>
      <icon>resources/icon.png</icon>

@@ -675,6 +675,13 @@ class HbogoHandler_eu(HbogoHandler):
         if not self.chk_login():
             self.login()
         self.log("Season: " + str(url))
+        # replace alien platform url with current set API platform
+        # temp fix for "new version" errors in series/season listings
+        url = url.replace("APTV", self.API_PLATFORM)
+        url = url.replace("ANMO", self.API_PLATFORM)
+        self.log("Season url fix: " + str(url))
+        # end fix
+
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
             return
@@ -717,7 +724,12 @@ class HbogoHandler_eu(HbogoHandler):
         self.log("Episode: " + str(url))
 
         self.reset_media_type_counters()
-
+        # replace alien platform url with current set API platform
+        # temp fix for "new version" errors in series/season listings
+        url = url.replace("APTV", self.API_PLATFORM)
+        url = url.replace("ANMO", self.API_PLATFORM)
+        self.log("Episode url fix: " + str(url))
+        # end fix
         jsonrsp = self.get_from_hbogo(url)
         if jsonrsp is False:
             return
