@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve, make sure to include a full debug log, for general questions, support, feature proposals please use the DISCUSSIONS SECTION instead.
+about: Create a report to help us improve, make sure to include a full debug log. For general questions, support, feature proposals please use the DISCUSSIONS SECTION instead.
 title: "[BUG] "
 labels: bug
 assignees: ''
