@@ -25,6 +25,9 @@ Simple Kodi add-on to access HBO® Go content from Kodi Media Center (http://kod
 
 This add-on support 18 countries at the moment: Bosnia and Herzegovina, Bulgaria, Croatia, Czech Republic, Denmark, Finland, Hungary, Macedonia, Montenegro, Norway, Polonia, Portugal, Romania, Serbia, Slovakia, Slovenija, Spain, Sweden. To see the full list of supported regions/countries/operators go to the [REGIONAL SUPPORT](https://github.com/arvvoid/plugin.video.hbogoeu/wiki/Regional-support) wiki page.
 
+MOST LIKELY SOON SOME OR ALL REGIONS SUPPORTED BY THIS ADD-ON WILL SWITCH TO HBO MAX, WHEN THAT HAPPEN A HBO MAX ADD-ON ALREADY EXIST HERE: https://forum.kodi.tv/showthread.php?tid=358484
+THIS ADD-ON WILL BE SUPPORTED UNTIL IT'S USEFUL. WHEN ALL REGIONS SWITCH TO HBO MAX THIS ADD-ON WILL BE DROPPED.
+
 ## Install instructions
 
 * Works on Kodi 18 (Leia), Kodi 19 (Matrix) or later
