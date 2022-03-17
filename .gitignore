@@ -78,3 +78,5 @@ Thumbs.db
 *.sql
 *.sqlite
 
+venv/
+
